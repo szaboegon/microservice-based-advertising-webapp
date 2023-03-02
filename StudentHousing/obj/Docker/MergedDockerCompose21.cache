@@ -1,0 +1,47 @@
+name: dockercompose4658398787065314807
+services:
+  advertisementservice.webapi:
+    build:
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      dockerfile: AdvertisementService.WebAPI/Dockerfile
+    container_name: advertisementservice
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+      DB_HOST: advertisementdb
+      DB_NAME: advertisement
+      DB_SA_PASSWORD: password@12345
+    image: advertisementservicewebapi
+    networks:
+      advertisement: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+  advrtisementdb:
+    container_name: advrtisementdb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password@12345
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      advertisement: null
+networks:
+  advertisement:
+    name: dockercompose4658398787065314807_advertisement

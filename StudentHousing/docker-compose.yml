@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks:
+  advertisement:
+
+services:
+  advertisementservice.webapi:
+    container_name: advertisementservice
+    image: ${DOCKER_REGISTRY-}advertisementservicewebapi
+    build:
+      context: .
+      dockerfile: AdvertisementService.WebAPI/Dockerfile
+    networks:
+       - advertisement
+    environment:
+       - DB_HOST=advertisementdb
+       - DB_NAME=advertisement
+       - DB_SA_PASSWORD=password@12345
+    ports:
+       - 8002:80
+
+
+  advretisementdb:
+    container_name: advertisementdb
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+       - ACCEPT_EULA=Y
+       - SA_PASSWORD=password@12345
+    networks:
+       - advertisement
+    ports:
+       - 8001:1433
+

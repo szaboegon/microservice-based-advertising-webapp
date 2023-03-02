@@ -73,7 +73,7 @@ namespace AdvertisementService.DataAccess
                 entity.Property(e => e.UploadDate)
                       .HasColumnName("uploadDate")
                       .IsRequired()
-                      .HasDefaultValue(DateOnly.FromDateTime(DateTime.Now));
+                      .HasDefaultValue(DateTime.Now);
 
                 entity.Property(e => e.Description)
                       .HasColumnName("description")
