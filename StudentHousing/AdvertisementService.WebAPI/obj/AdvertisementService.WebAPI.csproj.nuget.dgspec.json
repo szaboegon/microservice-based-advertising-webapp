@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\onallo_labor\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj": {}
+    "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj": {}
   },
   "projects": {
-    "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
+    "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
+        "projectUniqueName": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
         "projectName": "AdvertisementService.BusinessLogic",
-        "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
+        "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\obj\\",
+        "outputPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -64,14 +64,14 @@
         }
       }
     },
-    "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj": {
+    "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
+        "projectUniqueName": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
         "projectName": "AdvertisementService.DataAccess",
-        "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
+        "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\obj\\",
+        "outputPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -93,8 +93,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
-                "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
+              "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
+                "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
               }
             }
           }
@@ -116,10 +116,6 @@
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
-              "target": "Package",
-              "version": "[7.0.3, )"
-            },
-            "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[7.0.3, )"
             },
@@ -154,14 +150,14 @@
         }
       }
     },
-    "D:\\onallo_labor\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj": {
+    "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj",
+        "projectUniqueName": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj",
         "projectName": "AdvertisementService.WebAPI",
-        "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj",
+        "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.WebAPI\\AdvertisementService.WebAPI.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.WebAPI\\obj\\",
+        "outputPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -183,11 +179,11 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
-                "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
+              "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
+                "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
               },
-              "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj": {
-                "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj"
+              "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj": {
+                "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj"
               }
             }
           }

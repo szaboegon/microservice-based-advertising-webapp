@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
+      "projectUniqueName": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
       "projectName": "AdvertisementService.BusinessLogic",
-      "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
+      "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\obj\\",
+      "outputPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "67BH4gBhmzDaXRb/IAeZd9paJgL0MXuJpYWUDbmy2RwbPPOj6LMlG5ivVjkntLTsBnNO5B7SFGdePueb9VP1Qg==",
+  "dgSpecHash": "9AJgrNc4Uh0SspsKdVBc9FQqdNZCcl5KeghCmmStLMG0TdvCTsU1nmmM0xEAM5xajIz0k5uruXm1HyCtDjvgVw==",
   "success": true,
-  "projectFilePath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
+  "projectFilePath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

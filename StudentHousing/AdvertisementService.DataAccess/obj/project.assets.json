@@ -3474,7 +3474,6 @@
       "AdvertisementService.BusinessLogic >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.3",
-      "Microsoft.EntityFrameworkCore.Relational >= 7.0.3",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.3"
     ]
@@ -3486,11 +3485,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
+      "projectUniqueName": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
       "projectName": "AdvertisementService.DataAccess",
-      "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
+      "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\AdvertisementService.DataAccess.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.DataAccess\\obj\\",
+      "outputPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3512,8 +3511,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
-              "projectPath": "D:\\onallo_labor\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
+            "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj": {
+              "projectPath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisementService.BusinessLogic\\AdvertisementService.BusinessLogic.csproj"
             }
           }
         }
@@ -3535,10 +3534,6 @@
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
-            "target": "Package",
-            "version": "[7.0.3, )"
-          },
-          "Microsoft.EntityFrameworkCore.Relational": {
             "target": "Package",
             "version": "[7.0.3, )"
           },
