@@ -1,0 +1,12 @@
+* { border: 1px dashed red} 
+
+form.filterBar{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.card-text{     /*only way to overwrite unwanted ChakraUI CSS rule*/
+    margin-top: 0 !important;
+}
