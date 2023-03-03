@@ -39,29 +39,42 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.Region)
                       .HasColumnName("region")
-                       .IsRequired();
+                       .IsRequired()
+                       .HasColumnType("nvarchar")
+                       .HasMaxLength(30);
 
                 entity.Property(e => e.PostalCode)
                       .HasColumnName("postalCode")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("smallint");
 
                 entity.Property(e => e.City)
                       .HasColumnName("city")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(30);
 
                 entity.Property(e => e.District)
-                      .HasColumnName("district");
+                      .HasColumnName("district")
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(20);
 
                 entity.Property(e=>e.Street)
                       .HasColumnName("street")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(40);
 
                 entity.Property(e => e.StreetNumber)
                       .HasColumnName("streetNumber")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(10);
 
                 entity.Property(e => e.UnitNumber)
-                      .HasColumnName("unitNumber");
+                      .HasColumnName("unitNumber")
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(10);
             });
 
             modelBuilder.Entity<Advertisement>(entity =>
@@ -77,7 +90,9 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.Description)
                       .HasColumnName("description")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(300);
 
                 entity.Property(e => e.AdvertiserId)
                       .HasColumnName("advertiserId")
@@ -103,7 +118,9 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.Name)
                       .HasColumnName("name")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(30);
             });
 
             modelBuilder.Entity<Housing>(entity =>
@@ -114,10 +131,11 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.NumberOfRooms)
                       .HasColumnName("numberOfRooms")
+                      .HasColumnType("smallint")
                       .IsRequired();
 
                 entity.Property(e => e.Size)
-                     .HasColumnName("size")
+                     .HasColumnName("smallint")
                      .IsRequired();
 
                 entity.Property(e => e.Furnished)
@@ -161,17 +179,19 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.FilePath)
                       .HasColumnName("filePath")
-                      .IsRequired();
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(255);
 
-                entity.Property(e => e.AdvertisementId)
+                entity.Property(e => e.HousingId)
                      .HasColumnName("advertisementId")
                      .IsRequired();
 
-                entity.HasOne(i => i.Advertisement)
-                      .WithMany(a => a.Images)
-                      .HasForeignKey(i => i.AdvertisementId)
+                entity.HasOne(i => i.Housing)
+                      .WithMany(h => h.Images)
+                      .HasForeignKey(i => i.HousingId)
                       .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Image_Advertisement");
+                      .HasConstraintName("FK_Image_Housing");
             });
 
         }

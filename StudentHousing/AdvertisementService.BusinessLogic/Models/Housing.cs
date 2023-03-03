@@ -21,5 +21,6 @@ namespace AdvertisementService.BusinessLogic.Models
         public Address? Address { get; set; }
 
         public Advertisement? Advertisement { get; set; }
+        public ICollection<Image>? Images { get; set; }
     }
 }

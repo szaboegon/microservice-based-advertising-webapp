@@ -10,7 +10,6 @@
         public int HousingId { get; set; }
 
         public Housing? Housing { get; set; }    
-        public ICollection<Image>? Images { get; set; }
 
     }
 }

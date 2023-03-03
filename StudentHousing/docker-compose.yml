@@ -4,6 +4,25 @@ networks:
   advertisement:
 
 services:
+  reverse-proxy:
+    container_name: traefik
+    # The official v2 Traefik docker image
+    image: traefik:v2.9
+    networks:      
+       - advertisement
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The HTTPS port
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
   advertisementservice.webapi:
     container_name: advertisementservice
     image: ${DOCKER_REGISTRY-}advertisementservicewebapi
@@ -16,18 +35,21 @@ services:
        - DB_HOST=advertisementdb
        - DB_NAME=advertisement
        - DB_SA_PASSWORD=password@12345
-    ports:
-       - 8002:80
+    expose:
+       - 8002
+    labels:
+       - traefik.enable=true
+       - traefik.http.routers.todowebapi.rule=Host(`localhost`) && Path(`/api/advertisement`)
 
 
   advretisementdb:
     container_name: advertisementdb
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
        - advertisement
     ports:
-       - 8001:1433
+       - 8001:1433    # Only needed for debugging, remove later
 

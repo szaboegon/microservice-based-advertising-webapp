@@ -10,8 +10,8 @@ namespace AdvertisementService.BusinessLogic.Models
     {
         public int Id { get; set; }
         public string? FilePath { get; set; }
-        public int AdvertisementId { get; set; }
+        public int HousingId { get; set; }
 
-        public Advertisement? Advertisement { get; set; }
+        public Housing? Housing { get; set; }
     }
 }
