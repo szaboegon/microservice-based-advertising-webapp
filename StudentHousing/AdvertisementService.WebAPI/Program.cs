@@ -1,4 +1,6 @@
+using AdvertisementService.BusinessLogic.RepositoryInterfaces;
 using AdvertisementService.DataAccess;
+using AdvertisementService.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,9 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 
 var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
 builder.Services.AddDbContext<AdvertisementDbContext>(opt => opt.UseSqlServer(connectionString));
+
+//Repositories
+builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 
 var app = builder.Build();
 

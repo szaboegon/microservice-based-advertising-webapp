@@ -1,5 +1,5 @@
 ﻿using AdvertisementService.BusinessLogic.Models;
-using AdvertisementService.DataAccess;
+using AdvertisementService.BusinessLogic.RepositoryInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +9,16 @@ namespace AdvertisementService.WebAPI.Controllers
     [ApiController]
     public class AdvertisementController : ControllerBase
     {
-        private readonly AdvertisementDbContext _dbContext;
-        public AdvertisementController(AdvertisementDbContext dbContext) 
+        private readonly IAdvertisementRepository _repository;
+        public AdvertisementController(IAdvertisementRepository repository) 
         {
-          _dbContext = dbContext;
+            _repository = repository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Advertisement>> GetAdvertisements() 
         {
-            return _dbContext.Advertisements;
+            return _repository.FindAll().ToList();
         }
     }
 }
