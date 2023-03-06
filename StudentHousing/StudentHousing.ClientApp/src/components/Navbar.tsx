@@ -3,7 +3,6 @@ import {
   Flex,
   Box,
   Stack,
-  Link,
   Heading,
   Spacer,
   Button,
@@ -15,6 +14,7 @@ import {
   background,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 interface INavbarProps {}
 
@@ -35,7 +35,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
           ml="40px"
           textColor="white"
           as={Link}
-          href="/"
+          to="/"
           variant="hidden"
         >
           Student Housing
@@ -44,6 +44,8 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
         {isLoggedIn ? (
           <HStack spacing="15px" mr="40px">
             <Button
+              as={Link}
+              to="/newadvertisement"
               minH="50px"
               background="brandYellow.600"
               textColor="white"
@@ -74,6 +76,8 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
         ) : (
           <HStack spacing="15px" mr="40px">
             <Button
+              as={Link}
+              to="/newadvertisement"
               minH="50px"
               background="brandYellow.600"
               textColor="white"

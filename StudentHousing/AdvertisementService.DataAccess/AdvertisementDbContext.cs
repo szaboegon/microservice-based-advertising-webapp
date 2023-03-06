@@ -92,7 +92,7 @@ namespace AdvertisementService.DataAccess
                       .HasColumnName("description")
                       .IsRequired()
                       .HasColumnType("nvarchar")
-                      .HasMaxLength(300);
+                      .HasMaxLength(1000);
 
                 entity.Property(e => e.AdvertiserId)
                       .HasColumnName("advertiserId")

@@ -20,5 +20,8 @@ namespace AdvertisementService.WebAPI.Controllers
         {
             return _repository.FindAll().ToList();
         }
+
+        //async functions
+
     }
 }

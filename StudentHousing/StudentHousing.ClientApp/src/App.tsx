@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
 import { Details } from "./pages/Details";
+import { NewAdvertisement } from "./pages/NewAdvertisement";
 
 function App() {
   const theme = extendTheme({
@@ -55,6 +56,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/housing" element={<Search />} />
         <Route path="/details" element={<Details />} />
+        <Route path="/newadvertisement" element={<NewAdvertisement />} />
       </Routes>
     </ChakraProvider>
   );

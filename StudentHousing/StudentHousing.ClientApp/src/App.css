@@ -1,4 +1,4 @@
-* { border: 1px dashed red} 
+* { border: 1px dashed red;} 
 
 form.filterBar{
     display: flex;

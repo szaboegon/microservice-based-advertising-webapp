@@ -14,7 +14,12 @@ import SearchBar from "../components/SearchBar";
 export const Search = () => {
   return (
     <>
-      <Flex alignItems="center" justifyContent="center" flexWrap="wrap">
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        flexWrap="wrap"
+        marginX="100px"
+      >
         <VStack minWidth="75%">
           <Breadcrumb
             marginY="10px"
