@@ -1,29 +1,3 @@
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\appsettings.Development.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\appsettings.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.exe
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.deps.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.runtimeconfig.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.dll
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.pdb
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.csproj.AssemblyReference.cache
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.GeneratedMSBuildEditorConfig.editorconfig
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.AssemblyInfoInputs.cache
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.AssemblyInfo.cs
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.csproj.CoreCompileInputs.cache
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.MvcApplicationPartsAssemblyInfo.cache
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.AdvertisementService.WebAPI.Microsoft.AspNetCore.StaticWebAssets.props
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.build.AdvertisementService.WebAPI.props
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.AdvertisementService.WebAPI.props
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.AdvertisementService.WebAPI.props
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets.pack.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets.build.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\staticwebassets.development.json
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\scopedcss\bundle\AdvertisementService.WebAPI.styles.css
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.dll
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\refint\AdvertisementService.WebAPI.dll
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.pdb
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\AdvertisementService.WebAPI.genruntimeconfig.cache
-D:\onallo_labor\StudentHousing\AdvertisementService.WebAPI\obj\Debug\net7.0\ref\AdvertisementService.WebAPI.dll
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\appsettings.Development.json
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\appsettings.json
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisementService.WebAPI\bin\Debug\net7.0\AdvertisementService.WebAPI.exe

@@ -27,7 +27,6 @@ namespace AdvertisementService.DataAccess
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Housing> Housings { get; set; }
         public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
@@ -77,38 +76,6 @@ namespace AdvertisementService.DataAccess
                       .HasMaxLength(10);
             });
 
-            modelBuilder.Entity<Advertisement>(entity =>
-            {
-                entity.Property(e => e.Id)
-                      .HasColumnName("id")
-                      .IsRequired();
-
-                entity.Property(e => e.UploadDate)
-                      .HasColumnName("uploadDate")
-                      .IsRequired()
-                      .HasDefaultValue(DateTime.Now);
-
-                entity.Property(e => e.Description)
-                      .HasColumnName("description")
-                      .IsRequired()
-                      .HasColumnType("nvarchar")
-                      .HasMaxLength(1000);
-
-                entity.Property(e => e.AdvertiserId)
-                      .HasColumnName("advertiserId")
-                      .IsRequired();
-
-                entity.Property(e => e.HousingId)
-                      .HasColumnName("housingId")
-                      .IsRequired();
-
-                entity.HasOne(a => a.Housing)
-                      .WithOne(h => h.Advertisement)
-                      .HasForeignKey<Advertisement>(a => a.HousingId)
-                      .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Advertisement_Housing");
-
-            });
 
             modelBuilder.Entity<Category>(entity =>
             {
@@ -123,7 +90,7 @@ namespace AdvertisementService.DataAccess
                       .HasMaxLength(30);
             });
 
-            modelBuilder.Entity<Housing>(entity =>
+            modelBuilder.Entity<Advertisement>(entity =>
             {
                 entity.Property(e => e.Id)
                       .HasColumnName("id")
@@ -131,24 +98,40 @@ namespace AdvertisementService.DataAccess
 
                 entity.Property(e => e.NumberOfRooms)
                       .HasColumnName("numberOfRooms")
-                      .HasColumnType("smallint")
+                      .HasColumnType("float")
                       .IsRequired();
 
                 entity.Property(e => e.Size)
-                     .HasColumnName("smallint")
+                     .HasColumnName("size")
+                     .HasColumnType("float")
                      .IsRequired();
 
                 entity.Property(e => e.Furnished)
                      .HasColumnName("furnished")
                      .IsRequired();
 
-                entity.Property(e => e.ParkingAvailable)
-                     .HasColumnName("parkingAvailable")
+                entity.Property(e => e.Parking)
+                     .HasColumnName("parking")
                      .IsRequired();
 
                 entity.Property(e => e.MonthlyPrice)
                     .HasColumnName("monthlyPrice")
                     .IsRequired();
+
+                entity.Property(e => e.UploadDate)
+                     .HasColumnName("uploadDate")
+                     .IsRequired()
+                     .HasDefaultValue(DateTime.Now);
+
+                entity.Property(e => e.Description)
+                      .HasColumnName("description")
+                      .IsRequired()
+                      .HasColumnType("nvarchar")
+                      .HasMaxLength(1000);
+
+                entity.Property(e => e.AdvertiserId)
+                      .HasColumnName("advertiserId")
+                      .IsRequired();
 
                 entity.Property(e => e.AddressId)
                     .HasColumnName("addressId")
@@ -159,16 +142,16 @@ namespace AdvertisementService.DataAccess
                     .IsRequired();
 
                 entity.HasOne(h => h.Address)
-                      .WithOne(a => a.Housing)
-                      .HasForeignKey<Housing>(h => h.AddressId)
+                      .WithOne(a => a.Advertisement)
+                      .HasForeignKey<Advertisement>(h => h.AddressId)
                       .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Housing_Address");
+                      .HasConstraintName("FK_Advertisement_Address");
 
                 entity.HasOne(h => h.Category)
-                     .WithMany(c => c.Housings)
+                     .WithMany(c => c.Advertisements)
                      .HasForeignKey(h => h.CategoryId)
                      .OnDelete(DeleteBehavior.ClientSetNull)
-                     .HasConstraintName("FK_Housing_Category");
+                     .HasConstraintName("FK_Advertisement_Category");
             });
 
             modelBuilder.Entity<Image>(entity =>
@@ -183,15 +166,15 @@ namespace AdvertisementService.DataAccess
                       .HasColumnType("nvarchar")
                       .HasMaxLength(255);
 
-                entity.Property(e => e.HousingId)
+                entity.Property(e => e.AdvertisementId)
                      .HasColumnName("advertisementId")
                      .IsRequired();
 
-                entity.HasOne(i => i.Housing)
+                entity.HasOne(i => i.Advertisement)
                       .WithMany(h => h.Images)
-                      .HasForeignKey(i => i.HousingId)
+                      .HasForeignKey(i => i.AdvertisementId)
                       .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Image_Housing");
+                      .HasConstraintName("FK_Image_Advertisement");
             });
 
         }

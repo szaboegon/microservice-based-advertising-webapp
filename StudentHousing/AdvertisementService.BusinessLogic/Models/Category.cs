@@ -11,6 +11,6 @@ namespace AdvertisementService.BusinessLogic.Models
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        public ICollection<Housing>? Housings { get; set; }
+        public ICollection<Advertisement>? Advertisements { get; set; }
     }
 }

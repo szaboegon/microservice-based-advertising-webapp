@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   advertisementservice.webapi:
-    image: advertisementservicewebapi:dev
+    image: adsvertisementervicewebapi:dev
     build:
       target: base
       labels:

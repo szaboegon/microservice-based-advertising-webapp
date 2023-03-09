@@ -1,7 +1,8 @@
 ﻿using AdvertisementService.BusinessLogic.Models;
 using AdvertisementService.BusinessLogic.RepositoryInterfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AdvertisementService.BusinessLogic.Services;
+using AdvertisementService.BusinessLogic.DataTransferObjects;
 
 namespace AdvertisementService.WebAPI.Controllers
 {
@@ -21,7 +22,15 @@ namespace AdvertisementService.WebAPI.Controllers
             return _repository.FindAll().ToList();
         }
 
-        //async functions
+        [HttpPost]
+        public ActionResult PostNewAdvertisement([FromBody]NewAdvertisementDTO data)
+        {
+            if (AdService.CreateNewAdvertisement(data))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
 
     }
 }

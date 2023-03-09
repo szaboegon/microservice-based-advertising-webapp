@@ -1,15 +1,37 @@
 name: dockercompose4658398787065314807
 services:
+  advertisementdb:
+    container_name: advertisementdb
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: password@12345
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      advertisement: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "8001"
+      protocol: tcp
   advertisementservice.webapi:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisementService.WebAPI/Dockerfile
+    container_name: advertisementservice
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
-    image: advertisementservicewebapi
+      DB_HOST: advertisementdb
+      DB_NAME: advertisement
+      DB_SA_PASSWORD: password@12345
+    expose:
+    - "8002"
+    image: adsvertisementervicewebapi
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.todowebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
     networks:
-      default: null
+      advertisement: null
     ports:
     - mode: ingress
       target: 80
@@ -30,6 +52,33 @@ services:
       read_only: true
       bind:
         create_host_path: true
+  reverse-proxy:
+    command:
+    - --api.insecure=true
+    - --providers.docker
+    container_name: traefik
+    image: traefik:v2.9
+    networks:
+      advertisement: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "80"
+      protocol: tcp
+    - mode: ingress
+      target: 443
+      published: "443"
+      protocol: tcp
+    - mode: ingress
+      target: 8080
+      published: "8080"
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+      bind:
+        create_host_path: true
 networks:
-  default:
-    name: dockercompose4658398787065314807_default
+  advertisement:
+    name: dockercompose4658398787065314807_advertisement

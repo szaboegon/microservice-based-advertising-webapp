@@ -25,7 +25,7 @@ services:
 
   advertisementservice.webapi:
     container_name: advertisementservice
-    image: ${DOCKER_REGISTRY-}advertisementservicewebapi
+    image: ${DOCKER_REGISTRY-}adsvertisementervicewebapi
     build:
       context: .
       dockerfile: AdvertisementService.WebAPI/Dockerfile
@@ -42,7 +42,7 @@ services:
        - traefik.http.routers.todowebapi.rule=Host(`localhost`) && Path(`/api/advertisement`)
 
 
-  advretisementdb:
+  advertisementdb:
     container_name: advertisementdb
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:

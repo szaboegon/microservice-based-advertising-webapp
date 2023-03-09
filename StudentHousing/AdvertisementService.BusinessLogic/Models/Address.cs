@@ -11,6 +11,6 @@
         public string? StreetNumber { get; set; }
         public string? UnitNumber { get; set; }
 
-        public Housing? Housing { get; set; }
+        public Advertisement? Advertisement { get; set; }
     }
 }
