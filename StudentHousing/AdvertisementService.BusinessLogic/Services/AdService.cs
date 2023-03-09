@@ -12,19 +12,7 @@ namespace AdvertisementService.BusinessLogic.Services
     {
         public static bool CreateNewAdvertisement(NewAdvertisementDTO data)
         {
-            if (data == null)
-            {
-                return false;
-            }
-
-            var advertisement = new Advertisement
-            {
-                NumberOfRooms = data.NumberOfRooms,
-                Size = data.Size,
-                Furnished = data.Furnished,
-                Parking = data.Parking,
-                MonthlyPrice =data.Pr
-            };
+            return true;
         }
     }
 }

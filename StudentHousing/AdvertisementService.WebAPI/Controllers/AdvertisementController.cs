@@ -29,6 +29,7 @@ namespace AdvertisementService.WebAPI.Controllers
             {
                 return Ok();
             }
+
             return BadRequest();
         }
 
