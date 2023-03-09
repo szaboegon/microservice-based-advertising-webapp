@@ -1,37 +1,37 @@
 name: dockercompose4658398787065314807
 services:
-  advertisementdb:
-    container_name: advertisementdb
+  advertisingdb:
+    container_name: advertisingdb
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 1433
       published: "8001"
       protocol: tcp
-  advertisementservice.webapi:
+  advertisingservice.webapi:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
-      dockerfile: AdvertisementService.WebAPI/Dockerfile
-    container_name: advertisementservice
+      dockerfile: AdvertisingService.WebAPI/Dockerfile
+    container_name: advertisingservice
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
-      DB_HOST: advertisementdb
-      DB_NAME: advertisement
+      DB_HOST: advertisingdb
+      DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
     expose:
     - "8002"
-    image: adsvertisementervicewebapi
+    image: adsvertisingservicewebapi
     labels:
       traefik.enable: "true"
-      traefik.http.routers.todowebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
+      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -59,7 +59,7 @@ services:
     container_name: traefik
     image: traefik:v2.9
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -80,5 +80,5 @@ services:
       bind:
         create_host_path: true
 networks:
-  advertisement:
-    name: dockercompose4658398787065314807_advertisement
+  advertising:
+    name: dockercompose4658398787065314807_advertising

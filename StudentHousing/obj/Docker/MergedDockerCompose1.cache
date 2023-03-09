@@ -1,27 +1,27 @@
 name: dockercompose4658398787065314807
 services:
-  advertisementdb:
-    container_name: advertisementdb
+  advertisingdb:
+    container_name: advertisingdb
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 1433
       published: "8001"
       protocol: tcp
-  advertisementservice.webapi:
+  advertisingservice.webapi:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
-      dockerfile: AdvertisementService.WebAPI/Dockerfile
+      dockerfile: AdvertisingService.WebAPI/Dockerfile
       labels:
         com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: AdvertisementService.WebAPI
+        com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
       target: base
-    container_name: advertisementservice
+    container_name: advertisingservice
     entrypoint:
     - tail
     - -f
@@ -30,25 +30,25 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_URLS: https://+:443;http://+:80
-      DB_HOST: advertisementdb
-      DB_NAME: advertisement
+      DB_HOST: advertisingdb
+      DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
       NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
     expose:
     - "8002"
-    image: adsvertisementervicewebapi:dev
+    image: adsvertisingservicewebapi:dev
     labels:
       com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/AdvertisementService.WebAPI.dll"'
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
         dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet
       com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.routers.todowebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
+      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -59,7 +59,7 @@ services:
     tty: true
     volumes:
     - type: bind
-      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisementService.WebAPI
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI
       target: /app
       bind:
         create_host_path: true
@@ -104,7 +104,7 @@ services:
     container_name: traefik
     image: traefik:v2.9
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -125,5 +125,5 @@ services:
       bind:
         create_host_path: true
 networks:
-  advertisement:
-    name: dockercompose4658398787065314807_advertisement
+  advertising:
+    name: dockercompose4658398787065314807_advertising

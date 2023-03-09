@@ -1,51 +1,37 @@
 name: dockercompose4658398787065314807
 services:
-  advertisementdb:
-    container_name: advertisementdb
+  advertisingdb:
+    container_name: advertising_db
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 1433
       published: "8001"
       protocol: tcp
-  advertisementservice.webapi:
+  advertisingservice.webapi:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
-      dockerfile: AdvertisementService.WebAPI/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: AdvertisementService.WebAPI
-    container_name: advertisementservice
-    entrypoint:
-    - tail
-    - -f
-    - /dev/null
+      dockerfile: AdvertisingService.WebAPI/Dockerfile
+    container_name: advertising_service
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
-      DB_HOST: advertisementdb
-      DB_NAME: advertisement
+      DB_HOST: advertisingdb
+      DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
     expose:
     - "8002"
-    image: adsvertisementervicewebapi
+    image: adsvertisingservicewebapi
     labels:
-      com.microsoft.visual-studio.project-name: AdvertisementService.WebAPI
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/AdvertisementService.WebAPI.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.routers.todowebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
+      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -53,22 +39,16 @@ services:
     - mode: ingress
       target: 443
       protocol: tcp
-    tty: true
     volumes:
     - type: bind
-      source: C:\Users\User\vsdbg\vs2017u5
-      target: /remote_debugger
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
       bind:
         create_host_path: true
     - type: bind
       source: C:\Users\User\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
@@ -79,7 +59,7 @@ services:
     container_name: traefik
     image: traefik:v2.9
     networks:
-      advertisement: null
+      advertising: null
     ports:
     - mode: ingress
       target: 80
@@ -100,5 +80,5 @@ services:
       bind:
         create_host_path: true
 networks:
-  advertisement:
-    name: dockercompose4658398787065314807_advertisement
+  advertising:
+    name: dockercompose4658398787065314807_advertising

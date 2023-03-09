@@ -1,19 +1,19 @@
 version: '3.4'
 
 services:
-  advertisementservice.webapi:
-    image: adsvertisementervicewebapi:dev
+  advertisingservice.webapi:
+    image: adsvertisingservicewebapi:dev
     build:
       target: base
       labels:
         com.microsoft.created-by: "visual-studio"
-        com.microsoft.visual-studio.project-name: "AdvertisementService.WebAPI"
+        com.microsoft.visual-studio.project-name: "AdvertisingService.WebAPI"
     environment:
       - DOTNET_USE_POLLING_FILE_WATCHER=1
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
     volumes:
-      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisementService.WebAPI:/app
+      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI:/app
       - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing:/src
       - C:\Users\User\vsdbg\vs2017u5:/remote_debugger:rw
       - C:\Users\User\.nuget\packages\:/root/.nuget/packages:ro
@@ -24,7 +24,7 @@ services:
     entrypoint: tail -f /dev/null
     labels:
       com.microsoft.visualstudio.debuggee.program: "dotnet"
-      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  \"/app/bin/Debug/net7.0/AdvertisementService.WebAPI.dll\""
+      com.microsoft.visualstudio.debuggee.arguments: " --additionalProbingPath /root/.nuget/packages --additionalProbingPath /root/.nuget/fallbackpackages  \"/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll\""
       com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
       com.microsoft.visualstudio.debuggee.killprogram: "/bin/sh -c \"if PID=$$(pidof dotnet); then kill $$PID; fi\""
     tty: true

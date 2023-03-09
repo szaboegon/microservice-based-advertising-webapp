@@ -38,7 +38,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { NewAdvertisementFormData } from "../models/newAdvertisementFormData.model";
+import { NewAdvertisementFormData } from "../formInterfaces/newAdvertisementFormData";
 import FirstStep from "../components/NewAdvertisementForm/FirstStep";
 import SecondStep from "../components/NewAdvertisementForm/SecondStep";
 import ThirdStep from "../components/NewAdvertisementForm/ThirdStep";
@@ -60,7 +60,7 @@ export const NewAdvertisement = () => {
     furnished: "",
     parking: "",
     description: "",
-    price: "",
+    monthlyPrice: "",
     image: "",
   };
 
@@ -84,7 +84,10 @@ export const NewAdvertisement = () => {
     try {
       let response = await fetch("/api/advertisement", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          Accept: "text json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formValues),
       });
       if (response.ok) {

@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { NewAdvertisementFormData } from "../../models/newAdvertisementFormData.model";
+import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 
 interface IThirdStepProps {
   formValues: NewAdvertisementFormData;
@@ -102,7 +102,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
             </InputGroup>
           </VStack>
         </HStack>
-        <FormLabel sx={labelStyles} htmlFor="price">
+        <FormLabel sx={labelStyles} htmlFor="monthlyPrice">
           Price:
         </FormLabel>
         <InputGroup>
@@ -114,11 +114,11 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
             width="100%"
           >
             <NumberInputField
-              id="price"
-              name="price"
+              id="monthlyPrice"
+              name="monthlyPrice"
               maxLength={10}
               required
-              value={formValues.price}
+              value={formValues.monthlyPrice}
               onChange={handleInputChange}
             />
           </NumberInput>

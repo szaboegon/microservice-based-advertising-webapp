@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { NewAdvertisementFormData } from "../../models/newAdvertisementFormData.model";
+import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 
 interface ISecondStepProps {
   formValues: NewAdvertisementFormData;

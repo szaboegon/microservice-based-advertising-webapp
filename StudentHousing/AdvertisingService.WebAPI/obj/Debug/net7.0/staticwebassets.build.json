@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "dD3nfx4lgouPy7hzwysm0oNV3uH9UXXx7CgsCUiTMVc=",
+  "Source": "AdvertisingService.WebAPI",
+  "BasePath": "_content/AdvertisingService.WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
