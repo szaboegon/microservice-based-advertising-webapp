@@ -29,30 +29,30 @@ namespace AdvertisingService.BusinessLogic.Services
                 Name = data.Category,
             };
 
-            var newAdvertisement = new Advertisement()
-            {
-                NumberOfRooms = float.Parse(data.NumberOfRooms),
-                Size = float.Parse(data.Size),
-                Furnished = bool.Parse(data.Furnished),
-                Parking = bool.Parse(data.Parking),
-                MonthlyPrice = double.Parse(data.MonthlyPrice),
-                UploadDate = DateTime.Now,
-                Description = data.Description,
-                AdvertiserId = 10000,
-                Category= newCategory,
-            };
-
             var newAddress = new Address()
             {
                 Region = data.Region,
-                PostalCode = int.Parse(data.PostalCode),
+                PostalCode = data.PostalCode,
                 City = data.City,
                 District = data.District,
                 StreetName = data.StreetName,
                 StreetNumber = data.StreetNumber,
                 UnitNumber = data.UnitNumber,
-                Advertisement=newAdvertisement,
             };
+
+            var newAdvertisement = new Advertisement()
+            {
+                NumberOfRooms = data.NumberOfRooms,
+                Size = data.Size,
+                Furnished =data.Furnished,
+                Parking = data.Parking,
+                MonthlyPrice = data.MonthlyPrice,
+                Description = data.Description,
+                AdvertiserId = 10000,
+                Category= newCategory,
+                Address= newAddress,
+            };
+
 
             _categoryRepository.Add(newCategory);
             _addressRepository.Add(newAddress);

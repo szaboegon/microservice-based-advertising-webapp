@@ -80,8 +80,7 @@ namespace AdvertisingService.DataAccess
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.Property(e => e.Id)
-                      .HasColumnName("id")
-                      .IsRequired();
+                      .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                       .HasColumnName("name")
@@ -93,8 +92,7 @@ namespace AdvertisingService.DataAccess
             modelBuilder.Entity<Advertisement>(entity =>
             {
                 entity.Property(e => e.Id)
-                      .HasColumnName("id")
-                      .IsRequired();
+                      .HasColumnName("id");
 
                 entity.Property(e => e.NumberOfRooms)
                       .HasColumnName("numberOfRooms")
@@ -120,7 +118,6 @@ namespace AdvertisingService.DataAccess
 
                 entity.Property(e => e.UploadDate)
                      .HasColumnName("uploadDate")
-                     .IsRequired()
                      .HasDefaultValue(DateTime.Now);
 
                 entity.Property(e => e.Description)
@@ -157,8 +154,7 @@ namespace AdvertisingService.DataAccess
             modelBuilder.Entity<Image>(entity =>
             {
                 entity.Property(e => e.Id)
-                      .HasColumnName("id")
-                      .IsRequired();
+                      .HasColumnName("id");
 
                 entity.Property(e => e.Data)
                       .HasColumnName("data")

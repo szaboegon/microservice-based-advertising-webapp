@@ -14,6 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useState } from "react";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 
 interface IThirdStepProps {
@@ -27,6 +28,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
   setFormValues,
   labelStyles,
 }) => {
+  const [isRoom, setIsRoom] = useState(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -35,6 +37,15 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
       [e.target.name]: value,
     });
   };
+
+  React.useEffect(() => {
+    if (formValues.category.toUpperCase() == "ROOM") {
+      setIsRoom(true);
+    } else {
+      setIsRoom(false);
+    }
+  }, [formValues.category]);
+
   return (
     <>
       <FormControl>
@@ -50,19 +61,20 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
             <NumberInput
               max={40}
               min={1}
-              step={0.5}
+              step={isRoom ? 0 : 0.5}
               variant="flushed"
               borderColor="brandYellow.800"
               size="lg"
               width="100%"
             >
-              <NumberInputField
+              <NumberInputField //TODO: probably should use normal imput instead
                 id="numberOfRooms"
                 name="numberOfRooms"
                 maxLength={4}
                 required
-                value={formValues.numberOfRooms}
                 onChange={handleInputChange}
+                value={formValues.numberOfRooms}
+                disabled={isRoom}
               />
               <NumberInputStepper>
                 <NumberIncrementStepper />

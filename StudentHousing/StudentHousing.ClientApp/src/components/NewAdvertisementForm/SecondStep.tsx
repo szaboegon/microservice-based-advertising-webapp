@@ -9,21 +9,22 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useEffect } from "react";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 
 interface ISecondStepProps {
   formValues: NewAdvertisementFormData;
   setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementFormData>>;
-  isDistrictDisabled: boolean;
   labelStyles: Object;
 }
 
 const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
   formValues,
   setFormValues,
-  isDistrictDisabled,
   labelStyles,
 }) => {
+  const [isDistrictDisabled, setIsDistrictDisabled] = React.useState(true);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -34,6 +35,14 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
       [e.target.name]: value,
     });
   };
+
+  useEffect(() => {
+    if (formValues.city.toUpperCase() == "BUDAPEST") {
+      setIsDistrictDisabled(false);
+    } else {
+      setIsDistrictDisabled(true);
+    }
+  }, [formValues.city]);
 
   return (
     <>

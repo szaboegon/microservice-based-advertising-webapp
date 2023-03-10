@@ -67,3 +67,8 @@ D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousin
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\obj\Debug\net7.0\AdvertisingService.WebAPI.pdb
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\obj\Debug\net7.0\AdvertisingService.WebAPI.genruntimeconfig.cache
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\obj\Debug\net7.0\ref\AdvertisingService.WebAPI.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Humanizer.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\System.CodeDom.dll

@@ -66,15 +66,6 @@ export const NewAdvertisement = () => {
 
   const [tabIndex, setTabIndex] = useState(0);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [isDistrictDisabled, setIsDistrictDisabled] = useState(true);
-
-  useEffect(() => {
-    if (formValues.city.toUpperCase() == "BUDAPEST") {
-      setIsDistrictDisabled(false);
-    } else {
-      setIsDistrictDisabled(true);
-    }
-  }, [formValues.city]);
 
   const handleSubmit = async () => {
     if (tabIndex < 4) {
@@ -82,13 +73,32 @@ export const NewAdvertisement = () => {
       return;
     }
     try {
+      {
+        var newAdvertisementDTO = {
+          category: formValues.category,
+          region: formValues.region,
+          postalCode: parseInt(formValues.postalCode),
+          city: formValues.city,
+          district: formValues.district,
+          streetName: formValues.streetName,
+          streetNumber: formValues.streetNumber,
+          unitNumber: formValues.unitNumber,
+          numberOfRooms: parseFloat(formValues.numberOfRooms),
+          size: parseFloat(formValues.size),
+          furnished: JSON.parse(formValues.furnished),
+          parking: JSON.parse(formValues.parking),
+          description: formValues.description,
+          monthlyPrice: parseFloat(formValues.monthlyPrice),
+          image: "",
+        };
+      }
       let response = await fetch("/api/advertisement", {
         method: "POST",
         headers: {
           Accept: "text json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formValues),
+        body: JSON.stringify(newAdvertisementDTO),
       });
       if (response.ok) {
         let json = await response.json();
@@ -212,7 +222,6 @@ export const NewAdvertisement = () => {
                   <SecondStep
                     formValues={formValues}
                     setFormValues={setFormValues}
-                    isDistrictDisabled={isDistrictDisabled}
                     labelStyles={labelStyles}
                   />
                 </TabPanel>
