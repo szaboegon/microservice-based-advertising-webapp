@@ -9,6 +9,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import AdDetails from "../components/AdDetails";
 
 export const Details = () => {
   return (
@@ -33,8 +34,8 @@ export const Details = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to="/housing">
-                Housing
+              <BreadcrumbLink as={Link} to="/search">
+                Search
               </BreadcrumbLink>
             </BreadcrumbItem>
 
@@ -45,12 +46,7 @@ export const Details = () => {
             </BreadcrumbItem>
           </Breadcrumb>
         </VStack>
-        <Box>
-          <Image
-            src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
-            objectFit="cover"
-          ></Image>
-        </Box>
+        <AdDetails></AdDetails>
       </Flex>
     </>
   );

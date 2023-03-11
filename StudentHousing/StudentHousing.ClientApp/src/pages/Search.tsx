@@ -34,8 +34,8 @@ export const Search = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink as={Link} to="/housing">
-                Housing
+              <BreadcrumbLink as={Link} to="/search">
+                Search
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>

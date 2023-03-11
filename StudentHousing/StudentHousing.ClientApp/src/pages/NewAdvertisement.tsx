@@ -1,50 +1,28 @@
 import { ArrowLeftIcon } from "@chakra-ui/icons";
 import {
-  Box,
   Flex,
-  FormControl,
-  HStack,
-  VStack,
-  Radio,
-  RadioGroup,
   Heading,
-  Input,
-  FormLabel,
-  NumberInput,
-  NumberInputField,
-  Select,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Textarea,
   Button,
   Tabs,
   TabList,
   Tab,
   TabPanels,
   TabPanel,
-  InputRightAddon,
-  InputGroup,
-  Spacer,
   Alert,
   AlertIcon,
   AlertTitle,
-  AlertDescription,
+  Box,
+  Image,
 } from "@chakra-ui/react";
-import {
-  ChangeEvent,
-  FormEvent,
-  MouseEventHandler,
-  useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 import { NewAdvertisementFormData } from "../formInterfaces/newAdvertisementFormData";
 import FirstStep from "../components/NewAdvertisementForm/FirstStep";
 import SecondStep from "../components/NewAdvertisementForm/SecondStep";
 import ThirdStep from "../components/NewAdvertisementForm/ThirdStep";
 import FourthStep from "../components/NewAdvertisementForm/FourthStep";
 import FifthStep from "../components/NewAdvertisementForm/FifthStep";
-import ErrorAlert from "../components/NewAdvertisementForm/ErrorAlert";
+import ApartmentBuilding1 from "../assets/apartment-building1.jpg";
+import { formHeadingStyles } from "../styles/formHeadingStyles";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementFormData = {
@@ -66,17 +44,11 @@ export const NewAdvertisement = () => {
   };
 
   const [step, setStep] = useState(0);
-  const [errorTabIndex, setErrorTabIndex] = useState(-1);
+  const [success, setSuccess] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
 
-  const handleSubmit = async () => {
-    setErrorTabIndex(-1);
-    if (step < 4) {
-      if (handleValidation()) {
-        setStep(step + 1);
-      }
-      return;
-    }
+  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
     try {
       {
         var newAdvertisementDTO = {
@@ -107,7 +79,10 @@ export const NewAdvertisement = () => {
       });
       if (response.ok) {
         let json = await response.json();
+        setSuccess(true);
         setFormValues(initialFormValues);
+        setStep(0);
+        setTimeout(() => setSuccess(false), 5000); //TODO: cant test it might not work
       } else {
         alert("Some error occured");
       }
@@ -116,138 +91,71 @@ export const NewAdvertisement = () => {
     }
   };
 
-  const handleValidation = (): boolean => {
-    switch (step) {
-      case 0: {
-        if (formValues.category === "") {
-          setErrorTabIndex(0);
-          return false;
-        } else return true;
-      }
-      case 1: {
-        if (
-          formValues.region === "" ||
-          formValues.postalCode === "" ||
-          formValues.city === "" ||
-          (formValues.city.toUpperCase() === "BUDAPEST" &&
-            formValues.district === "") ||
-          formValues.streetName === "" ||
-          formValues.streetNumber === "" ||
-          formValues.unitNumber === ""
-        ) {
-          setErrorTabIndex(1);
-          return false;
-        } else return true;
-      }
-      case 2: {
-        if (
-          (formValues.category.toUpperCase() != "ROOM" &&
-            formValues.numberOfRooms == "") ||
-          formValues.size === "" ||
-          formValues.monthlyPrice === "" ||
-          formValues.parking === "" ||
-          formValues.furnished === ""
-        ) {
-          setErrorTabIndex(2);
-          return false;
-        }
-        return true;
-      }
-      case 3: {
-        if (formValues.description === "") {
-          setErrorTabIndex(3);
-          return false;
-        }
-        return true;
-      }
-      case 4: {
-        return true;
-      }
-      default:
-        return true;
+  const renderSuccessAlert = () => {
+    return (
+      <Alert status="success">
+        <AlertIcon />
+        <AlertTitle>Creating your Advertisement was successful!</AlertTitle>
+      </Alert>
+    );
+  };
+
+  const nextStep = () => {
+    if (step < 4) {
+      setStep(step + 1);
     }
   };
 
-  const renderErrorAlert = () => {
-    switch (errorTabIndex) {
-      case 0:
-        return <ErrorAlert description="Please select a category!" />;
-      case 1:
-        return (
-          <ErrorAlert description="Please fill out all required fields!" />
-        );
-      case 2:
-        return (
-          <ErrorAlert description="Please fill out all required fields!" />
-        );
-      case 3:
-        return <ErrorAlert description="Please write a description!" />;
-      case 4:
-        return <ErrorAlert description="Please upload an image!" />;
-      default:
-        return <></>;
-    }
-  };
-
-  const renderSuccessAlert = () => {};
-
-  const handleBackButton = () => {
+  const prevStep = () => {
     if (step > 0) {
-      setErrorTabIndex(-1);
       setStep(step - 1);
     }
-  };
-
-  const headingStyles = {
-    textColor: "gray.500",
-    fontSize: "1.8rem",
-    textAlign: "center",
-  };
-
-  const tabPanelStyles = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-  const labelStyles = {
-    textColor: "gray.600",
-    alignSelf: "start",
-    fontSize: "1.1rem",
-    marginTop: "15px",
-    marginBottom: "0px",
   };
 
   const conditionalHeader = () => {
     switch (step) {
       case 0:
         return (
-          <Heading sx={headingStyles} marginTop="34px">
+          <Heading sx={formHeadingStyles} marginTop="34px">
             Category of the property
           </Heading>
         );
       case 1:
-        return <Heading sx={headingStyles}>Address</Heading>;
+        return <Heading sx={formHeadingStyles}>Address</Heading>;
       case 2:
-        return <Heading sx={headingStyles}>Details</Heading>;
+        return <Heading sx={formHeadingStyles}>Details</Heading>;
       case 3:
-        return <Heading sx={headingStyles}>Description</Heading>;
+        return <Heading sx={formHeadingStyles}>Description</Heading>;
       case 4:
-        return <Heading sx={headingStyles}>Upload an Image</Heading>;
+        return <Heading sx={formHeadingStyles}>Upload an Image</Heading>;
     }
   };
 
   return (
     <>
-      <Flex marginTop="60px" justifyContent="center">
-        <form>
-          <Flex flexDirection="column" height="100%">
+      <Box height="900px">
+        <Flex
+          width={{ base: "0%", xl: "50%" }}
+          overflow="hidden"
+          float="left"
+          height="100%"
+        >
+          <Image
+            maxWidth="950px"
+            height="auto"
+            alignSelf="end"
+            src={ApartmentBuilding1}
+          ></Image>
+        </Flex>
+        <Flex
+          justifyContent="center"
+          width={{ base: "100%", xl: "50%" }}
+          alignItems="center"
+          height="100%"
+        >
+          <Flex flexDirection="column">
             <Tabs
               index={step}
-              height="450px"
-              width="600px"
               isFitted
               variant="soft-rounded"
               colorScheme="green"
@@ -263,7 +171,7 @@ export const NewAdvertisement = () => {
                 <Button
                   variant="link"
                   leftIcon={<ArrowLeftIcon />}
-                  onClick={handleBackButton}
+                  onClick={prevStep}
                   marginLeft="30px"
                   marginTop="10px"
                   color="brandYellow.800"
@@ -274,56 +182,48 @@ export const NewAdvertisement = () => {
                 <></>
               )}
               {conditionalHeader()}
-              <TabPanels display="flex" justifyContent="center" height="100%">
-                <TabPanel sx={tabPanelStyles}>
+              <TabPanels>
+                <TabPanel>
                   <FirstStep
                     formValues={formValues}
                     setFormValues={setFormValues}
+                    nextStep={nextStep}
                   />
                 </TabPanel>
-                <TabPanel sx={tabPanelStyles}>
+                <TabPanel>
                   <SecondStep
                     formValues={formValues}
                     setFormValues={setFormValues}
-                    labelStyles={labelStyles}
+                    nextStep={nextStep}
                   />
                 </TabPanel>
-                <TabPanel sx={tabPanelStyles}>
+                <TabPanel>
                   <ThirdStep
                     formValues={formValues}
                     setFormValues={setFormValues}
-                    labelStyles={labelStyles}
+                    nextStep={nextStep}
                   />
                 </TabPanel>
-                <TabPanel sx={tabPanelStyles}>
+                <TabPanel>
                   <FourthStep
                     formValues={formValues}
                     setFormValues={setFormValues}
-                    labelStyles={labelStyles}
+                    nextStep={nextStep}
                   />
                 </TabPanel>
-                <TabPanel sx={tabPanelStyles}>
-                  <FifthStep />
+                <TabPanel>
+                  <FifthStep
+                    formValues={formValues}
+                    setFormValues={setFormValues}
+                    handleSubmit={handleSubmit}
+                  />
                 </TabPanel>
               </TabPanels>
-              <Flex alignItems="center" margin="30px" flexDirection="column">
-                {renderErrorAlert()}
-                <Button
-                  size="lg"
-                  onClick={handleSubmit}
-                  width="350px"
-                  height="40px"
-                  bgColor="brandGreen.500"
-                  textColor="white"
-                  _hover={{ background: "brandGreen.700" }}
-                >
-                  {step === 4 ? "Submit" : "Next"}
-                </Button>
-              </Flex>
             </Tabs>
+            {success && renderSuccessAlert()}
           </Flex>
-        </form>
-      </Flex>
+        </Flex>
+      </Box>
     </>
   );
 };
