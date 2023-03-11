@@ -46,7 +46,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
 
   return (
     <>
-      <FormControl>
+      <FormControl isRequired>
         <FormLabel sx={labelStyles} htmlFor="region">
           Region:
         </FormLabel>
@@ -122,7 +122,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
           </VStack>
         </HStack>
         <FormLabel sx={labelStyles} htmlFor="district">
-          District:
+          District (only required for Budapest):
         </FormLabel>
         <Input
           id="district"

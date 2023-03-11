@@ -6,7 +6,7 @@ interface IFifthStepProps {}
 const FifthStep: React.FunctionComponent<IFifthStepProps> = (props) => {
   return (
     <>
-      <FormControl>
+      <FormControl isRequired>
         <Input type="file" accept="image/*"></Input>
       </FormControl>
     </>

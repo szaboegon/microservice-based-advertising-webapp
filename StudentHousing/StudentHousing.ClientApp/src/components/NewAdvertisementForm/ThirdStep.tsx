@@ -48,7 +48,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
 
   return (
     <>
-      <FormControl>
+      <FormControl isRequired>
         <HStack>
           <VStack width="50%">
             <FormLabel
@@ -109,13 +109,13 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                 backgroundColor="white"
                 border="0px"
                 fontWeight="600"
-                textColor="brandYellow.900"
+                textColor="brandGreen.700"
               />
             </InputGroup>
           </VStack>
         </HStack>
         <FormLabel sx={labelStyles} htmlFor="monthlyPrice">
-          Price:
+          Monthly Price:
         </FormLabel>
         <InputGroup>
           <NumberInput
@@ -140,13 +140,18 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
             backgroundColor="white"
             border="0px"
             fontWeight="600"
-            textColor="brandYellow.900"
+            textColor="brandGreen.700"
           />
         </InputGroup>
         <HStack>
           <VStack width="50%" alignItems="start">
-            <FormLabel sx={labelStyles}>Furnished:</FormLabel>
-            <RadioGroup name="furnished" size="lg" value={formValues.furnished}>
+            <FormLabel sx={labelStyles}>Is the property furnished?</FormLabel>
+            <RadioGroup
+              name="furnished"
+              size="lg"
+              value={formValues.furnished}
+              colorScheme="green"
+            >
               <HStack>
                 <Radio value="true" onChange={handleInputChange}>
                   Yes
@@ -158,8 +163,13 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
             </RadioGroup>
           </VStack>
           <VStack width="50%" alignItems="start">
-            <FormLabel sx={labelStyles}>Parking:</FormLabel>
-            <RadioGroup name="parking" size="lg" value={formValues.parking}>
+            <FormLabel sx={labelStyles}>Is there parking available?</FormLabel>
+            <RadioGroup
+              name="parking"
+              size="lg"
+              value={formValues.parking}
+              colorScheme="green"
+            >
               <HStack>
                 <Radio value="true" onChange={handleInputChange}>
                   Yes

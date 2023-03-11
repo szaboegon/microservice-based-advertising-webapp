@@ -23,7 +23,7 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
   };
   return (
     <>
-      <FormControl>
+      <FormControl isRequired>
         <FormLabel sx={labelStyles} htmlFor="description">
           Max 1000 characters
         </FormLabel>

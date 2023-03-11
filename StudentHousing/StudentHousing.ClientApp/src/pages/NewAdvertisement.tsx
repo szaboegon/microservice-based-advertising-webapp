@@ -44,10 +44,11 @@ import SecondStep from "../components/NewAdvertisementForm/SecondStep";
 import ThirdStep from "../components/NewAdvertisementForm/ThirdStep";
 import FourthStep from "../components/NewAdvertisementForm/FourthStep";
 import FifthStep from "../components/NewAdvertisementForm/FifthStep";
+import ErrorAlert from "../components/NewAdvertisementForm/ErrorAlert";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementFormData = {
-    category: "apartment",
+    category: "",
     region: "",
     postalCode: "",
     city: "",
@@ -64,12 +65,16 @@ export const NewAdvertisement = () => {
     image: "",
   };
 
-  const [tabIndex, setTabIndex] = useState(0);
+  const [step, setStep] = useState(0);
+  const [errorTabIndex, setErrorTabIndex] = useState(-1);
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const handleSubmit = async () => {
-    if (tabIndex < 4) {
-      setTabIndex(tabIndex + 1);
+    setErrorTabIndex(-1);
+    if (step < 4) {
+      if (handleValidation()) {
+        setStep(step + 1);
+      }
       return;
     }
     try {
@@ -111,27 +116,85 @@ export const NewAdvertisement = () => {
     }
   };
 
-  const handleValidation = () => {
-    switch (tabIndex) {
-      case 0:
+  const handleValidation = (): boolean => {
+    switch (step) {
+      case 0: {
+        if (formValues.category === "") {
+          setErrorTabIndex(0);
+          return false;
+        } else return true;
+      }
+      case 1: {
+        if (
+          formValues.region === "" ||
+          formValues.postalCode === "" ||
+          formValues.city === "" ||
+          (formValues.city.toUpperCase() === "BUDAPEST" &&
+            formValues.district === "") ||
+          formValues.streetName === "" ||
+          formValues.streetNumber === "" ||
+          formValues.unitNumber === ""
+        ) {
+          setErrorTabIndex(1);
+          return false;
+        } else return true;
+      }
+      case 2: {
+        if (
+          (formValues.category.toUpperCase() != "ROOM" &&
+            formValues.numberOfRooms == "") ||
+          formValues.size === "" ||
+          formValues.monthlyPrice === "" ||
+          formValues.parking === "" ||
+          formValues.furnished === ""
+        ) {
+          setErrorTabIndex(2);
+          return false;
+        }
+        return true;
+      }
+      case 3: {
+        if (formValues.description === "") {
+          setErrorTabIndex(3);
+          return false;
+        }
+        return true;
+      }
+      case 4: {
+        return true;
+      }
+      default:
+        return true;
     }
   };
 
-  const renderAlert = () => {
-    return (
-      <Alert status="error" marginBottom="20px">
-        <AlertIcon />
-        <AlertTitle>Your browser is outdated!</AlertTitle>
-        <AlertDescription>
-          Your Chakra experience may be degraded.
-        </AlertDescription>
-      </Alert>
-    );
+  const renderErrorAlert = () => {
+    switch (errorTabIndex) {
+      case 0:
+        return <ErrorAlert description="Please select a category!" />;
+      case 1:
+        return (
+          <ErrorAlert description="Please fill out all required fields!" />
+        );
+      case 2:
+        return (
+          <ErrorAlert description="Please fill out all required fields!" />
+        );
+      case 3:
+        return <ErrorAlert description="Please write a description!" />;
+      case 4:
+        return <ErrorAlert description="Please upload an image!" />;
+      default:
+        return <></>;
+    }
   };
 
+  const renderSuccessAlert = () => {};
+
   const handleBackButton = () => {
-    if (tabIndex > 0) {
-      setTabIndex(tabIndex - 1);
+    if (step > 0) {
+      setErrorTabIndex(-1);
+      setStep(step - 1);
     }
   };
 
@@ -158,7 +221,7 @@ export const NewAdvertisement = () => {
   };
 
   const conditionalHeader = () => {
-    switch (tabIndex) {
+    switch (step) {
       case 0:
         return (
           <Heading sx={headingStyles} marginTop="34px">
@@ -182,7 +245,7 @@ export const NewAdvertisement = () => {
         <form>
           <Flex flexDirection="column" height="100%">
             <Tabs
-              index={tabIndex}
+              index={step}
               height="450px"
               width="600px"
               isFitted
@@ -196,7 +259,7 @@ export const NewAdvertisement = () => {
                 <Tab>Description</Tab>
                 <Tab>Image</Tab>
               </TabList>
-              {tabIndex != 0 ? (
+              {step != 0 ? (
                 <Button
                   variant="link"
                   leftIcon={<ArrowLeftIcon />}
@@ -244,7 +307,7 @@ export const NewAdvertisement = () => {
                 </TabPanel>
               </TabPanels>
               <Flex alignItems="center" margin="30px" flexDirection="column">
-                {renderAlert()}
+                {renderErrorAlert()}
                 <Button
                   size="lg"
                   onClick={handleSubmit}
@@ -254,7 +317,7 @@ export const NewAdvertisement = () => {
                   textColor="white"
                   _hover={{ background: "brandGreen.700" }}
                 >
-                  {tabIndex === 4 ? "Submit" : "Next"}
+                  {step === 4 ? "Submit" : "Next"}
                 </Button>
               </Flex>
             </Tabs>
