@@ -13,5 +13,4 @@ export interface NewAdvertisementFormData{
     parking: string,
     description: string,
     monthlyPrice: string,
-    image: string,
 }

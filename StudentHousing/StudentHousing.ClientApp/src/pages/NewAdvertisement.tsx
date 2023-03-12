@@ -40,12 +40,12 @@ export const NewAdvertisement = () => {
     parking: "",
     description: "",
     monthlyPrice: "",
-    image: "",
   };
 
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [image, setImage] = useState<File>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ export const NewAdvertisement = () => {
           parking: JSON.parse(formValues.parking),
           description: formValues.description,
           monthlyPrice: parseFloat(formValues.monthlyPrice),
-          image: "",
+          image: image,
         };
       }
       let response = await fetch("/api/advertisement", {
@@ -212,11 +212,7 @@ export const NewAdvertisement = () => {
                   />
                 </TabPanel>
                 <TabPanel>
-                  <FifthStep
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                    handleSubmit={handleSubmit}
-                  />
+                  <FifthStep setImage={setImage} handleSubmit={handleSubmit} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

@@ -4,28 +4,22 @@ import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementF
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface IFifthStepProps {
-  formValues: NewAdvertisementFormData;
-  setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementFormData>>;
+  setImage: React.Dispatch<File>;
   handleSubmit: (e: React.FormEvent<HTMLElement>) => Promise<void>;
 }
 
 const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
-  formValues,
-  setFormValues,
+  setImage,
   handleSubmit,
 }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file;
     if (e.target.files) {
-      const file = e.target.files[0];
-
-      const reader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = () => {
-        setFormValues({
-          ...formValues,
-          [formValues.image]: reader.result,
-        });
-      };
+      file = e.target.files[0];
+    }
+    if (file) {
+      setImage(file);
+      alert(file);
     }
   };
 
