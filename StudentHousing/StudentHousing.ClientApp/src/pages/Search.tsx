@@ -7,11 +7,30 @@ import {
   Box,
   VStack,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AdCard from "../components/AdCard";
+import AdvertisementCard from "../components/AdvertisementCard";
 import SearchBar from "../components/SearchBar";
+import { AdvertisementCardData } from "../models/advertisementCardData.model";
 
 export const Search = () => {
+  const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
+    []
+  );
+
+  const getAdvertisements = async () => {
+    let response = await fetch("/api/advertisement");
+    if (response.ok) {
+      let json = await response.json();
+      setAdvertisements(json);
+    } else {
+      alert("HTTP-Error: " + response.status);
+    }
+  };
+  useEffect(() => {
+    getAdvertisements();
+  }, []);
+
   return (
     <>
       <Flex
@@ -43,12 +62,9 @@ export const Search = () => {
         </VStack>
       </Flex>
       <Flex margin="50px" flexWrap="wrap" justifyContent="center">
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-        <AdCard></AdCard>
+        {advertisements.map((advertisement) => (
+          <AdvertisementCard advertisement={advertisement}></AdvertisementCard>
+        ))}
       </Flex>
     </>
   );

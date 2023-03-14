@@ -5,8 +5,6 @@ import {
   FormLabel,
   HStack,
   Input,
-  NumberInput,
-  NumberInputField,
   Select,
   VStack,
 } from "@chakra-ui/react";
@@ -118,22 +116,21 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 <FormLabel sx={formLabelStyles} htmlFor="postalCode">
                   Postal Code:
                 </FormLabel>
-                <NumberInput
+                <Input
+                  id="postalCode"
+                  name="postalCode"
+                  required
+                  type="number"
+                  maxLength={4}
+                  min={1000}
+                  max={9999}
+                  value={formValues.postalCode}
+                  onChange={handleInputChange}
+                  placeholder="e.g. 1089"
                   borderColor="brandYellow.800"
                   size="lg"
                   width="100%"
-                >
-                  <NumberInputField
-                    id="postalCode"
-                    name="postalCode"
-                    required
-                    value={formValues.postalCode}
-                    onChange={handleInputChange}
-                    maxLength={4}
-                    minLength={4}
-                    placeholder="e.g. 1089"
-                  />
-                </NumberInput>
+                ></Input>
               </VStack>
             </HStack>
             <FormLabel sx={formLabelStyles} htmlFor="district">

@@ -1,6 +1,6 @@
 import { Flex, Image, Box, Heading, Card } from "@chakra-ui/react";
 import BannerImg from "../assets/bannerimg.jpg";
-import AdCard from "../components/AdCard";
+import AdvertisementCard from "../components/AdvertisementCard";
 import SearchBar from "../components/SearchBar";
 
 export const Home = () => {
@@ -38,11 +38,7 @@ export const Home = () => {
       <Heading marginY="60px" textAlign="center" textColor="gray.500">
         Recent Advertisements
       </Heading>
-      <Flex margin="50px" flexWrap="wrap" justifyContent="center">
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-        <AdCard></AdCard>
-      </Flex>
+      <Flex margin="50px" flexWrap="wrap" justifyContent="center"></Flex>
     </>
   );
 };

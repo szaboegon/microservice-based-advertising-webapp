@@ -14,9 +14,11 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 
-interface IAdDetailsProps {}
+interface IAdvertisementDetailsProps {}
 
-const AdDetails: React.FunctionComponent<IAdDetailsProps> = (props) => {
+const AdvertisementDetails: React.FunctionComponent<
+  IAdvertisementDetailsProps
+> = (props) => {
   return (
     <>
       <Flex width="75%" marginY="20px" flexWrap="wrap">
@@ -86,4 +88,4 @@ const AdDetails: React.FunctionComponent<IAdDetailsProps> = (props) => {
   );
 };
 
-export default AdDetails;
+export default AdvertisementDetails;

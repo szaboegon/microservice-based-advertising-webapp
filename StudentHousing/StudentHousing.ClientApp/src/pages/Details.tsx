@@ -8,10 +8,15 @@ import {
   Image,
   Box,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import AdDetails from "../components/AdDetails";
+import AdvertisementDetails from "../components/AdvertisementDetails";
+import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
 
 export const Details = () => {
+  const [advertisement, setAdvertisement] =
+    useState<AdvertisementDetailsData>();
+
   return (
     <>
       <Flex
@@ -46,7 +51,7 @@ export const Details = () => {
             </BreadcrumbItem>
           </Breadcrumb>
         </VStack>
-        <AdDetails></AdDetails>
+        <AdvertisementDetails></AdvertisementDetails>
       </Flex>
     </>
   );

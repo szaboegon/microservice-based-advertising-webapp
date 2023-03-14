@@ -9,19 +9,6 @@ namespace AdvertisingService.DataAccess
     {
         public AdvertisementDbContext(DbContextOptions<AdvertisementDbContext> dbContextOptions) : base(dbContextOptions)
         {
-            try
-            {
-                var databaseCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-                if (databaseCreator != null)
-                {
-                    if (!databaseCreator.CanConnect()) databaseCreator.Create();
-                    if (!databaseCreator.HasTables()) databaseCreator.CreateTables();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
 
         public DbSet<Address> Addresses { get; set; }
@@ -114,6 +101,7 @@ namespace AdvertisingService.DataAccess
 
                 entity.Property(e => e.MonthlyPrice)
                     .HasColumnName("monthlyPrice")
+                    .HasColumnType ("int")
                     .IsRequired();
 
                 entity.Property(e => e.UploadDate)
@@ -171,6 +159,74 @@ namespace AdvertisingService.DataAccess
                       .OnDelete(DeleteBehavior.ClientSetNull)
                       .HasConstraintName("FK_Image_Advertisement");
             });
+
+            DataSeeding(modelBuilder);
+        }
+        private void DataSeeding(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category {Id=1, Name = "apartment" },
+                new Category {Id=2, Name = "room"});
+
+            modelBuilder.Entity<Address>().HasData(
+                new Address
+                {
+                    Id=1,
+                    Region="Pest",
+                    PostalCode=1091,
+                    City="Budapest",
+                    District="XI.",
+                    StreetName="Király utca",
+                    StreetNumber="47.",
+                    UnitNumber="15."
+                },
+                 new Address
+                 {
+                     Id = 2,
+                     Region = "Baranya",
+                     PostalCode = 7600,
+                     City = "Pécs",
+                     StreetName = "Kossuth utca",
+                     StreetNumber = "12.",
+                     UnitNumber = "10."
+                 }
+                );
+
+            modelBuilder.Entity<Advertisement>().HasData(
+                new Advertisement
+                {
+                    Id = 1,
+                    NumberOfRooms = 3,
+                    Size = 70,
+                    Furnished = true,
+                    Parking = false,
+                    MonthlyPrice = 250000,
+                    Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
+                    " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
+                    " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
+                    " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+                    "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
+                    AdvertiserId = 1,
+                    CategoryId =1,
+                    AddressId = 1,
+                },
+                 new Advertisement
+                 {
+                     Id = 2,
+                     NumberOfRooms = 1,
+                     Size = 20,
+                     Furnished = false,
+                     Parking = true,
+                     MonthlyPrice = 100000,
+                     Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
+                    " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
+                    " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
+                    " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+                    "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
+                     AdvertiserId = 2,
+                     CategoryId = 2,
+                     AddressId = 2,
+                 });
 
         }
 

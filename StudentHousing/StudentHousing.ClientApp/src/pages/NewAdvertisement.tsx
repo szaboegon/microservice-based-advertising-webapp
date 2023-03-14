@@ -26,7 +26,7 @@ import { formHeadingStyles } from "../styles/formHeadingStyles";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementFormData = {
-    category: "",
+    categoryName: "",
     region: "",
     postalCode: "",
     city: "",
@@ -44,13 +44,14 @@ export const NewAdvertisement = () => {
 
   const [step, setStep] = useState(0);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [image, setImage] = useState<File>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      {
+      /*{
         var newAdvertisementDTO = {
           category: formValues.category,
           region: formValues.region,
@@ -68,23 +69,42 @@ export const NewAdvertisement = () => {
           monthlyPrice: parseFloat(formValues.monthlyPrice),
           image: image,
         };
+      }*/
+      const data = new FormData();
+      data.append("categoryName", formValues.categoryName);
+      data.append("region", formValues.region);
+      data.append("postalCode", formValues.postalCode);
+      data.append("city", formValues.city);
+      data.append("district", formValues.district);
+      data.append("streetName", formValues.streetName);
+      data.append("streetNumber", formValues.streetNumber);
+      data.append("unitNumber", formValues.unitNumber);
+      data.append("numberOfRooms", formValues.numberOfRooms);
+      data.append("size", formValues.size);
+      data.append("furnished", formValues.furnished);
+      data.append("parking", formValues.parking);
+      data.append("description", formValues.description);
+      data.append("monthlyPrice", formValues.monthlyPrice);
+      if (image) {
+        data.append("image", image);
       }
       let response = await fetch("/api/advertisement", {
         method: "POST",
         headers: {
           Accept: "text json",
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify(newAdvertisementDTO),
+        body: data,
       });
       if (response.ok) {
-        let json = await response.json();
         setSuccess(true);
+        setTimeout(() => setSuccess(false), 5000);
         setFormValues(initialFormValues);
         setStep(0);
-        setTimeout(() => setSuccess(false), 5000); //TODO: cant test it might not work
+        let json = await response.json();
+        //TODO: cant test it might not work
       } else {
-        alert("Some error occured");
+        setError(true);
+        setTimeout(() => setError(false), 5000);
       }
     } catch (error) {
       console.log(error);
@@ -96,6 +116,15 @@ export const NewAdvertisement = () => {
       <Alert status="success">
         <AlertIcon />
         <AlertTitle>Creating your Advertisement was successful!</AlertTitle>
+      </Alert>
+    );
+  };
+
+  const renderErrorAlert = () => {
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>There was an error processing your request.</AlertTitle>
       </Alert>
     );
   };
@@ -217,6 +246,7 @@ export const NewAdvertisement = () => {
               </TabPanels>
             </Tabs>
             {success && renderSuccessAlert()}
+            {error && renderErrorAlert()}
           </Flex>
         </Flex>
       </Box>

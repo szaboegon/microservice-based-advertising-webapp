@@ -47,13 +47,13 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
           alignItems="center"
         >
           <FormControl width="80%" isRequired>
-            <FormLabel sx={formLabelStyles} htmlFor="category">
+            <FormLabel sx={formLabelStyles} htmlFor="categoryName">
               Please choose:
             </FormLabel>
             <RadioGroup
-              name="category"
-              id="category"
-              value={formValues.category}
+              name="categoryName"
+              id="categoryName"
+              value={formValues.categoryName}
               alignSelf="center"
               size="lg"
             >

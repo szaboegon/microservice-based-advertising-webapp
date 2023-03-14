@@ -13,15 +13,50 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
   handleSubmit,
 }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let file;
-    if (e.target.files) {
-      file = e.target.files[0];
+    if (!e.target.files) {
+      return;
     }
+    const file = e.target.files[0];
+
     if (file) {
       setImage(file);
       alert(file);
     }
   };
+  /*const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+    const base64File = await readFile(e.target.files[0]);
+
+    if (base64File) {
+      setImage(base64File);
+      alert(base64File);
+    }
+  };
+
+  const readFile = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        if (event.target) {
+          resolve(event.target.result);
+        }
+      };
+
+      reader.onerror = (err) => {
+        reject(err);
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  };
+
+  const getAsByteArray = async (file: File) => {
+    const tmp = await readFile(file);
+    return new Uint8Array(tmp as ArrayBuffer);
+  };*/
 
   return (
     <>

@@ -1,8 +1,6 @@
 import { ChevronDownIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   Flex,
-  Box,
-  Stack,
   Heading,
   Spacer,
   Button,
@@ -11,7 +9,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  background,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { Link } from "react-router-dom";

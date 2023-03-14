@@ -4,13 +4,9 @@ import {
   FormControl,
   FormLabel,
   HStack,
+  Input,
   InputGroup,
   InputRightAddon,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Radio,
   RadioGroup,
   VStack,
@@ -47,12 +43,12 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
   };
 
   React.useEffect(() => {
-    if (formValues.category.toUpperCase() == "ROOM") {
+    if (formValues.categoryName.toUpperCase() == "ROOM") {
       setIsRoom(true);
     } else {
       setIsRoom(false);
     }
-  }, [formValues.category]);
+  }, [formValues.categoryName]);
 
   return (
     <>
@@ -74,40 +70,40 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                 >
                   Number of rooms:
                 </FormLabel>
-                <NumberInput
-                  max={40}
+                <Input
+                  id="numberOfRooms"
+                  name="numberOfRooms"
+                  type="number"
+                  step={0.5}
+                  required
+                  onChange={handleInputChange}
+                  value={formValues.numberOfRooms}
+                  disabled={isRoom}
+                  max={100}
                   min={1}
                   borderColor="brandYellow.800"
                   size="lg"
                   width="100%"
-                >
-                  <NumberInputField //TODO: probably should use normal imput instead
-                    id="numberOfRooms"
-                    name="numberOfRooms"
-                    maxLength={4}
-                    required
-                    onChange={handleInputChange}
-                    value={formValues.numberOfRooms}
-                    disabled={isRoom}
-                  />
-                </NumberInput>
+                ></Input>
               </VStack>
               <VStack width="50%">
                 <FormLabel sx={formLabelStyles} htmlFor="size">
                   Size:
                 </FormLabel>
                 <InputGroup>
-                  <NumberInput min={1} borderColor="brandYellow.800" size="lg">
-                    <NumberInputField
-                      id="size"
-                      name="size"
-                      maxLength={5}
-                      required
-                      value={formValues.size}
-                      onChange={handleInputChange}
-                      width="100%"
-                    />
-                  </NumberInput>
+                  <Input
+                    id="size"
+                    name="size"
+                    type="number"
+                    step={0.01}
+                    required
+                    value={formValues.size}
+                    onChange={handleInputChange}
+                    width="100%"
+                    min={1}
+                    borderColor="brandYellow.800"
+                    size="lg"
+                  />
                   <InputRightAddon
                     children="m²"
                     fontSize="1.2rem"
@@ -123,21 +119,18 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
               Monthly Price:
             </FormLabel>
             <InputGroup>
-              <NumberInput
+              <Input
+                id="monthlyPrice"
+                name="monthlyPrice"
+                type="number"
+                required
+                value={formValues.monthlyPrice}
+                onChange={handleInputChange}
                 min={1}
                 borderColor="brandYellow.800"
                 size="lg"
                 width="100%"
-              >
-                <NumberInputField
-                  id="monthlyPrice"
-                  name="monthlyPrice"
-                  maxLength={10}
-                  required
-                  value={formValues.monthlyPrice}
-                  onChange={handleInputChange}
-                />
-              </NumberInput>
+              />
               <InputRightAddon
                 children="Ft/month"
                 fontSize="1.2rem"

@@ -9,6 +9,6 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces
 {
     public interface ICategoryRepository : IRepositoryBase<Category>
     {
-
+        Task<Category?> FindByNameAsync(string name);
     }
 }

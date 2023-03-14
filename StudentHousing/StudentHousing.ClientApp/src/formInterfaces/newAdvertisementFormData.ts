@@ -1,5 +1,5 @@
 export interface NewAdvertisementFormData{
-    category: string,
+    categoryName: string,
     region: string,
     postalCode: string,
     city: string,

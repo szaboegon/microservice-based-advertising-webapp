@@ -1,4 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AdvertisingService.DataAccess.Repositories
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : class 
     {
         private readonly AdvertisementDbContext _dbcontext;
         public RepositoryBase(AdvertisementDbContext dbcontext)
@@ -17,43 +18,44 @@ namespace AdvertisingService.DataAccess.Repositories
             _dbcontext = dbcontext;
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-            _dbcontext.Set<T>().Add(entity);
-            _dbcontext.SaveChanges();
+           await _dbcontext.Set<T>().AddAsync(entity);;
         }
 
-        public void AddRange(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-            _dbcontext.Set<T>().AddRange(entities);
-            _dbcontext.SaveChanges();
+           await _dbcontext.Set<T>().AddRangeAsync(entities);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
+        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> expression)
         {
-            return _dbcontext.Set<T>().Where(expression);
+            return await _dbcontext.Set<T>().Where(expression).ToListAsync();
         }
 
-        public IEnumerable<T> FindAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _dbcontext.Set<T>().ToList();
+            return await Task.FromResult(_dbcontext.Set<T>().ToList());
         }
 
-        public T FindById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            return _dbcontext.Set<T>().Find(id);
+            return await _dbcontext.Set<T>().FindAsync(id);
         }
 
         public void Remove(T entity)
         {
-            _dbcontext.Set<T>().Remove(entity);
-            _dbcontext.SaveChanges();
+             _dbcontext.Set<T>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
             _dbcontext.Set<T>().RemoveRange(entities);
-            _dbcontext.SaveChanges();
+        }
+
+        public async Task SaveAsync()
+        {
+            await _dbcontext.SaveChangesAsync();
         }
     }
 }

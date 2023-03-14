@@ -19,6 +19,7 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
 builder.Services.AddDbContext<AdvertisementDbContext>(opt => opt.UseSqlServer(connectionString));
 
+
 //Repositories
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
@@ -29,6 +30,13 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
 
 var app = builder.Build();
+
+//Apply database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AdvertisementDbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 

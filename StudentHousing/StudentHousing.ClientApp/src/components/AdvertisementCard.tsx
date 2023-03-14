@@ -12,10 +12,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { AdvertisementCardData } from "../models/advertisementCardData.model";
 
-interface IAdCardProps {}
+interface IAdvertisementCardProps {
+  advertisement: AdvertisementCardData;
+}
 
-const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
+const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
+  advertisement,
+}) => {
   return (
     <>
       <LinkBox>
@@ -37,7 +42,8 @@ const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
               borderRightRadius="25px"
             >
               <Text fontSize="1.2rem" fontWeight="600" textColor="white">
-                Apartment
+                {advertisement.categoryName.charAt(0).toUpperCase() +
+                  advertisement.categoryName.slice(1)}
               </Text>
             </Flex>
             <Image
@@ -52,7 +58,7 @@ const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
                 fontSize="1.5rem"
                 textColor="brandGreen.500"
               >
-                300000
+                {advertisement.monthlyPrice}
               </Heading>
               <Heading fontSize="1.0rem" paddingTop="5px">
                 Ft/month
@@ -61,7 +67,7 @@ const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
             <LinkOverlay href="/"></LinkOverlay>
             <VStack alignItems="space-between">
               <Text fontSize="1.2rem" fontWeight="600">
-                Üllői út 86.
+                {advertisement.streetName + " " + advertisement.streetNumber}
               </Text>
               <Text
                 fontSize="1.2rem"
@@ -69,14 +75,18 @@ const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
                 className="card-text"
                 textColor="gray.500"
               >
-                1089 Budapest
+                {advertisement.district
+                  ? advertisement.district + " " + advertisement.city
+                  : advertisement.city}
               </Text>
               <HStack justifyContent="space-between">
                 <Text fontSize="1.1rem" fontWeight="600">
-                  3 rooms
+                  {advertisement.numberOfRooms == 1
+                    ? advertisement.numberOfRooms + " " + "room"
+                    : advertisement.numberOfRooms + " " + "rooms"}
                 </Text>
                 <Text fontSize="1.1rem" fontWeight="600">
-                  150 m²
+                  {advertisement.size} m²
                 </Text>
               </HStack>
             </VStack>
@@ -87,4 +97,4 @@ const AdCard: React.FunctionComponent<IAdCardProps> = (props) => {
   );
 };
 
-export default AdCard;
+export default AdvertisementCard;

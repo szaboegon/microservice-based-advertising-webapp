@@ -13,7 +13,7 @@ namespace AdvertisingService.BusinessLogic.Models
         public float Size { get; set; }
         public bool Furnished { get; set; }
         public bool Parking { get; set; }
-        public double MonthlyPrice { get; set; }
+        public int MonthlyPrice { get; set; }
         public DateTime UploadDate { get; set; }
         public string? Description { get; set; }
         public int AdvertiserId { get; set; }

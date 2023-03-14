@@ -16,24 +16,28 @@ namespace AdvertisingService.WebAPI.Controllers
             _advertisementService = advertisementService;
         }
 
-        /*[HttpGet]
-        public ActionResult<IEnumerable<Advertisement>> GetAdvertisements() 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements() 
         {
-            
-        }*/
+            var advertisements=await _advertisementService.GetAllAdvertisements();
+            return Ok(advertisements);
+        }
 
         [HttpPost]
-        public ActionResult PostNewAdvertisement([FromBody]NewAdvertisementDTO data)
+        public async Task<ActionResult<int>> PostNewAdvertisement([FromForm]NewAdvertisementDTO data)
         {
-            
-           bool success=_advertisementService.CreateNewAdvertisement(data);
-
-            if(success)
+            int newAdvertisementId;
+            try
             {
-                return Ok();
+                newAdvertisementId= await _advertisementService.CreateNewAdvertisement(data);
+
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            return BadRequest();
+            return Ok(newAdvertisementId);
+
         }
 
     }
