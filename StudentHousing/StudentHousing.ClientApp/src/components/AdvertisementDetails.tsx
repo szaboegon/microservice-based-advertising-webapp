@@ -13,12 +13,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
 
-interface IAdvertisementDetailsProps {}
+interface IAdvertisementDetailsProps {
+  advertisement: AdvertisementDetailsData;
+}
 
 const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
-> = (props) => {
+> = ({ advertisement }) => {
   return (
     <>
       <Flex width="75%" marginY="20px" flexWrap="wrap">
@@ -31,16 +34,26 @@ const AdvertisementDetails: React.FunctionComponent<
             objectFit="contain"
           ></Image>
           <Heading fontSize="2rem" textColor="gray.600">
-            30000 Ft/month
+            {advertisement.monthlyPrice} Ft/month
           </Heading>
           <Heading fontSize="1.8rem" fontWeight="600" textColor="gray.600">
-            Nagy János utca 11. /2.{" "}
+            {advertisement.streetName +
+              " " +
+              advertisement.streetNumber +
+              " " +
+              advertisement.unitNumber}
           </Heading>
           <Heading fontSize="1.3rem" fontWeight="400" textColor="gray.600">
-            1089 Budapest, XI. kerület
+            {advertisement.city.toUpperCase() == "BUDAPEST"
+              ? advertisement.postalCode + " " + advertisement.city
+              : advertisement.postalCode +
+                " " +
+                advertisement.city +
+                ", " +
+                advertisement.district}
           </Heading>
           <Heading fontSize="1.3rem" fontWeight="400" textColor="gray.600">
-            Pest vármegye
+            {advertisement.region} vármegye
           </Heading>
         </Box>
         <TableContainer margin="40px" minWidth="400px">
@@ -49,19 +62,19 @@ const AdvertisementDetails: React.FunctionComponent<
             <Tbody>
               <Tr>
                 <Th>Number of Rooms:</Th>
-                <Td>2.5</Td>
+                <Td>{advertisement.numberOfRooms}</Td>
               </Tr>
               <Tr>
                 <Th>Size</Th>
-                <Td>70 m</Td>
+                <Td>{advertisement.size} m²</Td>
               </Tr>
               <Tr>
                 <Th>Is it furnished?</Th>
-                <Td>Yes</Td>
+                <Td>{advertisement.furnished ? "Yes" : "No"}</Td>
               </Tr>
               <Tr>
                 <Th>Is there parking available?</Th>
-                <Td>No</Td>
+                <Td>{advertisement.parking ? "Yes" : "No"}</Td>
               </Tr>
             </Tbody>
           </Table>
@@ -70,18 +83,7 @@ const AdvertisementDetails: React.FunctionComponent<
           <Heading fontSize="1.8rem" textColor="gray.600" marginTop="30px">
             Description
           </Heading>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-            Nulla consequat massa quis enim. Donec pede justo, fringilla vel,
-            aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
-            imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede
-            mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum
-            semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
-            porttitor eu,
-          </Text>
+          <Text>{advertisement.description}</Text>
         </Box>
       </Flex>
     </>

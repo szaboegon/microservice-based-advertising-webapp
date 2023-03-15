@@ -12,7 +12,7 @@ namespace AdvertisingService.DataAccess.Repositories
             _dbcontext = dbcontext;
         }
 
-        public async Task<Category?> FindByNameAsync(string name)
+        public async Task<Category?> GetByNameAsync(string name)
         {
             return await _dbcontext.Categories.Where(c=>c.Name.ToUpper() == name.ToUpper()).FirstOrDefaultAsync();
         }

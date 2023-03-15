@@ -20,14 +20,14 @@ namespace AdvertisingService.BusinessLogic.Services
         }
 
 
-        public async Task<int> CreateNewAdvertisement(NewAdvertisementDTO data) //TODO make it async
+        public async Task<int> CreateNewAdvertisement(AdvertisementDetailsDTO data) //TODO make it async
         {
             
                 if (data == null) throw new Exception("Data is null!");
                 if (data.CategoryName == null) throw new Exception("Category name is null!");
                 if (data.CategoryName.ToUpper() != "APARTMENT" && data.CategoryName.ToUpper() != "ROOM" && data.CategoryName.ToUpper() != "HOUSE") throw new Exception("Invalid category!");
 
-                var newCategory = await _categoryRepository.FindByNameAsync(data.CategoryName);
+                var newCategory = await _categoryRepository.GetByNameAsync(data.CategoryName);
 
                 if (newCategory == null)
                 {
@@ -91,6 +91,14 @@ namespace AdvertisingService.BusinessLogic.Services
         public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisements()
         {
             return await _advertisementRepository.GetAllWithCardDataAsync();
+        }
+
+        public async Task<AdvertisementDetailsDTO> GetAdvertisementDetails(int id)
+        {
+            var advertisement= await _advertisementRepository.GetByIdWithDetailsAsync(id);
+            if (advertisement == null) throw new Exception("Advertisement with this id does not exist");
+
+            return advertisement;
         }
 
         /*public void Filter()

@@ -22,6 +22,7 @@ namespace AdvertisingService.DataAccess.Repositories
         {
             var list = await _dbcontext.Advertisements.Select( a => new AdvertisementCardDTO
             {
+                Id= a.Id,
                 CategoryName = a.Category.Name,
                 PostalCode = a.Address.PostalCode,
                 City = a.Address.City,
@@ -34,6 +35,31 @@ namespace AdvertisingService.DataAccess.Repositories
             }).ToListAsync();
                 
             return  list;
+        }
+
+        public async Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id)
+        {
+            var advertisement = await _dbcontext.Advertisements.Where(a=>a.Id==id).Select(a => new AdvertisementDetailsDTO
+            {
+                Id = a.Id,
+                CategoryName=a.Category.Name,
+                Region=a.Address.Region,
+                PostalCode=a.Address.PostalCode,
+                City=a.Address.City,
+                District=a.Address.District,
+                StreetName=a.Address.StreetName,
+                StreetNumber=a.Address.StreetNumber,
+                UnitNumber=a.Address.UnitNumber,
+                NumberOfRooms=a.NumberOfRooms,
+                Size = a.Size,
+                Furnished=a.Furnished,
+                Parking=a.Parking,
+                Description=a.Description,
+                MonthlyPrice=a.MonthlyPrice,
+
+            }).SingleOrDefaultAsync();
+
+            return advertisement;
         }
     }
 }

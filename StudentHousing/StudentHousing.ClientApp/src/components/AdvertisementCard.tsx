@@ -12,6 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { AdvertisementCardData } from "../models/advertisementCardData.model";
 
 interface IAdvertisementCardProps {
@@ -21,8 +22,14 @@ interface IAdvertisementCardProps {
 const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
   advertisement,
 }) => {
+  const navigate = useNavigate();
+  const openDetails = () => {
+    navigate("/details/" + advertisement.id);
+  };
+
   return (
     <>
+      <Heading>{advertisement.id}</Heading>
       <LinkBox>
         <Card
           maxWidth="md"
@@ -64,7 +71,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
                 Ft/month
               </Heading>
             </HStack>
-            <LinkOverlay href="/"></LinkOverlay>
+            <LinkOverlay onClick={openDetails}></LinkOverlay>
             <VStack alignItems="space-between">
               <Text fontSize="1.2rem" fontWeight="600">
                 {advertisement.streetName + " " + advertisement.streetNumber}

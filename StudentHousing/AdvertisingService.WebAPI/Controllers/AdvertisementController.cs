@@ -1,8 +1,6 @@
-﻿using AdvertisingService.BusinessLogic.Models;
-using AdvertisingService.BusinessLogic.RepositoryInterfaces;
-using Microsoft.AspNetCore.Mvc;
-using AdvertisingService.BusinessLogic.Services;
+﻿using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdvertisingService.WebAPI.Controllers
 {
@@ -11,27 +9,45 @@ namespace AdvertisingService.WebAPI.Controllers
     public class AdvertisementController : ControllerBase
     {
         public AdvertisementService _advertisementService;
-        public AdvertisementController(AdvertisementService advertisementService) 
+        public AdvertisementController(AdvertisementService advertisementService)
         {
             _advertisementService = advertisementService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Advertisement>>> GetAdvertisements() 
+        public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCards()
         {
-            var advertisements=await _advertisementService.GetAllAdvertisements();
+            var advertisements = await _advertisementService.GetAllAdvertisements();
             return Ok(advertisements);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AdvertisementDetailsDTO>> GetAdvertisementDetails(int id)
+        {
+            return Ok();
+            AdvertisementDetailsDTO advertisement;
+
+            try
+            {
+                advertisement = await _advertisementService.GetAdvertisementDetails(id);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(advertisement);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<int>> PostNewAdvertisement([FromForm]NewAdvertisementDTO data)
+        public async Task<ActionResult<int>> PostNewAdvertisement([FromForm] AdvertisementDetailsDTO data)
         {
             int newAdvertisementId;
             try
             {
-                newAdvertisementId= await _advertisementService.CreateNewAdvertisement(data);
+                newAdvertisementId = await _advertisementService.CreateNewAdvertisement(data);
 
-            }catch (Exception ex)
+            } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

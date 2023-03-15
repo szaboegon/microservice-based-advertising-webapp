@@ -4,8 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace AdvertisingService.BusinessLogic.DataTransferObjects
 {
-    public class NewAdvertisementDTO
+    public class AdvertisementDetailsDTO
     {
+        public int Id { get; set; }
         public string? CategoryName { get; set; }
         public string? Region { get; set; }
         public int PostalCode { get; set; }

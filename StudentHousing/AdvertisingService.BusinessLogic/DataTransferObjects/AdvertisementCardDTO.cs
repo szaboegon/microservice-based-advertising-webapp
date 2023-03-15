@@ -8,6 +8,7 @@ namespace AdvertisingService.BusinessLogic.DataTransferObjects
 {
     public class AdvertisementCardDTO
     {
+        public int Id { get; set; }
         public string? CategoryName { get; set; }
         public int PostalCode { get; set; }
         public string? City { get; set; }

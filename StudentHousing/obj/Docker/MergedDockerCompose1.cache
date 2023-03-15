@@ -1,7 +1,7 @@
 name: dockercompose4658398787065314807
 services:
   advertisingdb:
-    container_name: advertisingdb
+    container_name: advertising_db
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password@12345
@@ -21,7 +21,7 @@ services:
         com.microsoft.created-by: visual-studio
         com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
       target: base
-    container_name: advertisingservice
+    container_name: advertising_service
     entrypoint:
     - tail
     - -f

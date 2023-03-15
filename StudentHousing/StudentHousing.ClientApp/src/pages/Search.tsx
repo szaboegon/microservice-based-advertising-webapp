@@ -6,6 +6,7 @@ import {
   Flex,
   Box,
   VStack,
+  Heading,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -61,9 +62,17 @@ export const Search = () => {
           <SearchBar minWidth="100%"></SearchBar>
         </VStack>
       </Flex>
-      <Flex margin="50px" flexWrap="wrap" justifyContent="center">
+      <Flex
+        marginY="50px"
+        marginX="300px"
+        flexWrap="wrap"
+        justifyContent="start"
+      >
         {advertisements.map((advertisement) => (
-          <AdvertisementCard advertisement={advertisement}></AdvertisementCard>
+          <AdvertisementCard
+            key={advertisement.id}
+            advertisement={advertisement}
+          ></AdvertisementCard>
         ))}
       </Flex>
     </>

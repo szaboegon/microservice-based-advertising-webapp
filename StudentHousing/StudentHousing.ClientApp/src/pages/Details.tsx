@@ -8,14 +8,45 @@ import {
   Image,
   Box,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import AdvertisementDetails from "../components/AdvertisementDetails";
 import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
 
 export const Details = () => {
-  const [advertisement, setAdvertisement] =
-    useState<AdvertisementDetailsData>();
+  const [advertisement, setAdvertisement] = useState<AdvertisementDetailsData>({
+    id: 0,
+    categoryName: "",
+    region: "",
+    postalCode: 0,
+    city: "",
+    district: "",
+    streetName: "",
+    streetNumber: "",
+    unitNumber: "",
+    numberOfRooms: 0,
+    size: 0,
+    furnished: false,
+    parking: false,
+    description: "",
+    monthlyPrice: 0,
+  });
+
+  let params = useParams();
+
+  const getAdvertisement = async () => {
+    let response = await fetch("/api/advertisement/" + params.id);
+    if (response.ok) {
+      let json = await response.json();
+      setAdvertisement(json);
+    } else {
+      alert("HTTP-Error:" + response.status);
+    }
+  };
+
+  useEffect(() => {
+    getAdvertisement();
+  }, []);
 
   return (
     <>
@@ -51,7 +82,9 @@ export const Details = () => {
             </BreadcrumbItem>
           </Breadcrumb>
         </VStack>
-        <AdvertisementDetails></AdvertisementDetails>
+        <AdvertisementDetails
+          advertisement={advertisement}
+        ></AdvertisementDetails>
       </Flex>
     </>
   );

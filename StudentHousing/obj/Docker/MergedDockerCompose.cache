@@ -1,7 +1,7 @@
 name: dockercompose4658398787065314807
 services:
   advertisingdb:
-    container_name: advertisingdb
+    container_name: advertising_db
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: password@12345
@@ -17,7 +17,7 @@ services:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
-    container_name: advertisingservice
+    container_name: advertising_service
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80

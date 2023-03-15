@@ -20,18 +20,18 @@ var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=s
 builder.Services.AddDbContext<AdvertisementDbContext>(opt => opt.UseSqlServer(connectionString));
 
 
-//Repositories
+// Repositories
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
-//Services
+// Services
 builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
 
 var app = builder.Build();
 
-//Apply database migrations
+// Apply database migrations
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AdvertisementDbContext>();
@@ -40,7 +40,7 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
