@@ -81,7 +81,7 @@ namespace AdvertisingService.BusinessLogic.Services
 
                 await _addressRepository.AddAsync(newAddress);
                 await _advertisementRepository.AddAsync(newAdvertisement);
-                //_imageRepository.Add(newImage);
+                //await _imageRepository.AddAsync(newImage);
 
                 await _advertisementRepository.SaveAsync();
 

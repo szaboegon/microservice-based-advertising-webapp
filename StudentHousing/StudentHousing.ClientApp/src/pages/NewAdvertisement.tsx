@@ -101,12 +101,13 @@ export const NewAdvertisement = () => {
         setFormValues(initialFormValues);
         setStep(0);
         let json = await response.json();
-        //TODO: cant test it might not work
       } else {
         setError(true);
         setTimeout(() => setError(false), 5000);
       }
     } catch (error) {
+      //setError(true);
+      //setTimeout(() => setError(false), 5000);
       console.log(error);
     }
   };

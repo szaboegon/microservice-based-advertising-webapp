@@ -1,5 +1,6 @@
 ﻿
 using AdvertisingService.BusinessLogic.Converters;
+using System.Reflection.Metadata;
 using System.Text.Json.Serialization;
 
 namespace AdvertisingService.BusinessLogic.DataTransferObjects
