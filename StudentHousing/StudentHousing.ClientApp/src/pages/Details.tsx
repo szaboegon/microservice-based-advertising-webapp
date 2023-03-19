@@ -30,6 +30,7 @@ export const Details = () => {
     parking: false,
     description: "",
     monthlyPrice: 0,
+    image: new Uint8Array(),
   });
 
   let params = useParams();
@@ -76,7 +77,7 @@ export const Details = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink as={Link} to="/details">
+              <BreadcrumbLink as={Link} to={"/details/" + params.id}>
                 Details
               </BreadcrumbLink>
             </BreadcrumbItem>

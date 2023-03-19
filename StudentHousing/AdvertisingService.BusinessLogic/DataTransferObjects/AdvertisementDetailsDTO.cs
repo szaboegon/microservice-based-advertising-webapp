@@ -1,6 +1,4 @@
-﻿
-using AdvertisingService.BusinessLogic.Converters;
-using System.Reflection.Metadata;
+﻿using System.Reflection.Metadata;
 using System.Text.Json.Serialization;
 
 namespace AdvertisingService.BusinessLogic.DataTransferObjects
@@ -22,7 +20,6 @@ namespace AdvertisingService.BusinessLogic.DataTransferObjects
         public bool Parking { get; set; }
         public string? Description { get; set; }
         public int  MonthlyPrice { get; set; }
-        //[JsonConverter(typeof(ByteArrayConverter))]
         public byte[]? Image { get; set; }
     }
 }

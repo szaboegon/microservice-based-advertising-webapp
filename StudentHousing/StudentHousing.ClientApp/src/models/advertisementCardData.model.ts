@@ -9,4 +9,5 @@ export interface AdvertisementCardData{
     monthlyPrice: number,
     numberOfRooms: number,
     size: number
+    image: Uint8Array
 }

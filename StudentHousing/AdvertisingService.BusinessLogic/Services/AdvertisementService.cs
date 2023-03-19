@@ -20,7 +20,7 @@ namespace AdvertisingService.BusinessLogic.Services
         }
 
 
-        public async Task<int> CreateNewAdvertisement(AdvertisementDetailsDTO data) //TODO make it async
+        public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data) //TODO make it async
         {
             
                 if (data == null) throw new Exception("Data is null!");
@@ -73,27 +73,21 @@ namespace AdvertisingService.BusinessLogic.Services
                     Address = newAddress,
                 };
 
-                var newImage = new Image()
-                {
-                    Data = data.Image,
-                    Advertisement = newAdvertisement
-                };
 
                 await _addressRepository.AddAsync(newAddress);
                 await _advertisementRepository.AddAsync(newAdvertisement);
-                //await _imageRepository.AddAsync(newImage);
 
                 await _advertisementRepository.SaveAsync();
 
                 return newAdvertisement.Id;
         }
 
-        public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisements()
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync()
         {
             return await _advertisementRepository.GetAllWithCardDataAsync();
         }
 
-        public async Task<AdvertisementDetailsDTO> GetAdvertisementDetails(int id)
+        public async Task<AdvertisementDetailsDTO> GetAdvertisementDetailsAsync(int id)
         {
             var advertisement= await _advertisementRepository.GetByIdWithDetailsAsync(id);
             if (advertisement == null) throw new Exception("Advertisement with this id does not exist");

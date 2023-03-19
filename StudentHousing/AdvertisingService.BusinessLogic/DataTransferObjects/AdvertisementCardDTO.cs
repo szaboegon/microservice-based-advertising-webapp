@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,6 @@ namespace AdvertisingService.BusinessLogic.DataTransferObjects
         public float NumberOfRooms { get; set; }
         public float Size { get; set; }
         public int MonthlyPrice { get; set; }
-        //[JsonConverter(typeof(ByteArrayConverter))]
-        //public byte[]? Image { get; set; }
+        public byte[]? Image { get; set; }
     }
 }

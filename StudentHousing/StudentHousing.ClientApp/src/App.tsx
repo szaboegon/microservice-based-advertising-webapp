@@ -55,7 +55,7 @@ function App() {
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search/*" element={<Search />} />
         <Route path="/details/:id" element={<Details />} />
         <Route path="/newadvertisement" element={<NewAdvertisement />} />
         <Route path="/login" element={<Login />} />

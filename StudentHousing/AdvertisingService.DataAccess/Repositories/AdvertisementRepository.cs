@@ -31,7 +31,8 @@ namespace AdvertisingService.DataAccess.Repositories
                 StreetNumber = a.Address.StreetNumber,
                 NumberOfRooms = a.NumberOfRooms,
                 Size = a.Size,
-                MonthlyPrice = a.MonthlyPrice
+                MonthlyPrice = a.MonthlyPrice,
+                Image = a.Images.First().Data
             }).ToListAsync();
                 
             return  list;
@@ -56,6 +57,7 @@ namespace AdvertisingService.DataAccess.Repositories
                 Parking=a.Parking,
                 Description=a.Description,
                 MonthlyPrice=a.MonthlyPrice,
+                Image=a.Images.First().Data
 
             }).SingleOrDefaultAsync();
 

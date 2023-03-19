@@ -10,6 +10,7 @@ import {
   VStack,
   HStack,
   Text,
+  Box,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
@@ -27,18 +28,24 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
     navigate("/details/" + advertisement.id);
   };
 
+  var base64Image = "data:image/png;base64," + advertisement.image;
+
   return (
     <>
-      <Heading>{advertisement.id}</Heading>
       <LinkBox>
         <Card
-          maxWidth="md"
+          width="410px"
           variant="filled"
           margin="12px"
           borderBottom="4px"
           borderColor="brandYellow.500"
         >
-          <CardHeader padding="0px" position="relative">
+          <CardHeader
+            height="280px"
+            padding="0px"
+            position="relative"
+            overflow="hidden"
+          >
             <Flex
               backgroundColor="brandYellow.700"
               position="absolute"
@@ -54,8 +61,8 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
               </Text>
             </Flex>
             <Image
-              src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
-              objectFit="cover"
+              src={base64Image}
+              //src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
             ></Image>
           </CardHeader>
           <CardBody>

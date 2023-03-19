@@ -51,25 +51,6 @@ export const NewAdvertisement = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      /*{
-        var newAdvertisementDTO = {
-          category: formValues.category,
-          region: formValues.region,
-          postalCode: parseInt(formValues.postalCode),
-          city: formValues.city,
-          district: formValues.district,
-          streetName: formValues.streetName,
-          streetNumber: formValues.streetNumber,
-          unitNumber: formValues.unitNumber,
-          numberOfRooms: parseFloat(formValues.numberOfRooms),
-          size: parseFloat(formValues.size),
-          furnished: JSON.parse(formValues.furnished),
-          parking: JSON.parse(formValues.parking),
-          description: formValues.description,
-          monthlyPrice: parseFloat(formValues.monthlyPrice),
-          image: image,
-        };
-      }*/
       const data = new FormData();
       data.append("categoryName", formValues.categoryName);
       data.append("region", formValues.region);

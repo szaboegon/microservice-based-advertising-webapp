@@ -39,7 +39,8 @@ services:
        - 8002
     labels:
        - traefik.enable=true
-       - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && Path(`/api/advertisement`)
+       - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
+       
 
 
   advertisingdb:

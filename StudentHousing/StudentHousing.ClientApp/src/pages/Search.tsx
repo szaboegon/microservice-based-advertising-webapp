@@ -9,18 +9,19 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import AdvertisementCard from "../components/AdvertisementCard";
 import SearchBar from "../components/SearchBar";
 import { AdvertisementCardData } from "../models/advertisementCardData.model";
+import { SearchParams } from "../models/searchParams.model";
 
 export const Search = () => {
+  const [searchParams, setSearchParams] = useSearchParams({});
   const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
     []
   );
-
   const getAdvertisements = async () => {
-    let response = await fetch("/api/advertisement");
+    let response = await fetch("/api/advertisement?" + searchParams);
     if (response.ok) {
       let json = await response.json();
       setAdvertisements(json);
@@ -28,9 +29,10 @@ export const Search = () => {
       alert("HTTP-Error: " + response.status);
     }
   };
+
   useEffect(() => {
     getAdvertisements();
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
@@ -66,7 +68,7 @@ export const Search = () => {
         marginY="50px"
         marginX="300px"
         flexWrap="wrap"
-        justifyContent="start"
+        justifyContent="center"
       >
         {advertisements.map((advertisement) => (
           <AdvertisementCard

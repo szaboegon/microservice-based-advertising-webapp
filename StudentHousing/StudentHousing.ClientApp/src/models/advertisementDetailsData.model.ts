@@ -14,4 +14,5 @@ export interface AdvertisementDetailsData{
     parking: boolean,
     description: string,
     monthlyPrice: number,
+    image: Uint8Array
 }

@@ -28,6 +28,8 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 // Services
 builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
+builder.Services.AddScoped<ImageService, ImageService>();
+
 
 var app = builder.Build();
 

@@ -228,6 +228,13 @@ namespace AdvertisingService.DataAccess
                      AddressId = 2,
                  });
 
+            /*modelBuilder.Entity<Image>().HasData(
+                new Image
+                {
+                    Id = 1,
+                    AdvertisementId = 1
+                }
+            );*/
         }
 
     }

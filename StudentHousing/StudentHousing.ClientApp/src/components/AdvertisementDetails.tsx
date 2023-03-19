@@ -22,17 +22,14 @@ interface IAdvertisementDetailsProps {
 const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
 > = ({ advertisement }) => {
+  var base64Image = "data:image/png;base64," + advertisement.image;
   return (
     <>
       <Flex width="75%" marginY="20px" flexWrap="wrap">
-        <Box width="50%" minWidth="600px">
-          <Image
-            border="4px"
-            width="100%"
-            height="auto"
-            src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
-            objectFit="contain"
-          ></Image>
+        <Box width="50%" minWidth="600px" overflow="hidden">
+          <Box border="4px" overflow="hidden" maxHeight="500px">
+            <Image width="100%" height="auto" src={base64Image}></Image>
+          </Box>
           <Heading fontSize="2rem" textColor="gray.600">
             {advertisement.monthlyPrice} Ft/month
           </Heading>
