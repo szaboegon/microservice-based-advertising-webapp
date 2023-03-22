@@ -41,8 +41,6 @@ services:
        - traefik.enable=true
        - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
        
-
-
   advertisingdb:
     container_name: advertising_db
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -53,4 +51,20 @@ services:
        - advertising
     ports:
        - 8001:1433    # Only needed for debugging, remove later
+
+  clientapp:
+    container_name: client_app
+    build: 
+        context: ./StudentHousing.ClientApp
+        dockerfile: Dockerfile
+    ports: 
+       - 5173:5173
+    #volumes:
+    #   - ./StudentHousing.ClientApp:/app
+    #   - ./app/node_modules 
+    networks:
+       - advertising
+ 
+    stdin_open: true
+    tty: true
 
