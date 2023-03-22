@@ -1,7 +1,10 @@
+using AdvertisingService.BusinessLogic.Models;
+using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.DataAccess;
 using AdvertisingService.DataAccess.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +31,15 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 // Services
 builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
+builder.Services.AddScoped<AddressService, AddressService>();
+builder.Services.AddScoped<CategoryService, CategoryService>();
 builder.Services.AddScoped<ImageService, ImageService>();
 
+// Validators
+builder.Services.AddScoped<IValidator<Address>, AddressValidator>();
+builder.Services.AddScoped<IValidator<Advertisement>, AdvertisementValidator>();
+builder.Services.AddScoped<IValidator<Category>, CategoryValidator>();
+builder.Services.AddScoped<IValidator<Image>, ImageValidator>();
 
 var app = builder.Build();
 

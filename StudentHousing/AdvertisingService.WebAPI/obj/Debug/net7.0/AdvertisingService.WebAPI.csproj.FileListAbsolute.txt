@@ -72,3 +72,4 @@ D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousin
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\System.CodeDom.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI\bin\Debug\net7.0\FluentValidation.dll

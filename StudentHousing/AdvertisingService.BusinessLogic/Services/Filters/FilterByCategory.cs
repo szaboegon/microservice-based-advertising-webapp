@@ -16,7 +16,7 @@ namespace AdvertisingService.BusinessLogic.Services.Filters
         }
         public IEnumerable<AdvertisementCardDTO> Execute(IEnumerable<AdvertisementCardDTO> input)
         {
-            return _categoryName == null ? input : input.Where(a => a.CategoryName == _categoryName);
+            return _categoryName == null ? input : input.Where(a => a.CategoryName?.ToLower().Trim() == _categoryName.ToLower().Trim());
         }
     }
 }

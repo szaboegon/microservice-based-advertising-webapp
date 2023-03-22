@@ -1,12 +1,9 @@
-﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using AdvertisingService.BusinessLogic.Models;
+﻿using AdvertisingService.BusinessLogic.Models;
+using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AdvertisingService.BusinessLogic.Services
 {
@@ -14,10 +11,12 @@ namespace AdvertisingService.BusinessLogic.Services
     {
         private readonly IAdvertisementRepository _advertisementRepository;
         private readonly IImageRepository _imageRepository;
-        public ImageService(IAdvertisementRepository advertisementRepository, IAddressRepository addressRepository, ICategoryRepository categoryRepository, IImageRepository imageRepository)
+        private  readonly IValidator<Image> _imageValidator;
+        public ImageService(IAdvertisementRepository advertisementRepository, IImageRepository imageRepository, IValidator<Image> imageValidator)
         {
             _advertisementRepository = advertisementRepository;
             _imageRepository = imageRepository;
+            _imageValidator = imageValidator;
         }
 
         public async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
@@ -35,12 +34,24 @@ namespace AdvertisingService.BusinessLogic.Services
         public async Task<int> CreateNewImageAsync(IFormFile file, int advertisementId)
         {
             var advertisement= await _advertisementRepository.GetByIdAsync(advertisementId);
+            if (advertisement == null)
+                throw new ArgumentNullException(nameof(advertisement));
+
             var fileData = await ConvertFileDataToBytesAsync(file);
             var newImage = new Image
             {
                 Data = fileData,
                 Advertisement=advertisement
             };
+
+            var validationResult = await _imageValidator.ValidateAsync(newImage);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
+                {
+                    throw new ValidationException(error.ErrorMessage);
+                }
+            }
 
             await _imageRepository.AddAsync(newImage);
             await _imageRepository.SaveAsync();

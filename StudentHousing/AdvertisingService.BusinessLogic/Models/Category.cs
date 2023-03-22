@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvertisingService.BusinessLogic.Models
+﻿namespace AdvertisingService.BusinessLogic.Models
 {
     public class Category
     {
         public int Id { get; set; }
         public string? Name { get; set; }
 
-        public ICollection<Advertisement>? Advertisements { get; set; }
+        private ICollection<Advertisement>? _advertisements;
+        public ICollection<Advertisement> Advertisements
+        {
+            set => _advertisements = value;
+            get => _advertisements ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ICollection<Advertisement>));
+        }
     }
 }

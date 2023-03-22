@@ -1,89 +1,59 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Models;
+using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services.Filters;
 using AdvertisingService.BusinessLogic.Services.PipeLine;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Transactions;
+using FluentValidation;
 
 namespace AdvertisingService.BusinessLogic.Services
 {
     public class AdvertisementService
     {
         private readonly IAdvertisementRepository _advertisementRepository;
-        private readonly IAddressRepository _addressRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IImageRepository _imageRepository;
-        public AdvertisementService(IAdvertisementRepository advertisementRepository, IAddressRepository addressRepository, ICategoryRepository categoryRepository, IImageRepository imageRepository)
+        private readonly AddressService _addressService;
+        private readonly CategoryService _categoryService;
+
+        private readonly IValidator<Advertisement> _advertisementValidator;
+        public AdvertisementService(IAdvertisementRepository advertisementRepository,
+            AddressService addressService, CategoryService categoryService, IValidator<Advertisement> advertisementValidator)
         {
             _advertisementRepository = advertisementRepository;
-            _addressRepository = addressRepository;
-            _categoryRepository = categoryRepository;
-            _imageRepository = imageRepository;
+            _addressService = addressService;
+            _categoryService = categoryService;
+            _advertisementValidator = advertisementValidator;
         }
 
-
-        public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data) //TODO make it async
+        public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data)
         {
-            
-                if (data == null) throw new Exception("Data is null!");
-                if (data.CategoryName == null) throw new Exception("Category name is null!");
-                if (data.CategoryName.ToUpper() != "APARTMENT" && data.CategoryName.ToUpper() != "ROOM" && data.CategoryName.ToUpper() != "HOUSE") throw new Exception("Invalid category!");
+            var newCategory = await _categoryService.CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
+            var newAddress = await _addressService.CreateNewAddressAsync(data);
 
-                var newCategory = await _categoryRepository.GetByNameAsync(data.CategoryName);
+            var newAdvertisement = new Advertisement()
+            {
+                NumberOfRooms = data.NumberOfRooms,
+                Size = data.Size,
+                Furnished = data.Furnished,
+                Parking = data.Parking,
+                MonthlyPrice = data.MonthlyPrice,
+                Description = data.Description,
+                AdvertiserId = 10000,
+                Category = newCategory,
+                Address = newAddress,
+            };
 
-                if (newCategory == null)
+            var validationResult = await _advertisementValidator.ValidateAsync(newAdvertisement);
+            if (!validationResult.IsValid)
+            {
+                foreach (var error in validationResult.Errors)
                 {
-                    newCategory = new Category()
-                    {
-                        Name = data.CategoryName,
-                    };
-                    await _categoryRepository.AddAsync(newCategory);
+                    throw new ValidationException(error.ErrorMessage);
                 }
+            }
 
-                if (data.Region == null || data.PostalCode <= 0 || data.City == null
-                    || data.StreetName == null || data.StreetNumber == null || data.UnitNumber == null) throw new Exception("A part of the address is null!");
-
-                if (data.PostalCode < 1000 || data.PostalCode > 9999) throw new Exception("Invalid postal code!");
-
-                if (data.City.ToUpper() == "BUDAPEST" && data.District == null) throw new Exception("District required!");
-
-                if (data.City.ToUpper() != "BUDAPEST") data.District = null;
-
-                var newAddress = new Address()
-                {
-                    Region = data.Region,
-                    PostalCode = data.PostalCode,
-                    City = data.City,
-                    District = data.District,
-                    StreetName = data.StreetName,
-                    StreetNumber = data.StreetNumber,
-                    UnitNumber = data.UnitNumber,
-                };
-
-                //if( data.NumberOfRooms<=0 || data.Size<=0 || data.monthlyPrice<=0 ||)
-
-                var newAdvertisement = new Advertisement()
-                {
-                    NumberOfRooms = data.NumberOfRooms,
-                    Size = data.Size,
-                    Furnished = data.Furnished,
-                    Parking = data.Parking,
-                    MonthlyPrice = data.MonthlyPrice,
-                    Description = data.Description,
-                    AdvertiserId = 10000,
-                    Category = newCategory,
-                    Address = newAddress,
-                };
-
-
-                await _addressRepository.AddAsync(newAddress);
-                await _advertisementRepository.AddAsync(newAdvertisement);
-
-                await _advertisementRepository.SaveAsync();
-
-                return newAdvertisement.Id;
+            await _advertisementRepository.AddAsync(newAdvertisement);
+            await _advertisementRepository.SaveAsync();
+            return newAdvertisement.Id;
         }
 
         public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDTO queryParams)
@@ -101,7 +71,6 @@ namespace AdvertisingService.BusinessLogic.Services
                 .Register(new FilterByParking(queryParams.Parking));
 
             return pipeLine.PerformOperation(result);
-            
         }
 
         public async Task<AdvertisementDetailsDTO> GetAdvertisementDetailsAsync(int id)
@@ -111,6 +80,5 @@ namespace AdvertisingService.BusinessLogic.Services
 
             return advertisement;
         }
-
     }
 }

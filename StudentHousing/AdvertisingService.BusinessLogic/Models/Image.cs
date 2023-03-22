@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace AdvertisingService.BusinessLogic.Models
+﻿namespace AdvertisingService.BusinessLogic.Models
 {
     public class Image
     {
@@ -13,6 +6,12 @@ namespace AdvertisingService.BusinessLogic.Models
         public byte[]? Data{ get; set; }
         public int AdvertisementId { get; set; }
 
-        public Advertisement? Advertisement { get; set; }
+        private Advertisement? _advertisement;
+
+        public Advertisement Advertisement
+        {
+            set => _advertisement = value;
+            get => _advertisement ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Advertisement));
+        }
     }
 }

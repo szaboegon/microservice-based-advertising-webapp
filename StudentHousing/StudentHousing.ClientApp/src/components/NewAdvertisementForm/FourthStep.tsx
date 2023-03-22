@@ -54,6 +54,7 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
               size="md"
               borderColor="brandYellow.800"
               required
+              maxLength={1000}
               value={formValues.description}
               onChange={handleInputChange}
             ></Textarea>

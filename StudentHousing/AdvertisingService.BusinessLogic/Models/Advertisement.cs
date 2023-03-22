@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdvertisingService.BusinessLogic.Models
+﻿namespace AdvertisingService.BusinessLogic.Models
 {
     public class Advertisement
     {
@@ -21,9 +15,28 @@ namespace AdvertisingService.BusinessLogic.Models
         public int AddressId { get; set; }
 
 
-        public Category? Category { get; set; }
-        public Address? Address { get; set; }
+        private Category? _category;
 
-        public ICollection<Image>? Images { get; set; }
+        public Category Category
+        {
+            set => _category = value;
+            get => _category ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Category));
+        }
+
+        private Address? _address;
+
+        public Address Address
+        {
+            set => _address = value;
+            get => _address ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Address));
+        }
+
+        private ICollection<Image>? _images;
+
+        public ICollection<Image> Images
+        {
+            set => _images = value;
+            get => _images ?? throw new InvalidOperationException("Uninitialized property: " + nameof(ICollection<Image>));
+        }
     }
 }

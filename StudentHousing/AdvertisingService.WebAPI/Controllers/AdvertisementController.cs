@@ -31,33 +31,6 @@ namespace AdvertisingService.WebAPI.Controllers
             return Ok(advertisement);
         }
 
-        /*[HttpPost]
-        public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
-        {
-            int newAdvertisementId;
-            try
-            {
-                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
-
-                var file = Request.Form.Files[0];
-                if (file.Length > 0)
-                {
-                    byte[] fileData;
-                    using (var stream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(stream);
-                        fileData = stream.ToArray();
-                    }
-                    await _imageService.CreateNewImageAsync(fileData, newAdvertisementId);
-                }
-            }catch(Exception ex)
-            {
-               return BadRequest(ex.Message);
-            }
-
-            return Ok(newAdvertisementId);
-        }*/
-
         [HttpPost]
         public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
         {
@@ -65,6 +38,11 @@ namespace AdvertisingService.WebAPI.Controllers
             try
             {
                 newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
+
+                if (Request.Form.Files.Count == 0)
+                {
+                    return BadRequest("List of files was empty. Please upload a file.");
+                }
 
                 var file = Request.Form.Files[0];
                 if (file.Length > 0)
@@ -78,7 +56,6 @@ namespace AdvertisingService.WebAPI.Controllers
             }
 
             return Ok(newAdvertisementId);
-
         }
 
     }

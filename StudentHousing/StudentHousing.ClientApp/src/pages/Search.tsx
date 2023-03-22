@@ -7,6 +7,9 @@ import {
   Box,
   VStack,
   Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -30,6 +33,19 @@ export const Search = () => {
     }
   };
 
+  const renderNoResultsFoundAlert = () => {
+    return (
+      <>
+        <Alert status="warning" maxWidth="600px">
+          <AlertIcon />
+          <AlertTitle>
+            There are no matching advertisements for your search filters.
+          </AlertTitle>
+        </Alert>
+      </>
+    );
+  };
+
   useEffect(() => {
     getAdvertisements();
   }, [searchParams]);
@@ -40,7 +56,7 @@ export const Search = () => {
         alignItems="center"
         justifyContent="center"
         flexWrap="wrap"
-        marginX="100px"
+        marginX="auto"
       >
         <VStack minWidth="75%">
           <Breadcrumb
@@ -66,10 +82,11 @@ export const Search = () => {
       </Flex>
       <Flex
         marginY="50px"
-        marginX="300px"
+        marginX="auto"
         flexWrap="wrap"
         justifyContent="center"
       >
+        {advertisements.length == 0 && renderNoResultsFoundAlert()}
         {advertisements.map((advertisement) => (
           <AdvertisementCard
             key={advertisement.id}

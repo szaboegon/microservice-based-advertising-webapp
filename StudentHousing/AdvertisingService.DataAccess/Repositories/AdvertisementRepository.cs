@@ -23,8 +23,8 @@ namespace AdvertisingService.DataAccess.Repositories
             var list = await _dbcontext.Advertisements.Select( a => new AdvertisementCardDTO
             {
                 Id= a.Id,
-                CategoryName = a.Category!.Name,
-                PostalCode = a.Address!.PostalCode,
+                CategoryName = a.Category.Name,
+                PostalCode = a.Address.PostalCode,
                 City = a.Address.City,
                 District = a.Address.District,
                 StreetName = a.Address.StreetName,
@@ -32,7 +32,7 @@ namespace AdvertisingService.DataAccess.Repositories
                 NumberOfRooms = a.NumberOfRooms,
                 Size = a.Size,
                 MonthlyPrice = a.MonthlyPrice,
-                Image = a.Images!.First().Data,
+                Image = a.Images.First().Data,
                 Parking = a.Parking,
                 Furnished=a.Furnished
             }).ToListAsync();
@@ -45,8 +45,8 @@ namespace AdvertisingService.DataAccess.Repositories
             var advertisement = await _dbcontext.Advertisements.Where(a=>a.Id==id).Select(a => new AdvertisementDetailsDTO
             {
                 Id = a.Id,
-                CategoryName=a.Category!.Name,
-                Region=a.Address!.Region,
+                CategoryName=a.Category.Name,
+                Region=a.Address.Region,
                 PostalCode=a.Address.PostalCode,
                 City=a.Address.City,
                 District=a.Address.District,
@@ -59,7 +59,7 @@ namespace AdvertisingService.DataAccess.Repositories
                 Parking=a.Parking,
                 Description=a.Description,
                 MonthlyPrice=a.MonthlyPrice,
-                Image=a.Images!.First().Data
+                Image=a.Images.First().Data
 
             }).SingleOrDefaultAsync();
 

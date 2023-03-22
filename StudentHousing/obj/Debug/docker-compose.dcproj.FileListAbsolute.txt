@@ -18,3 +18,4 @@ D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousin
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\obj\Debug\docker-compose.dcproj.CopyComplete
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\bin\Debug\FluentValidation.dll

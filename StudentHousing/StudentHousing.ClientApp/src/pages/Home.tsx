@@ -6,10 +6,17 @@ import SearchBar from "../components/SearchBar";
 export const Home = () => {
   return (
     <>
-      <Flex height="600px" overflow="hidden" position="relative">
+      <Flex
+        height="600px"
+        overflow="hidden"
+        position="relative"
+        justifyContent="center"
+      >
         <Image
           src={BannerImg}
           alignSelf="end"
+          height="auto"
+          minWidth="2000px"
           placeholder="Image by benzoix</a> on Freepik"
         ></Image>
         <Flex

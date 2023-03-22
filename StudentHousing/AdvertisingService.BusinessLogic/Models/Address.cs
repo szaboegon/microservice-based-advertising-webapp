@@ -11,6 +11,12 @@
         public string? StreetNumber { get; set; }
         public string? UnitNumber { get; set; }
 
-        public Advertisement? Advertisement { get; set; }
+        private Advertisement? _advertisement;
+        public Advertisement Advertisement  //https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types
+        {
+            set  => _advertisement = value;
+            get => _advertisement ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Advertisement));
+        }
+
     }
 }
