@@ -119,7 +119,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               placeholder="e.g. Budapest"
             ></Input>
           </FormControl>
-          <FormControl maxWidth="110px">
+          <FormControl maxWidth="100px">
             <FormLabel mb="0px" mt="5px" htmlFor="numberOfRooms">
               Rooms
             </FormLabel>
@@ -135,7 +135,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               placeholder="Number"
             />
           </FormControl>
-          <FormControl maxWidth="200px">
+          <FormControl maxWidth="150px">
             <FormLabel mb="0px" mt="5px" htmlFor="minSize">
               Size
             </FormLabel>
@@ -164,7 +164,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               <InputRightAddon children="m²" />
             </InputGroup>
           </FormControl>
-          <FormControl maxWidth="250px">
+          <FormControl maxWidth="220px">
             <FormLabel mb="0px" mt="5px" htmlFor="minMonthlyPrice">
               Price
             </FormLabel>
@@ -191,24 +191,37 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               <InputRightAddon children="Ft" />
             </InputGroup>
           </FormControl>
-          <VStack alignItems="start" justifyContent="center">
-            <Checkbox
+          <FormControl maxWidth="100px">
+            <FormLabel mb="0px" mt="5px" htmlFor="minMonthlyPrice">
+              Furnished
+            </FormLabel>
+            <Select
               name="furnished"
               value={formValues.furnished}
               onChange={handleInputChange}
-              colorScheme="green"
+              variant="flushed"
+              placeholder="Choose"
             >
-              Furnished
-            </Checkbox>
-            <Checkbox
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </Select>
+          </FormControl>
+          <FormControl maxWidth="100px">
+            <FormLabel mb="0px" mt="5px" htmlFor="minMonthlyPrice">
+              Parking
+            </FormLabel>
+            <Select
               name="parking"
               value={formValues.parking}
               onChange={handleInputChange}
-              colorScheme="green"
+              variant="flushed"
+              placeholder="Choose"
             >
-              Parking
-            </Checkbox>
-          </VStack>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </Select>
+          </FormControl>
+
           <Flex backgroundColor="brandGreen.500" borderRightRadius="15px">
             <Button
               type="submit"

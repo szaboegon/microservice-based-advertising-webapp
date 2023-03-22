@@ -1,6 +1,10 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using AdvertisingService.BusinessLogic.Services.Filters;
+using AdvertisingService.BusinessLogic.Services.PipeLine;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Transactions;
 
 namespace AdvertisingService.BusinessLogic.Services
@@ -82,9 +86,22 @@ namespace AdvertisingService.BusinessLogic.Services
                 return newAdvertisement.Id;
         }
 
-        public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync()
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDTO queryParams)
         {
-            return await _advertisementRepository.GetAllWithCardDataAsync();
+            var result=await _advertisementRepository.GetAllWithCardDataAsync();
+
+            var pipeLine = new AdvertisementFilterPipeLine();
+            pipeLine
+                .Register(new FilterByCategory(queryParams.CategoryName))
+                .Register(new FilterByCity(queryParams.City))
+                .Register(new FilterByNumberOfRooms(queryParams.NumberOfRooms))
+                .Register(new FilterBySize(queryParams.MinSize, queryParams.MaxSize))
+                .Register(new FilterByMonthlyPrice(queryParams.MinMonthlyPrice, queryParams.MaxMonthlyPrice))
+                .Register(new FilterByFurnished(queryParams.Furnished))
+                .Register(new FilterByParking(queryParams.Parking));
+
+            return pipeLine.PerformOperation(result);
+            
         }
 
         public async Task<AdvertisementDetailsDTO> GetAdvertisementDetailsAsync(int id)
@@ -95,9 +112,5 @@ namespace AdvertisingService.BusinessLogic.Services
             return advertisement;
         }
 
-        /*public void Filter()
-        {
-
-        }*/
     }
 }

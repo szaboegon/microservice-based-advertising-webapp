@@ -19,6 +19,8 @@ namespace AdvertisingService.BusinessLogic.DataTransferObjects
         public float NumberOfRooms { get; set; }
         public float Size { get; set; }
         public int MonthlyPrice { get; set; }
+        public bool Furnished { get; set; }
+        public bool Parking { get; set; }
         public byte[]? Image { get; set; }
     }
 }

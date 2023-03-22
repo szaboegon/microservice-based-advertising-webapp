@@ -20,9 +20,22 @@ namespace AdvertisingService.BusinessLogic.Services
             _imageRepository = imageRepository;
         }
 
-        public async Task<int> CreateNewImageAsync(byte[] fileData, int advertisementId)
+        public async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
+        {
+            byte[] fileData;
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                fileData = stream.ToArray();
+            }
+
+            return fileData;
+        }
+
+        public async Task<int> CreateNewImageAsync(IFormFile file, int advertisementId)
         {
             var advertisement= await _advertisementRepository.GetByIdAsync(advertisementId);
+            var fileData = await ConvertFileDataToBytesAsync(file);
             var newImage = new Image
             {
                 Data = fileData,

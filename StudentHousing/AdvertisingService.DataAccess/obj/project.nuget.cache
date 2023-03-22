@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "G0s7M+Cz++zjvHmnGrBRA5RhaUNbxu6U7LpU4cTYXK7A1VUEfLwvNAs/TQ8+r0ad2kREtA4uDnsmtJQ347GloA==",
+  "dgSpecHash": "rb/s+SZF514rdWJJ2UzQWijKJp9/e4waqETqU7A6KZE+lzkNaBKpR377JjbTWIMwu733tLIExcx6gRu4GC3FaQ==",
   "success": true,
   "projectFilePath": "D:\\GitHub Repos\\Public repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisingService.DataAccess\\AdvertisingService.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

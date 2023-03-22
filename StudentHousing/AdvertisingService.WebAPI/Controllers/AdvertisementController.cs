@@ -9,8 +9,8 @@ namespace AdvertisingService.WebAPI.Controllers
     [ApiController]
     public class AdvertisementController : ControllerBase
     {
-        public AdvertisementService _advertisementService;
-        public ImageService _imageService;
+        private readonly AdvertisementService _advertisementService;
+        private readonly ImageService _imageService;
         public AdvertisementController(AdvertisementService advertisementService, ImageService imageService)
         {
             _advertisementService = advertisementService;
@@ -18,9 +18,9 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync()
+        public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDTO queryParams)
         {
-            var advertisements = await _advertisementService.GetAllAdvertisementsAsync();
+            var advertisements = await _advertisementService.GetAllAdvertisementsAsync(queryParams);
             return Ok(advertisements);
         }
 
@@ -31,6 +31,33 @@ namespace AdvertisingService.WebAPI.Controllers
             return Ok(advertisement);
         }
 
+        /*[HttpPost]
+        public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
+        {
+            int newAdvertisementId;
+            try
+            {
+                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
+
+                var file = Request.Form.Files[0];
+                if (file.Length > 0)
+                {
+                    byte[] fileData;
+                    using (var stream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(stream);
+                        fileData = stream.ToArray();
+                    }
+                    await _imageService.CreateNewImageAsync(fileData, newAdvertisementId);
+                }
+            }catch(Exception ex)
+            {
+               return BadRequest(ex.Message);
+            }
+
+            return Ok(newAdvertisementId);
+        }*/
+
         [HttpPost]
         public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
         {
@@ -40,19 +67,14 @@ namespace AdvertisingService.WebAPI.Controllers
                 newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
 
                 var file = Request.Form.Files[0];
-                byte[] fileData;
                 if (file.Length > 0)
                 {
-                    using (var stream = new MemoryStream())
-                    {
-                        file.CopyTo(stream);
-                        fileData = stream.ToArray();
-                    }
-                    await _imageService.CreateNewImageAsync(fileData, newAdvertisementId);
+                    await _imageService.CreateNewImageAsync(file, newAdvertisementId);
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-               return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
 
             return Ok(newAdvertisementId);
