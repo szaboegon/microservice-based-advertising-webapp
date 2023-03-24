@@ -29,7 +29,7 @@ services:
     image: adsvertisingservicewebapi
     labels:
       traefik.enable: "true"
-      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && Path(`/api/advertisement`)
+      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && PathPrefix(`/api/advertisement`)
     networks:
       advertising: null
     ports:
@@ -52,6 +52,20 @@ services:
       read_only: true
       bind:
         create_host_path: true
+  clientapp:
+    build:
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      dockerfile: Dockerfile
+    container_name: client_app
+    networks:
+      advertising: null
+    ports:
+    - mode: ingress
+      target: 5173
+      published: "5173"
+      protocol: tcp
+    stdin_open: true
+    tty: true
   reverse-proxy:
     command:
     - --api.insecure=true

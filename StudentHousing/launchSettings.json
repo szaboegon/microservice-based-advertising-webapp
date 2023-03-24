@@ -4,7 +4,20 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "advertisingservice.webapi": "StartDebugging"
+        "advertisingservice.webapi": "StartDebugging",
+        "advertisingdb": "StartWithoutDebugging",
+        "clientapp": "StartWithoutDebugging",
+        "traefik": "StartWithoutDebugging"
+      }
+    },
+    "Backend only": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "advertisingdb": "StartWithoutDebugging",
+        "advertisingservice.webapi": "StartDebugging",
+        "clientapp": "DoNotStart",
+        "traefik": "StartWithoutDebugging"
       }
     }
   }

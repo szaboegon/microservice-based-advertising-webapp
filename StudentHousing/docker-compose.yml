@@ -4,7 +4,7 @@ networks:
   advertising:
 
 services:
-  reverse-proxy:
+  traefik:
     container_name: traefik
     # The official v2 Traefik docker image
     image: traefik:v2.9
@@ -58,13 +58,12 @@ services:
         context: ./StudentHousing.ClientApp
         dockerfile: Dockerfile
     ports: 
-       - 5173:5173
+       - 5173:5173  
     #volumes:
     #   - ./StudentHousing.ClientApp:/app
     #   - ./app/node_modules 
     networks:
        - advertising
- 
     stdin_open: true
     tty: true
 

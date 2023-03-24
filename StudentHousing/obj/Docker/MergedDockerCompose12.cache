@@ -46,7 +46,7 @@ services:
       com.microsoft.visualstudio.debuggee.program: dotnet
       com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && PathPrefix(`/api`)
+      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && PathPrefix(`/api/advertisement`)
     networks:
       advertising: null
     ports:
@@ -97,7 +97,25 @@ services:
       target: /src
       bind:
         create_host_path: true
-  reverse-proxy:
+  clientapp:
+    build:
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      dockerfile: Dockerfile
+    container_name: client_app
+    networks:
+      advertising: null
+    ports:
+    - mode: ingress
+      target: 5173
+      published: "5173"
+      protocol: tcp
+    - mode: ingress
+      target: 80
+      published: "80"
+      protocol: tcp
+    stdin_open: true
+    tty: true
+  traefik:
     command:
     - --api.insecure=true
     - --providers.docker

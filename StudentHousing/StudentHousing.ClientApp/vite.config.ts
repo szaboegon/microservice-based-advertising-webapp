@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server:{
     proxy:{
-      '/api':{
-        target: 'http://localhost:80/',
+      '/api/':{
+        target: 'http://traefik:80/',
         changeOrigin: true,
         secure: false
       }
