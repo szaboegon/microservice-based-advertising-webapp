@@ -1,20 +1,16 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AdvertisingService.BusinessLogic.Interfaces;
 
-namespace AdvertisingService.BusinessLogic.Services.Filters
+namespace AdvertisingService.DataAccess.Filters
 {
-    public class FilterByCity: IFilter<IEnumerable<AdvertisementCardDTO>>
+    public class FilterByCity : IFilter<AdvertisementCardDTO>
     {
         private readonly string? _city;
         public FilterByCity(string? city)
         {
             _city = city;
         }
-        public IEnumerable<AdvertisementCardDTO> Execute(IEnumerable<AdvertisementCardDTO> input)
+        public IQueryable<AdvertisementCardDTO> Execute(IQueryable<AdvertisementCardDTO> input)
         {
             return _city == null ? input : input.Where(a => (a.City ?? "").Trim().ToLower().Contains(_city.Trim().ToLower()));
         }

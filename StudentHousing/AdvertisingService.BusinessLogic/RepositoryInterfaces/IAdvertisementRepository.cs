@@ -8,6 +8,8 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces
     {
         Task<IEnumerable<AdvertisementCardDTO>> GetAllWithCardDataAsync();
 
+        IQueryable<AdvertisementCardDTO> GetAllWithCardDataAsIQueryable();
+
         Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id);
     }
 }

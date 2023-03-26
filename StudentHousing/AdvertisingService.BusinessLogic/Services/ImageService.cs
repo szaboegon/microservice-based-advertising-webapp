@@ -1,8 +1,6 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
-using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using FluentValidation;
-using Microsoft.AspNetCore.Http;
 
 
 namespace AdvertisingService.BusinessLogic.Services
@@ -19,25 +17,12 @@ namespace AdvertisingService.BusinessLogic.Services
             _imageValidator = imageValidator;
         }
 
-        public async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
-        {
-            byte[] fileData;
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                fileData = stream.ToArray();
-            }
-
-            return fileData;
-        }
-
-        public async Task<int> CreateNewImageAsync(IFormFile file, int advertisementId)
+        public async Task<int> CreateNewImageAsync(byte[] fileData, int advertisementId)
         {
             var advertisement= await _advertisementRepository.GetByIdAsync(advertisementId);
             if (advertisement == null)
                 throw new ArgumentNullException(nameof(advertisement));
 
-            var fileData = await ConvertFileDataToBytesAsync(file);
             var newImage = new Image
             {
                 Data = fileData,

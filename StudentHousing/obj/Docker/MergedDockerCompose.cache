@@ -61,12 +61,12 @@ services:
       advertising: null
     ports:
     - mode: ingress
-      target: 5173
-      published: "5173"
+      target: 80
+      published: "8081"
       protocol: tcp
     stdin_open: true
     tty: true
-  reverse-proxy:
+  traefik:
     command:
     - --api.insecure=true
     - --providers.docker

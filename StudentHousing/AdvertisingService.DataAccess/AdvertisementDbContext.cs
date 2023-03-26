@@ -1,7 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace AdvertisingService.DataAccess
 {

@@ -1,7 +1,6 @@
 ﻿using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
-using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.WebAPI.Controllers
 {
@@ -45,9 +44,10 @@ namespace AdvertisingService.WebAPI.Controllers
                 }
 
                 var file = Request.Form.Files[0];
+                var bytes = await ConvertFileDataToBytesAsync(file);
                 if (file.Length > 0)
                 {
-                    await _imageService.CreateNewImageAsync(file, newAdvertisementId);
+                    await _imageService.CreateNewImageAsync(bytes, newAdvertisementId);
                 }
             }
             catch (Exception ex)
@@ -56,6 +56,18 @@ namespace AdvertisingService.WebAPI.Controllers
             }
 
             return Ok(newAdvertisementId);
+
+            async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
+            {
+                byte[] fileData;
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    fileData = stream.ToArray();
+                }
+
+                return fileData;
+            }
         }
 
     }

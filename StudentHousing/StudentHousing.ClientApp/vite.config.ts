@@ -7,16 +7,18 @@ export default defineConfig({
   server:{
     proxy:{
       '/api/':{
-        target: 'http://traefik:80/',
+        target: 'http://localhost:80/',
         changeOrigin: true,
         secure: false
       }
     },
-    /*watch: {
+    /*
+    watch: {
       usePolling: true,
-    },*/
+    },
     host: true, // needed for the Docker Container port mapping to work
     strictPort: true,
     port: 5173, // you can replace this port with any port
+    */
   }
 })

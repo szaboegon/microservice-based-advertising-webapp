@@ -2,11 +2,6 @@
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdvertisingService.DataAccess.Repositories
 {
@@ -38,6 +33,27 @@ namespace AdvertisingService.DataAccess.Repositories
             }).ToListAsync();
                 
             return  list;
+        }
+        public IQueryable<AdvertisementCardDTO> GetAllWithCardDataAsIQueryable()
+        {
+            var list = _dbcontext.Advertisements.Select(a => new AdvertisementCardDTO
+            {
+                Id = a.Id,
+                CategoryName = a.Category.Name,
+                PostalCode = a.Address.PostalCode,
+                City = a.Address.City,
+                District = a.Address.District,
+                StreetName = a.Address.StreetName,
+                StreetNumber = a.Address.StreetNumber,
+                NumberOfRooms = a.NumberOfRooms,
+                Size = a.Size,
+                MonthlyPrice = a.MonthlyPrice,
+                Image = a.Images.First().Data,
+                Parking = a.Parking,
+                Furnished = a.Furnished
+            });
+
+            return list;
         }
 
         public async Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id)

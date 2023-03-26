@@ -1,13 +1,9 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AdvertisingService.BusinessLogic.Interfaces;
 
-namespace AdvertisingService.BusinessLogic.Services.Filters
+namespace AdvertisingService.DataAccess.Filters
 {
-    public class FilterByMonthlyPrice : IFilter<IEnumerable<AdvertisementCardDTO>>
+    public class FilterByMonthlyPrice : IFilter<AdvertisementCardDTO>
     {
         private readonly int? _minMonthlyPrice;
         private readonly int? _maxMonthlyPrice;
@@ -16,7 +12,7 @@ namespace AdvertisingService.BusinessLogic.Services.Filters
             _minMonthlyPrice = minMonthlyPrice;
             _maxMonthlyPrice = maxMonthlyPrice;
         }
-        public IEnumerable<AdvertisementCardDTO> Execute(IEnumerable<AdvertisementCardDTO> input)
+        public IQueryable<AdvertisementCardDTO> Execute(IQueryable<AdvertisementCardDTO> input)
         {
             if (_minMonthlyPrice == null && _maxMonthlyPrice == null)
                 return input;

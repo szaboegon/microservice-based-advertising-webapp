@@ -1,13 +1,9 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AdvertisingService.BusinessLogic.Interfaces;
 
-namespace AdvertisingService.BusinessLogic.Services.Filters
+namespace AdvertisingService.DataAccess.Filters
 {
-    public class FilterBySize : IFilter<IEnumerable<AdvertisementCardDTO>>
+    public class FilterBySize : IFilter<AdvertisementCardDTO>
     {
         private readonly float? _minSize;
         private readonly float? _maxSize;
@@ -16,7 +12,7 @@ namespace AdvertisingService.BusinessLogic.Services.Filters
             _minSize = minSize;
             _maxSize = maxSize;
         }
-        public IEnumerable<AdvertisementCardDTO> Execute(IEnumerable<AdvertisementCardDTO> input)
+        public IQueryable<AdvertisementCardDTO> Execute(IQueryable<AdvertisementCardDTO> input)
         {
             if (_minSize == null && _maxSize == null)
                 return input;

@@ -1,9 +1,7 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
-using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
-using AdvertisingService.BusinessLogic.Services.Filters;
-using AdvertisingService.BusinessLogic.Services.PipeLine;
 using FluentValidation;
 
 namespace AdvertisingService.BusinessLogic.Services
@@ -13,15 +11,18 @@ namespace AdvertisingService.BusinessLogic.Services
         private readonly IAdvertisementRepository _advertisementRepository;
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
+        private readonly IPipeLineBuilder<AdvertisementCardDTO> _pipeLineBuilder;
 
         private readonly IValidator<Advertisement> _advertisementValidator;
         public AdvertisementService(IAdvertisementRepository advertisementRepository,
-            AddressService addressService, CategoryService categoryService, IValidator<Advertisement> advertisementValidator)
+            AddressService addressService, CategoryService categoryService,
+            IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<AdvertisementCardDTO> pipeLineBuilder)
         {
             _advertisementRepository = advertisementRepository;
             _addressService = addressService;
             _categoryService = categoryService;
             _advertisementValidator = advertisementValidator;
+            _pipeLineBuilder = pipeLineBuilder; 
         }
 
         public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data)
@@ -58,19 +59,10 @@ namespace AdvertisingService.BusinessLogic.Services
 
         public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDTO queryParams)
         {
-            var result=await _advertisementRepository.GetAllWithCardDataAsync();
+            var pipeLine = _pipeLineBuilder.Build(queryParams);
+            var result =await pipeLine.PerformOperation();
 
-            var pipeLine = new AdvertisementFilterPipeLine();
-            pipeLine
-                .Register(new FilterByCategory(queryParams.CategoryName))
-                .Register(new FilterByCity(queryParams.City))
-                .Register(new FilterByNumberOfRooms(queryParams.NumberOfRooms))
-                .Register(new FilterBySize(queryParams.MinSize, queryParams.MaxSize))
-                .Register(new FilterByMonthlyPrice(queryParams.MinMonthlyPrice, queryParams.MaxMonthlyPrice))
-                .Register(new FilterByFurnished(queryParams.Furnished))
-                .Register(new FilterByParking(queryParams.Parking));
-
-            return pipeLine.PerformOperation(result);
+            return result;
         }
 
         public async Task<AdvertisementDetailsDTO> GetAdvertisementDetailsAsync(int id)

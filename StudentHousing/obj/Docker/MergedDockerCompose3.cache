@@ -102,16 +102,18 @@ services:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
       dockerfile: Dockerfile
     container_name: client_app
+    labels:
+      traefik.http.routers.whoami2.rule: Host(`localhost`)
     networks:
       advertising: null
     ports:
     - mode: ingress
-      target: 5173
-      published: "5173"
+      target: 80
+      published: "8081"
       protocol: tcp
     stdin_open: true
     tty: true
-  reverse-proxy:
+  traefik:
     command:
     - --api.insecure=true
     - --providers.docker

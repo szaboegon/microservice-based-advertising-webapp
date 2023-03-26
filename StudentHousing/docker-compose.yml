@@ -58,12 +58,12 @@ services:
         context: ./StudentHousing.ClientApp
         dockerfile: Dockerfile
     ports: 
-       - 5173:5173  
-    #volumes:
-    #   - ./StudentHousing.ClientApp:/app
-    #   - ./app/node_modules 
+       - 8081:80  
     networks:
        - advertising
     stdin_open: true
     tty: true
+    labels:
+       - traefik.enable=true
+       - traefik.http.routers.clientapp.rule=Host(`localhost`)
 

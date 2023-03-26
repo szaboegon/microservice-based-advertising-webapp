@@ -1,12 +1,6 @@
 ﻿using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdvertisingService.DataAccess.Repositories
 {

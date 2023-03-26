@@ -1,8 +1,4 @@
-﻿using System.Reflection.Metadata;
-using System.Text.Json.Serialization;
-using AdvertisingService.BusinessLogic.Models;
-
-namespace AdvertisingService.BusinessLogic.DataTransferObjects
+﻿namespace AdvertisingService.BusinessLogic.DataTransferObjects
 {
     public class AdvertisementDetailsDTO
     {

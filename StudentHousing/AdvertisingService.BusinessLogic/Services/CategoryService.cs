@@ -1,5 +1,4 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
-using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using FluentValidation;
 
