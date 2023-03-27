@@ -51,6 +51,9 @@ services:
        - advertising
     ports:
        - 8001:1433    # Only needed for debugging, remove later
+ 
+  identityservice:
+    container_name: identity_service
 
   clientapp:
     container_name: client_app
