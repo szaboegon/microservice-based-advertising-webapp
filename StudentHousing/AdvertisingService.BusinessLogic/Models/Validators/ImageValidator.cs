@@ -6,9 +6,12 @@ namespace AdvertisingService.BusinessLogic.Models.Validators
     {
         public ImageValidator()
         {
-            RuleFor(image => image.Data).NotNull().NotEmpty();
+            RuleFor(image => image.Data)
+                .NotNull()
+                .NotEmpty();
 
-            RuleFor(image => image.Advertisement).NotNull();
+            RuleFor(image => image.Advertisement)
+                .NotNull();
         }
     }
 }

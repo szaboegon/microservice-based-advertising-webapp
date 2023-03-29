@@ -6,8 +6,11 @@ namespace AdvertisingService.BusinessLogic.Models.Validators
     {
         public CategoryValidator()
         {
-            RuleFor(category => category.Name).NotNull().NotEmpty()
-                .Must(name=>(name ?? "").ToLower()=="apartment" || (name ?? "").ToLower() == "house" || (name ?? "").ToLower() == "room");
+            RuleFor(category => category.Name)
+                .NotNull()
+                .NotEmpty()
+                .Must(name=>(name ?? "").ToLower()=="apartment" || (name ?? "")
+                    .ToLower() == "house" || (name ?? "").ToLower() == "room").WithMessage("Allowed Categories are House, Apartment and Room");
         }
     }
 }

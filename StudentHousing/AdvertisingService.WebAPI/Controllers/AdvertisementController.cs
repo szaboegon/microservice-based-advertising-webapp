@@ -23,10 +23,10 @@ namespace AdvertisingService.WebAPI.Controllers
             return Ok(advertisements);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<AdvertisementDetailsDTO>> GetAdvertisementDetailsAsync(int id)
         {
-            AdvertisementDetailsDTO advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
+            var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
             return Ok(advertisement);
         }
 
@@ -59,12 +59,9 @@ namespace AdvertisingService.WebAPI.Controllers
 
             async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
             {
-                byte[] fileData;
-                using (var stream = new MemoryStream())
-                {
-                    await file.CopyToAsync(stream);
-                    fileData = stream.ToArray();
-                }
+                using var stream = new MemoryStream();
+                await file.CopyToAsync(stream);
+                var fileData = stream.ToArray();
 
                 return fileData;
             }

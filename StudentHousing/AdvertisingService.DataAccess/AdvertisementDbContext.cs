@@ -5,7 +5,8 @@ namespace AdvertisingService.DataAccess
 {
     public class AdvertisementDbContext : DbContext
     {
-        public AdvertisementDbContext(DbContextOptions<AdvertisementDbContext> dbContextOptions) : base(dbContextOptions)
+        public AdvertisementDbContext(DbContextOptions<AdvertisementDbContext> dbContextOptions)
+            : base(dbContextOptions)
         {
         }
 

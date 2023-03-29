@@ -7,7 +7,8 @@
         "advertisingservice.webapi": "StartDebugging",
         "advertisingdb": "StartWithoutDebugging",
         "clientapp": "StartWithoutDebugging",
-        "traefik": "StartWithoutDebugging"
+        "traefik": "StartWithoutDebugging",
+        "identityservice": "StartDebugging"
       }
     },
     "Backend only": {
@@ -17,7 +18,8 @@
         "advertisingdb": "StartWithoutDebugging",
         "advertisingservice.webapi": "StartDebugging",
         "clientapp": "DoNotStart",
-        "traefik": "StartWithoutDebugging"
+        "traefik": "StartWithoutDebugging",
+        "identityservice": "StartDebugging"
       }
     }
   }

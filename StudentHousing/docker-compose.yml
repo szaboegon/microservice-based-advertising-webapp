@@ -54,6 +54,29 @@ services:
  
   identityservice:
     container_name: identity_service
+    build:
+        context: .
+        dockerfile: IdentityService/Dockerfile
+    networks: 
+        - advertising
+    environment:
+       - DB_HOST=identitydb
+       - DB_NAME=identity
+       - DB_SA_PASSWORD=password@12345
+    labels: 
+       - traefik.enable=true
+       - traefik.http.routers.identityservice.rule=Host(`localhost`) && PathPrefix(`/api/user`)
+
+  identitydb:
+    container_name: identity_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+       - ACCEPT_EULA=Y
+       - SA_PASSWORD=password@12345
+    networks:
+       - advertising
+    ports:
+       - 8002:1433
 
   clientapp:
     container_name: client_app
