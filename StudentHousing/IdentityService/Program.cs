@@ -1,12 +1,18 @@
+using System.Text;
 using FluentValidation;
 using IdentityService.Data;
+using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Models.Validators;
 using IdentityService.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
 // Add services to the container.
 var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
@@ -42,6 +48,30 @@ builder.Services.AddScoped<UserService, UserService>();
 builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
 builder.Services.AddScoped<IValidator<RegistrationRequest>, RegistrationRequestValidator>();
 
+// Jwt provider
+builder.Services.AddSingleton<JwtProvider, JwtProvider>();
+
+// Jwt token related configurations
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = configuration["Jwt:Issuer"],
+            ValidAudience = configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]))
+        };
+    });
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -68,6 +98,7 @@ else
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

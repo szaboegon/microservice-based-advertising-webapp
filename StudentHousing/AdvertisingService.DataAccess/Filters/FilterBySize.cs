@@ -19,15 +19,15 @@ namespace AdvertisingService.DataAccess.Filters
 
             if (_maxSize == null)
             {
-                return input.Where(a => a.MonthlyPrice >= _minSize);
+                return input.Where(a => a.Size >= _minSize);
             }
 
             if (_minSize == null)
             {
-                return input.Where(a => a.MonthlyPrice <= _maxSize);
+                return input.Where(a => a.Size <= _maxSize);
             }
 
-            return input.Where(a => a.MonthlyPrice >= _minSize && a.MonthlyPrice <= _maxSize);
+            return input.Where(a => a.Size >= _minSize && a.Size <= _maxSize);
         }
     }
 }

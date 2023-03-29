@@ -1,6 +1,7 @@
-﻿using IdentityService.Models;
+﻿using System.IdentityModel.Tokens.Jwt;
+using Azure;
+using IdentityService.Models;
 using IdentityService.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -21,22 +22,26 @@ namespace IdentityService.Controllers
         [Route("login")]
         public async Task<ActionResult> LoginAsync([FromBody] AuthenticationRequest request)
         {
-            SignInResult result;
+            AuthenticationResponse response;
             try
             {
-                result = await _userService.LoginAsync(request);
+                response = await _userService.LoginAsync(request);
             }
             catch(Exception e)
             {
                 return BadRequest(e.Message);
             }
 
-            if (result.Succeeded)
+            if (response.SignInResult != SignInResult.Success)
             {
-                return Ok();
+                return BadRequest(response.Message);
             }
-            return BadRequest("Wrong username or password.");
-            
+           
+            return Ok(new
+            {
+                response.Message,
+                response.Token
+            });
         }
 
         [HttpPost]
@@ -55,11 +60,10 @@ namespace IdentityService.Controllers
 
             if (result.Succeeded)
             {
-                return Ok();
+                return Ok("Registration was successful.");
             }
             
-            return BadRequest(result.Errors.First().Description);
-            
+            return BadRequest(result);
         }
     }
 }
