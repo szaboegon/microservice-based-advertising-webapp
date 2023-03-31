@@ -4,7 +4,7 @@ using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services;
-using AdvertisingService.DataAccess;
+using AdvertisingService.DataAccess.Data;
 using AdvertisingService.DataAccess.PipeLine;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;

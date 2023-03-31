@@ -1,6 +1,7 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using AdvertisingService.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisingService.DataAccess.Repositories

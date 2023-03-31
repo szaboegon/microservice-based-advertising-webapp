@@ -36,7 +36,5 @@ namespace IdentityService.Helpers
                 .WriteToken(token);
             return tokenValue;
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using AdvertisingService.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

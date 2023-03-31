@@ -56,7 +56,6 @@ namespace IdentityService.Services
             }
 
             var token = _jwtProvider.GenerateToken(user);
-
             return new AuthenticationResponse
             {
                 SignInResult = SignInResult.Success,
