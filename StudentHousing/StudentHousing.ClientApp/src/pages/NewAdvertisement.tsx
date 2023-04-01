@@ -8,9 +8,6 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Alert,
-  AlertIcon,
-  AlertTitle,
   Box,
   Image,
 } from "@chakra-ui/react";
@@ -23,6 +20,10 @@ import FourthStep from "../components/NewAdvertisementForm/FourthStep";
 import FifthStep from "../components/NewAdvertisementForm/FifthStep";
 import ApartmentBuilding1 from "../assets/apartment-building1.jpg";
 import { formHeadingStyles } from "../styles/formHeadingStyles";
+import { useMutation } from "react-query";
+import AdvertisementService from "../services/AdvertisementService";
+import { SuccessAlert } from "../components/Alerts/SuccessAlert";
+import { ErrorAlert } from "../components/Alerts/ErrorAlert";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementFormData = {
@@ -42,74 +43,45 @@ export const NewAdvertisement = () => {
     monthlyPrice: "",
   };
 
+  //const { register, setValue, handleSubmit };
   const [step, setStep] = useState(0);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [image, setImage] = useState<File>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
-    try {
-      const data = new FormData();
-      data.append("categoryName", formValues.categoryName);
-      data.append("region", formValues.region);
-      data.append("postalCode", formValues.postalCode);
-      data.append("city", formValues.city);
-      data.append("district", formValues.district);
-      data.append("streetName", formValues.streetName);
-      data.append("streetNumber", formValues.streetNumber);
-      data.append("unitNumber", formValues.unitNumber);
-      data.append("numberOfRooms", formValues.numberOfRooms);
-      data.append("size", formValues.size);
-      data.append("furnished", formValues.furnished);
-      data.append("parking", formValues.parking);
-      data.append("description", formValues.description);
-      data.append("monthlyPrice", formValues.monthlyPrice);
+    postAdvertisement();
+  };
+
+  const {
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+    mutateAsync: postAdvertisement,
+  } = useMutation({
+    mutationFn: async () => {
+      const formData = new FormData();
+      formData.append("categoryName", formValues.categoryName);
+      formData.append("region", formValues.region);
+      formData.append("postalCode", formValues.postalCode);
+      formData.append("city", formValues.city);
+      formData.append("district", formValues.district);
+      formData.append("streetName", formValues.streetName);
+      formData.append("streetNumber", formValues.streetNumber);
+      formData.append("unitNumber", formValues.unitNumber);
+      formData.append("numberOfRooms", formValues.numberOfRooms);
+      formData.append("size", formValues.size);
+      formData.append("furnished", formValues.furnished);
+      formData.append("parking", formValues.parking);
+      formData.append("description", formValues.description);
+      formData.append("monthlyPrice", formValues.monthlyPrice);
       if (image) {
-        data.append("image", image);
+        formData.append("image", image);
       }
-      let response = await fetch("/api/advertisement", {
-        method: "POST",
-        headers: {
-          Accept: "text json",
-        },
-        body: data,
-      });
-      if (response.ok) {
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 5000);
-        setFormValues(initialFormValues);
-        setStep(0);
-        let json = await response.json();
-      } else {
-        setError(true);
-        setTimeout(() => setError(false), 5000);
-      }
-    } catch (error) {
-      //setError(true);
-      //setTimeout(() => setError(false), 5000);
-      console.log(error);
-    }
-  };
-
-  const renderSuccessAlert = () => {
-    return (
-      <Alert status="success">
-        <AlertIcon />
-        <AlertTitle>Creating your Advertisement was successful!</AlertTitle>
-      </Alert>
-    );
-  };
-
-  const renderErrorAlert = () => {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle>There was an error processing your request.</AlertTitle>
-      </Alert>
-    );
-  };
+      return await AdvertisementService.create(formData);
+    },
+  });
 
   const nextStep = () => {
     if (step < 4) {
@@ -227,8 +199,11 @@ export const NewAdvertisement = () => {
                 </TabPanel>
               </TabPanels>
             </Tabs>
-            {success && renderSuccessAlert()}
-            {error && renderErrorAlert()}
+            {isSuccess && (
+              <SuccessAlert message="Creating your advertisement was successful." />
+            )}
+            {isLoading && <div>Loading...</div>}
+            {isError && error instanceof Error && <ErrorAlert error={error} />}
           </Flex>
         </Flex>
       </Box>

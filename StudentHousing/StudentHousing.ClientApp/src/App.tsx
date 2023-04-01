@@ -1,6 +1,11 @@
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { ChakraProvider, extendTheme, Heading } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  extendTheme,
+  Heading,
+  useQuery,
+} from "@chakra-ui/react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { Home } from "./pages/Home";

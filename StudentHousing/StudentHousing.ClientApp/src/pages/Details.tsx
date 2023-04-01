@@ -5,45 +5,38 @@ import {
   BreadcrumbLink,
   Flex,
   VStack,
-  Image,
-  Box,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AdvertisementDetails from "../components/AdvertisementDetails";
 import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
+import AdvertisementService from "../services/AdvertisementService";
+import { useQuery } from "react-query";
+import { ErrorAlert } from "../components/Alerts/ErrorAlert";
 
 export const Details = () => {
-  const [advertisement, setAdvertisement] = useState<AdvertisementDetailsData>({
-    id: 0,
-    categoryName: "",
-    region: "",
-    postalCode: 0,
-    city: "",
-    district: "",
-    streetName: "",
-    streetNumber: "",
-    unitNumber: "",
-    numberOfRooms: 0,
-    size: 0,
-    furnished: false,
-    parking: false,
-    description: "",
-    monthlyPrice: 0,
-    image: new Uint8Array(),
-  });
+  const [advertisement, setAdvertisement] =
+    useState<AdvertisementDetailsData>();
 
   let params = useParams();
 
-  const getAdvertisement = async () => {
-    let response = await fetch("/api/advertisement/" + params.id);
-    if (response.ok) {
-      let json = await response.json();
-      setAdvertisement(json);
-    } else {
-      alert("HTTP-Error:" + response.status);
-    }
-  };
+  const {
+    isSuccess,
+    isLoading,
+    isError,
+    data,
+    error,
+    refetch: getAdvertisement,
+  } = useQuery({
+    queryKey: "advertisment",
+    queryFn: async () => {
+      if (params.id) {
+        return await AdvertisementService.findById(+params.id);
+      }
+    },
+    onSuccess: (data: AdvertisementDetailsData) => setAdvertisement(data),
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     getAdvertisement();
@@ -83,9 +76,15 @@ export const Details = () => {
             </BreadcrumbItem>
           </Breadcrumb>
         </VStack>
-        <AdvertisementDetails
-          advertisement={advertisement}
-        ></AdvertisementDetails>
+        {isLoading && <div>Loading...</div>}
+        {isError && error instanceof Error && (
+          <ErrorAlert error={error}></ErrorAlert>
+        )}
+        {isSuccess && advertisement && (
+          <AdvertisementDetails
+            advertisement={advertisement}
+          ></AdvertisementDetails>
+        )}
       </Flex>
     </>
   );

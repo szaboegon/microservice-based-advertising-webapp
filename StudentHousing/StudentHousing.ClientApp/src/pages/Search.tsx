@@ -4,47 +4,39 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
-  Box,
   VStack,
-  Heading,
-  Alert,
-  AlertIcon,
-  AlertTitle,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import AdvertisementCard from "../components/AdvertisementCard";
+import { ErrorAlert } from "../components/Alerts/ErrorAlert";
+import { WarningAlert } from "../components/Alerts/WarningAlert";
 import SearchBar from "../components/SearchBar";
 import { AdvertisementCardData } from "../models/advertisementCardData.model";
-import { SearchParams } from "../models/searchParams.model";
+import AdvertisementService from "../services/AdvertisementService";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
     []
   );
-  const getAdvertisements = async () => {
-    let response = await fetch("/api/advertisement?" + searchParams);
-    if (response.ok) {
-      let json = await response.json();
-      setAdvertisements(json);
-    } else {
-      alert("HTTP-Error: " + response.status);
-    }
-  };
 
-  const renderNoResultsFoundAlert = () => {
-    return (
-      <>
-        <Alert status="warning" maxWidth="600px">
-          <AlertIcon />
-          <AlertTitle>
-            There are no matching advertisements for your search filters.
-          </AlertTitle>
-        </Alert>
-      </>
-    );
-  };
+  const {
+    isSuccess,
+    isLoading,
+    isError,
+    data,
+    error,
+    refetch: getAdvertisements,
+  } = useQuery({
+    queryKey: ["advertismentcards"],
+    queryFn: async () => {
+      return await AdvertisementService.findBySearchParams(searchParams);
+    },
+    onSuccess: (data: AdvertisementCardData[]) => setAdvertisements(data),
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     getAdvertisements();
@@ -86,13 +78,19 @@ export const Search = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {advertisements.length == 0 && renderNoResultsFoundAlert()}
-        {advertisements.map((advertisement) => (
-          <AdvertisementCard
-            key={advertisement.id}
-            advertisement={advertisement}
-          ></AdvertisementCard>
-        ))}
+        {isLoading && <div>Loading...</div>}
+        {isError && error instanceof Error && <ErrorAlert error={error} />}
+        {isSuccess &&
+          advertisements.length > 0 &&
+          advertisements.map((advertisement) => (
+            <AdvertisementCard
+              key={advertisement.id}
+              advertisement={advertisement}
+            ></AdvertisementCard>
+          ))}
+        {isSuccess && advertisements.length == 0 && (
+          <WarningAlert message="There are no matching advertisements for your search filters." />
+        )}
       </Flex>
     </>
   );
