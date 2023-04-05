@@ -1,7 +1,9 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   HStack,
   Input,
@@ -9,8 +11,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
+import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface ISecondStepProps {
@@ -24,35 +27,23 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
   setFormValues,
   nextStep,
 }) => {
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors },
+  } = useForm<NewAdvertisementFormData>();
+
+  const city = watch("city");
+
+  const saveData = (data: NewAdvertisementFormData) => {
+    setFormValues({ ...formValues, ...data });
     nextStep();
   };
 
-  const [isDistrictDisabled, setIsDistrictDisabled] = React.useState(true);
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const value = e.target.value;
-
-    setFormValues({
-      ...formValues,
-      [e.target.name]: value,
-    });
-  };
-
-  useEffect(() => {
-    if (formValues.city.toUpperCase() == "BUDAPEST") {
-      setIsDistrictDisabled(false);
-    } else {
-      setIsDistrictDisabled(true);
-    }
-  }, [formValues.city]);
-
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(saveData)}>
         <Flex
           height="450px"
           width="600px"
@@ -60,18 +51,17 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <FormControl isRequired>
+          <FormControl isInvalid={!!errors.region}>
             <FormLabel sx={formLabelStyles} htmlFor="region">
               Region:
             </FormLabel>
             <Select
+              {...register("region", {
+                required: "This field is required",
+              })}
               id="region"
-              name="region"
               borderColor="brandYellow.800"
               placeholder="Choose"
-              required
-              value={formValues.region}
-              onChange={handleInputChange}
               size="lg"
             >
               <option value="Bács-Kiskun">Bács-Kiskun</option>
@@ -95,76 +85,132 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
               <option value="Veszprém">Veszprém</option>
               <option value="Zala">Zala</option>
             </Select>
-            <HStack>
-              <VStack width="50%">
+            {errors.region ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.region.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
+          </FormControl>
+          <HStack width="100%" justifyContent="center">
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.city}>
                 <FormLabel sx={formLabelStyles} htmlFor="city">
                   City:
                 </FormLabel>
                 <Input
+                  {...register("city", {
+                    required: "This field is required",
+                  })}
                   id="city"
-                  name="city"
                   type="text"
                   borderColor="brandYellow.800"
                   placeholder="e.g. Budapest"
-                  required
-                  value={formValues.city}
-                  onChange={handleInputChange}
                   size="lg"
                 ></Input>
-              </VStack>
-              <VStack width="50%">
+                {errors.city ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.city.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.postalCode}>
                 <FormLabel sx={formLabelStyles} htmlFor="postalCode">
                   Postal Code:
                 </FormLabel>
                 <Input
+                  {...register("postalCode", {
+                    required: "This field is required",
+                    maxLength: {
+                      value: 4,
+                      message: "Postal code should have a lenght of 4",
+                    },
+                    minLength: {
+                      value: 4,
+                      message: "Postal code should have a lenght of 4",
+                    },
+                  })}
                   id="postalCode"
-                  name="postalCode"
-                  required
                   type="number"
-                  maxLength={4}
-                  min={1000}
-                  max={9999}
-                  value={formValues.postalCode}
-                  onChange={handleInputChange}
                   placeholder="e.g. 1089"
                   borderColor="brandYellow.800"
                   size="lg"
                   width="100%"
                 ></Input>
-              </VStack>
-            </HStack>
+                {errors.postalCode ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.postalCode.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+          </HStack>
+          <FormControl isInvalid={!!errors.district}>
             <FormLabel sx={formLabelStyles} htmlFor="district">
               District (only required for Budapest):
             </FormLabel>
             <Input
+              {...register("district", {
+                maxLength: {
+                  value: 6,
+                  message: "District should have a max lenght of 6",
+                },
+                required: {
+                  value: city?.toUpperCase() == "BUDAPEST",
+                  message: "This field is required if the city is Budapest",
+                },
+                disabled: city?.toUpperCase() != "BUDAPEST",
+              })}
               id="district"
-              name="district"
               type="text"
               borderColor="brandYellow.800"
-              maxLength={6}
               placeholder="e.g. XI."
-              value={formValues.district}
-              onChange={handleInputChange}
-              disabled={isDistrictDisabled}
               size="lg"
             ></Input>
+            {errors.district ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.district.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
+          </FormControl>
+          <FormControl isInvalid={!!errors.streetName}>
             <FormLabel sx={formLabelStyles} htmlFor="streetName">
               Street name:
             </FormLabel>
             <Input
+              {...register("streetName", {
+                required: "This field is required",
+                maxLength: {
+                  value: 40,
+                  message: "Street name should have a max lenght of 40",
+                },
+              })}
               id="streetName"
-              name="streetName"
               type="text"
               borderColor="brandYellow.800"
-              maxLength={40}
               placeholder="e.g. Király St."
-              required
-              value={formValues.streetName}
-              onChange={handleInputChange}
               size="lg"
             ></Input>
-            <HStack>
-              <VStack width="50%">
+            {errors.streetName ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.streetName.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
+          </FormControl>
+          <HStack width="100%">
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.streetName}>
                 <FormLabel
                   sx={formLabelStyles}
                   htmlFor="streetNumber"
@@ -173,18 +219,29 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                   Street number:
                 </FormLabel>
                 <Input
+                  {...register("streetNumber", {
+                    required: "This field is required",
+                    maxLength: {
+                      value: 20,
+                      message: "Street number should have a max lenght of 20",
+                    },
+                  })}
                   id="streetNumber"
-                  name="streetNumber"
                   type="text"
                   borderColor="brandYellow.800"
-                  maxLength={20}
-                  required
-                  value={formValues.streetNumber}
-                  onChange={handleInputChange}
                   size="lg"
                 ></Input>
-              </VStack>
-              <VStack width="50%">
+                {errors.streetNumber ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.streetNumber.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.unitNumber}>
                 <FormLabel
                   sx={formLabelStyles}
                   htmlFor="unitNumber"
@@ -193,20 +250,30 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                   Unit number:
                 </FormLabel>
                 <Input
+                  {...register("unitNumber", {
+                    maxLength: {
+                      value: 20,
+                      message: "Unit number should have a max lenght of 20",
+                    },
+                  })}
                   id="unitNumber"
-                  name="unitNumber"
                   type="text"
                   borderColor="brandYellow.800"
                   maxLength={20}
-                  value={formValues.unitNumber}
-                  onChange={handleInputChange}
                   size="lg"
                 ></Input>
-              </VStack>
-            </HStack>
-          </FormControl>
+                {errors.unitNumber ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.unitNumber.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+          </HStack>
         </Flex>
-        <Flex alignItems="center" marginTop="30px" flexDirection="column">
+        <Flex alignItems="center" marginTop="40px" flexDirection="column">
           <Button
             size="lg"
             type="submit"

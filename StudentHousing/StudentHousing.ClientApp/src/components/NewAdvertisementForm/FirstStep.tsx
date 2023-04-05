@@ -1,14 +1,18 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   HStack,
   Radio,
   RadioGroup,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
+import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface IFirstStepProps {
@@ -22,23 +26,20 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
   setFormValues,
   nextStep,
 }) => {
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<NewAdvertisementFormData>();
+
+  const saveData = (data: NewAdvertisementFormData) => {
+    setFormValues({ ...formValues, ...data });
     nextStep();
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    setFormValues({
-      ...formValues,
-      [e.target.name]: value,
-    });
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(saveData)}>
         <Flex
           height="450px"
           width="600px"
@@ -46,44 +47,56 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <FormControl width="80%" isRequired>
+          <FormControl width="80%" isInvalid={!!errors.categoryName}>
             <FormLabel sx={formLabelStyles} htmlFor="categoryName">
               Please choose:
             </FormLabel>
             <RadioGroup
               name="categoryName"
               id="categoryName"
-              value={formValues.categoryName}
               alignSelf="center"
               size="lg"
             >
               <HStack justifyContent="space-between">
                 <Radio
+                  {...register("categoryName", {
+                    required: "This field is required",
+                  })}
                   colorScheme="green"
                   value="apartment"
-                  onChange={handleInputChange}
                 >
                   Apartment
                 </Radio>
                 <Radio
+                  {...register("categoryName", {
+                    required: "This field is required",
+                  })}
                   colorScheme="green"
                   value="house"
-                  onChange={handleInputChange}
                 >
                   House
                 </Radio>
                 <Radio
+                  {...register("categoryName", {
+                    required: "This field is required",
+                  })}
                   colorScheme="green"
                   value="room"
-                  onChange={handleInputChange}
                 >
                   Room
                 </Radio>
               </HStack>
             </RadioGroup>
+            {errors.categoryName ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.categoryName.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
           </FormControl>
         </Flex>
-        <Flex alignItems="center" marginTop="30px" flexDirection="column">
+        <Flex alignItems="center" marginTop="40px" flexDirection="column">
           <Button
             size="lg"
             type="submit"

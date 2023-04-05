@@ -1,12 +1,16 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Textarea,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
+import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface IFourthStepProps {
@@ -20,21 +24,19 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
   setFormValues,
   nextStep,
 }) => {
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    nextStep();
-  };
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<NewAdvertisementFormData>();
 
-    setFormValues({
-      ...formValues,
-      [e.target.name]: value,
-    });
+  const saveData = (data: NewAdvertisementFormData) => {
+    setFormValues({ ...formValues, ...data });
+    nextStep();
   };
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(saveData)}>
         <Flex
           height="450px"
           width="600px"
@@ -42,25 +44,35 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <FormControl isRequired>
+          <FormControl isInvalid={!!errors.description}>
             <FormLabel sx={formLabelStyles} htmlFor="description">
               Max 1000 characters
             </FormLabel>
             <Textarea
+              {...register("description", {
+                required: "This field is required",
+                maxLength: {
+                  value: 1000,
+                  message:
+                    "The lenght of description must be max 1000 characters",
+                },
+              })}
               id="description"
-              name="description"
               resize="none"
               height="350px"
               size="md"
               borderColor="brandYellow.800"
-              required
-              maxLength={1000}
-              value={formValues.description}
-              onChange={handleInputChange}
             ></Textarea>
+            {errors.description ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.description.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
           </FormControl>
         </Flex>
-        <Flex alignItems="center" marginTop="30px" flexDirection="column">
+        <Flex alignItems="center" marginTop="40px" flexDirection="column">
           <Button
             size="lg"
             type="submit"

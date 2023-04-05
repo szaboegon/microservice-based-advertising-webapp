@@ -23,6 +23,7 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
 
+
   advertisingservice.webapi:
     container_name: advertising_service
     image: ${DOCKER_REGISTRY-}adsvertisingservicewebapi
@@ -40,6 +41,7 @@ services:
     labels:
        - traefik.enable=true
        - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
+
        
   advertisingdb:
     container_name: advertising_db
@@ -92,4 +94,5 @@ services:
     labels:
        - traefik.enable=true
        - traefik.http.routers.clientapp.rule=Host(`localhost`)
+
 

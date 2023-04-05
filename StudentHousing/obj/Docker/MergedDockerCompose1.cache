@@ -40,7 +40,7 @@ services:
     image: adsvertisingservicewebapi:dev
     labels:
       com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  ""'
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
         dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet
@@ -150,7 +150,7 @@ services:
     image: identityservice:dev
     labels:
       com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  ""'
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/IdentityService.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
         dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet

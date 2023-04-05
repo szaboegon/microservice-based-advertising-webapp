@@ -1,7 +1,9 @@
 import {
+  Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   HStack,
   Input,
@@ -13,7 +15,9 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
+import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface IThirdStepProps {
@@ -27,19 +31,17 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
   setFormValues,
   nextStep,
 }) => {
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-    nextStep();
-  };
-
   const [isRoom, setIsRoom] = useState(false);
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
 
-    setFormValues({
-      ...formValues,
-      [e.target.name]: value,
-    });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<NewAdvertisementFormData>();
+
+  const saveData = (data: NewAdvertisementFormData) => {
+    setFormValues({ ...formValues, ...data });
+    nextStep();
   };
 
   React.useEffect(() => {
@@ -52,7 +54,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(saveData)}>
         <Flex
           height="450px"
           width="600px"
@@ -60,9 +62,9 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
           justifyContent="center"
           alignItems="center"
         >
-          <FormControl isRequired>
-            <HStack>
-              <VStack width="50%">
+          <HStack width="100%">
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.numberOfRooms}>
                 <FormLabel
                   sx={formLabelStyles}
                   htmlFor="numberOfRooms"
@@ -71,36 +73,58 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                   Number of rooms:
                 </FormLabel>
                 <Input
+                  {...register("numberOfRooms", {
+                    required: "This field is required",
+                    min: {
+                      value: 1,
+                      message: "Number of rooms must be at least 1",
+                    },
+                    max: {
+                      value: 100,
+                      message: "Number of rooms must be 100 at maximum",
+                    },
+                    pattern: {
+                      value: /^[0-9]+$|^[0-9]+.[0,5]$/,
+                      message: "Number of rooms must be rounded to .5",
+                    },
+                    disabled: isRoom,
+                  })}
                   id="numberOfRooms"
-                  name="numberOfRooms"
                   type="number"
-                  step={0.5}
-                  required
-                  onChange={handleInputChange}
-                  value={formValues.numberOfRooms}
-                  disabled={isRoom}
-                  max={100}
-                  min={1}
                   borderColor="brandYellow.800"
                   size="lg"
                   width="100%"
                 ></Input>
-              </VStack>
-              <VStack width="50%">
+                {errors.numberOfRooms ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.numberOfRooms.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+            <VStack width="50%">
+              <FormControl isInvalid={!!errors.size}>
                 <FormLabel sx={formLabelStyles} htmlFor="size">
                   Size:
                 </FormLabel>
                 <InputGroup>
                   <Input
+                    {...register("size", {
+                      required: "This field is required",
+                      min: {
+                        value: 1,
+                        message: "Size must be at least 1",
+                      },
+                      pattern: {
+                        value: /^[0-9]+$|^[0-9]+.[0-9]$/,
+                        message: "Size should be rounded to .1",
+                      },
+                    })}
                     id="size"
-                    name="size"
                     type="number"
-                    step={0.01}
-                    required
-                    value={formValues.size}
-                    onChange={handleInputChange}
                     width="100%"
-                    min={1}
                     borderColor="brandYellow.800"
                     size="lg"
                   />
@@ -113,20 +137,31 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                     textColor="brandGreen.700"
                   />
                 </InputGroup>
-              </VStack>
-            </HStack>
+                {errors.size ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.size.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box visibility="hidden">Placeholder text</Box>
+                )}
+              </FormControl>
+            </VStack>
+          </HStack>
+          <FormControl isInvalid={!!errors.monthlyPrice}>
             <FormLabel sx={formLabelStyles} htmlFor="monthlyPrice">
               Monthly Price:
             </FormLabel>
             <InputGroup>
               <Input
+                {...register("monthlyPrice", {
+                  required: "This field is required",
+                  min: {
+                    value: 1,
+                    message: "Monthly price must be at least 1",
+                  },
+                })}
                 id="monthlyPrice"
-                name="monthlyPrice"
                 type="number"
-                required
-                value={formValues.monthlyPrice}
-                onChange={handleInputChange}
-                min={1}
                 borderColor="brandYellow.800"
                 size="lg"
                 width="100%"
@@ -140,51 +175,86 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                 textColor="brandGreen.700"
               />
             </InputGroup>
-            <HStack>
-              <VStack width="50%" alignItems="start">
+            {errors.monthlyPrice ? (
+              <FormErrorMessage sx={formErrorMessageStyles}>
+                {errors.monthlyPrice.message}
+              </FormErrorMessage>
+            ) : (
+              <Box visibility="hidden">Placeholder text</Box>
+            )}
+          </FormControl>
+          <HStack width="100%">
+            <VStack width="50%" alignItems="start">
+              <FormControl isInvalid={!!errors.furnished}>
                 <FormLabel sx={formLabelStyles}>
                   Is the property furnished?
                 </FormLabel>
-                <RadioGroup
-                  name="furnished"
-                  size="lg"
-                  value={formValues.furnished}
-                  colorScheme="green"
-                >
+                <RadioGroup name="furnished" size="lg" colorScheme="green">
                   <HStack>
-                    <Radio value="true" onChange={handleInputChange}>
+                    <Radio
+                      value="true"
+                      {...register("furnished", {
+                        required: "This field is required",
+                      })}
+                    >
                       Yes
                     </Radio>
-                    <Radio value="false" onChange={handleInputChange}>
+                    <Radio
+                      value="false"
+                      {...register("furnished", {
+                        required: "This field is required",
+                      })}
+                    >
                       No
                     </Radio>
                   </HStack>
+                  {errors.furnished ? (
+                    <FormErrorMessage sx={formErrorMessageStyles}>
+                      {errors.furnished.message}
+                    </FormErrorMessage>
+                  ) : (
+                    <Box visibility="hidden">Placeholder text</Box>
+                  )}
                 </RadioGroup>
-              </VStack>
-              <VStack width="50%" alignItems="start">
+              </FormControl>
+            </VStack>
+            <VStack width="50%" alignItems="start">
+              <FormControl isInvalid={!!errors.parking}>
                 <FormLabel sx={formLabelStyles}>
                   Is there parking available?
                 </FormLabel>
-                <RadioGroup
-                  name="parking"
-                  size="lg"
-                  value={formValues.parking}
-                  colorScheme="green"
-                >
+                <RadioGroup name="parking" size="lg" colorScheme="green">
                   <HStack>
-                    <Radio value="true" onChange={handleInputChange}>
+                    <Radio
+                      value="true"
+                      {...register("parking", {
+                        required: "This field is required",
+                      })}
+                    >
                       Yes
                     </Radio>
-                    <Radio value="false" onChange={handleInputChange}>
+                    <Radio
+                      value="false"
+                      {...register("parking", {
+                        required: "This field is required",
+                      })}
+                    >
                       No
                     </Radio>
                   </HStack>
+                  {errors.parking ? (
+                    <FormErrorMessage sx={formErrorMessageStyles}>
+                      {errors.parking.message}
+                    </FormErrorMessage>
+                  ) : (
+                    <Box visibility="hidden">Placeholder text</Box>
+                  )}
                 </RadioGroup>
-              </VStack>
-            </HStack>
-          </FormControl>
+              </FormControl>
+            </VStack>
+          </HStack>
         </Flex>
-        <Flex alignItems="center" marginTop="30px" flexDirection="column">
+        <Flex alignItems="center" marginTop="40px" flexDirection="column">
           <Button
             size="lg"
             type="submit"

@@ -36,12 +36,12 @@ namespace AdvertisingService.WebAPI.Controllers
             int newAdvertisementId;
             try
             {
-                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
-
                 if (Request.Form.Files.Count == 0)
                 {
                     return BadRequest("List of files was empty. Please upload a file.");
                 }
+
+                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
 
                 var file = Request.Form.Files[0];
                 var bytes = await ConvertFileDataToBytesAsync(file);

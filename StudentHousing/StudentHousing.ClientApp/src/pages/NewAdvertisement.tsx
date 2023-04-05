@@ -37,19 +37,17 @@ export const NewAdvertisement = () => {
     unitNumber: "",
     numberOfRooms: "",
     size: "",
-    furnished: "",
-    parking: "",
+    furnished: "false",
+    parking: "false",
     description: "",
     monthlyPrice: "",
   };
 
-  //const { register, setValue, handleSubmit };
   const [step, setStep] = useState(0);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [image, setImage] = useState<File>();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
+  const submitData = (data: NewAdvertisementFormData) => {
     postAdvertisement();
   };
 
@@ -195,7 +193,7 @@ export const NewAdvertisement = () => {
                   />
                 </TabPanel>
                 <TabPanel>
-                  <FifthStep setImage={setImage} handleSubmit={handleSubmit} />
+                  <FifthStep setImage={setImage} submitData={submitData} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

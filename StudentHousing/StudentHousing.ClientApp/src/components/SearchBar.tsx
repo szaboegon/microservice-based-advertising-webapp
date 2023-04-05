@@ -48,8 +48,6 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
     }
 
     setFormValues(updatedState);
-    console.log(formValues.city);
-    console.log(formValues.numberOfRooms);
   }, []);
 
   const handleInputChange = (

@@ -1,16 +1,17 @@
 import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import * as React from "react";
+import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 
 interface IFifthStepProps {
   setImage: React.Dispatch<File>;
-  handleSubmit: (e: React.FormEvent<HTMLElement>) => Promise<void>;
+  submitData: (data: NewAdvertisementFormData) => void;
 }
 
 const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
   setImage,
-  handleSubmit,
+  submitData,
 }) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -23,44 +24,12 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
       alert(file);
     }
   };
-  /*const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-    const base64File = await readFile(e.target.files[0]);
 
-    if (base64File) {
-      setImage(base64File);
-      alert(base64File);
-    }
-  };
-
-  const readFile = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        if (event.target) {
-          resolve(event.target.result);
-        }
-      };
-
-      reader.onerror = (err) => {
-        reject(err);
-      };
-
-      reader.readAsArrayBuffer(file);
-    });
-  };
-
-  const getAsByteArray = async (file: File) => {
-    const tmp = await readFile(file);
-    return new Uint8Array(tmp as ArrayBuffer);
-  };*/
+  const { handleSubmit } = useForm<NewAdvertisementFormData>();
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(submitData)}>
         <Flex
           height="450px"
           width="600px"
@@ -82,7 +51,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
             ></Input>
           </FormControl>
         </Flex>
-        <Flex alignItems="center" marginTop="30px" flexDirection="column">
+        <Flex alignItems="center" marginTop="40px" flexDirection="column">
           <Button
             size="lg"
             type="submit"
