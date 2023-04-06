@@ -1,6 +1,6 @@
 import axios from "axios";
-import { AdvertisementCardData } from "../models/advertisementCardData.model";
-import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
+import { AdvertisementCardData } from "../models/advertisementCardData.";
+import { AdvertisementDetailsData } from "../models/advertisementDetailsDatal";
 
 const apiClient = axios.create({
   baseURL: "/api",

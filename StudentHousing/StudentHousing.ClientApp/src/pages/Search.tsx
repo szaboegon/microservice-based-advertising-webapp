@@ -13,7 +13,7 @@ import AdvertisementCard from "../components/AdvertisementCard";
 import { ErrorAlert } from "../components/Alerts/ErrorAlert";
 import { WarningAlert } from "../components/Alerts/WarningAlert";
 import SearchBar from "../components/SearchBar";
-import { AdvertisementCardData } from "../models/advertisementCardData.model";
+import { AdvertisementCardData } from "../models/advertisementCardData.";
 import AdvertisementService from "../services/AdvertisementService";
 
 export const Search = () => {

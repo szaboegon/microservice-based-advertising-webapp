@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import AdvertisementDetails from "../components/AdvertisementDetails";
-import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
+import { AdvertisementDetailsData } from "../models/advertisementDetailsDatal";
 import AdvertisementService from "../services/AdvertisementService";
 import { useQuery } from "react-query";
 import { ErrorAlert } from "../components/Alerts/ErrorAlert";

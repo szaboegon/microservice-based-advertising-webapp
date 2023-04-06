@@ -13,6 +13,7 @@ import { Search } from "./pages/Search";
 import { Details } from "./pages/Details";
 import { NewAdvertisement } from "./pages/NewAdvertisement";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   const theme = extendTheme({
@@ -64,6 +65,7 @@ function App() {
         <Route path="/details/:id" element={<Details />} />
         <Route path="/newadvertisement" element={<NewAdvertisement />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </ChakraProvider>
   );

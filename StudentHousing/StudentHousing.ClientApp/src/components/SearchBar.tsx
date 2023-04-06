@@ -5,17 +5,15 @@ import {
   FormLabel,
   Input,
   Select,
-  VStack,
-  Checkbox,
   Button,
   InputGroup,
   InputRightAddon,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { SearchParamsFormData } from "../formInterfaces/searchParamsFormData";
-import { SearchParams } from "../models/searchParams.model";
 
 interface ISearchBarProps {
   minWidth?: string;
@@ -35,46 +33,46 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
     parking: "",
   };
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [formValues, setFormValues] =
-    useState<SearchParamsFormData>(initialFormValues);
 
-  useEffect(() => {
-    var updatedState = { ...initialFormValues };
-    for (const property in formValues) {
-      if (searchParams.has(property)) {
-        updatedState[property as keyof SearchParamsFormData] =
-          searchParams.get(property)!;
-      }
-    }
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    register,
+    formState: { errors },
+  } = useForm<SearchParamsFormData>();
 
-    setFormValues(updatedState);
-  }, []);
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const value = e.target.value;
-
-    setFormValues({
-      ...formValues,
-      [e.target.name]: value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    for (const property in formValues) {
+  const submit = (data: SearchParamsFormData) => {
+    for (const property in getValues()) {
+      setValue(
+        property as keyof SearchParamsFormData,
+        data[property as keyof SearchParamsFormData]
+      );
       searchParams.delete(property);
-      if (formValues[property as keyof SearchParamsFormData] != "") {
+      if (data[property as keyof SearchParamsFormData] != "") {
         searchParams.set(
-          property,
-          formValues[property as keyof SearchParamsFormData]
+          property as keyof SearchParamsFormData,
+          data[property as keyof SearchParamsFormData]
         );
       }
     }
     navigate("/search?" + searchParams, {});
   };
+
+  useEffect(() => {
+    var updatedState = { ...initialFormValues };
+    for (const property in getValues()) {
+      if (searchParams.has(property)) {
+        updatedState[property as keyof SearchParamsFormData] =
+          searchParams.get(property)!;
+        setValue(
+          property as keyof SearchParamsFormData,
+          searchParams.get(property)!
+        );
+      }
+    }
+  }, []);
+
   return (
     <>
       <Flex
@@ -85,16 +83,14 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
         paddingLeft="20px"
         minWidth={minWidth}
       >
-        <form className="filterBar" onSubmit={handleSubmit}>
+        <form className="filterBar" onSubmit={handleSubmit(submit)}>
           <FormControl maxWidth="180px">
             <FormLabel mb="0px" mt="5px" htmlFor="categoryName">
               Category
             </FormLabel>
             <Select
               id="categoryName"
-              name="categoryName"
-              value={formValues.categoryName}
-              onChange={handleInputChange}
+              {...register("categoryName")}
               placeholder="Choose"
               variant="flushed"
             >
@@ -109,9 +105,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
             </FormLabel>
             <Input
               id="city"
-              name="city"
-              value={formValues.city}
-              onChange={handleInputChange}
+              {...register("city")}
               type="text"
               variant="flushed"
               placeholder="e.g. Budapest"
@@ -123,9 +117,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
             </FormLabel>
             <Input
               id="numberOfRooms"
-              name="numberOfRooms"
-              value={formValues.numberOfRooms}
-              onChange={handleInputChange}
+              {...register("numberOfRooms")}
               type="number"
               max={20}
               min={1}
@@ -140,9 +132,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
             <InputGroup>
               <Input
                 id="minSize"
-                name="minSize"
-                value={formValues.minSize}
-                onChange={handleInputChange}
+                {...register("minSize")}
                 type="number"
                 variant="flushed"
                 placeholder="min"
@@ -152,9 +142,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               </FormLabel>
               <Input
                 id="maxSize"
-                name="maxSize"
-                value={formValues.maxSize}
-                onChange={handleInputChange}
+                {...register("maxSize")}
                 type="number"
                 variant="flushed"
                 placeholder="max"
@@ -169,9 +157,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
             <InputGroup>
               <Input
                 id="minMonthlyPrice"
-                name="minMonthlyPrice"
-                value={formValues.minMonthlyPrice}
-                onChange={handleInputChange}
+                {...register("minMonthlyPrice")}
                 variant="flushed"
                 placeholder="min"
               />
@@ -180,9 +166,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               </FormLabel>
               <Input
                 id="maxMonthlyPrice"
-                name="maxMonthlyPrice"
-                value={formValues.maxMonthlyPrice}
-                onChange={handleInputChange}
+                {...register("maxMonthlyPrice")}
                 variant="flushed"
                 placeholder="max"
               />
@@ -194,9 +178,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               Furnished
             </FormLabel>
             <Select
-              name="furnished"
-              value={formValues.furnished}
-              onChange={handleInputChange}
+              {...register("furnished")}
               variant="flushed"
               placeholder="Choose"
             >
@@ -209,9 +191,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               Parking
             </FormLabel>
             <Select
-              name="parking"
-              value={formValues.parking}
-              onChange={handleInputChange}
+              {...register("parking")}
               variant="flushed"
               placeholder="Choose"
             >

@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { AdvertisementDetailsData } from "../models/advertisementDetailsData.model";
+import { AdvertisementDetailsData } from "../models/advertisementDetailsDatal";
 
 interface IAdvertisementDetailsProps {
   advertisement: AdvertisementDetailsData;

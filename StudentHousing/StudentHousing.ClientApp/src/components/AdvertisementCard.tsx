@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { AdvertisementCardData } from "../models/advertisementCardData.model";
+import { AdvertisementCardData } from "../models/advertisementCardData.";
 
 interface IAdvertisementCardProps {
   advertisement: AdvertisementCardData;

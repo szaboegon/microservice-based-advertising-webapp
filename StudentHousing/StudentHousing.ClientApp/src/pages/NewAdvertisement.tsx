@@ -47,8 +47,8 @@ export const NewAdvertisement = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [image, setImage] = useState<File>();
 
-  const submitData = (data: NewAdvertisementFormData) => {
-    postAdvertisement();
+  const submitData = async (data: NewAdvertisementFormData) => {
+    await postAdvertisement();
   };
 
   const {
