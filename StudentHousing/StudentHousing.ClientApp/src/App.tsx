@@ -1,19 +1,17 @@
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import {
-  ChakraProvider,
-  extendTheme,
-  Heading,
-  useQuery,
-} from "@chakra-ui/react";
-import { Route, Routes } from "react-router-dom";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
 import { Details } from "./pages/Details";
-import { NewAdvertisement } from "./pages/NewAdvertisement";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { useEffect, useState } from "react";
+import UserService from "./services/UserService";
+import { PrivateRoute } from "./routes/PrivateRoute";
+import { User } from "./models/user";
+import { NewAdvertisement } from "./pages/NewAdvertisement";
 
 function App() {
   const theme = extendTheme({
@@ -56,16 +54,34 @@ function App() {
     },
   });
 
+  const [currentUser, setCurrentUser] = useState<User>();
+
+  useEffect(() => {
+    const user = UserService.getCurrentUser();
+    setCurrentUser(user);
+  }, []);
+
+  const logout = () => {
+    UserService.logout();
+    setCurrentUser(undefined);
+  };
+
   return (
     <ChakraProvider theme={theme}>
-      <Navbar></Navbar>
+      <Navbar logout={logout} user={currentUser}></Navbar>
       <Routes>
+        <Route
+          path="/newadvertisement"
+          element={<PrivateRoute isLoggedIn={!!currentUser} />}
+        >
+          <Route path="/newadvertisement" element={<NewAdvertisement />} />
+        </Route>
         <Route path="/" element={<Home />} />
         <Route path="/search/*" element={<Search />} />
         <Route path="/details/:id" element={<Details />} />
-        <Route path="/newadvertisement" element={<NewAdvertisement />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/*" element={<Navigate to="/login" replace />} />
       </Routes>
     </ChakraProvider>
   );

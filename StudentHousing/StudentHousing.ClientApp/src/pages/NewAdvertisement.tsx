@@ -10,6 +10,7 @@ import {
   TabPanel,
   Box,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NewAdvertisementFormData } from "../formInterfaces/newAdvertisementFormData";
@@ -134,7 +135,7 @@ export const NewAdvertisement = () => {
           alignItems="center"
           height="100%"
         >
-          <Flex flexDirection="column">
+          <Flex flexDirection="column" alignItems="center">
             <Tabs
               index={step}
               isFitted
@@ -200,7 +201,7 @@ export const NewAdvertisement = () => {
             {isSuccess && (
               <SuccessAlert message="Creating your advertisement was successful." />
             )}
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <Spinner />}
             {isError && error instanceof Error && <ErrorAlert error={error} />}
           </Flex>
         </Flex>

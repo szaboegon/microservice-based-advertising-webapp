@@ -40,6 +40,7 @@ namespace IdentityService.Controllers
             return Ok(new
             {
                 response.Message,
+                response.UserName,
                 response.Token
             });
         }

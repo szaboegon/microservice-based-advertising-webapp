@@ -1,4 +1,4 @@
-name: dockercompose4658398787065314807
+name: dockercompose14365604898514843923
 services:
   advertisingdb:
     container_name: advertising_db
@@ -15,7 +15,7 @@ services:
       protocol: tcp
   advertisingservice.webapi:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
       labels:
         com.microsoft.created-by: visual-studio
@@ -34,13 +34,12 @@ services:
       DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
-      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
+      NUGET_FALLBACK_PACKAGES: ""
     expose:
     - "8002"
     image: adsvertisingservicewebapi:dev
     labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
         dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet
@@ -59,47 +58,41 @@ services:
     tty: true
     volumes:
     - type: bind
-      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI
+      source: C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI
       target: /app
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\vsdbg\vs2017u5
+      source: C:\Users\szabo\vsdbg\vs2017u5
       target: /remote_debugger
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
-      target: /root/.nuget/fallbackpackages
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\.nuget\packages\
+      source: C:\Users\szabo\.nuget\packages\
       target: /root/.nuget/packages
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      source: C:\repos\microservice-based-advertising-webapp\StudentHousing
       target: /src
       bind:
         create_host_path: true
   clientapp:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
       dockerfile: Dockerfile
     container_name: client_app
     labels:
@@ -129,7 +122,7 @@ services:
       protocol: tcp
   identityservice:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
       labels:
         com.microsoft.created-by: visual-studio
@@ -146,11 +139,10 @@ services:
       DB_NAME: identity
       DB_SA_PASSWORD: password@12345
       DOTNET_USE_POLLING_FILE_WATCHER: "1"
-      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
+      NUGET_FALLBACK_PACKAGES: ""
     image: identityservice:dev
     labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/IdentityService.dll"'
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/IdentityService.dll"'
       com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
         dotnet); then kill $$PID; fi"
       com.microsoft.visualstudio.debuggee.program: dotnet
@@ -162,40 +154,34 @@ services:
     tty: true
     volumes:
     - type: bind
-      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService
+      source: C:\repos\microservice-based-advertising-webapp\StudentHousing\IdentityService
       target: /app
       bind:
         create_host_path: true
     - type: bind
-      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      source: C:\repos\microservice-based-advertising-webapp\StudentHousing
       target: /src
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\vsdbg\vs2017u5
+      source: C:\Users\szabo\vsdbg\vs2017u5
       target: /remote_debugger
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\.nuget\packages\
+      source: C:\Users\szabo\.nuget\packages\
       target: /root/.nuget/packages
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
-      target: /root/.nuget/fallbackpackages
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
       read_only: true
       bind:
@@ -203,7 +189,7 @@ services:
   traefik:
     command:
     - --api.insecure=true
-    - --providers.docker
+    - --providers.docker=true
     container_name: traefik
     image: traefik:v2.9
     networks:
@@ -229,4 +215,4 @@ services:
         create_host_path: true
 networks:
   advertising:
-    name: dockercompose4658398787065314807_advertising
+    name: dockercompose14365604898514843923_advertising

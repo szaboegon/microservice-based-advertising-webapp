@@ -36,7 +36,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 8;
+    options.Password.RequiredLength = 6;
 
     options.Lockout.AllowedForNewUsers = false;
 });
@@ -92,6 +92,7 @@ else
     app.UseHsts();
 }
 
+//app.UseForwardedHeaders();
 //app.UseHttpsRedirection();
 //app.UseStaticFiles();
 

@@ -8,6 +8,7 @@ using AdvertisingService.DataAccess.Data;
 using AdvertisingService.DataAccess.PipeLine;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,6 +57,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+//app.UseForwardedHeaders();
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();

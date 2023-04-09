@@ -4,6 +4,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
+  Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -50,7 +51,7 @@ export const Search = () => {
         flexWrap="wrap"
         marginX="auto"
       >
-        <VStack minWidth="75%">
+        <VStack width={{base: "100%", xl:"80%"}}>
           <Breadcrumb
             marginY="10px"
             spacing="8px"
@@ -78,19 +79,16 @@ export const Search = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <Spinner/>}
         {isError && error instanceof Error && <ErrorAlert error={error} />}
-        {isSuccess &&
-          advertisements.length > 0 &&
+        {
           advertisements.map((advertisement) => (
             <AdvertisementCard
               key={advertisement.id}
               advertisement={advertisement}
             ></AdvertisementCard>
           ))}
-        {isSuccess && advertisements.length == 0 && (
-          <WarningAlert message="There are no matching advertisements for your search filters." />
-        )}
+          {isSuccess && advertisements.length <= 0 && <WarningAlert message="There are no matching advertisements for your search filters." />}
       </Flex>
     </>
   );

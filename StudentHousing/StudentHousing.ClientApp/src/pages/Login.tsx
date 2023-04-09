@@ -7,6 +7,7 @@ import {
   FormLabel,
   Input,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -18,15 +19,12 @@ import UserService from "../services/UserService";
 import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../styles/formLabelStyles";
 import ApartmentBuilding1 from "../assets/apartment-building1.jpg";
+import { Link, useNavigate } from "react-router-dom";
+import { placeholderStyles } from "../styles/placeholderStyles";
 
 interface ILoginProps {}
 
 const Login: React.FunctionComponent<ILoginProps> = (props) => {
-  const initialFormValues: LoginData = {
-    userName: "",
-    password: "",
-  };
-
   const {
     handleSubmit,
     register,
@@ -45,8 +43,12 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
     },
   });
 
+  const navigate = useNavigate();
   const submit = async (data: LoginData) => {
-    const response = await submitLogin(data);
+    const response = await submitLogin(data).then(() => {
+      navigate("/search");
+      window.location.reload();
+    });
   };
 
   return (
@@ -70,19 +72,19 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
           width={{ base: "100%", xl: "50%" }}
           alignItems="center"
           height="100%"
+          flexDirection="column"
         >
           <form onSubmit={handleSubmit(submit)}>
-            <FormControl isInvalid={!!errors.userName}>
+            <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
               <FormLabel sx={formLabelStyles} htmlFor="userName">
-                Email:
+                Username:
               </FormLabel>
               <Input
                 {...register("userName", {
                   required: "This field is required",
                 })}
-                id="username"
+                id="userName"
                 borderColor="brandYellow.800"
-                placeholder="johndoe@example.com"
                 size="lg"
               ></Input>
               {errors.userName ? (
@@ -90,10 +92,10 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
                   {errors.userName.message}
                 </FormErrorMessage>
               ) : (
-                <Box visibility="hidden">Placeholder text</Box>
+                <Box sx={placeholderStyles}>Placeholder text</Box>
               )}
             </FormControl>
-            <FormControl isInvalid={!!errors.password}>
+            <FormControl maxWidth="400px" isInvalid={!!errors.password}>
               <FormLabel sx={formLabelStyles} htmlFor="password">
                 Password:
               </FormLabel>
@@ -111,29 +113,31 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
                   {errors.password.message}
                 </FormErrorMessage>
               ) : (
-                <Box visibility="hidden">Placeholder text</Box>
+                <Box sx={placeholderStyles}>Placeholder text</Box>
               )}
             </FormControl>
-            <Flex alignItems="center" marginTop="30px" flexDirection="column">
-              <Button
-                size="lg"
-                type="submit"
-                width="350px"
-                height="40px"
-                bgColor="brandGreen.500"
-                textColor="white"
-                _hover={{ background: "brandGreen.700" }}
-                marginBottom="20px"
-              >
-                Login
-              </Button>
-              {isLoading && <div>Loading...</div>}
-              {isError && error instanceof Error && (
-                <ErrorAlert error={error}></ErrorAlert>
-              )}
-              {isSuccess && <SuccessAlert message="Login was successful!" />}
-            </Flex>
+            <Button
+              size="lg"
+              type="submit"
+              width="350px"
+              height="40px"
+              bgColor="brandGreen.500"
+              textColor="white"
+              _hover={{ background: "brandGreen.700" }}
+              marginBottom="20px"
+              marginTop="10px"
+            >
+              Login
+            </Button>
           </form>
+          <Link to="/register">Don't have an account yet?</Link>
+          <Flex>
+            {isLoading && <Spinner />}
+            {isError && error instanceof Error && (
+              <ErrorAlert error={error}></ErrorAlert>
+            )}
+            {isSuccess && <SuccessAlert message="Login was successful!" />}
+          </Flex>
         </Flex>
       </Box>
     </>

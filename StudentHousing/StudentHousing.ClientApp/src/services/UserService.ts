@@ -1,7 +1,8 @@
 import axios from "axios";
 import { LoginData } from "../formInterfaces/loginData";
 import { RegistrationData } from "../formInterfaces/registrationData";
-import { Session } from "../models/session";
+import { User } from "../models/user";
+import { AuthResponse } from "../models/authResponse";
 
 const apiClient = axios.create({
   baseURL: "/api/user",
@@ -10,10 +11,14 @@ const apiClient = axios.create({
   },
 });
 
-const login = async (loginData: LoginData): Promise<Session> => {
-  return await axios.post("/login", loginData).then((response) => {
-    if (response.data.jwtToken) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+const login = async (loginData: LoginData): Promise<AuthResponse> => {
+  return await apiClient.post("/login", loginData).then((response) => {
+    if (response.data.token) {
+      const user: User ={
+        userName: response.data.userName,
+        token: response.data.token
+      }
+      localStorage.setItem("user", JSON.stringify(user));
     }
 
     return response.data;
@@ -24,11 +29,21 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
-const register = async (registrationData: RegistrationData) => {};
+const getCurrentUser = () =>{
+  const userStr = localStorage.getItem("user");
+  if(userStr) return JSON.parse(userStr);
+
+  return null;
+}
+
+const register = async (registrationData: RegistrationData) => {
+  return await apiClient.post("/register", registrationData);
+};
 
 const UserService = {
   login,
   logout,
-  register,
+  getCurrentUser,
+  register
 };
 export default UserService;

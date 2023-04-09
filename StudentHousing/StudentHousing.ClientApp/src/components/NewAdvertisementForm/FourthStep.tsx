@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
+import { placeholderStyles } from "../../styles/placeholderStyles";
 
 interface IFourthStepProps {
   formValues: NewAdvertisementFormData;
@@ -68,7 +69,7 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
                 {errors.description.message}
               </FormErrorMessage>
             ) : (
-              <Box visibility="hidden">Placeholder text</Box>
+              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
         </Flex>

@@ -60,6 +60,7 @@ namespace IdentityService.Services
             {
                 SignInResult = SignInResult.Success,
                 Message = "Sign in was successful.",
+                UserName = user.UserName,
                 Token = token
             };
         }

@@ -1,4 +1,4 @@
-name: dockercompose4658398787065314807
+name: dockercompose14365604898514843923
 services:
   advertisingdb:
     container_name: advertising_db
@@ -15,7 +15,7 @@ services:
       protocol: tcp
   advertisingservice.webapi:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
     container_name: advertising_service
     environment:
@@ -41,20 +41,20 @@ services:
       protocol: tcp
     volumes:
     - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
       read_only: true
       bind:
         create_host_path: true
   clientapp:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
       dockerfile: Dockerfile
     container_name: client_app
     labels:
@@ -84,7 +84,7 @@ services:
       protocol: tcp
   identityservice:
     build:
-      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
     container_name: identity_service
     environment:
@@ -99,7 +99,7 @@ services:
   traefik:
     command:
     - --api.insecure=true
-    - --providers.docker
+    - --providers.docker=true
     container_name: traefik
     image: traefik:v2.9
     networks:
@@ -125,4 +125,4 @@ services:
         create_host_path: true
 networks:
   advertising:
-    name: dockercompose4658398787065314807_advertising
+    name: dockercompose14365604898514843923_advertising

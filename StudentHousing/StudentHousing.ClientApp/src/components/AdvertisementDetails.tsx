@@ -25,7 +25,7 @@ const AdvertisementDetails: React.FunctionComponent<
   var base64Image = "data:image/png;base64," + advertisement.image;
   return (
     <>
-      <Flex width="75%" marginY="20px" flexWrap="wrap">
+      <Flex width="75%" marginY="20px" flexWrap="wrap" justifyContent="center">
         <Box width="50%" minWidth="600px" overflow="hidden">
           <Box border="4px" overflow="hidden" maxHeight="500px">
             <Image width="100%" height="auto" src={base64Image}></Image>
@@ -41,7 +41,7 @@ const AdvertisementDetails: React.FunctionComponent<
               advertisement.unitNumber}
           </Heading>
           <Heading fontSize="1.3rem" fontWeight="400" textColor="gray.600">
-            {advertisement.city.toUpperCase() == "BUDAPEST"
+            {advertisement.city.toUpperCase() != "BUDAPEST"
               ? advertisement.postalCode + " " + advertisement.city
               : advertisement.postalCode +
                 " " +
@@ -53,8 +53,8 @@ const AdvertisementDetails: React.FunctionComponent<
             {advertisement.region} vármegye
           </Heading>
         </Box>
-        <TableContainer margin="40px" minWidth="400px">
-          <Table width="600px">
+        <TableContainer margin="40px">
+          <Table minWidth="400px">
             <Thead></Thead>
             <Tbody>
               <Tr>
@@ -76,13 +76,13 @@ const AdvertisementDetails: React.FunctionComponent<
             </Tbody>
           </Table>
         </TableContainer>
-        <Box>
-          <Heading fontSize="1.8rem" textColor="gray.600" marginTop="30px">
-            Description
-          </Heading>
-          <Text>{advertisement.description}</Text>
-        </Box>
       </Flex>
+      <Box>
+        <Heading fontSize="1.8rem" textColor="gray.600" marginTop="30px">
+          Description
+        </Heading>
+        <Text>{advertisement.description}</Text>
+      </Box>
     </>
   );
 };

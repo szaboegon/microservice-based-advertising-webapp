@@ -4,6 +4,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
+  Spinner,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -76,7 +77,7 @@ export const Details = () => {
             </BreadcrumbItem>
           </Breadcrumb>
         </VStack>
-        {isLoading && <div>Loading...</div>}
+        {isLoading && <Spinner/>}
         {isError && error instanceof Error && (
           <ErrorAlert error={error}></ErrorAlert>
         )}

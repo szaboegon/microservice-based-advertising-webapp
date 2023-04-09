@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
+import { placeholderStyles } from "../../styles/placeholderStyles";
 
 interface IThirdStepProps {
   formValues: NewAdvertisementFormData;
@@ -100,7 +101,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                     {errors.numberOfRooms.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>
@@ -142,7 +143,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                     {errors.size.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>
@@ -180,7 +181,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                 {errors.monthlyPrice.message}
               </FormErrorMessage>
             ) : (
-              <Box visibility="hidden">Placeholder text</Box>
+              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
           <HStack width="100%">
@@ -213,7 +214,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                       {errors.furnished.message}
                     </FormErrorMessage>
                   ) : (
-                    <Box visibility="hidden">Placeholder text</Box>
+                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </RadioGroup>
               </FormControl>
@@ -247,7 +248,7 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
                       {errors.parking.message}
                     </FormErrorMessage>
                   ) : (
-                    <Box visibility="hidden">Placeholder text</Box>
+                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </RadioGroup>
               </FormControl>

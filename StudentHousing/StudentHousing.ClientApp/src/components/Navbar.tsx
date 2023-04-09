@@ -1,4 +1,4 @@
-import { ChevronDownIcon, InfoIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Flex,
   Heading,
@@ -11,13 +11,15 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { User } from "../models/user";
 
-interface INavbarProps {}
+interface INavbarProps {
+  user: User | undefined;
+  logout: () => void;
+}
 
-const isLoggedIn = true;
-
-const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
+const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
   return (
     <>
       <Flex
@@ -34,58 +36,61 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
           as={Link}
           to="/"
           variant="hidden"
+          display={{ base: "none", md: "block" }}
         >
           Student Housing
         </Heading>
         <Spacer />
-        {isLoggedIn ? (
-          <HStack spacing="15px" mr="40px">
-            <Button
-              as={Link}
-              to="/newadvertisement"
+        <Button
+          as={Link}
+          to="/newadvertisement"
+          minH="50px"
+          background="brandYellow.600"
+          textColor="white"
+          _hover={{ background: "brandYellow.1000" }}
+        >
+          New Advertisement
+        </Button>
+        {user ? (
+          <Menu>
+            <MenuButton
+              as={Button}
               minH="50px"
-              background="brandYellow.600"
+              variant="link"
+              rightIcon={<ChevronDownIcon />}
               textColor="white"
-              _hover={{ background: "brandYellow.1000" }}
             >
-              New Advertisement
-            </Button>
-            <Menu>
-              <MenuButton
-                as={Button}
-                minH="50px"
-                variant="link"
-                rightIcon={<ChevronDownIcon />}
-                textColor="white"
-              >
-                Username
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>Messages</MenuItem>
-                <MenuItem>Logout</MenuItem>
-              </MenuList>
-            </Menu>
-            <Button minH="50px" variant="link" textColor="white">
-              Logout
-            </Button>
-          </HStack>
+              {user.userName}
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Profile</MenuItem>
+              <MenuItem>Messages</MenuItem>
+            </MenuList>
+          </Menu>
         ) : (
-          <HStack spacing="15px" mr="40px">
-            <Button
-              as={Link}
-              to="/newadvertisement"
-              minH="50px"
-              background="brandYellow.600"
-              textColor="white"
-              _hover={{ background: "brandYellow.1000" }}
-            >
-              New Advertisement
-            </Button>
-            <Button minH="50px" variant="link" textColor="white">
-              Login
-            </Button>
-          </HStack>
+          <></>
+        )}
+        {user ? (
+          <Button
+            minH="50px"
+            variant="link"
+            textColor="white"
+            onClick={logout}
+            mr="40px"
+          >
+            Logout
+          </Button>
+        ) : (
+          <Button
+            as={NavLink}
+            to="/login"
+            minH="50px"
+            variant="link"
+            textColor="white"
+            mr="40px"
+          >
+            Login
+          </Button>
         )}
       </Flex>
     </>

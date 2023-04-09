@@ -39,7 +39,7 @@ export const Home = () => {
           >
             For Students
           </Heading>
-          <SearchBar minWidth="70%"></SearchBar>
+          <SearchBar minWidth="75%"></SearchBar>
         </Flex>
       </Flex>
       <Heading marginY="60px" textAlign="center" textColor="gray.500">

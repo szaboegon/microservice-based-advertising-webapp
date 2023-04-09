@@ -1,6 +1,7 @@
 import axios from "axios";
 import { AdvertisementCardData } from "../models/advertisementCardData.";
 import { AdvertisementDetailsData } from "../models/advertisementDetailsDatal";
+import authHeader from "./auth/authHeader";
 
 const apiClient = axios.create({
   baseURL: "/api",
@@ -35,7 +36,8 @@ const findById = async (id: number): Promise<AdvertisementDetailsData> => {
 const create = async (newAdvertisement: FormData) => {
   const response = await formDataClient.post<FormData>(
     "/advertisement",
-    newAdvertisement
+    newAdvertisement,
+    {headers: authHeader()}
   );
   return response.data;
 };

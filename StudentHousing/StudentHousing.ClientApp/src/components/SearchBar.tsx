@@ -84,7 +84,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
         minWidth={minWidth}
       >
         <form className="filterBar" onSubmit={handleSubmit(submit)}>
-          <FormControl maxWidth="180px">
+          <FormControl maxWidth="140px">
             <FormLabel mb="0px" mt="5px" htmlFor="categoryName">
               Category
             </FormLabel>
@@ -99,7 +99,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
               <option value="house">House</option>
             </Select>
           </FormControl>
-          <FormControl maxWidth="180px">
+          <FormControl maxWidth="140px">
             <FormLabel mb="0px" mt="5px" htmlFor="city">
               City
             </FormLabel>

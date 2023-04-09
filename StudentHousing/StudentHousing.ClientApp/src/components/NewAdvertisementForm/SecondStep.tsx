@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../formInterfaces/newAdvertisementFormData";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
+import { placeholderStyles } from "../../styles/placeholderStyles";
 
 interface ISecondStepProps {
   formValues: NewAdvertisementFormData;
@@ -90,7 +91,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 {errors.region.message}
               </FormErrorMessage>
             ) : (
-              <Box visibility="hidden">Placeholder text</Box>
+              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
           <HStack width="100%" justifyContent="center">
@@ -114,7 +115,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     {errors.city.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>
@@ -147,7 +148,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     {errors.postalCode.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>
@@ -179,7 +180,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 {errors.district.message}
               </FormErrorMessage>
             ) : (
-              <Box visibility="hidden">Placeholder text</Box>
+              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
           <FormControl isInvalid={!!errors.streetName}>
@@ -205,12 +206,12 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 {errors.streetName.message}
               </FormErrorMessage>
             ) : (
-              <Box visibility="hidden">Placeholder text</Box>
+              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
           <HStack width="100%">
             <VStack width="50%">
-              <FormControl isInvalid={!!errors.streetName}>
+              <FormControl isInvalid={!!errors.streetNumber}>
                 <FormLabel
                   sx={formLabelStyles}
                   htmlFor="streetNumber"
@@ -236,7 +237,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     {errors.streetNumber.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>
@@ -267,7 +268,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     {errors.unitNumber.message}
                   </FormErrorMessage>
                 ) : (
-                  <Box visibility="hidden">Placeholder text</Box>
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
                 )}
               </FormControl>
             </VStack>

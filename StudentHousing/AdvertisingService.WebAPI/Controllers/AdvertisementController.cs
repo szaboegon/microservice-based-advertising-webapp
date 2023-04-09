@@ -1,6 +1,7 @@
 ﻿using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AdvertisingService.WebAPI.Controllers
 {
