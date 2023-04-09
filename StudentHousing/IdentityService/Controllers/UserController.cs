@@ -2,6 +2,7 @@
 using Azure;
 using IdentityService.Models;
 using IdentityService.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -65,6 +66,13 @@ namespace IdentityService.Controllers
             }
             
             return BadRequest(result);
+        }
+
+        [HttpGet("validate")]
+        [Authorize]
+        public ActionResult ValidateToken()
+        {
+            return Ok();
         }
     }
 }

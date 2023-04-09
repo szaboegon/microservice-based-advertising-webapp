@@ -1,12 +1,13 @@
+import { User } from "../../models/user";
+
 export default function authHeader() {
     const userStr = localStorage.getItem("user");
     let user = null;
     if(userStr){
         user = JSON.parse(userStr);
     }
-
-    if(user && user.jwtToken){
-        return {Authorization: "Bearer "+ user.jwtToken};
+    if(user && user.token){
+        return {Authorization: "Bearer "+ user.token};
     }else {
         return {Authorization: ""};
     }

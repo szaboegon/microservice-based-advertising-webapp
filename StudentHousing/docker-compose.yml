@@ -23,7 +23,6 @@ services:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
 
-
   advertisingservice.webapi:
     container_name: advertising_service
     image: ${DOCKER_REGISTRY-}adsvertisingservicewebapi
@@ -41,7 +40,9 @@ services:
     labels:
        - traefik.enable=true
        - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
-
+       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.address=localhost/api/user/validate"
+       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.authResponseHeaders=X-Forwarded-User"
+       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.trustForwardHeader=true"
        
   advertisingdb:
     container_name: advertising_db
