@@ -32,3 +32,20 @@ C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.pdb
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.genruntimeconfig.cache
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\ref\AdvertisingService.DataAccess.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.DataAccess.deps.json
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.DataAccess.runtimeconfig.json
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.DataAccess.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.DataAccess.pdb
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.BusinessLogic.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\bin\Debug\net7.0\AdvertisingService.BusinessLogic.pdb
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.csproj.AssemblyReference.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.AssemblyInfoInputs.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.AssemblyInfo.cs
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.csproj.CoreCompileInputs.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.csproj.CopyComplete
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\refint\AdvertisingService.DataAccess.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.pdb
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\AdvertisingService.DataAccess.genruntimeconfig.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.DataAccess\obj\Debug\net7.0\ref\AdvertisingService.DataAccess.dll

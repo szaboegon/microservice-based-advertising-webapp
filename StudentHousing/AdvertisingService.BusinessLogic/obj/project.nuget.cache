@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "72dDSlpLWvJ4QzTgQRgLduh+LOwr64AJm278VlvtO7zM0jIJLZlM1A7S33bBCv9+Ek8fcdaotkl059kNQEteQw==",
+  "dgSpecHash": "Bq38OqwfCcl+6oIR1JoqAr+MyrhDAYlaytDCQCle9cFkXbQcDIXXYZWrV4Q5E4gN38oBGj+aMcYD49nZZEyVcQ==",
   "success": true,
-  "projectFilePath": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisingService.BusinessLogic\\AdvertisingService.BusinessLogic.csproj",
+  "projectFilePath": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisingService.BusinessLogic\\AdvertisingService.BusinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\szabo\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",

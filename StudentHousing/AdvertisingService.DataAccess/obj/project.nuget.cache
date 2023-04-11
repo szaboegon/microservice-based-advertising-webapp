@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UDEVuD9GFjqSYNwUeCyuroOPJ4zwsJE4Tzrc18MM91x2TJglv1E6vN6YqsqPuU90SWQm2DA/6tLDAXipaXT6AA==",
+  "dgSpecHash": "tKUyU/NszjkBqXFwtYz6JFspiNpxV+SRe6Ikj8rd441Xp80ZDP7leBDBGKbogicwqq8UJgqoWUctj7QLAVMMjw==",
   "success": true,
-  "projectFilePath": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisingService.DataAccess\\AdvertisingService.DataAccess.csproj",
+  "projectFilePath": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\AdvertisingService.DataAccess\\AdvertisingService.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\szabo\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

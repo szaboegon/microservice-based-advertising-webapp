@@ -4068,19 +4068,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\szabo\\.nuget\\packages\\": {}
+    "C:\\Users\\szabo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
+      "projectUniqueName": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
       "projectName": "IdentityService",
-      "projectPath": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
+      "projectPath": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
       "packagesPath": "C:\\Users\\szabo\\.nuget\\packages\\",
-      "outputPath": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\obj\\",
+      "outputPath": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\szabo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4158,7 +4163,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

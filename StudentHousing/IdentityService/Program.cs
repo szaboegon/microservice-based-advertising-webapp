@@ -72,6 +72,8 @@ builder.Services.AddAuthentication(opt =>
         };
     });
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -96,10 +98,9 @@ else
 //app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
-app.UseRouting();
-
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseRouting();
+app.UseAuthorization();
 
 app.MapControllers();
 

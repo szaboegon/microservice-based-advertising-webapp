@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sTqAKnVJ6Aupa2broGuOIfxcJNH/7atiSv1xFQ4ZBN1UsMnD8Y4F4FcQPv/dTh7EbPSiDcsx49KP7F+VMnoADg==",
+  "dgSpecHash": "DVv2XS1p7lNroWoNMicM7BXk3vFY1U13AzbFFmU4ppCsbe58dY3cAIUFge28xR5jZvenoaVo2juDBYNjMBVmOg==",
   "success": true,
-  "projectFilePath": "C:\\repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
+  "projectFilePath": "D:\\Github repos\\microservice-based-advertising-webapp\\StudentHousing\\IdentityService\\IdentityService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\szabo\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\szabo\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

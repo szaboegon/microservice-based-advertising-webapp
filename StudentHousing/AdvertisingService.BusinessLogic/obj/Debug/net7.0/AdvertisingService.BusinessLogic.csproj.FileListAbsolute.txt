@@ -22,3 +22,15 @@ C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\refint\AdvertisingService.BusinessLogic.dll
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.pdb
 C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\ref\AdvertisingService.BusinessLogic.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\bin\Debug\net7.0\AdvertisingService.BusinessLogic.deps.json
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\bin\Debug\net7.0\AdvertisingService.BusinessLogic.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\bin\Debug\net7.0\AdvertisingService.BusinessLogic.pdb
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.csproj.AssemblyReference.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.AssemblyInfoInputs.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.AssemblyInfo.cs
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.csproj.CoreCompileInputs.cache
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\refint\AdvertisingService.BusinessLogic.dll
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\AdvertisingService.BusinessLogic.pdb
+D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.BusinessLogic\obj\Debug\net7.0\ref\AdvertisingService.BusinessLogic.dll

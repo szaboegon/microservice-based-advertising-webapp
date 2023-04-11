@@ -10,14 +10,27 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import axios from "axios";
 import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { User } from "../models/user";
+import authHeader from "../services/auth/authHeader";
 
 interface INavbarProps {
   user: User | undefined;
   logout: () => void;
 }
+
+const test = () => {
+  axios
+    .get("/api/user/validate", { headers: authHeader() })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
   return (
