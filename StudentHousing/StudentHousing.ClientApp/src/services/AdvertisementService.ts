@@ -35,9 +35,9 @@ const findById = async (id: number): Promise<AdvertisementDetailsData> => {
 
 const create = async (newAdvertisement: FormData) => {
   const response = await formDataClient.post<FormData>(
-    "/advertisement",
+    "/advertisement/private",
     newAdvertisement,
-    {headers: authHeader()}
+    { headers: authHeader() }
   );
   return response.data;
 };

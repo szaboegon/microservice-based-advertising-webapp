@@ -13,13 +13,23 @@ import {
 import axios from "axios";
 import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { User } from "../models/user";
 import authHeader from "../services/auth/authHeader";
+import { useState, useEffect } from "react";
+import { User } from "../models/user";
+import UserService from "../services/UserService";
 
 interface INavbarProps {
-  user: User | undefined;
+  isLoggedIn: boolean;
   logout: () => void;
 }
+
+const [user, setUser] = useState<User>();
+
+const getUser = async () => {
+  const usr = await UserService.getCurrentUser;
+};
+
+useEffect(() => {});
 
 const test = () => {
   axios
@@ -32,7 +42,10 @@ const test = () => {
     });
 };
 
-const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
+const Navbar: React.FunctionComponent<INavbarProps> = ({
+  isLoggedIn,
+  logout,
+}) => {
   return (
     <>
       <Flex
@@ -64,7 +77,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
         >
           New Advertisement
         </Button>
-        {user ? (
+        {isLoggedIn ? (
           <Menu>
             <MenuButton
               as={Button}
@@ -73,7 +86,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
               rightIcon={<ChevronDownIcon />}
               textColor="white"
             >
-              {user.userName}
+              {"placeholder"}
             </MenuButton>
             <MenuList>
               <MenuItem>Profile</MenuItem>
@@ -83,7 +96,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
         ) : (
           <></>
         )}
-        {user ? (
+        {isLoggedIn ? (
           <Button
             minH="50px"
             variant="link"

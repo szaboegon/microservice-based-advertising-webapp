@@ -32,6 +32,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("private")]
         public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
         {
             int newAdvertisementId;

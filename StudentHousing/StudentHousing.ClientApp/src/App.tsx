@@ -10,7 +10,6 @@ import Register from "./pages/Register";
 import { useEffect, useState } from "react";
 import UserService from "./services/UserService";
 import { PrivateRoute } from "./routes/PrivateRoute";
-import { User } from "./models/user";
 import { NewAdvertisement } from "./pages/NewAdvertisement";
 
 function App() {
@@ -54,25 +53,27 @@ function App() {
     },
   });
 
-  const [currentUser, setCurrentUser] = useState<User>();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = UserService.getCurrentUser();
-    setCurrentUser(user);
+    const token = UserService.getCurrentUserToken();
+    if (token) {
+      setIsLoggedIn(true);
+    }
   }, []);
 
   const logout = () => {
     UserService.logout();
-    setCurrentUser(undefined);
+    setIsLoggedIn(false);
   };
 
   return (
     <ChakraProvider theme={theme}>
-      <Navbar logout={logout} user={currentUser}></Navbar>
+      <Navbar logout={logout} isLoggedIn={isLoggedIn}></Navbar>
       <Routes>
         <Route
           path="/newadvertisement"
-          element={<PrivateRoute isLoggedIn={!!currentUser} />}
+          element={<PrivateRoute isLoggedIn={isLoggedIn} />}
         >
           <Route path="/newadvertisement" element={<NewAdvertisement />} />
         </Route>

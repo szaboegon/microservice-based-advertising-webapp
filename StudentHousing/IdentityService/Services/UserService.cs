@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Security.Claims;
+using FluentValidation;
 using IdentityService.Helpers;
 using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -84,6 +85,18 @@ namespace IdentityService.Services
             };
 
             return await _userManager.CreateAsync(user, request.Password);
+        }
+
+        public async Task<ApplicationUser> GetUserByIdAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                throw new NullReferenceException("User does not exist");
+            }
+
+            return user;
         }
     }
 }

@@ -39,10 +39,12 @@ services:
        - 8002
     labels:
        - traefik.enable=true
-       - traefik.http.routers.advertisingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
-       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.address=localhost/api/user/validate"
-       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.authResponseHeaders=X-Forwarded-User"
-       - "traefik.http.middlewares.advertisingservicewebapi.forwardauth.trustForwardHeader=true"
+       - traefik.http.routers.advertisingserviceprivate.rule=Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
+       - traefik.http.routers.advertisingservicepublic.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
+       - "traefik.http.middlewares.advertisingauth.forwardauth.address=http://localhost:80/api/user/validate"
+       - "traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders=X-Forwarded-User"
+       - "traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader=true"
+       - "traefik.http.routers.advertisingserviceprivate.middlewares=advertisingauth"
        
   advertisingdb:
     container_name: advertising_db

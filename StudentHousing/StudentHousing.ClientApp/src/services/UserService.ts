@@ -1,8 +1,9 @@
 import axios from "axios";
 import { LoginData } from "../formInterfaces/loginData";
 import { RegistrationData } from "../formInterfaces/registrationData";
+import { Session } from "../models/session";
 import { User } from "../models/user";
-import { AuthResponse } from "../models/authResponse";
+import authHeader from "./auth/authHeader";
 
 const apiClient = axios.create({
   baseURL: "/api/user",
@@ -11,14 +12,10 @@ const apiClient = axios.create({
   },
 });
 
-const login = async (loginData: LoginData): Promise<AuthResponse> => {
+const login = async (loginData: LoginData): Promise<Session> => {
   return await apiClient.post("/login", loginData).then((response) => {
     if (response.data.token) {
-      const user: User ={
-        userName: response.data.userName,
-        token: response.data.token
-      }
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", JSON.stringify(response.data.token));
     }
 
     return response.data;
@@ -26,15 +23,20 @@ const login = async (loginData: LoginData): Promise<AuthResponse> => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  localStorage.removeItem("token");
 };
 
-const getCurrentUser = () =>{
-  const userStr = localStorage.getItem("user");
-  if(userStr) return JSON.parse(userStr);
+const getCurrentUserToken = () => {
+  const token = localStorage.getItem("token");
+  return token;
+};
 
-  return null;
-}
+const getCurrentUser = async (): Promise<User> => {
+  const respone = await apiClient.get("/currentuser", {
+    headers: authHeader(),
+  });
+  return respone.data;
+};
 
 const register = async (registrationData: RegistrationData) => {
   return await apiClient.post("/register", registrationData);
@@ -43,7 +45,8 @@ const register = async (registrationData: RegistrationData) => {
 const UserService = {
   login,
   logout,
+  getCurrentUserToken,
   getCurrentUser,
-  register
+  register,
 };
 export default UserService;

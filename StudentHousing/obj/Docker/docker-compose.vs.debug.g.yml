@@ -13,10 +13,10 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
     volumes:
-      - D:\Github repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI:/app
-      - D:\Github repos\microservice-based-advertising-webapp\StudentHousing:/src
-      - C:\Users\szabo\vsdbg\vs2017u5:/remote_debugger:rw
-      - C:\Users\szabo\.nuget\packages\:/root/.nuget/packages:ro
+      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI:/app
+      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing:/src
+      - C:\Users\User\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\User\.nuget\packages\:/root/.nuget/packages:ro
       - C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages:/root/.nuget/fallbackpackages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -40,10 +40,10 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
     volumes:
-      - D:\Github repos\microservice-based-advertising-webapp\StudentHousing\IdentityService:/app
-      - D:\Github repos\microservice-based-advertising-webapp\StudentHousing:/src
-      - C:\Users\szabo\vsdbg\vs2017u5:/remote_debugger:rw
-      - C:\Users\szabo\.nuget\packages\:/root/.nuget/packages:ro
+      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService:/app
+      - D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing:/src
+      - C:\Users\User\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\User\.nuget\packages\:/root/.nuget/packages:ro
       - C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages:/root/.nuget/fallbackpackages:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

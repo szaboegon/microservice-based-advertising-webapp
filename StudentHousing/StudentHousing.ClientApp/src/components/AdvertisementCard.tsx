@@ -89,7 +89,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
                 className="card-text"
                 textColor="gray.500"
               >
-                {advertisement.district
+                {advertisement.city.toUpperCase() == "BUDAPEST"
                   ? advertisement.district + " " + advertisement.city
                   : advertisement.city}
               </Text>

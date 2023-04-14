@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Azure;
 using IdentityService.Models;
 using IdentityService.Services;
@@ -73,6 +74,29 @@ namespace IdentityService.Controllers
         public ActionResult ValidateToken()
         {
             return Ok();
+        }
+
+        [HttpGet("currentuser")]
+
+        [Authorize]
+        public async Task<ActionResult<ApplicationUser>> GetCurrentUser()
+        {
+            ApplicationUser user = null;
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                if (identity != null)
+                {
+                    var id = identity.FindFirst("Sub").Value;
+                    user = await _userService.GetUserByIdAsync(id);
+                }
+
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
+            return Ok(user);
         }
     }
 }

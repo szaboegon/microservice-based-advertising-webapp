@@ -7,7 +7,7 @@ services:
         com.microsoft.created-by: "visual-studio"
         com.microsoft.visual-studio.project-name: "AdvertisingService.WebAPI"
     volumes:
-      - C:\Users\szabo\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\User\vsdbg\vs2017u5:/remote_debugger:rw
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
@@ -25,7 +25,7 @@ services:
         com.microsoft.created-by: "visual-studio"
         com.microsoft.visual-studio.project-name: "IdentityService"
     volumes:
-      - C:\Users\szabo\vsdbg\vs2017u5:/remote_debugger:rw
+      - C:\Users\User\vsdbg\vs2017u5:/remote_debugger:rw
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
