@@ -75,28 +75,5 @@ namespace IdentityService.Controllers
         {
             return Ok();
         }
-
-        [HttpGet("currentuser")]
-
-        [Authorize]
-        public async Task<ActionResult<ApplicationUser>> GetCurrentUser()
-        {
-            ApplicationUser user = null;
-            try
-            {
-                var identity = HttpContext.User.Identity as ClaimsIdentity;
-                if (identity != null)
-                {
-                    var id = identity.FindFirst("Sub").Value;
-                    user = await _userService.GetUserByIdAsync(id);
-                }
-
-            }
-            catch (Exception e)
-            {
-                return NotFound(e.Message);
-            }
-            return Ok(user);
-        }
     }
 }

@@ -51,7 +51,7 @@ export const Search = () => {
         flexWrap="wrap"
         marginX="auto"
       >
-        <VStack width={{base: "100%", xl:"80%"}}>
+        <VStack width={{ base: "100%", xl: "80%" }}>
           <Breadcrumb
             marginY="10px"
             spacing="8px"
@@ -79,16 +79,18 @@ export const Search = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {isLoading && <Spinner/>}
+        {isLoading && <Spinner />}
         {isError && error instanceof Error && <ErrorAlert error={error} />}
-        {
+        {isSuccess &&
           advertisements.map((advertisement) => (
             <AdvertisementCard
               key={advertisement.id}
               advertisement={advertisement}
             ></AdvertisementCard>
           ))}
-          {isSuccess && advertisements.length <= 0 && <WarningAlert message="There are no matching advertisements for your search filters." />}
+        {isSuccess && advertisements.length <= 0 && (
+          <WarningAlert message="There are no matching advertisements for your search filters." />
+        )}
       </Flex>
     </>
   );

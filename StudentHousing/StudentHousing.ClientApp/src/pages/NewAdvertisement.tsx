@@ -25,6 +25,7 @@ import { useMutation } from "react-query";
 import AdvertisementService from "../services/AdvertisementService";
 import { SuccessAlert } from "../components/Alerts/SuccessAlert";
 import { ErrorAlert } from "../components/Alerts/ErrorAlert";
+import { ResponseError } from "../models/responseError";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementFormData = {

@@ -11,7 +11,20 @@ services:
     networks:      
        - advertising
     # Enables the web UI and tells Traefik to listen to docker
-    command: --api.insecure=true --providers.docker
+    command: 
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"   
+      - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=szabo.egon2001@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # The HTTP port
       - "80:80"
@@ -21,7 +34,9 @@ services:
       - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
+      - "./letsencrypt:/letsencrypt"
       - /var/run/docker.sock:/var/run/docker.sock
+      
 
   advertisingservice.webapi:
     container_name: advertising_service
@@ -41,10 +56,12 @@ services:
        - traefik.enable=true
        - traefik.http.routers.advertisingserviceprivate.rule=Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
        - traefik.http.routers.advertisingservicepublic.rule=Host(`localhost`) && PathPrefix(`/api/advertisement`)
-       - "traefik.http.middlewares.advertisingauth.forwardauth.address=http://localhost:80/api/user/validate"
+       - "traefik.http.middlewares.advertisingauth.forwardauth.address=https://localhost:80/api/user/validate"
        - "traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders=X-Forwarded-User"
        - "traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader=true"
        - "traefik.http.routers.advertisingserviceprivate.middlewares=advertisingauth"
+       - traefik.http.routers.advertisingservicepublic.tls=true
+       - traefik.http.routers.advertisingservicepublic.tls.certresolver=myresolver
        
   advertisingdb:
     container_name: advertising_db
@@ -71,6 +88,8 @@ services:
     labels: 
        - traefik.enable=true
        - traefik.http.routers.identityservice.rule=Host(`localhost`) && PathPrefix(`/api/user`)
+       - traefik.http.routers.identityservice.tls=true
+       - traefik.http.routers.identityservice.tls.certresolver=myresolver
 
   identitydb:
     container_name: identity_db
@@ -87,13 +106,14 @@ services:
     container_name: client_app
     build: 
         context: ./StudentHousing.ClientApp
-        dockerfile: Dockerfile
-    ports: 
-       - 8081:80  
+        dockerfile: Dockerfile 
     networks:
        - advertising
     stdin_open: true
     tty: true
     labels:
        - traefik.enable=true
+       - traefik.http.routers.clientapp.entrypoints=websecure
        - traefik.http.routers.clientapp.rule=Host(`localhost`)
+       - traefik.http.routers.clientapp.tls=true
+       - traefik.http.routers.clientapp.tls.certresolver=myresolver

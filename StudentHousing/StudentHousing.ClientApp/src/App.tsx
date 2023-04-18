@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import UserService from "./services/UserService";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { NewAdvertisement } from "./pages/NewAdvertisement";
+import { User } from "./models/user";
+import { AuthVerify } from "./services/auth/AuthVerify";
 
 function App() {
   const theme = extendTheme({
@@ -53,27 +55,25 @@ function App() {
     },
   });
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = UserService.getCurrentUserToken();
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const [user, setUser] = useState<User | undefined>(undefined);
 
   const logout = () => {
     UserService.logout();
-    setIsLoggedIn(false);
+    setUser(undefined);
   };
+
+  useEffect(() => {
+    const user = UserService.getCurrentUser();
+    setUser(user);
+  }, [logout]);
 
   return (
     <ChakraProvider theme={theme}>
-      <Navbar logout={logout} isLoggedIn={isLoggedIn}></Navbar>
+      <Navbar logout={logout} user={user}></Navbar>
       <Routes>
         <Route
           path="/newadvertisement"
-          element={<PrivateRoute isLoggedIn={isLoggedIn} />}
+          element={<PrivateRoute isLoggedIn={!!user} />}
         >
           <Route path="/newadvertisement" element={<NewAdvertisement />} />
         </Route>
@@ -84,6 +84,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<Navigate to="/login" replace />} />
       </Routes>
+      <AuthVerify logout={logout} />
     </ChakraProvider>
   );
 }

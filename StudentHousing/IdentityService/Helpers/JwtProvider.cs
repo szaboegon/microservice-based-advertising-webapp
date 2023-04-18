@@ -18,7 +18,11 @@ namespace IdentityService.Helpers
         {
             var claims = new Claim[]
             {
-                new(JwtRegisteredClaimNames.Sub, user.Id)
+                new(JwtRegisteredClaimNames.Sub, user.Id),
+                new("lastName", user.LastName),
+                new("firstName", user.FirstName),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new("userName", user.UserName),
             };
 
             var signingCredentials = new SigningCredentials(

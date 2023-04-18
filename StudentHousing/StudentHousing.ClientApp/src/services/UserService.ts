@@ -1,9 +1,10 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import { LoginData } from "../formInterfaces/loginData";
 import { RegistrationData } from "../formInterfaces/registrationData";
 import { Session } from "../models/session";
+import { TokenClaims } from "../models/tokenClaims";
 import { User } from "../models/user";
-import authHeader from "./auth/authHeader";
 
 const apiClient = axios.create({
   baseURL: "/api/user",
@@ -26,16 +27,20 @@ const logout = () => {
   localStorage.removeItem("token");
 };
 
-const getCurrentUserToken = () => {
+const getCurrentUser = () => {
   const token = localStorage.getItem("token");
-  return token;
-};
+  if (!token) {
+    return;
+  }
+  const decoded: TokenClaims = jwtDecode(token);
+  const user: User = {
+    firstName: decoded.firstName,
+    lastName: decoded.lastName,
+    userName: decoded.userName,
+    email: decoded.email,
+  };
 
-const getCurrentUser = async (): Promise<User> => {
-  const respone = await apiClient.get("/currentuser", {
-    headers: authHeader(),
-  });
-  return respone.data;
+  return user;
 };
 
 const register = async (registrationData: RegistrationData) => {
@@ -45,7 +50,6 @@ const register = async (registrationData: RegistrationData) => {
 const UserService = {
   login,
   logout,
-  getCurrentUserToken,
   getCurrentUser,
   register,
 };
