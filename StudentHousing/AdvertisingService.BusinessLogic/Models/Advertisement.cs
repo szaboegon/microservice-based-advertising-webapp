@@ -12,7 +12,6 @@
         public string? Description { get; set; }
         public int AdvertiserId { get; set; }
         public int CategoryId { get; set; }
-        public int AddressId { get; set; }
 
 
         private Category? _category;

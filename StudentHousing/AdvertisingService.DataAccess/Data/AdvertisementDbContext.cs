@@ -60,6 +60,16 @@ namespace AdvertisingService.DataAccess.Data
                       .HasColumnName("unitNumber")
                       .HasColumnType("nvarchar")
                       .HasMaxLength(10);
+
+                entity.Property(e => e.AdvertisementId)
+                    .HasColumnName("advertisementId")
+                    .IsRequired();
+
+                entity.HasOne(addr => addr.Advertisement)
+                    .WithOne(adv => adv.Address)
+                    .HasForeignKey<Address>(h => h.AdvertisementId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_Address_Advertisement");
             });
 
 
@@ -117,19 +127,11 @@ namespace AdvertisingService.DataAccess.Data
                       .HasColumnName("advertiserId")
                       .IsRequired();
 
-                entity.Property(e => e.AddressId)
-                    .HasColumnName("addressId")
-                    .IsRequired();
 
                 entity.Property(e => e.CategoryId)
                     .HasColumnName("categoryId")
                     .IsRequired();
 
-                entity.HasOne(h => h.Address)
-                      .WithOne(a => a.Advertisement)
-                      .HasForeignKey<Advertisement>(h => h.AddressId)
-                      .OnDelete(DeleteBehavior.ClientSetNull)
-                      .HasConstraintName("FK_Advertisement_Address");
 
                 entity.HasOne(h => h.Category)
                      .WithMany(c => c.Advertisements)
@@ -155,7 +157,7 @@ namespace AdvertisingService.DataAccess.Data
                 entity.HasOne(i => i.Advertisement)
                       .WithMany(h => h.Images)
                       .HasForeignKey(i => i.AdvertisementId)
-                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .OnDelete(DeleteBehavior.Cascade)
                       .HasConstraintName("FK_Image_Advertisement");
             });
 
@@ -167,6 +169,40 @@ namespace AdvertisingService.DataAccess.Data
                 new Category { Id = 1, Name = "apartment" },
                 new Category { Id = 2, Name = "room" });
 
+            modelBuilder.Entity<Advertisement>().HasData(
+               new Advertisement
+               {
+                   Id = 1,
+                   NumberOfRooms = 3,
+                   Size = 70,
+                   Furnished = true,
+                   Parking = false,
+                   MonthlyPrice = 250000,
+                   Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
+                   " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
+                   " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
+                   " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+                   "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
+                   AdvertiserId = 1,
+                   CategoryId = 1,
+               },
+                new Advertisement
+                {
+                    Id = 2,
+                    NumberOfRooms = 1,
+                    Size = 20,
+                    Furnished = false,
+                    Parking = true,
+                    MonthlyPrice = 100000,
+                    Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
+                   " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
+                   " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
+                   " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
+                   "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
+                    AdvertiserId = 2,
+                    CategoryId = 2,
+                });
+
             modelBuilder.Entity<Address>().HasData(
                 new Address
                 {
@@ -177,7 +213,8 @@ namespace AdvertisingService.DataAccess.Data
                     District = "XI.",
                     StreetName = "Király utca",
                     StreetNumber = "47.",
-                    UnitNumber = "15."
+                    UnitNumber = "15.",
+                    AdvertisementId = 1
                 },
                  new Address
                  {
@@ -187,53 +224,11 @@ namespace AdvertisingService.DataAccess.Data
                      City = "Pécs",
                      StreetName = "Kossuth utca",
                      StreetNumber = "12.",
-                     UnitNumber = "10."
+                     UnitNumber = "10.",
+                     AdvertisementId = 2
                  }
                 );
 
-            modelBuilder.Entity<Advertisement>().HasData(
-                new Advertisement
-                {
-                    Id = 1,
-                    NumberOfRooms = 3,
-                    Size = 70,
-                    Furnished = true,
-                    Parking = false,
-                    MonthlyPrice = 250000,
-                    Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
-                    " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
-                    " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
-                    " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
-                    "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
-                    AdvertiserId = 1,
-                    CategoryId = 1,
-                    AddressId = 1,
-                },
-                 new Advertisement
-                 {
-                     Id = 2,
-                     NumberOfRooms = 1,
-                     Size = 20,
-                     Furnished = false,
-                     Parking = true,
-                     MonthlyPrice = 100000,
-                     Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor." +
-                    " Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus." +
-                    " Donec quam felis, ultricies nec, pellentesque eu, pretium quis," +
-                    " sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. " +
-                    "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
-                     AdvertiserId = 2,
-                     CategoryId = 2,
-                     AddressId = 2,
-                 });
-
-            /*modelBuilder.Entity<Image>().HasData(
-                new Image
-                {
-                    Id = 1,
-                    AdvertisementId = 1
-                }
-            );*/
         }
 
     }

@@ -1,7 +1,8 @@
-﻿using AdvertisingService.BusinessLogic.Services;
+﻿using System.IdentityModel.Tokens.Jwt;
+using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.Net.Http.Headers;
 
 namespace AdvertisingService.WebAPI.Controllers
 {
@@ -11,20 +12,24 @@ namespace AdvertisingService.WebAPI.Controllers
     {
         private readonly AdvertisementService _advertisementService;
         private readonly ImageService _imageService;
+        private readonly JwtSecurityTokenHandler _tokenHandler;
         public AdvertisementController(AdvertisementService advertisementService, ImageService imageService)
         {
             _advertisementService = advertisementService;
             _imageService = imageService;
+            _tokenHandler = new JwtSecurityTokenHandler();
         }
 
         [HttpGet]
+        [Route("public/advertisement-cards")]
         public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDTO queryParams)
         {
             var advertisements = await _advertisementService.GetAllAdvertisementsAsync(queryParams);
             return Ok(advertisements);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet]
+        [Route("public/advertisement-details/{id:int}")]
         public async Task<ActionResult<AdvertisementDetailsDTO>> GetAdvertisementDetailsAsync(int id)
         {
             var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
@@ -32,7 +37,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("private")]
+        [Route("private/advertisements")]
         public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
         {
             int newAdvertisementId;
@@ -43,7 +48,17 @@ namespace AdvertisingService.WebAPI.Controllers
                     return BadRequest("List of files was empty. Please upload a file.");
                 }
 
-                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data);
+                var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+                var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
+
+                if (jwtSecurityToken == null)
+                {
+                    return BadRequest("Token is invalid.");
+                }
+
+                var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+
+                newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data, int.Parse(advertiserId));
 
                 var file = Request.Form.Files[0];
                 var bytes = await ConvertFileDataToBytesAsync(file);
@@ -69,5 +84,67 @@ namespace AdvertisingService.WebAPI.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("private/advertisements/{id:int}")]
+        public async Task<ActionResult> DeleteAdvertisementAsync(int id)
+        {
+            try
+            {
+                var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+                var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
+
+                if (jwtSecurityToken == null)
+                {
+                    return BadRequest("Token is invalid.");
+                }
+
+                var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+                await _advertisementService.DeleteAdvertisementAsync(id, int.Parse(advertiserId));
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("private/advertisements-by-user")]
+        public async Task<ActionResult<IEnumerable<AdvertisementListItemDTO>>> GetAdvertisementsByUserAsync(int id)
+        {
+            try
+            {
+                var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+                var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
+
+                if (jwtSecurityToken == null)
+                {
+                    return BadRequest("Token is invalid");
+                }
+
+                var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+                var result = await _advertisementService.GetAdvertisementsByUserAsync(int.Parse(advertiserId));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("public/latest-advertisements/{count:int}")]
+        public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetLatestAdvertisementsAsync(int count)
+        {
+            try
+            {
+                var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

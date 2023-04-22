@@ -1,18 +1,19 @@
 import "./App.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import { Home } from "./pages/Home";
-import { Search } from "./pages/Search";
-import { Details } from "./pages/Details";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Navbar from "./components/shared/Navbar";
+import { Home } from "./components/pages/Home";
+import { Search } from "./components/pages/Search";
+import { Details } from "./components/pages/Details";
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 import { useEffect, useState } from "react";
 import UserService from "./services/UserService";
-import { PrivateRoute } from "./routes/PrivateRoute";
-import { NewAdvertisement } from "./pages/NewAdvertisement";
+import { PrivateRoute } from "./components/routes/PrivateRoute";
+import { NewAdvertisement } from "./components/pages/NewAdvertisement";
 import { User } from "./models/user";
 import { AuthVerify } from "./services/auth/AuthVerify";
+import Profile from "./components/pages/Profile";
 
 function App() {
   const theme = extendTheme({
@@ -56,6 +57,7 @@ function App() {
   });
 
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [loaded, setLoaded] = useState(false);
 
   const logout = () => {
     UserService.logout();
@@ -65,6 +67,7 @@ function App() {
   useEffect(() => {
     const user = UserService.getCurrentUser();
     setUser(user);
+    setLoaded(true);
   }, [logout]);
 
   return (
@@ -76,6 +79,9 @@ function App() {
           element={<PrivateRoute isLoggedIn={!!user} />}
         >
           <Route path="/newadvertisement" element={<NewAdvertisement />} />
+        </Route>
+        <Route path="/profile" element={<PrivateRoute isLoggedIn={!!user} />}>
+          {user && <Route path="/profile" element={<Profile user={user} />} />}
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/search/*" element={<Search />} />

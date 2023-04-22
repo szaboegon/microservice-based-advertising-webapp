@@ -11,5 +11,9 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces
         IQueryable<AdvertisementCardDTO> GetAllWithCardDataAsIQueryable();
 
         Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id);
+
+        Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdWithListItemDataAsync(int id);
+
+        Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count);
     }
 }

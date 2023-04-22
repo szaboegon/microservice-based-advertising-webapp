@@ -1,4 +1,4 @@
-name: dockercompose14365604898514843923
+name: dockercompose4658398787065314807
 services:
   advertisingdb:
     container_name: advertising_db
@@ -15,40 +15,26 @@ services:
       protocol: tcp
   advertisingservice.webapi:
     build:
-      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
-      target: base
     container_name: advertising_service
-    entrypoint:
-    - tail
-    - -f
-    - /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_URLS: https://+:443;http://+:80
       DB_HOST: advertisingdb
       DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
-      DOTNET_USE_POLLING_FILE_WATCHER: "1"
-      NUGET_FALLBACK_PACKAGES: ""
     expose:
     - "8002"
-    image: adsvertisingservicewebapi:dev
+    image: adsvertisingservicewebapi
     labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.address: localhost/api/user
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.authResponseHeaders: X-Forwarded-User
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.trustForwardHeader: "true"
-      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && PathPrefix(`/api/advertisement`)
+      traefik.http.middlewares.advertisingauth.forwardauth.address: https://localhost:80/api/user/auth
+      traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders: X-Forwarded-User
+      traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader: "true"
+      traefik.http.routers.advertisingserviceprivate.middlewares: advertisingauth
+      traefik.http.routers.advertisingserviceprivate.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
+      traefik.http.routers.advertisingservicepublic.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/public`)
     networks:
       advertising: null
     ports:
@@ -58,44 +44,22 @@ services:
     - mode: ingress
       target: 443
       protocol: tcp
-    tty: true
     volumes:
     - type: bind
-      source: C:\repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI
-      target: /app
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\vsdbg\vs2017u5
-      target: /remote_debugger
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\szabo\.nuget\packages\
-      target: /root/.nuget/packages
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
       read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\repos\microservice-based-advertising-webapp\StudentHousing
-      target: /src
       bind:
         create_host_path: true
   clientapp:
     build:
-      context: C:\repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
       dockerfile: Dockerfile
     container_name: client_app
     labels:
@@ -103,11 +67,6 @@ services:
       traefik.http.routers.clientapp.rule: Host(`localhost`)
     networks:
       advertising: null
-    ports:
-    - mode: ingress
-      target: 80
-      published: "8081"
-      protocol: tcp
     stdin_open: true
     tty: true
   identitydb:
@@ -125,74 +84,26 @@ services:
       protocol: tcp
   identityservice:
     build:
-      context: C:\repos\microservice-based-advertising-webapp\StudentHousing
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: IdentityService
-      target: base
     container_name: identity_service
-    entrypoint:
-    - tail
-    - -f
-    - /dev/null
     environment:
-      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       DB_HOST: identitydb
       DB_NAME: identity
       DB_SA_PASSWORD: password@12345
-      DOTNET_USE_POLLING_FILE_WATCHER: "1"
-      NUGET_FALLBACK_PACKAGES: ""
-    image: identityservice:dev
     labels:
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages  "/app/bin/Debug/net7.0/IdentityService.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
       traefik.http.routers.identityservice.rule: Host(`localhost`) && PathPrefix(`/api/user`)
     networks:
       advertising: null
-    tty: true
-    volumes:
-    - type: bind
-      source: C:\repos\microservice-based-advertising-webapp\StudentHousing\IdentityService
-      target: /app
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\repos\microservice-based-advertising-webapp\StudentHousing
-      target: /src
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\vsdbg\vs2017u5
-      target: /remote_debugger
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\.nuget\packages\
-      target: /root/.nuget/packages
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
-      read_only: true
-      bind:
-        create_host_path: true
   traefik:
     command:
+    - --log.level=DEBUG
     - --api.insecure=true
     - --providers.docker
+    - --providers.docker.exposedbydefault=false
+    - --entrypoints.web.address=:80
+    - --entrypoints.websecure.address=:443
     container_name: traefik
     image: traefik:v2.9
     networks:
@@ -212,10 +123,15 @@ services:
       protocol: tcp
     volumes:
     - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\letsencrypt
+      target: /letsencrypt
+      bind:
+        create_host_path: true
+    - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
       bind:
         create_host_path: true
 networks:
   advertising:
-    name: dockercompose14365604898514843923_advertising
+    name: dockercompose4658398787065314807_advertising

@@ -31,6 +31,10 @@ namespace AdvertisingService.DataAccess.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AdvertisementId")
+                        .HasColumnType("int")
+                        .HasColumnName("advertisementId");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -71,12 +75,16 @@ namespace AdvertisingService.DataAccess.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdvertisementId")
+                        .IsUnique();
+
                     b.ToTable("Addresses");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            AdvertisementId = 1,
                             City = "Budapest",
                             District = "XI.",
                             PostalCode = (short)1091,
@@ -88,6 +96,7 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                         new
                         {
                             Id = 2,
+                            AdvertisementId = 2,
                             City = "Pécs",
                             PostalCode = (short)7600,
                             Region = "Baranya",
@@ -105,10 +114,6 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                         .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int")
-                        .HasColumnName("addressId");
 
                     b.Property<int>("AdvertiserId")
                         .HasColumnType("int")
@@ -147,13 +152,10 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                     b.Property<DateTime>("UploadDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 3, 13, 18, 49, 26, 474, DateTimeKind.Local).AddTicks(3129))
+                        .HasDefaultValue(new DateTime(2023, 4, 22, 14, 11, 29, 736, DateTimeKind.Local).AddTicks(9345))
                         .HasColumnName("uploadDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId")
-                        .IsUnique();
 
                     b.HasIndex("CategoryId");
 
@@ -163,7 +165,6 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                         new
                         {
                             Id = 1,
-                            AddressId = 1,
                             AdvertiserId = 1,
                             CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
@@ -177,7 +178,6 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                         new
                         {
                             Id = 2,
-                            AddressId = 2,
                             AdvertiserId = 2,
                             CategoryId = 2,
                             Description = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu",
@@ -247,21 +247,25 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                     b.ToTable("Images");
                 });
 
+            modelBuilder.Entity("AdvertisingService.BusinessLogic.Models.Address", b =>
+                {
+                    b.HasOne("AdvertisingService.BusinessLogic.Models.Advertisement", "Advertisement")
+                        .WithOne("Address")
+                        .HasForeignKey("AdvertisingService.BusinessLogic.Models.Address", "AdvertisementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Address_Advertisement");
+
+                    b.Navigation("Advertisement");
+                });
+
             modelBuilder.Entity("AdvertisingService.BusinessLogic.Models.Advertisement", b =>
                 {
-                    b.HasOne("AdvertisingService.BusinessLogic.Models.Address", "Address")
-                        .WithOne("Advertisement")
-                        .HasForeignKey("AdvertisingService.BusinessLogic.Models.Advertisement", "AddressId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Advertisement_Address");
-
                     b.HasOne("AdvertisingService.BusinessLogic.Models.Category", "Category")
                         .WithMany("Advertisements")
                         .HasForeignKey("CategoryId")
                         .IsRequired()
                         .HasConstraintName("FK_Advertisement_Category");
-
-                    b.Navigation("Address");
 
                     b.Navigation("Category");
                 });
@@ -271,19 +275,18 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                     b.HasOne("AdvertisingService.BusinessLogic.Models.Advertisement", "Advertisement")
                         .WithMany("Images")
                         .HasForeignKey("AdvertisementId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Image_Advertisement");
 
                     b.Navigation("Advertisement");
                 });
 
-            modelBuilder.Entity("AdvertisingService.BusinessLogic.Models.Address", b =>
-                {
-                    b.Navigation("Advertisement");
-                });
-
             modelBuilder.Entity("AdvertisingService.BusinessLogic.Models.Advertisement", b =>
                 {
+                    b.Navigation("Address")
+                        .IsRequired();
+
                     b.Navigation("Images");
                 });
 

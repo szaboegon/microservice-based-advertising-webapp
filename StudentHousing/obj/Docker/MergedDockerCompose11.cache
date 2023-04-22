@@ -1,4 +1,4 @@
-name: dockercompose17679181687133849317
+name: dockercompose4658398787065314807
 services:
   advertisingdb:
     container_name: advertising_db
@@ -15,7 +15,7 @@ services:
       protocol: tcp
   advertisingservice.webapi:
     build:
-      context: D:\Github repos\microservice-based-advertising-webapp\StudentHousing
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
     container_name: advertising_service
     environment:
@@ -29,10 +29,12 @@ services:
     image: adsvertisingservicewebapi
     labels:
       traefik.enable: "true"
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.address: localhost/api/user/validate
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.authResponseHeaders: X-Forwarded-User
-      traefik.http.middlewares.advertisingservicewebapi.forwardauth.trustForwardHeader: "true"
-      traefik.http.routers.advertisingservicewebapi.rule: Host(`localhost`) && PathPrefix(`/api/advertisement`)
+      traefik.http.middlewares.advertisingauth.forwardauth.address: http://localhost:80/api/user/auth
+      traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders: X-Forwarded-User
+      traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader: "true"
+      traefik.http.routers.advertisingserviceprivate.middlewares: advertisingauth
+      traefik.http.routers.advertisingserviceprivate.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
+      traefik.http.routers.advertisingservicepublic.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/public`)
     networks:
       advertising: null
     ports:
@@ -44,20 +46,20 @@ services:
       protocol: tcp
     volumes:
     - type: bind
-      source: C:\Users\szabo\AppData\Roaming/Microsoft/UserSecrets
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\szabo\AppData\Roaming/ASP.NET/Https
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
       read_only: true
       bind:
         create_host_path: true
   clientapp:
     build:
-      context: D:\Github repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp
       dockerfile: Dockerfile
     container_name: client_app
     labels:
@@ -65,11 +67,6 @@ services:
       traefik.http.routers.clientapp.rule: Host(`localhost`)
     networks:
       advertising: null
-    ports:
-    - mode: ingress
-      target: 80
-      published: "8081"
-      protocol: tcp
     stdin_open: true
     tty: true
   identitydb:
@@ -87,7 +84,7 @@ services:
       protocol: tcp
   identityservice:
     build:
-      context: D:\Github repos\microservice-based-advertising-webapp\StudentHousing
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
     container_name: identity_service
     environment:
@@ -101,8 +98,12 @@ services:
       advertising: null
   traefik:
     command:
+    - --log.level=DEBUG
     - --api.insecure=true
     - --providers.docker
+    - --providers.docker.exposedbydefault=false
+    - --entrypoints.web.address=:80
+    - --entrypoints.websecure.address=:443
     container_name: traefik
     image: traefik:v2.9
     networks:
@@ -122,10 +123,15 @@ services:
       protocol: tcp
     volumes:
     - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\letsencrypt
+      target: /letsencrypt
+      bind:
+        create_host_path: true
+    - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
       bind:
         create_host_path: true
 networks:
   advertising:
-    name: dockercompose17679181687133849317_advertising
+    name: dockercompose4658398787065314807_advertising

@@ -25,7 +25,7 @@ namespace AdvertisingService.BusinessLogic.Services
             _pipeLineBuilder = pipeLineBuilder; 
         }
 
-        public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data)
+        public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data, int advertiserId)
         {
             var newCategory = await _categoryService.CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
             var newAddress = await _addressService.CreateNewAddressAsync(data);
@@ -38,7 +38,7 @@ namespace AdvertisingService.BusinessLogic.Services
                 Parking = data.Parking,
                 MonthlyPrice = data.MonthlyPrice,
                 Description = data.Description,
-                AdvertiserId = 10000,
+                AdvertiserId = advertiserId,
                 Category = newCategory,
                 Address = newAddress,
             };
@@ -71,6 +71,39 @@ namespace AdvertisingService.BusinessLogic.Services
             if (advertisement == null) throw new Exception("Advertisement with this id does not exist");
 
             return advertisement;
+        }
+
+        public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   //TODO change cascade delete settings for this to work
+        {
+            var advertisement = await _advertisementRepository.GetByIdAsync(advertisementId);
+            if (advertisement == null)
+            {
+                throw new Exception("Advertisement with this id does not exist");
+            }
+
+            if (advertisement.AdvertiserId != advertiserId)
+            {
+                throw new Exception("Advertisement does not belong to this advertiser");
+            }
+            _advertisementRepository.Remove(advertisement);
+            await _advertisementRepository.SaveAsync();
+        }
+
+        public async Task<IEnumerable<AdvertisementListItemDTO>> GetAdvertisementsByUserAsync(int advertiserId)
+        {
+            var result = await _advertisementRepository.GetByAdvertiserIdWithListItemDataAsync(advertiserId);
+
+            return result;
+        }
+
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count)
+        {
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException("count");
+            }
+            var result = await _advertisementRepository.GetLatestAdvertisementsAsync(count);
+            return result;
         }
     }
 }

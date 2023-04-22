@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { LoginData } from "../formInterfaces/loginData";
-import { RegistrationData } from "../formInterfaces/registrationData";
+import { LoginData } from "../models/formInterfaces/loginData";
+import { RegistrationData } from "../models/formInterfaces/registrationData";
 import { Session } from "../models/session";
 import { TokenClaims } from "../models/tokenClaims";
 import { User } from "../models/user";

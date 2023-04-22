@@ -82,5 +82,44 @@ namespace AdvertisingService.DataAccess.Repositories
 
             return advertisement;
         }
+
+        public async Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdWithListItemDataAsync(int id)
+        {
+            var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementListItemDTO
+            {
+                Id = a.Id,
+                CategoryName = a.Category.Name,
+                PostalCode = a.Address.PostalCode,
+                City = a.Address.City,
+                StreetName = a.Address.StreetName,
+                StreetNumber = a.Address.StreetNumber,
+                UploadDate = a.UploadDate,
+                Image = a.Images.First().Data,
+            }).ToListAsync();
+
+            return list;
+        }
+
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count)
+        {
+            var list = await _dbcontext.Advertisements.OrderByDescending(a => a.UploadDate).Select(a => new AdvertisementCardDTO
+            {
+                Id = a.Id,
+                CategoryName = a.Category.Name,
+                PostalCode = a.Address.PostalCode,
+                City = a.Address.City,
+                District = a.Address.District,
+                StreetName = a.Address.StreetName,
+                StreetNumber = a.Address.StreetNumber,
+                NumberOfRooms = a.NumberOfRooms,
+                Size = a.Size,
+                MonthlyPrice = a.MonthlyPrice,
+                Image = a.Images.First().Data,
+                Parking = a.Parking,
+                Furnished = a.Furnished
+            }).Take(count).ToListAsync();
+
+            return list;
+        }
     }
 }

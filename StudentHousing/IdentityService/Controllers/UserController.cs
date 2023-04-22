@@ -66,10 +66,11 @@ namespace IdentityService.Controllers
                 return Ok("Registration was successful.");
             }
             
-            return BadRequest(result);
+            return BadRequest(result.Errors.First().Description);
         }
 
-        [HttpGet("validate")]
+        [HttpGet]
+        [Route("auth")]
         [Authorize]
         public ActionResult ValidateToken()
         {

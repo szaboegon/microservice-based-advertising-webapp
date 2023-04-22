@@ -56,10 +56,6 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
-//app.UseForwardedHeaders();
-//app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

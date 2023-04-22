@@ -87,16 +87,5 @@ namespace IdentityService.Services
             return await _userManager.CreateAsync(user, request.Password);
         }
 
-        public async Task<ApplicationUser> GetUserByIdAsync(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if (user == null)
-            {
-                throw new NullReferenceException("User does not exist");
-            }
-
-            return user;
-        }
     }
 }
