@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { AdvertisementDetailsData } from "../../models/advertisement/advertisementDetailsDatal";
+import ImageService from "../../services/ImageService";
 
 interface IAdvertisementDetailsProps {
   advertisement: AdvertisementDetailsData;
@@ -22,7 +23,7 @@ interface IAdvertisementDetailsProps {
 const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
 > = ({ advertisement }) => {
-  var base64Image = "data:image/png;base64," + advertisement.image;
+  var base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
       <Flex width="75%" marginY="20px" flexWrap="wrap" justifyContent="center">

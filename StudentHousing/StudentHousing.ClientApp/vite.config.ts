@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/hubs/": {
+        target: "ws://localhost:80/",
+        changeOrigin: true,
+        secure: false,
+      },
     },
     /*
     watch: {

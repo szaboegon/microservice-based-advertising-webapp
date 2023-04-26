@@ -7,7 +7,7 @@ services:
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 1433
@@ -17,26 +17,43 @@ services:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
+      target: base
     container_name: advertising_service
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_URLS: https://+:443;http://+:80
       DB_HOST: advertisingdb
       DB_NAME: advertising
       DB_SA_PASSWORD: password@12345
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
     expose:
     - "8002"
-    image: adsvertisingservicewebapi
+    image: adsvertisingservicewebapi:dev
     labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/AdvertisingService.WebAPI.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.middlewares.advertisingauth.forwardauth.address: https://localhost:80/api/user/auth
+      traefik.http.middlewares.advertisingauth.forwardauth.address: http://localhost:80/api/user/auth
       traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders: X-Forwarded-User
       traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader: "true"
       traefik.http.routers.advertisingserviceprivate.middlewares: advertisingauth
       traefik.http.routers.advertisingserviceprivate.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
       traefik.http.routers.advertisingservicepublic.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/public`)
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 80
@@ -44,7 +61,24 @@ services:
     - mode: ingress
       target: 443
       protocol: tcp
+    tty: true
     volumes:
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\AdvertisingService.WebAPI
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
     - type: bind
       source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
       target: /root/.microsoft/usersecrets
@@ -52,9 +86,20 @@ services:
       bind:
         create_host_path: true
     - type: bind
-      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
       read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      target: /src
       bind:
         create_host_path: true
   clientapp:
@@ -66,7 +111,7 @@ services:
       traefik.enable: "true"
       traefik.http.routers.clientapp.rule: Host(`localhost`)
     networks:
-      advertising: null
+      mynetwork: null
     stdin_open: true
     tty: true
   identitydb:
@@ -76,7 +121,7 @@ services:
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 1433
@@ -86,16 +131,150 @@ services:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: IdentityService
+      target: base
     container_name: identity_service
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
     environment:
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       DB_HOST: identitydb
       DB_NAME: identity
       DB_SA_PASSWORD: password@12345
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
+    image: identityservice:dev
     labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/IdentityService.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
       traefik.http.routers.identityservice.rule: Host(`localhost`) && PathPrefix(`/api/user`)
     networks:
-      advertising: null
+      mynetwork: null
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  messagingservice:
+    build:
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      dockerfile: MessagingService/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: MessagingService
+      target: base
+    container_name: messaging_service
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages
+    image: messagingservice:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/bin/Debug/net7.0/MessagingService.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+      traefik.enable: "true"
+      traefik.http.routers.messagingservice.rule: Host(`localhost`) && PathPrefix(`/hubs`)
+    networks:
+      mynetwork: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\MessagingService
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
   traefik:
     command:
     - --log.level=DEBUG
@@ -107,7 +286,7 @@ services:
     container_name: traefik
     image: traefik:v2.9
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 80
@@ -133,5 +312,5 @@ services:
       bind:
         create_host_path: true
 networks:
-  advertising:
-    name: dockercompose4658398787065314807_advertising
+  mynetwork:
+    name: dockercompose4658398787065314807_mynetwork

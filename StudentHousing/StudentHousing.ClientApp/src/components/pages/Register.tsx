@@ -9,18 +9,16 @@ import {
   Image,
   Spinner,
   HStack,
-  VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
-import { LoginData } from "../../models/formInterfaces/loginData";
 import UserService from "../../services/UserService";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
-import ApartmentBuilding1 from "../../assets/apartment-building1.jpg";
+import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
 import { Link } from "react-router-dom";
 import { RegistrationData } from "../../models/formInterfaces/registrationData";
 import { placeholderStyles } from "../../styles/placeholderStyles";

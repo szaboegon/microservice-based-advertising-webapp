@@ -15,6 +15,7 @@ import {
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import ImageService from "../../services/ImageService";
 
 interface IAdvertisementCardProps {
   advertisement: AdvertisementCardData;
@@ -28,7 +29,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
     navigate("/details/" + advertisement.id);
   };
 
-  var base64Image = "data:image/png;base64," + advertisement.image;
+  var base64Image = ImageService.convertToBase64Image(advertisement.image);
 
   return (
     <>

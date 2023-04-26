@@ -18,15 +18,13 @@ import { LoginData } from "../../models/formInterfaces/loginData";
 import UserService from "../../services/UserService";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
-import ApartmentBuilding1 from "../../assets/apartment-building1.jpg";
+import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { placeholderStyles } from "../../styles/placeholderStyles";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 
-interface ILoginProps {}
-
-const Login: React.FunctionComponent<ILoginProps> = (props) => {
+export const Login = () => {
   const {
     handleSubmit,
     register,
@@ -151,5 +149,3 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
     </>
   );
 };
-
-export default Login;

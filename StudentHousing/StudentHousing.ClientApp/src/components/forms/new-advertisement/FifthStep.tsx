@@ -2,6 +2,7 @@ import { Button, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdvertisementFormData";
+import ImageService from "../../../services/ImageService";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 
 interface IFifthStepProps {
@@ -13,15 +14,19 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
   setImage,
   submitData,
 }) => {
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
     }
     const file = e.target.files[0];
+    if (file && (await ImageService.validateImageDimensions(file))) {
+      alert("good");
+    } else {
+      alert("not good");
+    }
 
     if (file) {
       setImage(file);
-      alert(file);
     }
   };
 

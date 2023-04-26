@@ -73,7 +73,7 @@ namespace AdvertisingService.BusinessLogic.Services
             return advertisement;
         }
 
-        public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   //TODO change cascade delete settings for this to work
+        public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
         {
             var advertisement = await _advertisementRepository.GetByIdAsync(advertisementId);
             if (advertisement == null)
@@ -91,7 +91,7 @@ namespace AdvertisingService.BusinessLogic.Services
 
         public async Task<IEnumerable<AdvertisementListItemDTO>> GetAdvertisementsByUserAsync(int advertiserId)
         {
-            var result = await _advertisementRepository.GetByAdvertiserIdWithListItemDataAsync(advertiserId);
+            var result = await _advertisementRepository.GetByAdvertiserIdAsync(advertiserId);
 
             return result;
         }
@@ -100,7 +100,7 @@ namespace AdvertisingService.BusinessLogic.Services
         {
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
             var result = await _advertisementRepository.GetLatestAdvertisementsAsync(count);
             return result;

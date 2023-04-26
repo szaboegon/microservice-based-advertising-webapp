@@ -17,6 +17,7 @@ import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { AdvertisementListItemData } from "../../models/advertisement/advertisementListItemData";
 import AdvertisementService from "../../services/AdvertisementService";
+import ImageService from "../../services/ImageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
 
@@ -50,7 +51,7 @@ const AdvertisementListItem: React.FunctionComponent<
     },
   });
 
-  var base64Image = "data:image/png;base64," + advertisement.image;
+  var base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
       <Flex

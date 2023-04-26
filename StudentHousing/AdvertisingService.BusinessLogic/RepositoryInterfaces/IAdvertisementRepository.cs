@@ -12,7 +12,7 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces
 
         Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id);
 
-        Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdWithListItemDataAsync(int id);
+        Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdAsync(int id);
 
         Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count);
     }

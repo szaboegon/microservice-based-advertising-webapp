@@ -83,7 +83,7 @@ namespace AdvertisingService.DataAccess.Repositories
             return advertisement;
         }
 
-        public async Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdWithListItemDataAsync(int id)
+        public async Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdAsync(int id)
         {
             var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementListItemDTO
             {

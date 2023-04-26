@@ -1,7 +1,7 @@
 version: '3.4'
 
 networks:
-  advertising:
+  mynetwork:
 
 services:
   traefik:
@@ -9,7 +9,7 @@ services:
     # The official v2 Traefik docker image
     image: traefik:v2.9
     networks:      
-       - advertising
+       - mynetwork
     # Enables the web UI and tells Traefik to listen to docker
     command: 
       - "--log.level=DEBUG"
@@ -46,7 +46,7 @@ services:
       context: .
       dockerfile: AdvertisingService.WebAPI/Dockerfile
     networks:
-       - advertising
+       - mynetwork
     environment:
        - DB_HOST=advertisingdb
        - DB_NAME=advertising
@@ -73,7 +73,7 @@ services:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
-       - advertising
+       - mynetwork
     ports:
        - 8001:1433    # Only needed for debugging, remove later
  
@@ -83,7 +83,7 @@ services:
         context: .
         dockerfile: IdentityService/Dockerfile
     networks: 
-        - advertising
+        - mynetwork
     environment:
        - DB_HOST=identitydb
        - DB_NAME=identity
@@ -101,7 +101,7 @@ services:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
-       - advertising
+       - mynetwork
     ports:
        - 8002:1433
 
@@ -111,7 +111,7 @@ services:
         context: ./StudentHousing.ClientApp
         dockerfile: Dockerfile 
     networks:
-       - advertising
+       - mynetwork
     stdin_open: true
     tty: true
     labels:
@@ -120,3 +120,16 @@ services:
        - traefik.http.routers.clientapp.rule=Host(`localhost`)
   #     - traefik.http.routers.clientapp.tls=true
   #     - traefik.http.routers.clientapp.tls.certresolver=myresolver
+
+  messagingservice:
+    container_name: messaging_service
+    image: ${DOCKER_REGISTRY-}messagingservice
+    build:
+      context: .
+      dockerfile: MessagingService/Dockerfile
+    networks:
+       - mynetwork
+    labels: 
+     - traefik.enable=true
+     - traefik.http.routers.messagingservice.rule=Host(`localhost`) && PathPrefix(`/hubs`)
+

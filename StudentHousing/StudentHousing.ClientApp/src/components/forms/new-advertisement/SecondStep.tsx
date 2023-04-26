@@ -12,6 +12,8 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import districts from "../../../assets/literals/districts";
+import regions from "../../../assets/literals/regions";
 import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdvertisementFormData";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
@@ -65,26 +67,11 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
               placeholder="Choose"
               size="lg"
             >
-              <option value="Bács-Kiskun">Bács-Kiskun</option>
-              <option value="Baranya">Baranya</option>
-              <option value="Borsod-Abaúj-Zemplén">Borsod-Abaúj-Zemplén</option>
-              <option value="Csongrád-Csanád">Csongrád-Csanád</option>
-              <option value="Fejér">Fejér</option>
-              <option value="Győr-Moson-Sopron">Győr-Moson-Sopron</option>
-              <option value="Hajdú-Bihar">Hajdú-Bihar</option>
-              <option value="Heves">Heves</option>
-              <option value="Jász-Nagykun-Szolnok">Jász-Nagykun-Szolnok</option>
-              <option value="Komárom-Esztergom">Komárom-Esztergom</option>
-              <option value="Nógrád">Nógrád</option>
-              <option value="Pest">Pest</option>
-              <option value="Somogy">Somogy</option>
-              <option value="Szabolcs-Szatmár-Bereg">
-                Szabolcs-Szatmár-Bereg
-              </option>
-              <option value="Tolna">Tolna</option>
-              <option value="Vas">Vas</option>
-              <option value="Veszprém">Veszprém</option>
-              <option value="Zala">Zala</option>
+              {regions.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
             </Select>
             {errors.region ? (
               <FormErrorMessage sx={formErrorMessageStyles}>
@@ -103,6 +90,15 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 <Input
                   {...register("city", {
                     required: "This field is required",
+                    pattern: {
+                      value:
+                        /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]+$|^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]+-[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ]+$/,
+                      message: "Invalid format",
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: "City can be at most 30 characters long.",
+                    },
                   })}
                   id="city"
                   type="text"
@@ -157,12 +153,8 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
             <FormLabel sx={formLabelStyles} htmlFor="district">
               District (only required for Budapest):
             </FormLabel>
-            <Input
+            <Select
               {...register("district", {
-                maxLength: {
-                  value: 6,
-                  message: "District should have a max lenght of 6",
-                },
                 required: {
                   value: city?.toUpperCase() == "BUDAPEST",
                   message: "This field is required if the city is Budapest",
@@ -170,11 +162,16 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 disabled: city?.toUpperCase() != "BUDAPEST",
               })}
               id="district"
-              type="text"
               borderColor="brandYellow.800"
-              placeholder="e.g. XI."
+              placeholder="Choose"
               size="lg"
-            ></Input>
+            >
+              {districts.map((d) => (
+                <option key={d} value={d}>
+                  {d}
+                </option>
+              ))}
+            </Select>
             {errors.district ? (
               <FormErrorMessage sx={formErrorMessageStyles}>
                 {errors.district.message}
@@ -193,6 +190,10 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 maxLength: {
                   value: 40,
                   message: "Street name should have a max lenght of 40",
+                },
+                pattern: {
+                  value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
+                  message: "Invalid format",
                 },
               })}
               id="streetName"
@@ -226,6 +227,10 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                       value: 20,
                       message: "Street number should have a max lenght of 20",
                     },
+                    pattern: {
+                      value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
+                      message: "Invalid format",
+                    },
                   })}
                   id="streetNumber"
                   type="text"
@@ -255,6 +260,10 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     maxLength: {
                       value: 20,
                       message: "Unit number should have a max lenght of 20",
+                    },
+                    pattern: {
+                      value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
+                      message: "Invalid format",
                     },
                   })}
                   id="unitNumber"

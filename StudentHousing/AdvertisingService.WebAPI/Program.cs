@@ -8,7 +8,6 @@ using AdvertisingService.DataAccess.Data;
 using AdvertisingService.DataAccess.PipeLine;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

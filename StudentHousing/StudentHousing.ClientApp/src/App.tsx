@@ -5,7 +5,7 @@ import Navbar from "./components/shared/Navbar";
 import { Home } from "./components/pages/Home";
 import { Search } from "./components/pages/Search";
 import { Details } from "./components/pages/Details";
-import Login from "./components/pages/Login";
+import { Login } from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import { useEffect, useState } from "react";
 import UserService from "./services/UserService";
@@ -14,6 +14,7 @@ import { NewAdvertisement } from "./components/pages/NewAdvertisement";
 import { User } from "./models/user";
 import { AuthVerify } from "./services/auth/AuthVerify";
 import Profile from "./components/pages/Profile";
+import Messages from "./components/pages/Messages";
 
 function App() {
   const theme = extendTheme({
@@ -82,6 +83,11 @@ function App() {
         </Route>
         <Route path="/profile" element={<PrivateRoute isLoggedIn={!!user} />}>
           {user && <Route path="/profile" element={<Profile user={user} />} />}
+        </Route>
+        <Route path="/messages" element={<PrivateRoute isLoggedIn={!!user} />}>
+          {user && (
+            <Route path="/messages" element={<Messages user={user} />} />
+          )}
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/search/*" element={<Search />} />

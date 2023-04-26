@@ -7,7 +7,7 @@ services:
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 1433
@@ -17,14 +17,7 @@ services:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: AdvertisingService.WebAPI/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
     container_name: advertising_service
-    entrypoint:
-    - tail
-    - -f
-    - /dev/null
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: https://+:443;http://+:80
@@ -35,26 +28,15 @@ services:
     - "8002"
     image: adsvertisingservicewebapi
     labels:
-      com.microsoft.visual-studio.project-name: AdvertisingService.WebAPI
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/AdvertisingService.WebAPI.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
-      traefik.http.middlewares.advertisingauth.forwardauth.address: https://localhost:80/api/user/auth
+      traefik.http.middlewares.advertisingauth.forwardauth.address: http://localhost:80/api/user/auth
       traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders: X-Forwarded-User
       traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader: "true"
       traefik.http.routers.advertisingserviceprivate.middlewares: advertisingauth
       traefik.http.routers.advertisingserviceprivate.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
-      traefik.http.routers.advertisingserviceprivate.tls: "true"
-      traefik.http.routers.advertisingserviceprivate.tls.certresolver: myresolver
       traefik.http.routers.advertisingservicepublic.rule: Host(`localhost`) && PathPrefix(`/api/advertisement/public`)
-      traefik.http.routers.advertisingservicepublic.tls: "true"
-      traefik.http.routers.advertisingservicepublic.tls.certresolver: myresolver
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 80
@@ -62,22 +44,16 @@ services:
     - mode: ingress
       target: 443
       protocol: tcp
-    tty: true
     volumes:
     - type: bind
-      source: C:\Users\User\vsdbg\vs2017u5
-      target: /remote_debugger
+      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
       bind:
         create_host_path: true
     - type: bind
       source: C:\Users\User\AppData\Roaming/ASP.NET/Https
       target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
       read_only: true
       bind:
         create_host_path: true
@@ -88,12 +64,9 @@ services:
     container_name: client_app
     labels:
       traefik.enable: "true"
-      traefik.http.routers.clientapp.entrypoints: websecure
       traefik.http.routers.clientapp.rule: Host(`localhost`)
-      traefik.http.routers.clientapp.tls: "true"
-      traefik.http.routers.clientapp.tls.certresolver: myresolver
     networks:
-      advertising: null
+      mynetwork: null
     stdin_open: true
     tty: true
   identitydb:
@@ -103,7 +76,7 @@ services:
       SA_PASSWORD: password@12345
     image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 1433
@@ -113,71 +86,45 @@ services:
     build:
       context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
       dockerfile: IdentityService/Dockerfile
-      labels:
-        com.microsoft.created-by: visual-studio
-        com.microsoft.visual-studio.project-name: IdentityService
     container_name: identity_service
-    entrypoint:
-    - tail
-    - -f
-    - /dev/null
     environment:
       DB_HOST: identitydb
       DB_NAME: identity
       DB_SA_PASSWORD: password@12345
     labels:
-      com.microsoft.visual-studio.project-name: IdentityService
-      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
-        --additionalProbingPath /root/.nuget/fallbackpackages  "/app/IdentityService.dll"'
-      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
-        dotnet); then kill $$PID; fi"
-      com.microsoft.visualstudio.debuggee.program: dotnet
-      com.microsoft.visualstudio.debuggee.workingdirectory: /app
       traefik.enable: "true"
       traefik.http.routers.identityservice.rule: Host(`localhost`) && PathPrefix(`/api/user`)
-      traefik.http.routers.identityservice.tls: "true"
-      traefik.http.routers.identityservice.tls.certresolver: myresolver
     networks:
-      advertising: null
-    tty: true
-    volumes:
-    - type: bind
-      source: C:\Users\User\vsdbg\vs2017u5
-      target: /remote_debugger
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\AppData\Roaming/ASP.NET/Https
-      target: /root/.aspnet/https
-      read_only: true
-      bind:
-        create_host_path: true
-    - type: bind
-      source: C:\Users\User\AppData\Roaming/Microsoft/UserSecrets
-      target: /root/.microsoft/usersecrets
-      read_only: true
-      bind:
-        create_host_path: true
+      mynetwork: null
+  messagingservice:
+    build:
+      context: D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing
+      dockerfile: MessagingService/Dockerfile
+    container_name: messaging_service
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    image: messagingservice
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.clientapp.rule: Host(`localhost`) && PathPrefix(`/hubs`)
+    networks:
+      mynetwork: null
+    ports:
+    - mode: ingress
+      target: 80
+      protocol: tcp
   traefik:
     command:
     - --log.level=DEBUG
     - --api.insecure=true
     - --providers.docker
-    - --serversTransport.insecureSkipVerify=true
     - --providers.docker.exposedbydefault=false
     - --entrypoints.web.address=:80
     - --entrypoints.websecure.address=:443
-    - --entrypoints.web.http.redirections.entryPoint.to=websecure
-    - --entrypoints.web.http.redirections.entryPoint.scheme=https
-    - --entrypoints.web.http.redirections.entrypoint.permanent=true
-    - --certificatesresolvers.myresolver.acme.httpchallenge=true
-    - --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
-    - --certificatesresolvers.myresolver.acme.email=szabo.egon2001@gmail.com
-    - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
     container_name: traefik
     image: traefik:v2.9
     networks:
-      advertising: null
+      mynetwork: null
     ports:
     - mode: ingress
       target: 80
@@ -203,5 +150,5 @@ services:
       bind:
         create_host_path: true
 networks:
-  advertising:
-    name: dockercompose4658398787065314807_advertising
+  mynetwork:
+    name: dockercompose4658398787065314807_mynetwork

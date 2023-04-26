@@ -78,7 +78,9 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
               <MenuItem as={Link} to="/profile">
                 Profile
               </MenuItem>
-              <MenuItem>Messages</MenuItem>
+              <MenuItem as={Link} to="/messages">
+                Messages
+              </MenuItem>
             </MenuList>
           </Menu>
         ) : (

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Data;
 
 namespace AdvertisingService.BusinessLogic.Models.Validators
 {
@@ -31,6 +32,10 @@ namespace AdvertisingService.BusinessLogic.Models.Validators
 
             RuleFor(advertisement => advertisement.Address)
                 .NotNull().WithMessage("The Address belonging to the Advertisement cannot be null.");
+
+            RuleFor(advertisement => advertisement.AdvertiserId)
+                .NotNull()
+                .WithMessage("AdvertiserId cannot be null.");
 
         }
     }

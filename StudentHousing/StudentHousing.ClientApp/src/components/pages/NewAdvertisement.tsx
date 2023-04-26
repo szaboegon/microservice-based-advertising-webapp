@@ -19,7 +19,7 @@ import SecondStep from "../forms/new-advertisement/SecondStep";
 import ThirdStep from "../forms/new-advertisement/ThirdStep";
 import FourthStep from "../forms/new-advertisement/FourthStep";
 import FifthStep from "../forms/new-advertisement/FifthStep";
-import ApartmentBuilding1 from "../../assets/apartment-building1.jpg";
+import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
 import { formHeadingStyles } from "../../styles/formHeadingStyles";
 import { useMutation } from "react-query";
 import AdvertisementService from "../../services/AdvertisementService";
