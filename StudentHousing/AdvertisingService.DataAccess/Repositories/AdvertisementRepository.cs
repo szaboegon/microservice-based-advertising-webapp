@@ -18,9 +18,8 @@ namespace AdvertisingService.DataAccess.Repositories
         {
             var list = await _dbcontext.Advertisements.Select( a => new AdvertisementCardDTO
             {
-                Id= a.Id,
+                Id = a.Id,
                 CategoryName = a.Category.Name,
-                PostalCode = a.Address.PostalCode,
                 City = a.Address.City,
                 District = a.Address.District,
                 StreetName = a.Address.StreetName,
@@ -28,32 +27,15 @@ namespace AdvertisingService.DataAccess.Repositories
                 NumberOfRooms = a.NumberOfRooms,
                 Size = a.Size,
                 MonthlyPrice = a.MonthlyPrice,
+                UploadDate = a.UploadDate,
                 Image = a.Images.First().Data,
-                Parking = a.Parking,
-                Furnished=a.Furnished
             }).ToListAsync();
                 
             return  list;
         }
-        public IQueryable<AdvertisementCardDTO> GetAllWithCardDataAsIQueryable()
+        public IQueryable<Advertisement> GetAllAsIQueryable()
         {
-            var list = _dbcontext.Advertisements.Select(a => new AdvertisementCardDTO
-            {
-                Id = a.Id,
-                CategoryName = a.Category.Name,
-                PostalCode = a.Address.PostalCode,
-                City = a.Address.City,
-                District = a.Address.District,
-                StreetName = a.Address.StreetName,
-                StreetNumber = a.Address.StreetNumber,
-                NumberOfRooms = a.NumberOfRooms,
-                Size = a.Size,
-                MonthlyPrice = a.MonthlyPrice,
-                Image = a.Images.First().Data,
-                Parking = a.Parking,
-                Furnished = a.Furnished
-            });
-
+            var list = _dbcontext.Advertisements.Where(_ => true);
             return list;
         }
 
@@ -83,16 +65,19 @@ namespace AdvertisingService.DataAccess.Repositories
             return advertisement;
         }
 
-        public async Task<IEnumerable<AdvertisementListItemDTO>> GetByAdvertiserIdAsync(int id)
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetByAdvertiserIdAsync(int id)
         {
-            var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementListItemDTO
+            var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementCardDTO
             {
                 Id = a.Id,
                 CategoryName = a.Category.Name,
-                PostalCode = a.Address.PostalCode,
                 City = a.Address.City,
+                District = a.Address.District,
                 StreetName = a.Address.StreetName,
                 StreetNumber = a.Address.StreetNumber,
+                NumberOfRooms = a.NumberOfRooms,
+                Size = a.Size,
+                MonthlyPrice = a.MonthlyPrice,
                 UploadDate = a.UploadDate,
                 Image = a.Images.First().Data,
             }).ToListAsync();
@@ -106,7 +91,6 @@ namespace AdvertisingService.DataAccess.Repositories
             {
                 Id = a.Id,
                 CategoryName = a.Category.Name,
-                PostalCode = a.Address.PostalCode,
                 City = a.Address.City,
                 District = a.Address.District,
                 StreetName = a.Address.StreetName,
@@ -114,9 +98,8 @@ namespace AdvertisingService.DataAccess.Repositories
                 NumberOfRooms = a.NumberOfRooms,
                 Size = a.Size,
                 MonthlyPrice = a.MonthlyPrice,
+                UploadDate = a.UploadDate,
                 Image = a.Images.First().Data,
-                Parking = a.Parking,
-                Furnished = a.Furnished
             }).Take(count).ToListAsync();
 
             return list;

@@ -8,8 +8,9 @@ import MessagingService from "../../services/MessagingService";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { Flex } from "@chakra-ui/react";
-import MessageBubble from "../messages/MessageBubble";
-import MessageInput from "../messages/MessageInput";
+import MessageBubble from "../messaging/MessageBubble";
+import MessageInput from "../messaging/MessageInput";
+import UserService from "../../services/UserService";
 
 interface IMessagesProps {
   user: User;
@@ -18,9 +19,6 @@ interface IMessagesProps {
 const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
   const [connection, setConnection] = useState<HubConnection>();
   const [chat, setChat] = useState<Message[]>([]);
-  const latestChat = useRef<Message[]>([]);
-
-  latestChat.current = chat;
 
   useEffect(() => {
     const conn = MessagingService.buildConnection();
@@ -36,8 +34,12 @@ const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
 
           connection.on("ReceiveMessage", (message) => {
             console.log(message);
-            const updatedChat = [...latestChat.current];
-            updatedChat.push(message);
+            const msg: Message = {
+              senderId: 1,
+              content: message,
+            };
+            const updatedChat = [...chat];
+            updatedChat.push(msg);
 
             setChat(updatedChat);
           });
@@ -45,6 +47,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
         .catch((e) => console.log("Connection failed: ", e));
     }
   }, [connection]);
+
   return (
     <>
       <Flex justifyContent="center" alignItems="center">

@@ -4,6 +4,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
+  HStack,
   Spacer,
   Spinner,
   VStack,
@@ -63,7 +64,9 @@ export const Search = () => {
         flexWrap="wrap"
         justifyContent="center"
       >
-        {(isLoading || isRefetching) && <Spinner />}
+        {(isLoading || isRefetching) && advertisements.length <= 0 && (
+          <Spinner />
+        )}
         {isError && error instanceof Error && <ErrorAlert error={error} />}
         {advertisements.map((advertisement) => (
           <AdvertisementCard

@@ -1,16 +1,17 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Interfaces;
+using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.DataAccess.Filters
 {
-    public class FilterByFurnished : IFilter<AdvertisementCardDTO>
+    public class FilterByFurnished : IFilter<Advertisement>
     {
         private readonly bool? _furnished;
         public FilterByFurnished(bool? furnished)
         {
             _furnished = furnished;
         }
-        public IQueryable<AdvertisementCardDTO> Execute(IQueryable<AdvertisementCardDTO> input)
+        public IQueryable<Advertisement> Execute(IQueryable<Advertisement> input)
         {
             return _furnished == null ? input : input.Where(a => a.Furnished == _furnished);
         }

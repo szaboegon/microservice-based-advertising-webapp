@@ -1,28 +1,30 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
+  Box,
   Card,
   CardBody,
   CardHeader,
   Flex,
   Heading,
+  HStack,
   IconButton,
   Image,
   LinkBox,
   LinkOverlay,
   Spinner,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { AdvertisementListItemData } from "../../models/advertisement/advertisementListItemData";
+import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
 import AdvertisementService from "../../services/AdvertisementService";
 import ImageService from "../../services/ImageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
-import { SuccessAlert } from "../alerts/SuccessAlert";
 
 interface IAdvertisementListItemProps {
-  advertisement: AdvertisementListItemData;
+  advertisement: AdvertisementCardData;
   refetch: Function;
 }
 
@@ -40,7 +42,6 @@ const AdvertisementListItem: React.FunctionComponent<
   };
 
   const {
-    isSuccess,
     isLoading,
     isError,
     error,
@@ -51,58 +52,91 @@ const AdvertisementListItem: React.FunctionComponent<
     },
   });
 
+  function formatDate(dateString: string) {
+    const validString = dateString.replace(/T[0-9:.]+/, "");
+    const validDate = new Date(validString);
+    return validDate.toDateString();
+  }
+
+  console.log(advertisement.uploadDate);
   var base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
-      <Flex
-        direction="column"
-        width="800px"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <LinkBox>
-          <Card
-            padding="10px"
-            direction="row"
+      <LinkBox>
+        <Card
+          padding="10px"
+          direction="row"
+          overflow="hidden"
+          variant="filled"
+          height="180px"
+          borderBottom="4px"
+          borderColor="brandYellow.500"
+          width={{ base: "450px", md: "800px" }}
+        >
+          <CardHeader
+            width="300px"
+            padding="0px"
+            position="relative"
             overflow="hidden"
-            variant="filled"
-            height="200px"
-            width="800px"
+            display={{ base: "none", md: "flex" }}
           >
-            <CardHeader
-              width="300px"
-              padding="0px"
-              position="relative"
-              overflow="hidden"
+            <Flex
+              backgroundColor="brandYellow.700"
+              position="absolute"
+              width="40%"
+              height="15%"
+              justifyContent="center"
+              alignItems="center"
+              borderRightRadius="25px"
             >
-              <Flex
-                backgroundColor="brandYellow.700"
-                position="absolute"
-                width="40%"
-                height="13%"
-                justifyContent="center"
-                alignItems="center"
-                borderRightRadius="25px"
-              >
-                <Text fontSize="1.2rem" fontWeight="600" textColor="white">
-                  {advertisement.categoryName.charAt(0).toUpperCase() +
-                    advertisement.categoryName.slice(1)}
+              <Text fontSize="1.2rem" fontWeight="600" textColor="white">
+                {advertisement.categoryName.charAt(0).toUpperCase() +
+                  advertisement.categoryName.slice(1)}
+              </Text>
+            </Flex>
+            <Flex justifyContent="center" alignItems="center">
+              <Image src={base64Image} minWidth="100%" minHeight="100%"></Image>
+            </Flex>
+          </CardHeader>
+          <LinkOverlay onClick={openDetails}></LinkOverlay>
+          <CardBody>
+            <HStack justifyContent="space-between">
+              <Box>
+                <HStack>
+                  <Heading
+                    alignSelf="end"
+                    fontSize="1.7rem"
+                    textColor="brandGreen.500"
+                  >
+                    {advertisement.monthlyPrice}
+                  </Heading>
+                  <Heading fontSize="1.2rem" paddingTop="5px">
+                    Ft/month
+                  </Heading>
+                </HStack>
+                <Heading
+                  alignSelf="end"
+                  fontSize="1.2rem"
+                  textColor="brandGreen.500"
+                ></Heading>
+                <Text fontSize="1.3rem" fontWeight="600">
+                  {advertisement.streetName + " " + advertisement.streetNumber}
                 </Text>
-              </Flex>
-              <Flex justifyContent="center" alignItems="center">
-                <Image
-                  src={base64Image}
-                  minWidth="100%"
-                  minHeight="100%"
-                  //src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
-                ></Image>
-              </Flex>
-            </CardHeader>
-            <LinkOverlay onClick={openDetails}></LinkOverlay>
-            <CardBody>
-              <Heading>
-                {advertisement.postalCode + " " + advertisement.city}
-              </Heading>
+                <Text
+                  fontSize="1.1rem"
+                  fontWeight="600"
+                  className="card-text"
+                  textColor="gray.500"
+                >
+                  {advertisement.city.toUpperCase() == "BUDAPEST"
+                    ? advertisement.district + " " + advertisement.city
+                    : advertisement.city}
+                </Text>
+
+                <Text fontSize="1.1rem" fontWeight="600">
+                  {"Posted on: " + formatDate(advertisement.uploadDate)}
+                </Text>
+              </Box>
               <IconButton
                 colorScheme="red"
                 aria-label="Delete Advertisement"
@@ -110,14 +144,14 @@ const AdvertisementListItem: React.FunctionComponent<
                 icon={<DeleteIcon />}
                 onClick={handleClick}
               ></IconButton>
-            </CardBody>
-          </Card>
-        </LinkBox>
-        {isLoading && <Spinner />}
-        {isError && error instanceof Error && (
-          <ErrorAlert error={error} maxWidth="800px" />
-        )}
-      </Flex>
+            </HStack>
+          </CardBody>
+        </Card>
+      </LinkBox>
+      {isLoading && <Spinner />}
+      {isError && error instanceof Error && (
+        <ErrorAlert error={error} maxWidth="800px" />
+      )}
     </>
   );
 };

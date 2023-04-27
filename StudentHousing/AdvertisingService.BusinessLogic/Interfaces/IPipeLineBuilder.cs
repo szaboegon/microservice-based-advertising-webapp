@@ -8,9 +8,9 @@ using AdvertisingService.BusinessLogic.DataTransferObjects;
 
 namespace AdvertisingService.BusinessLogic.Interfaces
 {
-    public interface IPipeLineBuilder <T>
+    public interface IPipeLineBuilder <T, V>
     {
-        public PipeLineBase<T> Build(QueryParamsDTO data);
+        public PipeLineBase<T, V> Build(QueryParamsDTO data);
     }
     
 }

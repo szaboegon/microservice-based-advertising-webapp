@@ -11,12 +11,12 @@ namespace AdvertisingService.BusinessLogic.Services
         private readonly IAdvertisementRepository _advertisementRepository;
         private readonly AddressService _addressService;
         private readonly CategoryService _categoryService;
-        private readonly IPipeLineBuilder<AdvertisementCardDTO> _pipeLineBuilder;
+        private readonly IPipeLineBuilder<Advertisement, AdvertisementCardDTO> _pipeLineBuilder;
 
         private readonly IValidator<Advertisement> _advertisementValidator;
         public AdvertisementService(IAdvertisementRepository advertisementRepository,
             AddressService addressService, CategoryService categoryService,
-            IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<AdvertisementCardDTO> pipeLineBuilder)
+            IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<Advertisement, AdvertisementCardDTO> pipeLineBuilder)
         {
             _advertisementRepository = advertisementRepository;
             _addressService = addressService;
@@ -89,7 +89,7 @@ namespace AdvertisingService.BusinessLogic.Services
             await _advertisementRepository.SaveAsync();
         }
 
-        public async Task<IEnumerable<AdvertisementListItemDTO>> GetAdvertisementsByUserAsync(int advertiserId)
+        public async Task<IEnumerable<AdvertisementCardDTO>> GetAdvertisementsByUserAsync(int advertiserId)
         {
             var result = await _advertisementRepository.GetByAdvertiserIdAsync(advertiserId);
 

@@ -18,6 +18,7 @@ import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdve
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
+import { useState } from "react";
 
 interface ISecondStepProps {
   formValues: NewAdvertisementFormData;

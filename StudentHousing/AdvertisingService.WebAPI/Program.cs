@@ -44,7 +44,7 @@ builder.Services.AddScoped<IValidator<Advertisement>, AdvertisementValidator>();
 builder.Services.AddScoped<IValidator<Category>, CategoryValidator>();
 builder.Services.AddScoped<IValidator<Image>, ImageValidator>();
 
-builder.Services.AddScoped<IPipeLineBuilder<AdvertisementCardDTO>, AdvertisementFilterPipeLineBuilder>(); //TODO
+builder.Services.AddScoped<IPipeLineBuilder<Advertisement, AdvertisementCardDTO>, AdvertisementFilterPipeLineBuilder>(); //TODO
 
 var app = builder.Build();
 

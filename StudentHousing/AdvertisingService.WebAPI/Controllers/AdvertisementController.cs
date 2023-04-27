@@ -110,7 +110,7 @@ namespace AdvertisingService.WebAPI.Controllers
 
         [HttpGet]
         [Route("private/advertisements-by-user")]
-        public async Task<ActionResult<IEnumerable<AdvertisementListItemDTO>>> GetAdvertisementsByUserAsync(int id)
+        public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementsByUserAsync(int id)
         {
             try
             {

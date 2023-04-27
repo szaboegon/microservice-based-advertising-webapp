@@ -1,9 +1,10 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Interfaces;
+using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.DataAccess.Filters
 {
-    public class FilterByParking : IFilter<AdvertisementCardDTO>
+    public class FilterByParking : IFilter<Advertisement>
     {
         private readonly bool? _parking;
 
@@ -11,7 +12,7 @@ namespace AdvertisingService.DataAccess.Filters
         {
             _parking = parking;
         }
-        public IQueryable<AdvertisementCardDTO> Execute(IQueryable<AdvertisementCardDTO> input)
+        public IQueryable<Advertisement> Execute(IQueryable<Advertisement> input)
         {
             return _parking == null ? input : input.Where(a => a.Parking == _parking);
         }

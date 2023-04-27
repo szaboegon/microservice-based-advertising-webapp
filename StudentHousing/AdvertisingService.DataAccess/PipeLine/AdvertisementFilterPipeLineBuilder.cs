@@ -1,18 +1,19 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Interfaces;
+using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.DataAccess.Filters;
 
 namespace AdvertisingService.DataAccess.PipeLine
 {
-    public class AdvertisementFilterPipeLineBuilder : IPipeLineBuilder<AdvertisementCardDTO>
+    public class AdvertisementFilterPipeLineBuilder : IPipeLineBuilder<Advertisement, AdvertisementCardDTO>
     {
         private readonly IAdvertisementRepository _advertisementRepository;
         public AdvertisementFilterPipeLineBuilder(IAdvertisementRepository advertisementRepository)
         {
             _advertisementRepository = advertisementRepository;
         }
-        public PipeLineBase<AdvertisementCardDTO> Build(QueryParamsDTO data)
+        public PipeLineBase<Advertisement, AdvertisementCardDTO> Build(QueryParamsDTO data)
         {
             var pipeLine=new AdvertisementFilterPipeLine(_advertisementRepository)
                 .Register(new FilterByCategory(data.CategoryName))

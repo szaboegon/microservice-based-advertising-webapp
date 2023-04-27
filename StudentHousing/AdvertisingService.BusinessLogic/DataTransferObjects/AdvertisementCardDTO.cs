@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public string? CategoryName { get; set; }
-        public int PostalCode { get; set; }
         public string? City { get; set; }
         public string? District { get; set; }
         public string? StreetName { get; set; }
@@ -12,8 +11,7 @@
         public float NumberOfRooms { get; set; }
         public float Size { get; set; }
         public int MonthlyPrice { get; set; }
-        public bool Furnished { get; set; }
-        public bool Parking { get; set; }
+        public DateTime UploadDate { get; set; }
         public byte[]? Image { get; set; }
     }
 }
