@@ -129,7 +129,28 @@ services:
       dockerfile: MessagingService/Dockerfile
     networks:
        - mynetwork
+    environment:
+       - DB_HOST=messagingdb
+       - DB_NAME=messaging
+       - DB_SA_PASSWORD=password@12345
     labels: 
      - traefik.enable=true
      - traefik.http.routers.messagingservice.rule=Host(`localhost`) && PathPrefix(`/hubs`)
+     - traefik.http.middlewares.messagingauth.forwardauth.address=http://localhost:80/api/user/auth
+     - traefik.http.middlewares.messagingauth.forwardauth.authResponseHeaders=X-Forwarded-User
+     - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
+     - traefik.http.routers.messagingservice.middlewares=messagingauth
+
+  messagingdb:
+    container_name: messaging_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+       - ACCEPT_EULA=Y
+       - SA_PASSWORD=password@12345
+    networks:
+       - mynetwork
+    ports:
+       - 8003:1433
+
+
 

@@ -3,6 +3,7 @@ import {
   HubConnection,
   HubConnectionState,
 } from "@microsoft/signalr/dist/esm/HubConnection";
+import { Message } from "../models/message";
 
 const buildConnection = (): HubConnection | undefined => {
   const token = localStorage.getItem("token");
@@ -14,7 +15,7 @@ const buildConnection = (): HubConnection | undefined => {
     .withUrl("/hubs/message", {
       //skipNegotiation: true,
       //transport: HttpTransportType.WebSockets,
-      accessTokenFactory: () => token,
+      accessTokenFactory: () => JSON.parse(token),
     })
     .withAutomaticReconnect()
     .build();
@@ -23,11 +24,9 @@ const buildConnection = (): HubConnection | undefined => {
 };
 
 const sendMessage = async (message: string, connection: HubConnection) => {
-  const chatMessage = {};
-
   if (connection.state == HubConnectionState.Connected) {
     try {
-      await connection.send("SendMessage", "test");
+      await connection.send("SendMessageToUser", 2, message);
     } catch (e) {
       console.log(e);
     }

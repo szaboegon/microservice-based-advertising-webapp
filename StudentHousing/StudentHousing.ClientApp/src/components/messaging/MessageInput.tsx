@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import MessagingService from "../../services/MessagingService";
 
 interface IMessageInputProps {
-  connection: HubConnection | undefined;
+  connection: HubConnection | null;
 }
 
 interface MessageInputData {
@@ -19,7 +19,6 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
 
   const submit = (data: MessageInputData) => {
     connection && MessagingService.sendMessage(data.content, connection);
-    connection && console.log("message sent " + data.content);
   };
   return (
     <>

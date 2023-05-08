@@ -7,7 +7,7 @@ import {
 import MessagingService from "../../services/MessagingService";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
-import { Flex } from "@chakra-ui/react";
+import { Flex, VStack } from "@chakra-ui/react";
 import MessageBubble from "../messaging/MessageBubble";
 import MessageInput from "../messaging/MessageInput";
 import UserService from "../../services/UserService";
@@ -17,12 +17,23 @@ interface IMessagesProps {
 }
 
 const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
-  const [connection, setConnection] = useState<HubConnection>();
-  const [chat, setChat] = useState<Message[]>([]);
+  const [connection, setConnection] = useState<HubConnection | null>(null);
+  const [chat, setChat] = useState<Message[]>([
+    {
+      senderId: 2,
+      content: "hehe",
+    },
+    {
+      senderId: 2,
+      content: "haha",
+    },
+  ]);
 
   useEffect(() => {
     const conn = MessagingService.buildConnection();
-    setConnection(conn);
+    if (conn) {
+      setConnection(conn);
+    }
   }, []);
 
   useEffect(() => {
@@ -33,30 +44,33 @@ const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
           console.log("Connected!");
 
           connection.on("ReceiveMessage", (message) => {
-            console.log(message);
-            const msg: Message = {
-              senderId: 1,
-              content: message,
-            };
-            const updatedChat = [...chat];
-            updatedChat.push(msg);
-
-            setChat(updatedChat);
+            receiveMessage(message);
           });
         })
         .catch((e) => console.log("Connection failed: ", e));
     }
   }, [connection]);
 
+  const receiveMessage = (message: string) => {
+    console.log("Received: " + message);
+    const msg: Message = {
+      senderId: 1,
+      content: message,
+    };
+    setChat((chat) => [...chat, msg]);
+  };
+
   return (
     <>
-      <Flex justifyContent="center" alignItems="center">
-        {chat.map((m) => (
-          <MessageBubble
-            key={Date.now() * Math.random()}
-            message={m}
-          ></MessageBubble>
-        ))}
+      <Flex justifyContent="center" alignItems="center" direction="column">
+        <VStack>
+          {chat.map((m) => (
+            <MessageBubble
+              key={Date.now() * Math.random()}
+              message={m}
+            ></MessageBubble>
+          ))}
+        </VStack>
         <MessageInput connection={connection}></MessageInput>
       </Flex>
     </>

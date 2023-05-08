@@ -1,16 +1,30 @@
+using MessagingService.Data;
 using MessagingService.Hubs;
+using MessagingService.Repositories;
+using MessagingService.Repositories.Abstraction;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
 
-builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
+builder.Services.AddDbContext<MessageDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
+
+/*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
     builder
     .AllowAnyMethod()
     .AllowAnyHeader()
     .AllowCredentials()
     .WithOrigins("http://localhost:80");
-}));
+}));*/
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -21,6 +35,12 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<MessageDbContext>();
+    db.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 /*if (app.Environment.IsDevelopment())
 {
@@ -28,7 +48,7 @@ var app = builder.Build();
     app.UseSwaggerUI();
 }*/
 app.UseRouting();
-app.UseCors("CorsPolicy");
+//app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapHub<MessageHub>("/hubs/message");

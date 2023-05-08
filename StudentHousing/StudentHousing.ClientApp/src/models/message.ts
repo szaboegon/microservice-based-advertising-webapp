@@ -1,4 +1,5 @@
 export interface Message {
-  senderId: number;
+  senderId?: number;
   content: string;
+  dateTime?: Date;
 }
