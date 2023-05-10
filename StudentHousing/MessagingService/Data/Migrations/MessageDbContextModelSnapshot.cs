@@ -37,23 +37,19 @@ namespace MessagingService.Data.Migrations
                         .HasColumnType("nvarchar")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("DateTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 5, 8, 22, 32, 52, 736, DateTimeKind.Local).AddTicks(1120))
-                        .HasColumnName("dateTime");
-
                     b.Property<int>("PrivateChatId")
                         .HasColumnType("int")
                         .HasColumnName("privateChatId");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int")
-                        .HasColumnName("receiverId");
-
                     b.Property<int>("SenderId")
                         .HasColumnType("int")
                         .HasColumnName("senderId");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 5, 10, 10, 3, 18, 622, DateTimeKind.Local).AddTicks(3274))
+                        .HasColumnName("timeStamp");
 
                     b.HasKey("Id");
 
@@ -71,17 +67,23 @@ namespace MessagingService.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Participant1Id")
-                        .HasColumnType("int")
-                        .HasColumnName("participant1Id");
+                    b.Property<string>("UniqueName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("uniqueName");
 
-                    b.Property<int>("Participant2Id")
+                    b.Property<int>("User1Id")
                         .HasColumnType("int")
-                        .HasColumnName("participant2Id");
+                        .HasColumnName("user1Id");
+
+                    b.Property<int>("User2Id")
+                        .HasColumnType("int")
+                        .HasColumnName("user2Id");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PrivateChat");
+                    b.ToTable("PrivateChats");
                 });
 
             modelBuilder.Entity("MessagingService.Models.Message", b =>

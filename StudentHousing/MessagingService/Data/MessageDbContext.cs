@@ -11,6 +11,7 @@ namespace MessagingService.Data
         }
 
         public DbSet<Message> Messages { get; set; }
+        public DbSet<PrivateChat> PrivateChats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,19 +25,14 @@ namespace MessagingService.Data
                        .IsRequired()
                        .HasColumnType("int");
 
-                entity.Property(e => e.ReceiverId)
-                      .HasColumnName("receiverId")
-                      .IsRequired()
-                      .HasColumnType("int");
-
                 entity.Property(e => e.Content)
                       .HasColumnName("content")
                       .IsRequired()
                       .HasColumnType("nvarchar")
                       .HasMaxLength(1000);
 
-                entity.Property(e => e.DateTime)
-                     .HasColumnName("dateTime")
+                entity.Property(e => e.TimeStamp)
+                     .HasColumnName("timeStamp")
                      .HasDefaultValue(DateTime.Now);
 
                 entity.Property(e => e.PrivateChatId)
@@ -55,16 +51,21 @@ namespace MessagingService.Data
                 entity.Property(e => e.Id)
                       .HasColumnName("id");
 
-                entity.Property(e => e.Participant1Id)
-                       .HasColumnName("participant1Id")
-                       .IsRequired()
-                       .HasColumnType("int");
+                entity.Property(e => e.UniqueName)
+                     .HasColumnName("uniqueName")
+                     .IsRequired()
+                     .HasColumnType("nvarchar")
+                     .HasMaxLength(100);
 
-                entity.Property(e => e.Participant2Id)
-                      .HasColumnName("participant2Id")
-                      .IsRequired()
-                      .HasColumnType("int");
+                entity.Property(e => e.User1Id)
+                      .HasColumnName("user1Id")
+                      .IsRequired();
+
+                entity.Property(e => e.User2Id)
+                      .HasColumnName("user2Id")
+                      .IsRequired();
             });
+
         }
     }
 }

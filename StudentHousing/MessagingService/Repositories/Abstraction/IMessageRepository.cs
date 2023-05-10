@@ -11,6 +11,8 @@ namespace MessagingService.Repositories
 
         Task<Message?> GetByIdAsync(int id);
 
+        void Remove(Message message);
+
         Task SaveAsync();
  
     }

@@ -23,10 +23,27 @@ const buildConnection = (): HubConnection | undefined => {
   return newConnection;
 };
 
-const sendMessage = async (message: string, connection: HubConnection) => {
+const startPrivateChat = async (
+  connection: HubConnection,
+  otherUserId: number
+): Promise<string> => {
+  let groupName: string = "";
+  try {
+    groupName = await connection.invoke("StartPrivateChat", otherUserId);
+  } catch (e) {
+    console.log(e);
+  }
+  return groupName;
+};
+
+const sendMessage = async (
+  message: string,
+  connection: HubConnection,
+  groupName: string
+) => {
   if (connection.state == HubConnectionState.Connected) {
     try {
-      await connection.send("SendMessageToUser", 2, message);
+      await connection.send("SendMessageToGroup", groupName, message);
     } catch (e) {
       console.log(e);
     }
@@ -37,6 +54,7 @@ const sendMessage = async (message: string, connection: HubConnection) => {
 
 const MessagingService = {
   buildConnection,
+  startPrivateChat,
   sendMessage,
 };
 

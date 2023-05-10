@@ -27,6 +27,11 @@ namespace MessagingService.Repositories
             return await _dbcontext.Messages.FindAsync(id);
         }
 
+        public void Remove(Message message)
+        {
+            _dbcontext.Messages.Remove(message);
+        }
+
         public async Task SaveAsync()
         {
             await _dbcontext.SaveChangesAsync();

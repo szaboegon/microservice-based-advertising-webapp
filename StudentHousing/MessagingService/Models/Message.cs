@@ -4,9 +4,8 @@
     {
         public int Id { get; set; }
         public int SenderId { get; set; }
-        public int ReceiverId { get; set; }
         public string? Content { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime TimeStamp { get; set; }
         public int PrivateChatId { get; set; }
 
         private PrivateChat? _privateChat;

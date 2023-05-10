@@ -16,7 +16,7 @@ builder.Services.AddDbContext<MessageDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
+builder.Services.AddScoped<IPrivateChatRepository, PrivateChatReposiotry>();
 
 /*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
     builder

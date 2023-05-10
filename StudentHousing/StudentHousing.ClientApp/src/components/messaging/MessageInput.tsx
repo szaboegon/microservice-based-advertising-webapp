@@ -6,6 +6,7 @@ import MessagingService from "../../services/MessagingService";
 
 interface IMessageInputProps {
   connection: HubConnection | null;
+  groupName: string;
 }
 
 interface MessageInputData {
@@ -14,11 +15,13 @@ interface MessageInputData {
 
 const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
   connection,
+  groupName,
 }) => {
   const { handleSubmit, register } = useForm<MessageInputData>();
 
   const submit = (data: MessageInputData) => {
-    connection && MessagingService.sendMessage(data.content, connection);
+    connection &&
+      MessagingService.sendMessage(data.content, connection, groupName);
   };
   return (
     <>

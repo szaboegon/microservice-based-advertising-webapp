@@ -1,5 +1,6 @@
 ﻿using MessagingService.Models;
 using MessagingService.Repositories;
+using MessagingService.Repositories.Abstraction;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,61 +10,14 @@ namespace MessagingService.Hubs
     public class MessageHub : Hub
     {
         private readonly JwtSecurityTokenHandler _tokenHandler;
-        private readonly Dictionary<int, List<string>> _connectedUsers = new();
         private readonly IMessageRepository _messageRepository;
-        public MessageHub(IMessageRepository messageRepository)
+        private readonly IPrivateChatRepository _privateChatRepository;
+
+        public MessageHub(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
         {
             _messageRepository = messageRepository;
+            _privateChatRepository = privateChatRepository;
             _tokenHandler = new JwtSecurityTokenHandler();
-        }
-
-        public override Task OnConnectedAsync()
-        {
-            var connectionId = Context.ConnectionId;
-            var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-
-            if (jwtSecurityToken == null)
-            {
-                throw new Exception("bajvan");
-            }
-
-            var userId = int.Parse(jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value);
-
-            lock (_connectedUsers)
-            {
-                if (!_connectedUsers.ContainsKey(userId))
-                    _connectedUsers[userId] = new();
-                _connectedUsers[userId].Add(connectionId);
-            }
-
-            return base.OnConnectedAsync();
-        }
-
-        public override Task OnDisconnectedAsync(Exception? ex)
-        {
-            var connectionId = Context.ConnectionId;
-            var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-
-            if (jwtSecurityToken == null)
-            {
-                throw new Exception("bajvan2");
-            }
-
-            var userId = int.Parse(jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value);
-
-            lock (_connectedUsers)
-            {
-                if (_connectedUsers.ContainsKey(userId))
-                {
-                    _connectedUsers[userId].Remove(connectionId);
-                    if (_connectedUsers[userId].Count == 0)
-                        _connectedUsers.Remove(userId);
-                }
-            }
-
-            return base.OnDisconnectedAsync(ex);
         }
 
         public async Task SendMessage(string message)
@@ -71,37 +25,53 @@ namespace MessagingService.Hubs
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
-        public async Task SendMessageToUser(int receiverId, string messageContent)
+        public async Task SendMessageToGroup(string uniqueName, string messageContent)
         {
-            var connectionId = Context.ConnectionId;
             var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
 
-            if (jwtSecurityToken == null)
-            {
-                throw new Exception("bajvan2");
-            }
-
-            var senderId = int.Parse(jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value);
-
-
-            List<string> connections = new();
-            if (_connectedUsers.TryGetValue(receiverId, out connections))
-            {
-                await Clients.Clients(connections).SendAsync("ReceiveMessage", messageContent);
-            }
-
+            var senderId = GetUserIdFromToken(tokenString);
+            var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new Exception("Chat does not exist");
             var message = new Message
             {
-                ReceiverId = receiverId,
                 SenderId = senderId,
-                Content = messageContent
+                Content = messageContent,
+                PrivateChatId = privateChat.Id
             };
 
             await _messageRepository.AddAsync(message);
             await _messageRepository.SaveAsync();
+
+            await Clients.Group(uniqueName).SendAsync("ReceiveMessage", messageContent);
         }
 
-        public string GetConnectionId () => Context.ConnectionId;
+        public async Task<string> StartPrivateChat(int user2Id)
+        {
+            var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var user1Id = GetUserIdFromToken(tokenString);
+
+            var privateChat = await _privateChatRepository.GetUniqueNameByUserIdsAsync(user1Id, user2Id);
+            if(privateChat == null)
+            {
+                privateChat = new PrivateChat
+                {
+                    User1Id = user1Id,
+                    User2Id = user2Id,
+                    UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow}"
+                };
+
+                await _privateChatRepository.AddAsync(privateChat);
+                await _privateChatRepository.SaveAsync();
+            }
+            await Groups.AddToGroupAsync(Context.ConnectionId, privateChat.UniqueName);
+            return privateChat.UniqueName;
+        }
+
+        private int GetUserIdFromToken(string? tokenString)
+        {
+            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString) ?? throw new Exception("uh-oh");
+            var user1Id = int.Parse(jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value);
+
+            return user1Id;
+        }
     }
 }

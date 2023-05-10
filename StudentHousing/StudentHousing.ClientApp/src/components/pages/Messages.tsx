@@ -1,16 +1,12 @@
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-import {
-  HubConnection,
-  HubConnectionState,
-} from "@microsoft/signalr/dist/esm/HubConnection";
+import { useState, useEffect } from "react";
+import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../../services/MessagingService";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { Flex, VStack } from "@chakra-ui/react";
 import MessageBubble from "../messaging/MessageBubble";
 import MessageInput from "../messaging/MessageInput";
-import UserService from "../../services/UserService";
 
 interface IMessagesProps {
   user: User;
@@ -18,16 +14,8 @@ interface IMessagesProps {
 
 const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
-  const [chat, setChat] = useState<Message[]>([
-    {
-      senderId: 2,
-      content: "hehe",
-    },
-    {
-      senderId: 2,
-      content: "haha",
-    },
-  ]);
+  const [groupName, setGroupName] = useState<string>("");
+  const [chat, setChat] = useState<Message[]>([]);
 
   useEffect(() => {
     const conn = MessagingService.buildConnection();
@@ -40,9 +28,13 @@ const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
     if (connection) {
       connection
         .start()
-        .then((result) => {
+        .then(async (result) => {
+          const uniqueName = await MessagingService.startPrivateChat(
+            connection,
+            2
+          );
+          setGroupName(uniqueName);
           console.log("Connected!");
-
           connection.on("ReceiveMessage", (message) => {
             receiveMessage(message);
           });
@@ -71,7 +63,10 @@ const Messages: React.FunctionComponent<IMessagesProps> = (props) => {
             ></MessageBubble>
           ))}
         </VStack>
-        <MessageInput connection={connection}></MessageInput>
+        <MessageInput
+          connection={connection}
+          groupName={groupName}
+        ></MessageInput>
       </Flex>
     </>
   );
