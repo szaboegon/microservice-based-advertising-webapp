@@ -21,7 +21,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("public/advertisement-cards")]
+        [Route("public/advertisement_cards")]
         public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDTO queryParams)
         {
             var advertisements = await _advertisementService.GetAllAdvertisementsAsync(queryParams);
@@ -29,7 +29,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("public/advertisement-details/{id:int}")]
+        [Route("public/advertisement_details/{id:int}")]
         public async Task<ActionResult<AdvertisementDetailsDTO>> GetAdvertisementDetailsAsync(int id)
         {
             var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
@@ -109,7 +109,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("private/advertisements-by-user")]
+        [Route("private/advertisements_by_user")]
         public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementsByUserAsync(int id)
         {
             try
@@ -133,7 +133,7 @@ namespace AdvertisingService.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("public/latest-advertisements/{count:int}")]
+        [Route("public/latest_advertisements/{count:int}")]
         public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetLatestAdvertisementsAsync(int count)
         {
             try

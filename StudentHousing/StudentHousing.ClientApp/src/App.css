@@ -10,3 +10,7 @@ form.filterBar{
 .card-text{     /*only way to overwrite unwanted ChakraUI CSS rule*/
     margin-top: 0 !important;
 }
+
+.chat-tab-container{
+    margin-top: 2px !important;
+}

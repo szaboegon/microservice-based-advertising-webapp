@@ -15,7 +15,7 @@ services:
       - "--log.level=DEBUG"
       - "--api.insecure=true"   
       - "--providers.docker"
-    #  - "--serversTransport.insecureSkipVerify=true"
+      - "--serversTransport.insecureSkipVerify=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
@@ -139,7 +139,7 @@ services:
      - traefik.http.middlewares.messagingauth.forwardauth.address=http://localhost:80/api/user/auth
      - traefik.http.middlewares.messagingauth.forwardauth.authResponseHeaders=X-Forwarded-User
      - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
-     - traefik.http.routers.messagingservice.middlewares=messagingauth
+   #  - traefik.http.routers.messagingservice.middlewares=messagingauth
 
   messagingdb:
     container_name: messaging_db

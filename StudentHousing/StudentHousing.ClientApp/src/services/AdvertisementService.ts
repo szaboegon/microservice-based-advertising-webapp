@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AdvertisementCardData } from "../models/advertisement/advertisementCardData.";
 import { AdvertisementDetailsData } from "../models/advertisement/advertisementDetailsDatal";
-import { AdvertisementListItemData } from "../models/advertisement/advertisementListItemData";
 import authHeader from "./auth/authHeader";
 
 const apiClient = axios.create({
@@ -22,14 +21,14 @@ const findBySearchParams = async (
   searchParams: URLSearchParams
 ): Promise<AdvertisementCardData[]> => {
   const response = await apiClient.get<AdvertisementCardData[]>(
-    "/public/advertisement-cards?" + searchParams
+    "/public/advertisement_cards?" + searchParams
   );
   return response.data;
 };
 
 const findById = async (id: number): Promise<AdvertisementDetailsData> => {
   const response = await apiClient.get<AdvertisementDetailsData>(
-    `/public/advertisement-details/${id}`
+    `/public/advertisement_details/${id}`
   );
   return response.data;
 };
@@ -50,9 +49,9 @@ const remove = async (id: number) => {
   return response.data;
 };
 
-const findByUser = async (): Promise<AdvertisementListItemData[]> => {
-  const response = await apiClient.get<AdvertisementListItemData[]>(
-    "/private/advertisements-by-user",
+const findByUser = async (): Promise<AdvertisementCardData[]> => {
+  const response = await apiClient.get<AdvertisementCardData[]>(
+    "/private/advertisements_by_user",
     {
       headers: authHeader(),
     }
@@ -61,8 +60,8 @@ const findByUser = async (): Promise<AdvertisementListItemData[]> => {
 };
 
 const getLatests = async (count: number) => {
-  const response = await apiClient.get<AdvertisementListItemData[]>(
-    `/public/latest-advertisements/${count}`
+  const response = await apiClient.get<AdvertisementCardData[]>(
+    `/public/latest_advertisements/${count}`
   );
   return response.data;
 };

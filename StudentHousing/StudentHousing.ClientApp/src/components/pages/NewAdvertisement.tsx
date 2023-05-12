@@ -115,7 +115,7 @@ export const NewAdvertisement = () => {
 
   return (
     <>
-      <Box height="900px">
+      <Box height="calc(100vh - 80px)" minHeight="700px">
         <Flex
           width={{ base: "0%", xl: "50%" }}
           overflow="hidden"
@@ -125,7 +125,7 @@ export const NewAdvertisement = () => {
           <Image
             maxWidth="950px"
             height="auto"
-            alignSelf="end"
+            alignSelf="center"
             src={ApartmentBuilding1}
           ></Image>
         </Flex>
@@ -134,6 +134,7 @@ export const NewAdvertisement = () => {
           width={{ base: "100%", xl: "50%" }}
           alignItems="center"
           height="100%"
+          scrollBehavior="smooth"
         >
           <Flex flexDirection="column" alignItems="center">
             <Tabs

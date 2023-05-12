@@ -87,5 +87,16 @@ namespace IdentityService.Services
             return await _userManager.CreateAsync(user, request.Password);
         }
 
+        public async Task<UserDetailsDTO> GetUserDetailsByIdAsync(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new KeyNotFoundException($"User with id: {userId} does not exist.");
+            var userDetails = new UserDetailsDTO
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+            };
+            return userDetails;
+        }
     }
 }

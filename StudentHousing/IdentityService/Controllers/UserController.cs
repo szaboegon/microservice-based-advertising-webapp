@@ -76,5 +76,21 @@ namespace IdentityService.Controllers
         {
             return Ok();
         }
+
+        [HttpGet]
+        [Route("user_details/{id:int}")]
+        [Authorize]
+        public async Task<ActionResult<UserDetailsDTO>> ValidateToken(int id)
+        {
+            try
+            {
+                var result = await _userService.GetUserDetailsByIdAsync(id);
+                return Ok(result);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

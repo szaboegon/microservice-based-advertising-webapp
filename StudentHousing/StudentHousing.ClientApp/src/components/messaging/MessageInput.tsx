@@ -1,4 +1,4 @@
-import { Box, Button, Textarea } from "@chakra-ui/react";
+import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { HubConnection } from "@microsoft/signalr";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -25,19 +25,30 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
   };
   return (
     <>
-      <Box>
+      <Box width="700px">
         <form onSubmit={handleSubmit(submit)}>
-          <Textarea
-            {...register("content", {
-              required: true,
-            })}
-            id="content"
-            resize="none"
-            height="50px"
-            size="sm"
-            borderColor="brandYellow.800"
-          ></Textarea>
-          <Button type="submit">Send</Button>
+          <HStack>
+            <Textarea
+              {...register("content", {
+                required: true,
+              })}
+              id="content"
+              resize="none"
+              height="50px"
+              size="sm"
+              borderColor="brandYellow.800"
+            ></Textarea>
+            <Button
+              size="lg"
+              type="submit"
+              height="40px"
+              bgColor="brandGreen.500"
+              textColor="white"
+              _hover={{ background: "brandGreen.700" }}
+            >
+              Send
+            </Button>
+          </HStack>
         </form>
       </Box>
     </>

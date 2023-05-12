@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Card,
   CardHeader,
@@ -21,15 +22,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({ user }) => {
   return (
     <>
       <Card align="center" variant="filled" padding="1%" width="100%">
-        <Box
-          border="4px"
-          borderRadius="100%"
-          borderColor="brandGreen.600"
-          overflow="hidden"
-          maxWidth="200px"
-        >
-          <Image width="100%" height="auto" src={ProfilePic}></Image>
-        </Box>
+        <Avatar name={`${user.firstName} ${user.lastName}`} size="2xl" />
         <Heading textColor="brandGreen.700" marginBottom="1rem">
           {user.firstName + " " + user.lastName}
         </Heading>
