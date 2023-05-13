@@ -2,26 +2,29 @@ import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { HubConnection } from "@microsoft/signalr";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { MessageInputData } from "../../models/formInterfaces/messageInputData";
 import MessagingService from "../../services/MessagingService";
 
 interface IMessageInputProps {
   connection: HubConnection | null;
   groupName: string;
 }
-
-interface MessageInputData {
-  content: string;
-}
-
 const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
   connection,
   groupName,
 }) => {
-  const { handleSubmit, register } = useForm<MessageInputData>();
+  const { handleSubmit, register, reset } = useForm<MessageInputData>();
 
   const submit = (data: MessageInputData) => {
     connection &&
       MessagingService.sendMessage(data.content, connection, groupName);
+    reset();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key == "Enter") {
+      handleSubmit(submit);
+    }
   };
   return (
     <>
@@ -37,6 +40,7 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
               height="50px"
               size="sm"
               borderColor="brandYellow.800"
+              onKeyDown={handleKeyDown}
             ></Textarea>
             <Button
               size="lg"

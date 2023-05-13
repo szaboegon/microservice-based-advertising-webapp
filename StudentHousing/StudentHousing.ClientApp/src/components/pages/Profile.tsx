@@ -43,8 +43,10 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
           My Advertisements
         </Heading>
         <Flex flexDirection="column" gap="20px" marginBottom="20px">
-          {(isLoading || isRefetching) && <Spinner />}
-          {isError && error instanceof Error && <ErrorAlert error={error} />}
+          {(isLoading || isRefetching) && <Spinner alignSelf="center" />}
+          {isError && !isLoading && !isRefetching && error instanceof Error && (
+            <ErrorAlert error={error} />
+          )}
           {advertisements.map((advertisement) => (
             <AdvertisementListItem
               key={advertisement.id}

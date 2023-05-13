@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Azure;
+using IdentityService.DataTransferObjects;
 using IdentityService.Models;
 using IdentityService.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -78,13 +79,17 @@ namespace IdentityService.Controllers
         }
 
         [HttpGet]
-        [Route("user_details/{id:int}")]
-        [Authorize]
-        public async Task<ActionResult<UserDetailsDTO>> ValidateToken(int id)
+        [Route("user_details")]
+        public async Task<ActionResult<List<UserDetailsDTO>>> GetUserDetailsAsync([FromQuery] List<int> id)
         {
             try
             {
-                var result = await _userService.GetUserDetailsByIdAsync(id);
+                var result = new List<UserDetailsDTO>();
+                foreach (var userId in id)
+                {
+                   var userDetails = await _userService.GetUserDetailsByIdAsync(userId);
+                   result.Add(userDetails);
+                }
                 return Ok(result);
             }
             catch(Exception e)

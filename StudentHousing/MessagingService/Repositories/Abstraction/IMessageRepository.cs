@@ -1,7 +1,6 @@
 ﻿using MessagingService.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace MessagingService.Repositories
+namespace MessagingService.Repositories.Abstraction
 {
     public interface IMessageRepository
     {
@@ -10,6 +9,8 @@ namespace MessagingService.Repositories
         Task AddRangeAsync(IEnumerable<Message> messages);
 
         Task<Message?> GetByIdAsync(int id);
+
+        Task<IEnumerable<Message>> GetByPrivateChatUniqueNameAsync(string uniqueName);
 
         void Remove(Message message);
 

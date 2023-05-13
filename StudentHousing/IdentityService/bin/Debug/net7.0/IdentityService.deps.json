@@ -9,6 +9,7 @@
       "IdentityService/1.0.0": {
         "dependencies": {
           "FluentValidation": "11.5.1",
+          "Invio.Extensions.Authentication.JwtBearer": "2.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.4",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "7.0.3",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.3",
@@ -68,6 +69,18 @@
           "lib/net6.0/Humanizer.dll": {
             "assemblyVersion": "2.14.0.0",
             "fileVersion": "2.14.1.48190"
+          }
+        }
+      },
+      "Invio.Extensions.Authentication.JwtBearer/2.0.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.4",
+          "Microsoft.Extensions.DependencyInjection": "7.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Invio.Extensions.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "2.0.1.0",
+            "fileVersion": "2.0.1.0"
           }
         }
       },
@@ -775,6 +788,13 @@
       "sha512": "sha512-lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "path": "humanizer.core/2.14.1",
       "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
+    },
+    "Invio.Extensions.Authentication.JwtBearer/2.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Pwh2IeiNwZJeRQC+aeyZn68B2vB+SO1HLuCLW//BoECOJDueJnWZAErpSdhgQyl5P+3P9G+yqXaFIZEQsQ0wNg==",
+      "path": "invio.extensions.authentication.jwtbearer/2.0.1",
+      "hashPath": "invio.extensions.authentication.jwtbearer.2.0.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/7.0.4": {
       "type": "package",

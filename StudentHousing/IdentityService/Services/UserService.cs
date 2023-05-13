@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using FluentValidation;
+using IdentityService.DataTransferObjects;
 using IdentityService.Helpers;
 using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -95,6 +96,8 @@ namespace IdentityService.Services
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
             };
             return userDetails;
         }

@@ -5,6 +5,7 @@ using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Models.Validators;
 using IdentityService.Services;
+using Invio.Extensions.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +71,7 @@ builder.Services.AddAuthentication(opt =>
             ValidAudience = configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]))
         };
+       // opt.AddQueryStringAuthentication();
     });
 
 builder.Services.AddAuthorization();

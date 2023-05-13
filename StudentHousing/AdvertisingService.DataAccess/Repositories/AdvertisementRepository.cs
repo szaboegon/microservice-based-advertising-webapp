@@ -58,7 +58,8 @@ namespace AdvertisingService.DataAccess.Repositories
                 Parking=a.Parking,
                 Description=a.Description,
                 MonthlyPrice=a.MonthlyPrice,
-                Image=a.Images.First().Data
+                Image=a.Images.First().Data,
+                AdvertiserId = a.AdvertiserId
 
             }).SingleOrDefaultAsync();
 

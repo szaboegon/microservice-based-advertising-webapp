@@ -2,6 +2,7 @@ using MessagingService.Data;
 using MessagingService.Hubs;
 using MessagingService.Repositories;
 using MessagingService.Repositories.Abstraction;
+using MessagingService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<MessageDbContext>(options =>
 
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IPrivateChatRepository, PrivateChatReposiotry>();
+
+builder.Services.AddScoped<MessageService, MessageService>();
 
 /*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
     builder

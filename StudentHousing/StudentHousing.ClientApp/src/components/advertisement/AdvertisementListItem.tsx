@@ -149,7 +149,7 @@ const AdvertisementListItem: React.FunctionComponent<
         </Card>
       </LinkBox>
       {isLoading && <Spinner />}
-      {isError && error instanceof Error && (
+      {isError && !isLoading && error instanceof Error && (
         <ErrorAlert error={error} maxWidth="800px" />
       )}
     </>

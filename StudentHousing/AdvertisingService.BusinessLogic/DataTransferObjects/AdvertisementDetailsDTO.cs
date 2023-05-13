@@ -18,5 +18,6 @@
         public string? Description { get; set; }
         public int  MonthlyPrice { get; set; }
         public byte[]? Image { get; set; }
+        public int AdvertiserId { get; set; }
     }
 }

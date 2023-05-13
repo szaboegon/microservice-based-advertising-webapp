@@ -8,6 +8,7 @@ import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import MessageBubble from "../messaging/MessageBubble";
 import MessageInput from "../messaging/MessageInput";
 import ChatTab from "../messaging/ChatTab";
+import UserService from "../../services/UserService";
 
 interface IMessagesProps {
   user: User;
@@ -18,25 +19,25 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   const [groupName, setGroupName] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const [chatPartners, setChatPartners] = useState<User[]>([
-    {
-      id: 1,
-      userName: "user1",
-      firstName: "Jozsef",
-      lastName: "Nagy",
-      email: "jozsef@gmail.com",
-    },
-    {
-      id: 2,
-      userName: "user2",
-      firstName: "Janos",
-      lastName: "Kis",
-      email: "janos@gmail.com",
-    },
-  ]);
+  const [chatPartners, setChatPartners] = useState<User[]>([]);
   const [selectedChatPartner, setSelectedChatPartner] = useState<User>();
 
   useEffect(() => {
+    fetchChatPartners();
+  }, []);
+
+  const fetchChatPartners = async () => {
+    const partnerIds = await MessagingService.getChatPartnersForUser();
+    const queryParams = new URLSearchParams();
+    partnerIds.forEach((id) => {
+      queryParams.append("id", id.toString());
+    });
+    const partnerNames = await UserService.getUserDetails(queryParams);
+    setChatPartners(partnerNames);
+  };
+
+  useEffect(() => {
+    if (!selectedChatPartner) return;
     const conn = MessagingService.buildConnection();
     if (conn) {
       setConnection(conn);
@@ -44,18 +45,22 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   }, [selectedChatPartner]);
 
   useEffect(() => {
+    if (!selectedChatPartner) return;
     if (connection) {
       connection
         .start()
         .then(async (result) => {
-          if (!selectedChatPartner) return;
           const uniqueName = await MessagingService.startPrivateChat(
             connection,
             selectedChatPartner.id
           );
           setGroupName(uniqueName);
+          console.log("Name " + uniqueName);
+          const previousMessages =
+            await MessagingService.getMessagesForPrivateChat(uniqueName);
+          setMessages(previousMessages);
           console.log("Connected!");
-          connection.on("ReceiveMessage", (message) => {
+          connection.on("ReceiveMessage", (message: Message) => {
             receiveMessage(message);
           });
         })
@@ -63,13 +68,9 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
     }
   }, [connection]);
 
-  const receiveMessage = (message: string) => {
+  const receiveMessage = (message: Message) => {
     console.log("Received: " + message);
-    const msg: Message = {
-      senderId: selectedChatPartner?.id,
-      content: message,
-    };
-    setMessages((messages) => [...messages, msg]);
+    setMessages((messages) => [...messages, message]);
   };
 
   return (
@@ -94,6 +95,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
           </Heading>
           {chatPartners.map((partner) => (
             <ChatTab
+              key={partner.id}
               chatPartner={partner}
               setSelectedChatPartner={setSelectedChatPartner}
             />
@@ -132,12 +134,29 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
           ) : (
             <></>
           )}
-          {messages.map((m) => (
-            <MessageBubble
-              key={Date.now() * Math.random()}
-              message={m}
-            ></MessageBubble>
-          ))}
+          <VStack
+            overflowY="scroll"
+            height={"calc(100vh - 260px)"}
+            width="100%"
+            paddingX="2rem"
+          >
+            {messages.map((m) => (
+              <MessageBubble
+                key={Date.now() * Math.random()}
+                message={m}
+                backgroundColor={
+                  m.senderId == UserService.getCurrentUser()?.id
+                    ? "brandGreen.500"
+                    : "brandYellow.500"
+                }
+                alignment={
+                  m.senderId == UserService.getCurrentUser()?.id
+                    ? "end"
+                    : "start"
+                }
+              ></MessageBubble>
+            ))}
+          </VStack>
           <Flex position="fixed" bottom="20px">
             <MessageInput
               connection={connection}

@@ -67,7 +67,9 @@ export const Search = () => {
         {(isLoading || isRefetching) && advertisements.length <= 0 && (
           <Spinner />
         )}
-        {isError && error instanceof Error && <ErrorAlert error={error} />}
+        {isError && !isLoading && !isRefetching && error instanceof Error && (
+          <ErrorAlert error={error} />
+        )}
         {advertisements.map((advertisement) => (
           <AdvertisementCard
             key={advertisement.id}

@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
 import { Home } from "./components/pages/Home";
 import { Search } from "./components/pages/Search";
-import { Details } from "./components/pages/Details";
+import Details from "./components/pages/Details";
 import { Login } from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import { useEffect, useState } from "react";
@@ -91,7 +91,7 @@ function App() {
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/search/*" element={<Search />} />
-        <Route path="/details/:id" element={<Details />} />
+        <Route path="/details/:id" element={<Details isLoggedIn={!!user} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/*" element={<Navigate to="/login" replace />} />

@@ -15,7 +15,11 @@ import AdvertisementService from "../../services/AdvertisementService";
 import { useQuery } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 
-export const Details = () => {
+interface IDetailsProps {
+  isLoggedIn: boolean;
+}
+
+const Details: React.FunctionComponent<IDetailsProps> = ({ isLoggedIn }) => {
   const [advertisement, setAdvertisement] =
     useState<AdvertisementDetailsData>();
 
@@ -47,9 +51,12 @@ export const Details = () => {
         {isSuccess && advertisement && (
           <AdvertisementDetails
             advertisement={advertisement}
+            isLoggedIn={isLoggedIn}
           ></AdvertisementDetails>
         )}
       </Flex>
     </>
   );
 };
+
+export default Details;

@@ -1,4 +1,5 @@
-﻿using MessagingService.Data;
+﻿using System.Collections;
+using MessagingService.Data;
 using MessagingService.Models;
 using MessagingService.Repositories.Abstraction;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,24 @@ namespace MessagingService.Repositories
         public async Task<IEnumerable<PrivateChat>> GetAllByUserIdAsync(int userId)
         {
             return await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
+        }
+
+        public async Task<List<int>> GetAllChatPartnerIdsByUserIdAsync(int userId)
+        {
+            var ids = new List<int>();
+            var chats = await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
+            foreach (var chat in chats)
+            {
+                if (chat.User1Id != userId)
+                {
+                    ids.Add(chat.User1Id);
+                }
+                else if (chat.User2Id != userId)
+                {
+                    ids.Add(chat.User2Id);
+                }
+            }
+            return ids;
         }
 
         public async Task<PrivateChat?> GetUniqueNameByUserIdsAsync(int user1Id, int user2Id)

@@ -2,22 +2,25 @@
 using MessagingService.Repositories;
 using MessagingService.Repositories.Abstraction;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
+using MessagingService.Services;
 
 namespace MessagingService.Hubs
 {
     public class MessageHub : Hub
     {
         private readonly JwtSecurityTokenHandler _tokenHandler;
-        private readonly IMessageRepository _messageRepository;
-        private readonly IPrivateChatRepository _privateChatRepository;
+        private readonly MessageService _messageService;
 
-        public MessageHub(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
+        public MessageHub(MessageService messageService)
         {
-            _messageRepository = messageRepository;
-            _privateChatRepository = privateChatRepository;
+            _messageService = messageService;
             _tokenHandler = new JwtSecurityTokenHandler();
+        }
+        public override Task OnConnectedAsync()
+        {
+            //Context.Abort(); TODO
+            return base.OnConnectedAsync();
         }
 
         public async Task SendMessage(string message)
@@ -27,41 +30,22 @@ namespace MessagingService.Hubs
 
         public async Task SendMessageToGroup(string uniqueName, string messageContent)
         {
-            var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
+            //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             var senderId = GetUserIdFromToken(tokenString);
-            var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new Exception("Chat does not exist");
-            var message = new Message
-            {
-                SenderId = senderId,
-                Content = messageContent,
-                PrivateChatId = privateChat.Id
-            };
 
-            await _messageRepository.AddAsync(message);
-            await _messageRepository.SaveAsync();
-
-            await Clients.Group(uniqueName).SendAsync("ReceiveMessage", messageContent);
+            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, uniqueName, messageContent);
+            await Clients.Group(uniqueName).SendAsync("ReceiveMessage", message);
         }
 
         public async Task<string> StartPrivateChat(int user2Id)
         {
-            var tokenString = Context.GetHttpContext()?.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
+            //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             var user1Id = GetUserIdFromToken(tokenString);
 
-            var privateChat = await _privateChatRepository.GetUniqueNameByUserIdsAsync(user1Id, user2Id);
-            if(privateChat == null)
-            {
-                privateChat = new PrivateChat
-                {
-                    User1Id = user1Id,
-                    User2Id = user2Id,
-                    UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow}"
-                };
-
-                await _privateChatRepository.AddAsync(privateChat);
-                await _privateChatRepository.SaveAsync();
-            }
+            var privateChat = await _messageService.CreatePrivateChatIfDoesNotExistAsync(user1Id, user2Id);
             await Groups.AddToGroupAsync(Context.ConnectionId, privateChat.UniqueName);
             return privateChat.UniqueName;
         }

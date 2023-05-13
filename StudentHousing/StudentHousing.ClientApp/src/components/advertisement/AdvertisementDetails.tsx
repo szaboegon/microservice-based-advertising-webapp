@@ -13,17 +13,34 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { AdvertisementDetailsData } from "../../models/advertisement/advertisementDetailsDatal";
+import { User } from "../../models/user";
 import ImageService from "../../services/ImageService";
+import UserService from "../../services/UserService";
+import AdvertiserInfo from "../messaging/AdvertiserInfo";
 
 interface IAdvertisementDetailsProps {
   advertisement: AdvertisementDetailsData;
+  isLoggedIn: boolean;
 }
 
 const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
-> = ({ advertisement }) => {
+> = ({ advertisement, isLoggedIn }) => {
   var base64Image = ImageService.convertToBase64Image(advertisement.image);
+  const [advertiser, setAdvertiser] = useState<User>();
+
+  useEffect(() => {
+    fetchAdvertisement();
+  }, []);
+
+  const fetchAdvertisement = async () => {
+    const searchParams = new URLSearchParams();
+    searchParams.append("id", advertisement.advertiserId.toString());
+    var userDetails = await UserService.getUserDetails(searchParams);
+    setAdvertiser(userDetails.at(0));
+  };
   return (
     <>
       <Flex width="75%" marginY="20px" flexWrap="wrap" justifyContent="center">
@@ -84,6 +101,7 @@ const AdvertisementDetails: React.FunctionComponent<
         </Heading>
         <Text>{advertisement.description}</Text>
       </Box>
+      <AdvertiserInfo advertiser={advertiser} isLoggedIn={isLoggedIn} />
     </>
   );
 };

@@ -1,4 +1,5 @@
 ﻿using MessagingService.Models;
+using System.Threading.Tasks;
 
 namespace MessagingService.Repositories.Abstraction
 {
@@ -13,6 +14,8 @@ namespace MessagingService.Repositories.Abstraction
         void Remove(PrivateChat chat);
 
         Task<IEnumerable<PrivateChat>> GetAllByUserIdAsync(int userId);
+
+        Task<List<int>> GetAllChatPartnerIdsByUserIdAsync(int userId);
 
         Task SaveAsync();
     }

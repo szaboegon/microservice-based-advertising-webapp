@@ -135,11 +135,13 @@ services:
        - DB_SA_PASSWORD=password@12345
     labels: 
      - traefik.enable=true
-     - traefik.http.routers.messagingservice.rule=Host(`localhost`) && PathPrefix(`/hubs`)
+     - traefik.http.routers.messagingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/message`)
+     - traefik.http.routers.messagingservicesocket.rule=Host(`localhost`) && PathPrefix(`/hubs`)
      - traefik.http.middlewares.messagingauth.forwardauth.address=http://localhost:80/api/user/auth
      - traefik.http.middlewares.messagingauth.forwardauth.authResponseHeaders=X-Forwarded-User
      - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
-   #  - traefik.http.routers.messagingservice.middlewares=messagingauth
+     - traefik.http.routers.messagingservicewebapi.middlewares=messagingauth
+    # - traefik.http.routers.messagingservicesocket.middlewares=messagingauth
 
   messagingdb:
     container_name: messaging_db

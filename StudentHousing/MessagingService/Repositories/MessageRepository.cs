@@ -1,6 +1,8 @@
 ﻿using MessagingService.Data;
 using MessagingService.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using MessagingService.Repositories.Abstraction;
 
 namespace MessagingService.Repositories
 {
@@ -25,6 +27,11 @@ namespace MessagingService.Repositories
         public async Task<Message?> GetByIdAsync(int id)
         {
             return await _dbcontext.Messages.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Message>> GetByPrivateChatUniqueNameAsync(string uniqueName)
+        {
+            return await _dbcontext.Messages.Where(m => m.PrivateChat.UniqueName == uniqueName).ToListAsync();
         }
 
         public void Remove(Message message)

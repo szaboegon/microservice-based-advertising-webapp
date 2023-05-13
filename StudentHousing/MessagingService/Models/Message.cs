@@ -8,11 +8,6 @@
         public DateTime TimeStamp { get; set; }
         public int PrivateChatId { get; set; }
 
-        private PrivateChat? _privateChat;
-        public PrivateChat PrivateChat
-        {
-            set => _privateChat = value;
-            get => _privateChat ?? throw new InvalidOperationException("Uninitialized property: " + nameof(PrivateChat));
-        }
+        public PrivateChat? PrivateChat;
     }
 }

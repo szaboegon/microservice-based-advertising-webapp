@@ -247,3 +247,4 @@ D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousin
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService\obj\Debug\net7.0\IdentityService.pdb
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService\obj\Debug\net7.0\IdentityService.genruntimeconfig.cache
 D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService\obj\Debug\net7.0\ref\IdentityService.dll
+D:\GitHub Repos\Public repos\microservice-based-advertising-webapp\StudentHousing\IdentityService\bin\Debug\net7.0\Invio.Extensions.Authentication.JwtBearer.dll
