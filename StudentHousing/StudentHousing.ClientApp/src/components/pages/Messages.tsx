@@ -4,11 +4,23 @@ import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../../services/MessagingService";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
-import { Avatar, Flex, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import MessageBubble from "../messaging/MessageBubble";
 import MessageInput from "../messaging/MessageInput";
 import ChatTab from "../messaging/ChatTab";
 import UserService from "../../services/UserService";
+import { useQuery } from "react-query";
+import { WarningAlert } from "../alerts/WarningAlert";
+import { ErrorAlert } from "../alerts/ErrorAlert";
+import { AxiosError } from "axios";
 
 interface IMessagesProps {
   user: User;
@@ -19,22 +31,45 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   const [groupName, setGroupName] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
 
+  const [chatPartnerIds, setChatPartnerIds] = useState<number[] | undefined>(
+    undefined
+  );
   const [chatPartners, setChatPartners] = useState<User[]>([]);
   const [selectedChatPartner, setSelectedChatPartner] = useState<User>();
 
-  useEffect(() => {
-    fetchChatPartners();
-  }, []);
+  const {
+    isSuccess: isSuccessPartnerIds,
+    isLoading: isLoadingPartnerIds,
+    isError: isErrorPartnerIds,
+    isRefetching: isRefetchingPartnerIds,
+    error: errorPartnerIds,
+  } = useQuery({
+    queryKey: ["partnerIds"],
+    queryFn: async () => {
+      return await MessagingService.getChatPartnersForUser();
+    },
+    onSuccess: (data: number[]) => setChatPartnerIds(data),
+    refetchOnWindowFocus: false,
+  });
 
-  const fetchChatPartners = async () => {
-    const partnerIds = await MessagingService.getChatPartnersForUser();
-    const queryParams = new URLSearchParams();
-    partnerIds.forEach((id) => {
-      queryParams.append("id", id.toString());
-    });
-    const partnerNames = await UserService.getUserDetails(queryParams);
-    setChatPartners(partnerNames);
-  };
+  const {
+    isSuccess: isSuccessPartnerData,
+    isLoading: isLoadingPartnerData,
+    isError: isErrorPartnerData,
+    isRefetching: isRefetchingPartnerData,
+  } = useQuery({
+    queryKey: ["userDetails"],
+    queryFn: async () => {
+      const queryParams = new URLSearchParams();
+      chatPartnerIds?.forEach((id) => {
+        queryParams.append("id", id.toString());
+      });
+      return await UserService.getUserDetails(queryParams);
+    },
+    onSuccess: (data: User[]) => setChatPartners(data),
+    refetchOnWindowFocus: false,
+    enabled: !!chatPartnerIds,
+  });
 
   useEffect(() => {
     if (!selectedChatPartner) return;
@@ -93,13 +128,36 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
           >
             Private Chats
           </Heading>
-          {chatPartners.map((partner) => (
-            <ChatTab
-              key={partner.id}
-              chatPartner={partner}
-              setSelectedChatPartner={setSelectedChatPartner}
-            />
-          ))}
+          <Flex justifyContent="center" alignItems="center" width="100%">
+            {isSuccessPartnerData &&
+              chatPartners.map((partner) => (
+                <ChatTab
+                  key={partner.id}
+                  chatPartner={partner}
+                  setSelectedChatPartner={setSelectedChatPartner}
+                />
+              ))}
+            {(isLoadingPartnerIds ||
+              isRefetchingPartnerIds ||
+              isLoadingPartnerData ||
+              isRefetchingPartnerData) &&
+              chatPartners.length <= 0 && <Spinner />}
+
+            {(isErrorPartnerIds || isErrorPartnerData) &&
+              !isLoadingPartnerIds &&
+              !isRefetchingPartnerIds &&
+              errorPartnerIds instanceof AxiosError && (
+                <ErrorAlert error={errorPartnerIds} />
+              )}
+
+            {isSuccessPartnerData &&
+              isSuccessPartnerIds &&
+              chatPartners.length <= 0 &&
+              !isRefetchingPartnerIds &&
+              !isRefetchingPartnerData && (
+                <WarningAlert message="You have no private chats yet." />
+              )}
+          </Flex>
         </VStack>
         <VStack
           flex="80%"
@@ -158,10 +216,14 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
             ))}
           </VStack>
           <Flex position="fixed" bottom="20px">
-            <MessageInput
-              connection={connection}
-              groupName={groupName}
-            ></MessageInput>
+            {connection ? (
+              <MessageInput
+                connection={connection}
+                groupName={groupName}
+              ></MessageInput>
+            ) : (
+              <></>
+            )}
           </Flex>
         </VStack>
       </Flex>

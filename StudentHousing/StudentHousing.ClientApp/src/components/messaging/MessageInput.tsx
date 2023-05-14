@@ -15,17 +15,12 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
 }) => {
   const { handleSubmit, register, reset } = useForm<MessageInputData>();
 
-  const submit = (data: MessageInputData) => {
+  const submit = async (data: MessageInputData) => {
     connection &&
-      MessagingService.sendMessage(data.content, connection, groupName);
+      (await MessagingService.sendMessage(data.content, connection, groupName));
     reset();
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key == "Enter") {
-      handleSubmit(submit);
-    }
-  };
   return (
     <>
       <Box width="700px">
@@ -40,7 +35,6 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
               height="50px"
               size="sm"
               borderColor="brandYellow.800"
-              onKeyDown={handleKeyDown}
             ></Textarea>
             <Button
               size="lg"

@@ -18,7 +18,7 @@ namespace MessagingService.Services
 
         public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
         {
-            var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new Exception("Chat does not exist");
+            var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist");
             var message = new Message
             {
                 SenderId = senderId,
@@ -36,18 +36,17 @@ namespace MessagingService.Services
         public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id)
         {
             var privateChat = await _privateChatRepository.GetUniqueNameByUserIdsAsync(user1Id, user2Id);
-            if (privateChat == null)
-            {
-                privateChat = new PrivateChat
-                {
-                    User1Id = user1Id,
-                    User2Id = user2Id,
-                    UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}"
-                };
+            if (privateChat != null) return privateChat;
 
-                await _privateChatRepository.AddAsync(privateChat);
-                await _privateChatRepository.SaveAsync();
-            }
+            privateChat = new PrivateChat
+            {
+                User1Id = user1Id,
+                User2Id = user2Id,
+                UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}"
+            };
+
+            await _privateChatRepository.AddAsync(privateChat);
+            await _privateChatRepository.SaveAsync();
 
             return privateChat;
         }
