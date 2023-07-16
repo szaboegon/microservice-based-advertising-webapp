@@ -8,6 +8,7 @@ import AdvertisementListItem from "../advertisement/AdvertisementListItem";
 import { WarningAlert } from "../alerts/WarningAlert";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
 
 interface IProfileProps {
   user: User;
@@ -39,9 +40,7 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
     <>
       <Flex alignItems="center" justifyContent="center" direction="column">
         <ProfileCard user={user}></ProfileCard>
-        <Heading marginY="2rem" textColor="gray.500">
-          My Advertisements
-        </Heading>
+        <Heading sx={pageSubheadingStyles}>My Advertisements</Heading>
         <Flex flexDirection="column" gap="20px" marginBottom="20px">
           {(isLoading || isRefetching) && <Spinner alignSelf="center" />}
           {isError && !isLoading && !isRefetching && error instanceof Error && (

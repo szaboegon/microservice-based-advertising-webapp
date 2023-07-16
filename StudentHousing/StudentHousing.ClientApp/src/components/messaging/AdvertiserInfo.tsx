@@ -56,8 +56,8 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
 
   return (
     <>
-      <Card maxW="md">
-        <CardHeader>
+      <Card minW="350px" variant="filled">
+        <CardHeader height="120px">
           <HStack>
             <Avatar
               name={`${advertiser?.firstName ?? "unkown"} ${
@@ -65,7 +65,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
               }`}
               size="lg"
             />
-            <VStack marginLeft="10px">
+            <VStack marginLeft="10px" alignItems="start">
               <Text
                 fontSize="1.6rem"
                 textColor="gray.600"
@@ -104,13 +104,13 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
                   })}
                   id="content"
                   resize="none"
-                  height="50px"
-                  size="sm"
+                  height="100px"
+                  size="md"
                   borderColor="brandYellow.800"
                 ></Textarea>
                 <Button
+                  width="100%"
                   alignSelf="end"
-                  size="md"
                   type="submit"
                   height="40px"
                   bgColor="brandGreen.500"
@@ -122,7 +122,14 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
               </VStack>
             </form>
           ) : (
-            <Text>Please login to send messages to advertiser</Text>
+            <Text
+              fontSize="1.1rem"
+              fontWeight="semibold"
+              textColor="gray.600"
+              textAlign="center"
+            >
+              Please login to send messages to the advertiser
+            </Text>
           )}
           <Flex justifyContent="center" alignItems="center" marginTop="10px">
             {isLoading && <Spinner />}

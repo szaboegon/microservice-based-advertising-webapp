@@ -1,6 +1,4 @@
 ﻿using MessagingService.Repositories.Abstraction;
-using MessagingService.Repositories;
-using Azure.Messaging;
 using MessagingService.Models;
 
 namespace MessagingService.Services

@@ -69,7 +69,7 @@ export const NewAdvertisement = () => {
       formData.append("streetName", formValues.streetName);
       formData.append("streetNumber", formValues.streetNumber);
       formData.append("unitNumber", formValues.unitNumber);
-      formData.append("numberOfRooms", formValues.numberOfRooms);
+      formData.append("numberOfRooms", formValues.numberOfRooms ?? 1);
       formData.append("size", formValues.size);
       formData.append("furnished", formValues.furnished);
       formData.append("parking", formValues.parking);

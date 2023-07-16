@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using FluentValidation;
+﻿using FluentValidation;
 using IdentityService.DataTransferObjects;
 using IdentityService.Helpers;
 using IdentityService.Models;

@@ -1,7 +1,4 @@
-﻿using MessagingService.Models;
-using MessagingService.Repositories;
-using MessagingService.Repositories.Abstraction;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using System.IdentityModel.Tokens.Jwt;
 using MessagingService.Services;
 

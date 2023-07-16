@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Azure;
-using IdentityService.DataTransferObjects;
+﻿using IdentityService.DataTransferObjects;
 using IdentityService.Models;
 using IdentityService.Services;
 using Microsoft.AspNetCore.Authorization;

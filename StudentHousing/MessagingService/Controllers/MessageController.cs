@@ -1,8 +1,5 @@
 using MessagingService.Models;
-using MessagingService.Repositories;
-using MessagingService.Repositories.Abstraction;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
 using MessagingService.Services;

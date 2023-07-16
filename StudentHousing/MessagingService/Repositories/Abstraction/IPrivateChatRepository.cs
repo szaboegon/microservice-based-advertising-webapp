@@ -1,5 +1,4 @@
 ﻿using MessagingService.Models;
-using System.Threading.Tasks;
 
 namespace MessagingService.Repositories.Abstraction
 {

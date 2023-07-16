@@ -161,7 +161,7 @@ namespace AdvertisingService.DataAccess.Data
                       .HasConstraintName("FK_Image_Advertisement");
             });
 
-            DataSeeding(modelBuilder);
+            //DataSeeding(modelBuilder);
         }
         private void DataSeeding(ModelBuilder modelBuilder)
         {

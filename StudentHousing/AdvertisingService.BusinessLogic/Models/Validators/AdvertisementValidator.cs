@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System.Data;
 
 namespace AdvertisingService.BusinessLogic.Models.Validators
 {

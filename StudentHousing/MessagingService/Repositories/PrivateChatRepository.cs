@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using MessagingService.Data;
+﻿using MessagingService.Data;
 using MessagingService.Models;
 using MessagingService.Repositories.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace MessagingService.Repositories
 {
-    public class PrivateChatReposiotry : IPrivateChatRepository
+    public class PrivateChatRepository : IPrivateChatRepository
     {
         private readonly MessageDbContext _dbcontext;
-        public PrivateChatReposiotry(MessageDbContext dbcontext)
+        public PrivateChatRepository(MessageDbContext dbcontext)
         {
             _dbcontext = dbcontext;
         }

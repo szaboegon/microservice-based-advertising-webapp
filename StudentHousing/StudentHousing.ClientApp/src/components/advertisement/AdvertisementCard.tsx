@@ -10,7 +10,6 @@ import {
   VStack,
   HStack,
   Text,
-  Box,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +28,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
     navigate("/details/" + advertisement.id);
   };
 
-  var base64Image = ImageService.convertToBase64Image(advertisement.image);
+  let base64Image = ImageService.convertToBase64Image(advertisement.image);
 
   return (
     <>

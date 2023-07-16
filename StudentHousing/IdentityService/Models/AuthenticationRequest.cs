@@ -1,8 +1,4 @@
-﻿
-
-using System.ComponentModel.DataAnnotations;
-
-namespace IdentityService.Models
+﻿namespace IdentityService.Models
 {
     public class AuthenticationRequest
     {

@@ -5,11 +5,9 @@ using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Models.Validators;
 using IdentityService.Services;
-using Invio.Extensions.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);

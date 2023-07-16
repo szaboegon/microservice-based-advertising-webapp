@@ -3,7 +3,6 @@ using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace AdvertisingService.DataAccess.PipeLine
 {

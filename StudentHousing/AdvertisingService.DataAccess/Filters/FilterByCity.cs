@@ -1,5 +1,4 @@
-﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using AdvertisingService.BusinessLogic.Interfaces;
+﻿using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.DataAccess.Filters

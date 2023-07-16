@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace MessagingService.Models
+﻿namespace MessagingService.Models
 {
     public class PrivateChat
     {

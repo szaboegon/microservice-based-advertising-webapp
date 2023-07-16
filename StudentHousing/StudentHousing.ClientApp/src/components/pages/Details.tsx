@@ -1,16 +1,8 @@
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Flex,
-  Spinner,
-  VStack,
-} from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import AdvertisementDetails from "../advertisement/AdvertisementDetails";
-import { AdvertisementDetailsData } from "../../models/advertisement/advertisementDetailsDatal";
+import { Flex, Spinner } from "@chakra-ui/react";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import AdvertisementDetails from "../advertisement/details/AdvertisementDetails";
+import { AdvertisementDetailsData } from "../../models/advertisement/advertisementDetailsData";
 import AdvertisementService from "../../services/AdvertisementService";
 import { useQuery } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
@@ -38,12 +30,7 @@ const Details: React.FunctionComponent<IDetailsProps> = ({ isLoggedIn }) => {
 
   return (
     <>
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        flexWrap="wrap"
-        marginX="auto"
-      >
+      <Flex marginY="20px" marginX="auto" justifyContent="center">
         {isLoading && <Spinner marginTop="10%" />}
         {isError && error instanceof Error && (
           <ErrorAlert error={error}></ErrorAlert>

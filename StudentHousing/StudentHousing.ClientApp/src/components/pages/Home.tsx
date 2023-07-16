@@ -7,6 +7,7 @@ import AdvertisementCard from "../advertisement/AdvertisementCard";
 import SearchBar from "../shared/SearchBar";
 import { useState } from "react";
 import { ErrorAlert } from "../alerts/ErrorAlert";
+import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
 
 export const Home = () => {
   const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
@@ -68,10 +69,8 @@ export const Home = () => {
           <SearchBar minWidth="75%"></SearchBar>
         </Flex>
       </Flex>
-      <Heading marginY="60px" textAlign="center" textColor="gray.500">
-        Recent Advertisements
-      </Heading>
-      <Flex margin="50px" flexWrap="wrap" justifyContent="center">
+      <Heading sx={pageSubheadingStyles}>Recent Advertisements</Heading>
+      <Flex margin="1rem" flexWrap="wrap" justifyContent="center">
         {(isLoading || isRefetching) && <Spinner />}
         {isError && !isLoading && !isRefetching && error instanceof Error && (
           <ErrorAlert error={error} />

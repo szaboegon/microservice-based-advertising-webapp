@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AdvertisementCardData } from "../models/advertisement/advertisementCardData.";
-import { AdvertisementDetailsData } from "../models/advertisement/advertisementDetailsDatal";
+import { AdvertisementDetailsData } from "../models/advertisement/advertisementDetailsData";
 import authHeader from "./auth/authHeader";
 
 const apiClient = axios.create({

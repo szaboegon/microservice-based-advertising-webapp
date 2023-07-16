@@ -13,7 +13,6 @@ import {
   LinkOverlay,
   Spinner,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useMutation } from "react-query";
@@ -59,7 +58,7 @@ const AdvertisementListItem: React.FunctionComponent<
   }
 
   console.log(advertisement.uploadDate);
-  var base64Image = ImageService.convertToBase64Image(advertisement.image);
+  let base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
       <LinkBox>

@@ -1,7 +1,6 @@
 ﻿using MessagingService.Data;
 using MessagingService.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 using MessagingService.Repositories.Abstraction;
 
 namespace MessagingService.Repositories

@@ -41,6 +41,7 @@ namespace AdvertisingService.BusinessLogic.Services
                 AdvertiserId = advertiserId,
                 Category = newCategory,
                 Address = newAddress,
+                UploadDate = DateTime.Now
             };
 
             var validationResult = await _advertisementValidator.ValidateAsync(newAdvertisement);
