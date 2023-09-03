@@ -51,8 +51,8 @@ services:
        - DB_HOST=advertisingdb
        - DB_NAME=advertising
        - DB_SA_PASSWORD=password@12345
-    expose:
-       - 8002
+    ports:
+       - 9001:80
     labels:
        - traefik.enable=true
        - traefik.http.routers.advertisingserviceprivate.rule=Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
@@ -75,7 +75,7 @@ services:
     networks:
        - mynetwork
     ports:
-       - 8001:1433    # Only needed for debugging, remove later
+       - 8001:1433    # Only needed for dev, remove in prod
  
   identityservice:
     container_name: identity_service
@@ -84,6 +84,8 @@ services:
         dockerfile: IdentityService/Dockerfile
     networks: 
         - mynetwork
+    ports:
+        - 9002:80  # Only needed for dev, remove in prod
     environment:
        - DB_HOST=identitydb
        - DB_NAME=identity
@@ -103,7 +105,7 @@ services:
     networks:
        - mynetwork
     ports:
-       - 8002:1433
+       - 8002:1433  # Only needed for dev, remove in prod
 
   clientapp:
     container_name: client_app
@@ -129,6 +131,8 @@ services:
       dockerfile: MessagingService/Dockerfile
     networks:
        - mynetwork
+    ports:
+      - 9003:80  # Only needed for dev, remove in prod
     environment:
        - DB_HOST=messagingdb
        - DB_NAME=messaging
@@ -152,7 +156,7 @@ services:
     networks:
        - mynetwork
     ports:
-       - 8003:1433
+       - 8003:1433  # Only needed for dev, remove in prod
 
 
 

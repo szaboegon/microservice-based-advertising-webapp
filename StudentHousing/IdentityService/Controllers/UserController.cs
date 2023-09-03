@@ -8,7 +8,7 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace IdentityService.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/user")]
 [ApiController]
 public class UserController : ControllerBase
 {

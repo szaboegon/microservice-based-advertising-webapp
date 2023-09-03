@@ -46,7 +46,17 @@ builder.Services.AddScoped<IValidator<Image>, ImageValidator>();
 
 builder.Services.AddScoped<IPipeLineBuilder<Advertisement, AdvertisementCardDTO>, AdvertisementFilterPipeLineBuilder>(); //TODO
 
+//Add Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+//if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Apply database migrations
 using (var scope = app.Services.CreateScope())

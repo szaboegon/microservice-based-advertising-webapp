@@ -3,6 +3,9 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "advertisingservice.webapi",
+      "composeLaunchUrl": "http://localhost:9001/swagger/index.html",
       "serviceActions": {
         "advertisingservice.webapi": "StartDebugging",
         "advertisingdb": "StartWithoutDebugging",
@@ -10,12 +13,16 @@
         "traefik": "StartWithoutDebugging",
         "identityservice": "StartDebugging",
         "messagingservice": "StartDebugging",
-        "identitydb": "StartWithoutDebugging"
+        "identitydb": "StartWithoutDebugging",
+        "messagingdb": "StartWithoutDebugging"
       }
     },
     "Backend only": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "advertisingservice.webapi",
+      "composeLaunchUrl": "http://localhost:9001/swagger/index.html",
       "serviceActions": {
         "advertisingdb": "StartWithoutDebugging",
         "advertisingservice.webapi": "StartDebugging",
@@ -23,7 +30,8 @@
         "traefik": "StartWithoutDebugging",
         "identityservice": "StartDebugging",
         "messagingservice": "StartDebugging",
-        "identitydb": "StartWithoutDebugging"
+        "identitydb": "StartWithoutDebugging",
+        "messagingdb": "StartWithoutDebugging"
       }
     }
   }

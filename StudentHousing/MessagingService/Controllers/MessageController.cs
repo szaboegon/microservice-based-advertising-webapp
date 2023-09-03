@@ -6,7 +6,7 @@ using MessagingService.Services;
 
 namespace MessagingService.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/message")]
 [ApiController]
 public class MessageController : ControllerBase
 {

@@ -6,7 +6,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace AdvertisingService.WebAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/advertisement")]
 [ApiController]
 public class AdvertisementController : ControllerBase
 {

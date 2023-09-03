@@ -6,7 +6,7 @@
     <ProjectGuid>d18abbac-9eed-4baf-93ee-074e88bbd1be</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>messagingservice</DockerServiceName>
+    <DockerServiceName>advertisingservice.webapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">
