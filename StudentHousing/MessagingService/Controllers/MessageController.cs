@@ -59,7 +59,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("messages/{uniqueName}")]
-    public async Task<ActionResult<IEnumerable<PrivateChat>>> GetMessagesByPrivateChatUniqueNameAsync(string uniqueName)
+    public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByPrivateChatUniqueNameAsync(string uniqueName)
     {
         try
         {
