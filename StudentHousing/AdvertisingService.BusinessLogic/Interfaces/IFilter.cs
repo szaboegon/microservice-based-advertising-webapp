@@ -1,7 +1,6 @@
-﻿namespace AdvertisingService.BusinessLogic.Interfaces
+﻿namespace AdvertisingService.BusinessLogic.Interfaces;
+
+public interface IFilter<T>
 {
-    public interface IFilter<T>
-    {
-        IQueryable<T> Execute(IQueryable<T> input);
-    }
+    IQueryable<T> Execute(IQueryable<T> input);
 }

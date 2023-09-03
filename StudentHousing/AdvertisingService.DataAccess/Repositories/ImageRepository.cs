@@ -2,12 +2,11 @@
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.DataAccess.Data;
 
-namespace AdvertisingService.DataAccess.Repositories
+namespace AdvertisingService.DataAccess.Repositories;
+
+public class ImageRepository : RepositoryBase<Image>, IImageRepository
 {
-    public class ImageRepository : RepositoryBase<Image>, IImageRepository
+    public ImageRepository(AdvertisementDbContext dbcontext) : base(dbcontext)
     {
-        public ImageRepository(AdvertisementDbContext dbcontext) : base(dbcontext)
-        {
-        }
     }
 }

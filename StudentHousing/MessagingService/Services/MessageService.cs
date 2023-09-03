@@ -1,67 +1,66 @@
 ﻿using MessagingService.Repositories.Abstraction;
 using MessagingService.Models;
 
-namespace MessagingService.Services
+namespace MessagingService.Services;
+
+public class MessageService
 {
-    public class MessageService
+    private readonly IMessageRepository _messageRepository;
+    private readonly IPrivateChatRepository _privateChatRepository;
+
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
     {
-        private readonly IMessageRepository _messageRepository;
-        private readonly IPrivateChatRepository _privateChatRepository;
+        _messageRepository = messageRepository;
+        _privateChatRepository = privateChatRepository;
+    }
 
-        public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
+    public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
+    {
+        var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist");
+        var message = new Message
         {
-            _messageRepository = messageRepository;
-            _privateChatRepository = privateChatRepository;
-        }
+            SenderId = senderId,
+            Content = messageContent,
+            PrivateChatId = privateChat.Id,
+            PrivateChat = privateChat,
+        };
 
-        public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
+        await _messageRepository.AddAsync(message);
+        await _messageRepository.SaveAsync();
+
+        return message;
+    }
+
+    public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id)
+    {
+        var privateChat = await _privateChatRepository.GetUniqueNameByUserIdsAsync(user1Id, user2Id);
+        if (privateChat != null) return privateChat;
+
+        privateChat = new PrivateChat
         {
-            var privateChat = await _privateChatRepository.GetByUniqueNameAsync(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist");
-            var message = new Message
-            {
-                SenderId = senderId,
-                Content = messageContent,
-                PrivateChatId = privateChat.Id,
-                PrivateChat = privateChat,
-            };
+            User1Id = user1Id,
+            User2Id = user2Id,
+            UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}"
+        };
 
-            await _messageRepository.AddAsync(message);
-            await _messageRepository.SaveAsync();
+        await _privateChatRepository.AddAsync(privateChat);
+        await _privateChatRepository.SaveAsync();
 
-            return message;
-        }
+        return privateChat;
+    }
 
-        public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id)
-        {
-            var privateChat = await _privateChatRepository.GetUniqueNameByUserIdsAsync(user1Id, user2Id);
-            if (privateChat != null) return privateChat;
+    public async Task<IEnumerable<PrivateChat>> GetPrivateChatsForUserAsync(int userId)
+    {
+        return await _privateChatRepository.GetAllByUserIdAsync(userId);
+    }
 
-            privateChat = new PrivateChat
-            {
-                User1Id = user1Id,
-                User2Id = user2Id,
-                UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}"
-            };
+    public async Task<List<int>> GetChatPartnerIdsForUserAsync(int userId)
+    {
+        return await _privateChatRepository.GetAllChatPartnerIdsByUserIdAsync(userId);
+    }
 
-            await _privateChatRepository.AddAsync(privateChat);
-            await _privateChatRepository.SaveAsync();
-
-            return privateChat;
-        }
-
-        public async Task<IEnumerable<PrivateChat>> GetPrivateChatsForUserAsync(int userId)
-        {
-            return await _privateChatRepository.GetAllByUserIdAsync(userId);
-        }
-
-        public async Task<List<int>> GetChatPartnerIdsForUserAsync(int userId)
-        {
-            return await _privateChatRepository.GetAllChatPartnerIdsByUserIdAsync(userId);
-        }
-
-        public async Task<IEnumerable<Message>> GetMessagesForPrivateChatAsync(string uniqueName)
-        {
-            return await _messageRepository.GetByPrivateChatUniqueNameAsync(uniqueName);
-        }
+    public async Task<IEnumerable<Message>> GetMessagesForPrivateChatAsync(string uniqueName)
+    {
+        return await _messageRepository.GetByPrivateChatUniqueNameAsync(uniqueName);
     }
 }

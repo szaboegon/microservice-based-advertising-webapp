@@ -3,42 +3,41 @@ using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using FluentValidation;
 
-namespace AdvertisingService.BusinessLogic.Services
+namespace AdvertisingService.BusinessLogic.Services;
+
+public class AddressService
 {
-    public class AddressService
+    private readonly IAddressRepository _addressRepository;
+    private readonly IValidator<Address> _addressValidator;
+
+    public AddressService(IAddressRepository addressRepository, IValidator<Address> addressValidator)
     {
-        private readonly IAddressRepository _addressRepository;
-        private readonly IValidator<Address> _addressValidator;
+        _addressRepository = addressRepository;
+        _addressValidator = addressValidator;
+    }
 
-        public AddressService(IAddressRepository addressRepository, IValidator<Address> addressValidator)
+    public async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDTO data)
+    {
+        var newAddress = new Address()
         {
-            _addressRepository = addressRepository;
-            _addressValidator = addressValidator;
-        }
+            Region = data.Region,
+            PostalCode = data.PostalCode,
+            City = data.City,
+            District = data.District,
+            StreetName = data.StreetName,
+            StreetNumber = data.StreetNumber,
+            UnitNumber = data.UnitNumber,
+        };
 
-        public async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDTO data)
+        var validationResult = await _addressValidator.ValidateAsync(newAddress);
+        if (!validationResult.IsValid)
         {
-            var newAddress = new Address()
+            foreach (var error in validationResult.Errors)
             {
-                Region = data.Region,
-                PostalCode = data.PostalCode,
-                City = data.City,
-                District = data.District,
-                StreetName = data.StreetName,
-                StreetNumber = data.StreetNumber,
-                UnitNumber = data.UnitNumber,
-            };
-
-            var validationResult = await _addressValidator.ValidateAsync(newAddress);
-            if (!validationResult.IsValid)
-            {
-                foreach (var error in validationResult.Errors)
-                {
-                    throw new ValidationException(error.ErrorMessage);
-                }
+                throw new ValidationException(error.ErrorMessage);
             }
-            await _addressRepository.AddAsync(newAddress);
-            return newAddress;
         }
+        await _addressRepository.AddAsync(newAddress);
+        return newAddress;
     }
 }

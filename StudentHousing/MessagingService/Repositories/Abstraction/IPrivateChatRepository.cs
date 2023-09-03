@@ -1,21 +1,20 @@
 ﻿using MessagingService.Models;
 
-namespace MessagingService.Repositories.Abstraction
+namespace MessagingService.Repositories.Abstraction;
+
+public interface IPrivateChatRepository
 {
-    public interface IPrivateChatRepository
-    {
-        Task AddAsync(PrivateChat chat);
+    Task AddAsync(PrivateChat chat);
 
-        Task<PrivateChat?> GetUniqueNameByUserIdsAsync(int user1Id, int user2Id);
+    Task<PrivateChat?> GetUniqueNameByUserIdsAsync(int user1Id, int user2Id);
 
-        Task<PrivateChat?> GetByUniqueNameAsync(string uniqueName);
+    Task<PrivateChat?> GetByUniqueNameAsync(string uniqueName);
 
-        void Remove(PrivateChat chat);
+    void Remove(PrivateChat chat);
 
-        Task<IEnumerable<PrivateChat>> GetAllByUserIdAsync(int userId);
+    Task<IEnumerable<PrivateChat>> GetAllByUserIdAsync(int userId);
 
-        Task<List<int>> GetAllChatPartnerIdsByUserIdAsync(int userId);
+    Task<List<int>> GetAllChatPartnerIdsByUserIdAsync(int userId);
 
-        Task SaveAsync();
-    }
+    Task SaveAsync();
 }

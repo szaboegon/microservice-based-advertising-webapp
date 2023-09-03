@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace IdentityService.Data
+namespace IdentityService.Data;
+
+public class IdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
 {
-    public class IdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
+    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
+        : base(options)
     {
-        public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
-            : base(options)
-        {
-        }
     }
 }

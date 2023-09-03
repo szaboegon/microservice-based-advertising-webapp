@@ -1,5 +1,31 @@
 ﻿namespace AdvertisingService.BusinessLogic.DataTransferObjects;
 
+public record AdvertisementDto(
+    int Id,
+    string CategoryName,
+    string City,
+    string District,
+    string StreetName,
+    string StreetNumber,
+    float NumberOfRooms,
+    float Size,
+    int MonthlyPrice,
+    DateTime UploadDate,
+    byte[] Image);
+
+public record AdvertisementDetailsDto(
+    int Id,
+    string CategoryName,
+    string Region,
+    string PostalCode,
+    string City,
+    string District,
+    string StreetName,
+    string StreetNumber,
+    string UnitNumber,)
+
+
+
 public class AdvertisementDetailsDTO
 {
     public int Id { get; set; }
@@ -16,7 +42,7 @@ public class AdvertisementDetailsDTO
     public bool Furnished { get; set; }
     public bool Parking { get; set; }
     public string? Description { get; set; }
-    public int  MonthlyPrice { get; set; }
+    public int MonthlyPrice { get; set; }
     public byte[]? Image { get; set; }
     public int AdvertiserId { get; set; }
 }
