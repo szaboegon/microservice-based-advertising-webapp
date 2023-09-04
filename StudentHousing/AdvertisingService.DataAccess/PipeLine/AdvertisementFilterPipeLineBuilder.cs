@@ -6,14 +6,14 @@ using AdvertisingService.DataAccess.Filters;
 
 namespace AdvertisingService.DataAccess.PipeLine;
 
-public class AdvertisementFilterPipeLineBuilder : IPipeLineBuilder<Advertisement, AdvertisementCardDTO>
+public class AdvertisementFilterPipeLineBuilder : IPipeLineBuilder<Advertisement, AdvertisementDto>
 {
     private readonly IAdvertisementRepository _advertisementRepository;
     public AdvertisementFilterPipeLineBuilder(IAdvertisementRepository advertisementRepository)
     {
         _advertisementRepository = advertisementRepository;
     }
-    public PipeLineBase<Advertisement, AdvertisementCardDTO> Build(QueryParamsDto data)
+    public PipeLineBase<Advertisement, AdvertisementDto> Build(QueryParamsDto data)
     {
         var pipeLine=new AdvertisementFilterPipeLine(_advertisementRepository)
             .Register(new FilterByCategory(data.CategoryName))

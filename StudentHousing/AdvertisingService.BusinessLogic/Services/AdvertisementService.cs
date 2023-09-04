@@ -11,12 +11,12 @@ public class AdvertisementService
     private readonly IAdvertisementRepository _advertisementRepository;
     private readonly AddressService _addressService;
     private readonly CategoryService _categoryService;
-    private readonly IPipeLineBuilder<Advertisement, AdvertisementCardDTO> _pipeLineBuilder;
+    private readonly IPipeLineBuilder<Advertisement, AdvertisementDto> _pipeLineBuilder;
 
     private readonly IValidator<Advertisement> _advertisementValidator;
     public AdvertisementService(IAdvertisementRepository advertisementRepository,
         AddressService addressService, CategoryService categoryService,
-        IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<Advertisement, AdvertisementCardDTO> pipeLineBuilder)
+        IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<Advertisement, AdvertisementDto> pipeLineBuilder)
     {
         _advertisementRepository = advertisementRepository;
         _addressService = addressService;
@@ -25,7 +25,7 @@ public class AdvertisementService
         _pipeLineBuilder = pipeLineBuilder; 
     }
 
-    public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDTO data, int advertiserId)
+    public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId)
     {
         var newCategory = await _categoryService.CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
         var newAddress = await _addressService.CreateNewAddressAsync(data);
@@ -58,7 +58,7 @@ public class AdvertisementService
         return newAdvertisement.Id;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDto queryParams)
+    public async Task<IEnumerable<AdvertisementDto>> GetAllAdvertisementsAsync(QueryParamsDto queryParams)
     {
         var pipeLine = _pipeLineBuilder.Build(queryParams);
         var result =await pipeLine.PerformOperation();
@@ -66,7 +66,7 @@ public class AdvertisementService
         return result;
     }
 
-    public async Task<AdvertisementDetailsDTO> GetAdvertisementDetailsAsync(int id)
+    public async Task<AdvertisementDetailsDto> GetAdvertisementDetailsAsync(int id)
     {
         var advertisement= await _advertisementRepository.GetByIdWithDetailsAsync(id);
         if (advertisement == null) throw new Exception("Advertisement with this id does not exist");
@@ -90,14 +90,14 @@ public class AdvertisementService
         await _advertisementRepository.SaveAsync();
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetAdvertisementsByUserAsync(int advertiserId)
+    public async Task<IEnumerable<AdvertisementDto>> GetAdvertisementsByUserAsync(int advertiserId)
     {
         var result = await _advertisementRepository.GetByAdvertiserIdAsync(advertiserId);
 
         return result;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count)
+    public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
     {
         if (count < 0)
         {

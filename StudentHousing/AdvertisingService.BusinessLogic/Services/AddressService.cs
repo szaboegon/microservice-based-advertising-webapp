@@ -16,7 +16,7 @@ public class AddressService
         _addressValidator = addressValidator;
     }
 
-    public async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDTO data)
+    public async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDto data)
     {
         var newAddress = new Address()
         {

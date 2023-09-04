@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisingService.DataAccess.PipeLine;
 
-public class AdvertisementFilterPipeLine : PipeLineBase<Advertisement, AdvertisementCardDTO>
+public class AdvertisementFilterPipeLine : PipeLineBase<Advertisement, AdvertisementDto>
 {
     private readonly IAdvertisementRepository _advertisementRepository;
     public AdvertisementFilterPipeLine(IAdvertisementRepository advertisementRepository)
@@ -14,7 +14,7 @@ public class AdvertisementFilterPipeLine : PipeLineBase<Advertisement, Advertise
         _advertisementRepository = advertisementRepository;
 
     }
-    public override async Task<IEnumerable<AdvertisementCardDTO>> PerformOperation()
+    public override async Task<IEnumerable<AdvertisementDto>> PerformOperation()
     {
         var input = _advertisementRepository.GetAllAsIQueryable();
         foreach (var operation in Operations)
@@ -22,7 +22,7 @@ public class AdvertisementFilterPipeLine : PipeLineBase<Advertisement, Advertise
             input = operation.Execute(input);
         }
 
-        return await input.Select(a => new AdvertisementCardDTO
+        return await input.Select(a => new AdvertisementDto
         {
             Id = a.Id,
             CategoryName = a.Category.Name,

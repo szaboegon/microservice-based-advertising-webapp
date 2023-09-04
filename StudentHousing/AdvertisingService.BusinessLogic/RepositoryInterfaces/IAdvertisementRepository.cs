@@ -6,13 +6,13 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
 
 public interface IAdvertisementRepository : IRepositoryBase<Advertisement>
 {
-    Task<IEnumerable<AdvertisementCardDTO>> GetAllWithCardDataAsync();
+    Task<IEnumerable<AdvertisementDto>> GetAllWithCardDataAsync();
 
     IQueryable<Advertisement> GetAllAsIQueryable();
 
-    Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id);
+    Task<AdvertisementDetailsDto?> GetByIdWithDetailsAsync(int id);
 
-    Task<IEnumerable<AdvertisementCardDTO>> GetByAdvertiserIdAsync(int id);
+    Task<IEnumerable<AdvertisementDto>> GetByAdvertiserIdAsync(int id);
 
-    Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count);
+    Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count);
 }

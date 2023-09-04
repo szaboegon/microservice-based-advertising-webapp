@@ -14,9 +14,9 @@ public class AdvertisementRepository : RepositoryBase<Advertisement>, IAdvertise
         _dbcontext = dbcontext;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetAllWithCardDataAsync()
+    public async Task<IEnumerable<AdvertisementDto>> GetAllWithCardDataAsync()
     {
-        var list = await _dbcontext.Advertisements.Select( a => new AdvertisementCardDTO
+        var list = await _dbcontext.Advertisements.Select( a => new AdvertisementDto
         {
             Id = a.Id,
             CategoryName = a.Category.Name,
@@ -39,9 +39,9 @@ public class AdvertisementRepository : RepositoryBase<Advertisement>, IAdvertise
         return list;
     }
 
-    public async Task<AdvertisementDetailsDTO?> GetByIdWithDetailsAsync(int id)
+    public async Task<AdvertisementDetailsDto?> GetByIdWithDetailsAsync(int id)
     {
-        var advertisement = await _dbcontext.Advertisements.Where(a=>a.Id==id).Select(a => new AdvertisementDetailsDTO
+        var advertisement = await _dbcontext.Advertisements.Where(a=>a.Id==id).Select(a => new AdvertisementDetailsDto
         {
             Id = a.Id,
             CategoryName=a.Category.Name,
@@ -66,9 +66,9 @@ public class AdvertisementRepository : RepositoryBase<Advertisement>, IAdvertise
         return advertisement;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetByAdvertiserIdAsync(int id)
+    public async Task<IEnumerable<AdvertisementDto>> GetByAdvertiserIdAsync(int id)
     {
-        var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementCardDTO
+        var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementDto
         {
             Id = a.Id,
             CategoryName = a.Category.Name,
@@ -86,9 +86,9 @@ public class AdvertisementRepository : RepositoryBase<Advertisement>, IAdvertise
         return list;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetLatestAdvertisementsAsync(int count)
+    public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
     {
-        var list = await _dbcontext.Advertisements.OrderByDescending(a => a.UploadDate).Select(a => new AdvertisementCardDTO
+        var list = await _dbcontext.Advertisements.OrderByDescending(a => a.UploadDate).Select(a => new AdvertisementDto
         {
             Id = a.Id,
             CategoryName = a.Category.Name,

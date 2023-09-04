@@ -44,7 +44,7 @@ builder.Services.AddScoped<IValidator<Advertisement>, AdvertisementValidator>();
 builder.Services.AddScoped<IValidator<Category>, CategoryValidator>();
 builder.Services.AddScoped<IValidator<Image>, ImageValidator>();
 
-builder.Services.AddScoped<IPipeLineBuilder<Advertisement, AdvertisementCardDTO>, AdvertisementFilterPipeLineBuilder>(); //TODO
+builder.Services.AddScoped<IPipeLineBuilder<Advertisement, AdvertisementDto>, AdvertisementFilterPipeLineBuilder>(); //TODO
 
 //Add Swagger
 builder.Services.AddEndpointsApiExplorer();

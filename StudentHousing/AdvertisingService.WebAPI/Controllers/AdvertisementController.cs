@@ -22,7 +22,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDto queryParams)
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDto queryParams)
     {
         var advertisements = await _advertisementService.GetAllAdvertisementsAsync(queryParams);
         return Ok(advertisements);
@@ -30,7 +30,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_details/{id:int}")]
-    public async Task<ActionResult<AdvertisementDetailsDTO>> GetAdvertisementDetailsAsync(int id)
+    public async Task<ActionResult<AdvertisementDetailsDto>> GetAdvertisementDetailsAsync(int id)
     {
         var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
         return Ok(advertisement);
@@ -38,7 +38,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDTO data)
+    public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDto data)
     {
         int newAdvertisementId;
         try
@@ -110,7 +110,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("private/advertisements_by_user")]
-    public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementsByUserAsync(int id)
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementsByUserAsync(int id)
     {
         try
         {
@@ -134,7 +134,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/latest_advertisements/{count:int}")]
-    public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetLatestAdvertisementsAsync(int count)
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisementsAsync(int count)
     {
         try
         {
