@@ -22,7 +22,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDTO queryParams)
+    public async Task<ActionResult<IEnumerable<AdvertisementCardDTO>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDto queryParams)
     {
         var advertisements = await _advertisementService.GetAllAdvertisementsAsync(queryParams);
         return Ok(advertisements);

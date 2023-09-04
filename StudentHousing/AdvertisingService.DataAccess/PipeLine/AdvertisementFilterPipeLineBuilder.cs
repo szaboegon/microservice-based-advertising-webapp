@@ -13,7 +13,7 @@ public class AdvertisementFilterPipeLineBuilder : IPipeLineBuilder<Advertisement
     {
         _advertisementRepository = advertisementRepository;
     }
-    public PipeLineBase<Advertisement, AdvertisementCardDTO> Build(QueryParamsDTO data)
+    public PipeLineBase<Advertisement, AdvertisementCardDTO> Build(QueryParamsDto data)
     {
         var pipeLine=new AdvertisementFilterPipeLine(_advertisementRepository)
             .Register(new FilterByCategory(data.CategoryName))

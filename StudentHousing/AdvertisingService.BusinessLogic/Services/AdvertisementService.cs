@@ -58,7 +58,7 @@ public class AdvertisementService
         return newAdvertisement.Id;
     }
 
-    public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDTO queryParams)
+    public async Task<IEnumerable<AdvertisementCardDTO>> GetAllAdvertisementsAsync(QueryParamsDto queryParams)
     {
         var pipeLine = _pipeLineBuilder.Build(queryParams);
         var result =await pipeLine.PerformOperation();
