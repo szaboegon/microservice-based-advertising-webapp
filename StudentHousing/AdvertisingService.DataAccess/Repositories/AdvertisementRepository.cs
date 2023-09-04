@@ -6,103 +6,83 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisingService.DataAccess.Repositories;
 
-public class AdvertisementRepository : RepositoryBase<Advertisement>, IAdvertisementRepository
+public class 
+    AdvertisementRepository : IAdvertisementRepository
 {
     private readonly AdvertisementDbContext _dbcontext;
-    public AdvertisementRepository(AdvertisementDbContext dbcontext) : base(dbcontext)
+    public AdvertisementRepository(AdvertisementDbContext dbcontext)
     {
         _dbcontext = dbcontext;
     }
 
-    public async Task<IEnumerable<AdvertisementDto>> GetAllWithCardDataAsync()
+    public async Task<Advertisement?> Get(int id)
     {
-        var list = await _dbcontext.Advertisements.Select( a => new AdvertisementDto
-        {
-            Id = a.Id,
-            CategoryName = a.Category.Name,
-            City = a.Address.City,
-            District = a.Address.District,
-            StreetName = a.Address.StreetName,
-            StreetNumber = a.Address.StreetNumber,
-            NumberOfRooms = a.NumberOfRooms,
-            Size = a.Size,
-            MonthlyPrice = a.MonthlyPrice,
-            UploadDate = a.UploadDate,
-            Image = a.Images.First().Data,
-        }).ToListAsync();
-                
-        return  list;
+        return await _dbcontext.Advertisements
+            .Include(a => a.Address)
+            .Include(a => a.Category)
+            .Include(a => a.Images)
+            .Where(a => a.Id == id)
+            .SingleOrDefaultAsync();
     }
+
+    public async Task<IEnumerable<Advertisement>> GetAll()
+    {
+        return await _dbcontext.Advertisements
+            .Include(a => a.Address)
+            .Include(a => a.Category)
+            .Include(a => a.Images)
+            .ToListAsync();
+    }
+
+    public async Task Add(Advertisement advertisement)
+    {
+        await _dbcontext.Advertisements.AddAsync(advertisement);
+        await _dbcontext.SaveChangesAsync();
+    }
+
+    public async Task AddRange(IEnumerable<Advertisement> advertisements)
+    {
+        await _dbcontext.Advertisements.AddRangeAsync(advertisements);
+        await _dbcontext.SaveChangesAsync();
+    }
+
+    public void Remove(Advertisement advertisement)
+    {
+        _dbcontext.Advertisements.Remove(advertisement);
+        _dbcontext.SaveChanges();
+    }
+
+    public void RemoveRange(IEnumerable<Advertisement> advertisements)
+    {
+        _dbcontext.Advertisements.RemoveRange(advertisements);
+        _dbcontext.SaveChanges();
+    }
+
     public IQueryable<Advertisement> GetAllAsIQueryable()
     {
         var list = _dbcontext.Advertisements.Where(_ => true);
         return list;
     }
 
-    public async Task<AdvertisementDetailsDto?> GetByIdWithDetailsAsync(int id)
+
+    public async Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id)
     {
-        var advertisement = await _dbcontext.Advertisements.Where(a=>a.Id==id).Select(a => new AdvertisementDetailsDto
-        {
-            Id = a.Id,
-            CategoryName=a.Category.Name,
-            Region=a.Address.Region,
-            PostalCode=a.Address.PostalCode,
-            City=a.Address.City,
-            District=a.Address.District,
-            StreetName=a.Address.StreetName,
-            StreetNumber=a.Address.StreetNumber,
-            UnitNumber=a.Address.UnitNumber,
-            NumberOfRooms=a.NumberOfRooms,
-            Size = a.Size,
-            Furnished=a.Furnished,
-            Parking=a.Parking,
-            Description=a.Description,
-            MonthlyPrice=a.MonthlyPrice,
-            Image=a.Images.First().Data,
-            AdvertiserId = a.AdvertiserId
-
-        }).SingleOrDefaultAsync();
-
-        return advertisement;
+        return await _dbcontext.Advertisements
+            .Include(a => a.Address)
+            .Include(a => a.Category)
+            .Include(a => a.Images)
+            .Where(a => a.AdvertiserId == id)
+            .ToListAsync();
     }
 
-    public async Task<IEnumerable<AdvertisementDto>> GetByAdvertiserIdAsync(int id)
+    public async Task<IEnumerable<Advertisement>> GetLatest(int count)
     {
-        var list = await _dbcontext.Advertisements.Where(a => a.AdvertiserId == id).Select(a => new AdvertisementDto
-        {
-            Id = a.Id,
-            CategoryName = a.Category.Name,
-            City = a.Address.City,
-            District = a.Address.District,
-            StreetName = a.Address.StreetName,
-            StreetNumber = a.Address.StreetNumber,
-            NumberOfRooms = a.NumberOfRooms,
-            Size = a.Size,
-            MonthlyPrice = a.MonthlyPrice,
-            UploadDate = a.UploadDate,
-            Image = a.Images.First().Data,
-        }).ToListAsync();
-
-        return list;
-    }
-
-    public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
-    {
-        var list = await _dbcontext.Advertisements.OrderByDescending(a => a.UploadDate).Select(a => new AdvertisementDto
-        {
-            Id = a.Id,
-            CategoryName = a.Category.Name,
-            City = a.Address.City,
-            District = a.Address.District,
-            StreetName = a.Address.StreetName,
-            StreetNumber = a.Address.StreetNumber,
-            NumberOfRooms = a.NumberOfRooms,
-            Size = a.Size,
-            MonthlyPrice = a.MonthlyPrice,
-            UploadDate = a.UploadDate,
-            Image = a.Images.First().Data,
-        }).Take(count).ToListAsync();
-
-        return list;
+        return await _dbcontext.Advertisements
+            .Include(a => a.Address)
+            .Include(a => a.Category)
+            .Include(a => a.Images)
+            .OrderByDescending(a => a.UploadDate)
+            .Take(count)
+            .ToListAsync();
     }
 }

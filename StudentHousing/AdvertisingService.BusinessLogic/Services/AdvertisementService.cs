@@ -1,4 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Extensions;
 using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
@@ -9,26 +10,37 @@ namespace AdvertisingService.BusinessLogic.Services;
 public class AdvertisementService
 {
     private readonly IAdvertisementRepository _advertisementRepository;
-    private readonly AddressService _addressService;
-    private readonly CategoryService _categoryService;
+    private readonly IAddressRepository _addressRepository;
+    private readonly ICategoryRepository _categoryRepository;
+
     private readonly IPipeLineBuilder<Advertisement, AdvertisementDto> _pipeLineBuilder;
 
     private readonly IValidator<Advertisement> _advertisementValidator;
-    public AdvertisementService(IAdvertisementRepository advertisementRepository,
-        AddressService addressService, CategoryService categoryService,
-        IValidator<Advertisement> advertisementValidator, IPipeLineBuilder<Advertisement, AdvertisementDto> pipeLineBuilder)
+    private readonly IValidator<Address> _addressValidator;
+    private readonly IValidator<Category> _categoryValidator;
+
+    public AdvertisementService(
+        IAdvertisementRepository advertisementRepository,
+        IAddressRepository addressRepository,
+        ICategoryRepository categoryRepository,
+        IValidator<Advertisement> advertisementValidator,
+        IValidator<Address> addressValidator,
+        IValidator<Category> categoryValidator,
+        IPipeLineBuilder<Advertisement, AdvertisementDto> pipeLineBuilder)
     {
         _advertisementRepository = advertisementRepository;
-        _addressService = addressService;
-        _categoryService = categoryService;
         _advertisementValidator = advertisementValidator;
-        _pipeLineBuilder = pipeLineBuilder; 
+        _pipeLineBuilder = pipeLineBuilder;
+        _addressRepository = addressRepository;
+        _categoryRepository = categoryRepository;
+        _addressValidator = addressValidator;
+        _categoryValidator = categoryValidator;
     }
 
     public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId)
     {
-        var newCategory = await _categoryService.CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
-        var newAddress = await _addressService.CreateNewAddressAsync(data);
+        var newCategory = await CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
+        var newAddress = await CreateNewAddressAsync(data);
 
         var newAdvertisement = new Advertisement()
         {
@@ -53,8 +65,7 @@ public class AdvertisementService
             }
         }
 
-        await _advertisementRepository.AddAsync(newAdvertisement);
-        await _advertisementRepository.SaveAsync();
+        await _advertisementRepository.Add(newAdvertisement);
         return newAdvertisement.Id;
     }
 
@@ -68,15 +79,15 @@ public class AdvertisementService
 
     public async Task<AdvertisementDetailsDto> GetAdvertisementDetailsAsync(int id)
     {
-        var advertisement= await _advertisementRepository.GetByIdWithDetailsAsync(id);
+        var advertisement= await _advertisementRepository.Get(id);
         if (advertisement == null) throw new Exception("Advertisement with this id does not exist");
 
-        return advertisement;
+        return advertisement.ToDetailsDto();
     }
 
     public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
     {
-        var advertisement = await _advertisementRepository.GetByIdAsync(advertisementId);
+        var advertisement = await _advertisementRepository.Get(advertisementId);
         if (advertisement == null)
         {
             throw new Exception("Advertisement with this id does not exist");
@@ -87,14 +98,13 @@ public class AdvertisementService
             throw new Exception("Advertisement does not belong to this advertiser");
         }
         _advertisementRepository.Remove(advertisement);
-        await _advertisementRepository.SaveAsync();
     }
 
     public async Task<IEnumerable<AdvertisementDto>> GetAdvertisementsByUserAsync(int advertiserId)
     {
-        var result = await _advertisementRepository.GetByAdvertiserIdAsync(advertiserId);
+        var result = await _advertisementRepository.GetByAdvertiserId(advertiserId);
 
-        return result;
+        return result.Select(a => a.ToCardDto());
     }
 
     public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
@@ -103,7 +113,57 @@ public class AdvertisementService
         {
             throw new ArgumentOutOfRangeException(nameof(count));
         }
-        var result = await _advertisementRepository.GetLatestAdvertisementsAsync(count);
-        return result;
+        var result = await _advertisementRepository.GetLatest(count);
+        return result.Select(a => a.ToCardDto());
+    }
+
+    private async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDto data)
+    {
+        var newAddress = new Address()
+        {
+            Region = data.Region,
+            PostalCode = data.PostalCode,
+            City = data.City,
+            District = data.District,
+            StreetName = data.StreetName,
+            StreetNumber = data.StreetNumber,
+            UnitNumber = data.UnitNumber,
+        };
+
+        var validationResult = await _addressValidator.ValidateAsync(newAddress);
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                throw new ValidationException(error.ErrorMessage);
+            }
+        }
+        return newAddress;
+    }
+
+    private async Task<Category> CreateNewCategoryIfDoesNotExistAsync(string? categoryName)
+    {
+        if (categoryName == null)
+            throw new ArgumentNullException(nameof(categoryName));
+
+        var newCategory = await _categoryRepository.GetByName(categoryName);
+
+        if (newCategory != null)
+            return newCategory;
+
+        newCategory = new Category()
+        {
+            Name = categoryName,
+        };
+
+        var validationResult = await _categoryValidator.ValidateAsync(newCategory);
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                throw new ValidationException(error.ErrorMessage);
+            }
+        }
+        return newCategory;
     }
 }

@@ -4,15 +4,15 @@ using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
 
-public interface IAdvertisementRepository : IRepositoryBase<Advertisement>
+public interface IAdvertisementRepository
 {
-    Task<IEnumerable<AdvertisementDto>> GetAllWithCardDataAsync();
-
+    Task<Advertisement?> Get(int id);
+    Task<IEnumerable<Advertisement>> GetAll();
+    Task Add(Advertisement advertisement);
+    Task AddRange(IEnumerable<Advertisement> advertisements);
+    void Remove(Advertisement advertisement);
+    void RemoveRange(IEnumerable<Advertisement> advertisements);
     IQueryable<Advertisement> GetAllAsIQueryable();
-
-    Task<AdvertisementDetailsDto?> GetByIdWithDetailsAsync(int id);
-
-    Task<IEnumerable<AdvertisementDto>> GetByAdvertiserIdAsync(int id);
-
-    Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count);
+    Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id);
+    Task<IEnumerable<Advertisement>> GetLatest(int count);
 }

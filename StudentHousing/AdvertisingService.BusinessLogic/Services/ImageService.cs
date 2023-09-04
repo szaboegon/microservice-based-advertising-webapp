@@ -19,7 +19,7 @@ public class ImageService
 
     public async Task<int> CreateNewImageAsync(byte[] fileData, int advertisementId)
     {
-        var advertisement= await _advertisementRepository.GetByIdAsync(advertisementId);
+        var advertisement= await _advertisementRepository.Get(advertisementId);
         if (advertisement == null)
             throw new ArgumentNullException(nameof(advertisement));
 
@@ -38,8 +38,7 @@ public class ImageService
             }
         }
 
-        await _imageRepository.AddAsync(newImage);
-        await _imageRepository.SaveAsync();
+        await _imageRepository.Add(newImage);
 
         return newImage.Id;
     }

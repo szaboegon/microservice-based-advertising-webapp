@@ -2,7 +2,7 @@
 
 namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
 
-public interface IImageRepository : IRepositoryBase<Image>
+public interface IImageRepository
 {
-
+    Task Add(Image image);
 }

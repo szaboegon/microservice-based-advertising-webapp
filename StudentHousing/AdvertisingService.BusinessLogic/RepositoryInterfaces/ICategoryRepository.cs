@@ -2,7 +2,8 @@
 
 namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
 
-public interface ICategoryRepository : IRepositoryBase<Category>
+public interface ICategoryRepository
 {
-    Task<Category?> GetByNameAsync(string name);
+    Task<Category?> GetByName(string name);
+    Task Add(Category category);
 }

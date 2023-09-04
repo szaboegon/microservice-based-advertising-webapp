@@ -4,9 +4,18 @@ using AdvertisingService.DataAccess.Data;
 
 namespace AdvertisingService.DataAccess.Repositories;
 
-public class ImageRepository : RepositoryBase<Image>, IImageRepository
+public class ImageRepository: IImageRepository
 {
-    public ImageRepository(AdvertisementDbContext dbcontext) : base(dbcontext)
+    private readonly AdvertisementDbContext _dbcontext;
+
+    public ImageRepository(AdvertisementDbContext dbcontext)
     {
+        _dbcontext = dbcontext;
+    }
+
+    public async Task Add(Image image)
+    {
+        await _dbcontext.Images.AddAsync(image);
+        await _dbcontext.SaveChangesAsync();
     }
 }

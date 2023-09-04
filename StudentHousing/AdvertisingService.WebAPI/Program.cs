@@ -34,8 +34,6 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 // Services
 builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
-builder.Services.AddScoped<AddressService, AddressService>();
-builder.Services.AddScoped<CategoryService, CategoryService>();
 builder.Services.AddScoped<ImageService, ImageService>();
 
 // Validators
@@ -62,6 +60,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AdvertisementDbContext>();
+    db.Database.EnsureCreated();
     db.Database.Migrate();
 }
 
