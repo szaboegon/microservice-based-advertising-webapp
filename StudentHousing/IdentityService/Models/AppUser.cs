@@ -2,7 +2,7 @@
 
 namespace IdentityService.Models;
 
-public class ApplicationUser : IdentityUser<int>
+public class AppUser : IdentityUser<int>
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }

@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using IdentityService.DataTransferObjects;
+using IdentityService.Extensions;
 using IdentityService.Helpers;
 using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
@@ -8,13 +9,13 @@ namespace IdentityService.Services;
 
 public class UserService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
     private readonly IValidator<AuthenticationRequest> _authenticationRequestValidator;
     private readonly IValidator<RegistrationRequest> _registrationRequestValidator;
     private readonly JwtProvider _jwtProvider;
 
-    public UserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+    public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
         IValidator<AuthenticationRequest> authenticationRequestValidator, IValidator<RegistrationRequest> registrationRequestValidator, JwtProvider jwtProvider)
     {
         _userManager = userManager;
@@ -76,7 +77,7 @@ public class UserService
                 throw new ValidationException(error.ErrorMessage);
             }
         }
-        var user = new ApplicationUser
+        var user = new AppUser()
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
@@ -87,17 +88,9 @@ public class UserService
         return await _userManager.CreateAsync(user, request.Password);
     }
 
-    public async Task<UserDetailsDTO> GetUserDetailsByIdAsync(int userId)
+    public async Task<AppUserDto> GetUserDetailsByIdAsync(int userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new KeyNotFoundException($"User with id: {userId} does not exist.");
-        var userDetails = new UserDetailsDTO
-        {
-            Id = user.Id,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            UserName = user.UserName,
-            Email = user.Email,
-        };
-        return userDetails;
+        return user.ToDto();
     }
 }

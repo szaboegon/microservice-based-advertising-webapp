@@ -1,7 +1,7 @@
 ﻿namespace IdentityService.Models;
 
-public class AuthenticationRequest
+public record AuthenticationRequest
 {
-    public string? UserName { get; set; }
-    public string? Password { get; set; }
+    public required string UserName { get; init; }
+    public required string Password { get; init; }
 }

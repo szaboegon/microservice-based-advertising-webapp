@@ -24,7 +24,7 @@ var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=s
 builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<IdentityDbContext>();
+builder.Services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<IdentityDbContext>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {

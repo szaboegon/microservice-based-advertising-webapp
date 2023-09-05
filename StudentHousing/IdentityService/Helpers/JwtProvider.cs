@@ -14,7 +14,7 @@ public class JwtProvider
         _configuration = configuration;
     }
 
-    public string GenerateToken(ApplicationUser user)
+    public string GenerateToken(AppUser user)
     {
         var claims = new Claim[]
         {

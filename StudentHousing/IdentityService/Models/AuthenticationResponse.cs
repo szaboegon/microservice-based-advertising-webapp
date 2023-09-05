@@ -2,10 +2,10 @@
 
 namespace IdentityService.Models;
 
-public class AuthenticationResponse
+public record AuthenticationResponse
 {
-    public SignInResult? SignInResult { get; set; }
-    public string? Message { get; set; }
-    public string? UserName { get; set; }
-    public string? Token { get; set; }
+    public required SignInResult SignInResult { get; init; }
+    public required string Message { get; init; }
+    public string? UserName { get; init; }
+    public string? Token { get; init; }
 }

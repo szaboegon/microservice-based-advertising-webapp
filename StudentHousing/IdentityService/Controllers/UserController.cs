@@ -77,11 +77,11 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("user_details")]
-    public async Task<ActionResult<List<UserDetailsDTO>>> GetUserDetailsAsync([FromQuery] List<int> id)
+    public async Task<ActionResult<List<AppUserDto>>> GetUserDetailsAsync([FromQuery] List<int> id)
     {
         try
         {
-            var result = new List<UserDetailsDTO>();
+            var result = new List<AppUserDto>();
             foreach (var userId in id)
             {
                 var userDetails = await _userService.GetUserDetailsByIdAsync(userId);
