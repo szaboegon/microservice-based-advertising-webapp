@@ -1,5 +1,5 @@
 
-FROM node AS builder
+FROM node:18-alpine3.17 AS builder
 WORKDIR /app
 COPY . .
 RUN npm install && npm run build

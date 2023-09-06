@@ -9,7 +9,7 @@ public class Advertisement
     public bool Parking { get; set; }
     public int MonthlyPrice { get; set; }
     public DateTime UploadDate { get; set; }
-    public string? Description { get; set; }
+    public required string Description { get; set; }
     public int AdvertiserId { get; set; }
     public int CategoryId { get; set; }
 

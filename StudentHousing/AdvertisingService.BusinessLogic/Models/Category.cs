@@ -3,7 +3,7 @@
 public class Category
 {
     public int Id { get; set; }
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     private ICollection<Advertisement>? _advertisements;
     public ICollection<Advertisement> Advertisements

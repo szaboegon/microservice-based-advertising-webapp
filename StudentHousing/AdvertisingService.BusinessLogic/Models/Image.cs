@@ -3,7 +3,7 @@
 public class Image
 {
     public int Id { get; set; }
-    public byte[]? Data{ get; set; }
+    public required byte[] Data{ get; set; }
     public int AdvertisementId { get; set; }
 
     private Advertisement? _advertisement;
