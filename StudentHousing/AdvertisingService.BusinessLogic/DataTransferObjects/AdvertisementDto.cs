@@ -12,7 +12,7 @@ public record AdvertisementDto
     public required float Size { get; init; }
     public required int MonthlyPrice { get; init; }
     public required  DateTime UploadDate { get; init; }
-    public required byte[] Image { get; init; }
+    public byte[]? Image { get; init; }
 }
 
 public record AdvertisementDetailsDto
@@ -32,6 +32,6 @@ public record AdvertisementDetailsDto
     public required bool Parking { get; init; }
     public required string Description { get; init; }
     public required int MonthlyPrice { get; init; }
-    public required byte[] Image { get; init; }
+    public byte[]? Image { get; init; }
     public required int AdvertiserId { get; init; }
 }

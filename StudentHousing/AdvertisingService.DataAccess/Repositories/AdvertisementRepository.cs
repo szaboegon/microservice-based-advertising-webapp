@@ -1,4 +1,5 @@
-﻿using AdvertisingService.BusinessLogic.Models;
+﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.DataAccess.DAL;
 using Microsoft.EntityFrameworkCore;
@@ -82,6 +83,24 @@ public class
             .Include(a => a.Images)
             .OrderByDescending(a => a.UploadDate)
             .Take(count)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Advertisement>> GetByQuery(QueryParamsDto query)
+    {
+        return await _dbcontext.Advertisements
+            .Include(a => a.Address)
+            .Include(a => a.Category)
+            .Include(a => a.Images)
+            .Where(a => (string.IsNullOrEmpty(query.CategoryName) || a.Category.Name == query.CategoryName))
+            .Where(a => (string.IsNullOrEmpty(query.City) || a.Address.City == query.City))
+            .Where(a => (query.NumberOfRooms == null || Equals(a.NumberOfRooms, query.NumberOfRooms)))
+            .Where(a => (query.MinSize == null || a.Size >= query.MinSize))
+            .Where(a => (query.MaxSize == null || a.Size <= query.MaxSize))
+            .Where(a => (query.MinMonthlyPrice == null || a.MonthlyPrice >= query.MinMonthlyPrice))
+            .Where(a => (query.MaxMonthlyPrice == null || a.MonthlyPrice <= query.MaxMonthlyPrice))
+            .Where(a => (query.Furnished == null || a.Furnished == query.Furnished))
+            .Where(a => (query.Parking == null || a.Parking == query.Parking))
             .ToListAsync();
     }
 }

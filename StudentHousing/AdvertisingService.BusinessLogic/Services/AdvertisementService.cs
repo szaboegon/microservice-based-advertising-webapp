@@ -1,6 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Extensions;
-using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using FluentValidation;
@@ -13,8 +12,6 @@ public class AdvertisementService
     private readonly IAddressRepository _addressRepository;
     private readonly ICategoryRepository _categoryRepository;
 
-    private readonly IPipeLineBuilder<Advertisement, AdvertisementDto> _pipeLineBuilder;
-
     private readonly IValidator<Advertisement> _advertisementValidator;
     private readonly IValidator<Address> _addressValidator;
     private readonly IValidator<Category> _categoryValidator;
@@ -25,12 +22,10 @@ public class AdvertisementService
         ICategoryRepository categoryRepository,
         IValidator<Advertisement> advertisementValidator,
         IValidator<Address> addressValidator,
-        IValidator<Category> categoryValidator,
-        IPipeLineBuilder<Advertisement, AdvertisementDto> pipeLineBuilder)
+        IValidator<Category> categoryValidator)
     {
         _advertisementRepository = advertisementRepository;
         _advertisementValidator = advertisementValidator;
-        _pipeLineBuilder = pipeLineBuilder;
         _addressRepository = addressRepository;
         _categoryRepository = categoryRepository;
         _addressValidator = addressValidator;
@@ -71,10 +66,9 @@ public class AdvertisementService
 
     public async Task<IEnumerable<AdvertisementDto>> GetAllAdvertisementsAsync(QueryParamsDto queryParams)
     {
-        var pipeLine = _pipeLineBuilder.Build(queryParams);
-        var result =await pipeLine.PerformOperation();
+        var advertisements = await _advertisementRepository.GetByQuery(queryParams);
 
-        return result;
+        return advertisements.Select(a => a.ToDto());
     }
 
     public async Task<AdvertisementDetailsDto> GetAdvertisementDetailsAsync(int id)
@@ -104,7 +98,7 @@ public class AdvertisementService
     {
         var result = await _advertisementRepository.GetByAdvertiserId(advertiserId);
 
-        return result.Select(a => a.ToCardDto());
+        return result.Select(a => a.ToDto());
     }
 
     public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
@@ -114,7 +108,7 @@ public class AdvertisementService
             throw new ArgumentOutOfRangeException(nameof(count));
         }
         var result = await _advertisementRepository.GetLatest(count);
-        return result.Select(a => a.ToCardDto());
+        return result.Select(a => a.ToDto());
     }
 
     private async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDto data)

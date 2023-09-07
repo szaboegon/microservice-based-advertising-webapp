@@ -5,7 +5,7 @@ namespace AdvertisingService.BusinessLogic.Extensions;
 
 public static class AdvertisementExtensions
 {
-    public static AdvertisementDto ToCardDto(this Advertisement advertisement)
+    public static AdvertisementDto ToDto(this Advertisement advertisement)
     {
         return new AdvertisementDto
         {

@@ -1,11 +1,9 @@
 using AdvertisingService.BusinessLogic.DataTransferObjects;
-using AdvertisingService.BusinessLogic.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.DataAccess.DAL;
-using AdvertisingService.DataAccess.PipeLine;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -35,8 +33,6 @@ builder.Services.AddScoped<IValidator<Address>, AddressValidator>();
 builder.Services.AddScoped<IValidator<Advertisement>, AdvertisementValidator>();
 builder.Services.AddScoped<IValidator<Category>, CategoryValidator>();
 builder.Services.AddScoped<IValidator<Image>, ImageValidator>();
-
-builder.Services.AddScoped<IPipeLineBuilder<Advertisement, AdvertisementDto>, AdvertisementFilterPipeLineBuilder>(); //TODO
 
 //Add Swagger
 builder.Services.AddEndpointsApiExplorer();

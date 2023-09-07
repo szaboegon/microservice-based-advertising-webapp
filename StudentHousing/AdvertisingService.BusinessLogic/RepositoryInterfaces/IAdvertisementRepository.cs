@@ -1,4 +1,5 @@
-﻿using AdvertisingService.BusinessLogic.Models;
+﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Models;
 
 
 namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
@@ -14,4 +15,5 @@ public interface IAdvertisementRepository
     IQueryable<Advertisement> GetAllAsIQueryable();
     Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id);
     Task<IEnumerable<Advertisement>> GetLatest(int count);
+    Task<IEnumerable<Advertisement>> GetByQuery(QueryParamsDto query);
 }
