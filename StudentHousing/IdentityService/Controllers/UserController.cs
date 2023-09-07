@@ -77,8 +77,23 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Route("user_details")]
-    public async Task<ActionResult<List<AppUserDto>>> GetUserDetailsAsync([FromQuery] List<int> id)
+    [Route("user_details/{id}")]
+    public async Task<ActionResult<List<AppUserDto>>> GetUserDetailsAsync(int id)
+    {
+        try
+        {
+            var userDetails = await _userService.GetUserDetailsByIdAsync(id);
+            return Ok(userDetails);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("multiple_user_details")]
+    public async Task<ActionResult<List<AppUserDto>>> GetMultipleUserDetailsAsync([FromQuery] List<int> id)
     {
         try
         {

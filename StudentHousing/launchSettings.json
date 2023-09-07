@@ -14,7 +14,8 @@
         "identityservice": "StartDebugging",
         "messagingservice": "StartDebugging",
         "identitydb": "StartWithoutDebugging",
-        "messagingdb": "StartWithoutDebugging"
+        "messagingdb": "StartWithoutDebugging",
+        "emailnotificationservice": "StartDebugging"
       }
     },
     "Backend only": {
@@ -31,7 +32,8 @@
         "identityservice": "StartDebugging",
         "messagingservice": "StartDebugging",
         "identitydb": "StartWithoutDebugging",
-        "messagingdb": "StartWithoutDebugging"
+        "messagingdb": "StartWithoutDebugging",
+        "emailnotificationservice": "StartDebugging"
       }
     }
   }

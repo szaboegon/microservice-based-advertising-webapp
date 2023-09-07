@@ -50,7 +50,7 @@ const register = async (registrationData: RegistrationData) => {
 };
 
 const getUserDetails = async (ids: URLSearchParams) => {
-  const response = await apiClient.get<Array<User>>("/user_details?" + ids, {
+  const response = await apiClient.get<Array<User>>("/multiple_user_details?" + ids, {
     headers: authHeader(),
   });
   return response.data;

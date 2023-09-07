@@ -158,6 +158,14 @@ services:
     ports:
        - 8003:1433  # Only needed for dev, remove in prod
 
+  emailnotificationservice:
+    image: ${DOCKER_REGISTRY-}emailnotificationservice
+    build:
+      context: .
+      dockerfile: EmailNotificationService/EmailNotificationService/Dockerfile
+    networks:
+      - mynetwork
+
   rabbitmq:
     container_name: rabbit_mq
     image: rabbitmq:3-management
@@ -169,4 +177,5 @@ services:
       - "15672:15672"
     networks:
       - mynetwork
+
 

@@ -10,11 +10,15 @@ public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;
+    private readonly IUserDataProvider _userDataProvider;
+    private readonly IMessageProducer _messageProducer;
 
-    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IUserDataProvider userDataProvider, IMessageProducer messageProducer)
     {
         _messageRepository = messageRepository;
         _privateChatRepository = privateChatRepository;
+        _userDataProvider = userDataProvider;
+        _messageProducer = messageProducer;
     }
 
     public async Task<MessageDto> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
@@ -29,6 +33,10 @@ public class MessageService : IMessageService
         };
 
         await _messageRepository.Add(message);
+
+        var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
+        var receiverUser = _userDataProvider.GetUserDataByIdAsync(receiverId);
+        //TODO send message
 
         return message.ToDto();
     }

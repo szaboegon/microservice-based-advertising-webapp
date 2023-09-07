@@ -14,10 +14,14 @@ var connectionString = ConnectionHandler.GetMessageDbConnectionString();
 builder.Services.AddDbContext<MessageDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Repositories
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
 
+// Services
 builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();
+builder.Services.AddScoped<IMessageProducer, MessageProducer>();
 
 /*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
     builder
