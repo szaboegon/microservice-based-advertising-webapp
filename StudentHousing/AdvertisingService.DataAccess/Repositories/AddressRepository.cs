@@ -1,6 +1,6 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
-using AdvertisingService.DataAccess.Data;
+using AdvertisingService.DataAccess.DAL;
 
 namespace AdvertisingService.DataAccess.Repositories;
 

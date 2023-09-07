@@ -1,6 +1,6 @@
-﻿using MessagingService.Data;
+﻿using MessagingService.DAL;
 using MessagingService.Models;
-using MessagingService.Repositories.Abstraction;
+using MessagingService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace MessagingService.Repositories;
@@ -13,17 +13,18 @@ public class PrivateChatRepository : IPrivateChatRepository
         _dbcontext = dbcontext;
     }
 
-    public async Task AddAsync(PrivateChat chat)
+    public async Task Add(PrivateChat chat)
     {
         await _dbcontext.PrivateChats.AddAsync(chat);
+        await _dbcontext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<PrivateChat>> GetAllByUserIdAsync(int userId)
+    public async Task<IEnumerable<PrivateChat>> GetByUserId(int userId)
     {
         return await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
     }
 
-    public async Task<List<int>> GetAllChatPartnerIdsByUserIdAsync(int userId)
+    public async Task<List<int>> GetChatPartnerIdsByUserId(int userId)
     {
         var ids = new List<int>();
         var chats = await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
@@ -41,24 +42,14 @@ public class PrivateChatRepository : IPrivateChatRepository
         return ids;
     }
 
-    public async Task<PrivateChat?> GetUniqueNameByUserIdsAsync(int user1Id, int user2Id)
+    public async Task<PrivateChat?> GetByUserIds(int user1Id, int user2Id)
     {
         return await _dbcontext.PrivateChats
             .Where(c => (c.User1Id == user1Id && c.User2Id == user2Id) || (c.User1Id == user2Id && c.User2Id == user1Id)).SingleOrDefaultAsync();
     }
 
-    public async Task<PrivateChat?> GetByUniqueNameAsync(string uniqueName)
+    public async Task<PrivateChat?> GetByUniqueName(string uniqueName)
     {
         return await _dbcontext.PrivateChats.Where(c => c.UniqueName == uniqueName).SingleOrDefaultAsync();
-    }
-
-    public void Remove(PrivateChat chat)
-    {
-        _dbcontext.PrivateChats.Remove(chat);
-    }
-
-    public async Task SaveAsync()
-    {
-        await _dbcontext.SaveChangesAsync();
     }
 }

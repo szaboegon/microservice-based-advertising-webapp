@@ -1,6 +1,6 @@
 using System.Text;
 using FluentValidation;
-using IdentityService.Data;
+using IdentityService.DAL;
 using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Models.Validators;
@@ -14,11 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 // Add services to the container.
-var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-
-var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
+var connectionString = ConnectionHandler.GetIdentityDbConnectionString();
 
 //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<IdentityDbContext>(options =>

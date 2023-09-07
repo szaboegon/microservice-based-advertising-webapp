@@ -19,7 +19,7 @@ public static class AdvertisementExtensions
             Size = advertisement.Size,
             MonthlyPrice = advertisement.MonthlyPrice,
             UploadDate = advertisement.UploadDate,
-            Image = advertisement.Images.FirstOrDefault()?.Data,
+            Image = advertisement.Images.FirstOrDefault()?.Data, //use First
         };
     }
 
@@ -42,9 +42,8 @@ public static class AdvertisementExtensions
             Parking = advertisement.Parking,
             Description = advertisement.Description,
             MonthlyPrice = advertisement.MonthlyPrice,
-            Image = advertisement.Images.FirstOrDefault()?.Data,
+            Image = advertisement.Images.FirstOrDefault()?.Data, //use First
             AdvertiserId = advertisement.AdvertiserId
-
         };
     }
 }

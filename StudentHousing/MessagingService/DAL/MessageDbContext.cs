@@ -1,7 +1,7 @@
 ﻿using MessagingService.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace MessagingService.Data;
+namespace MessagingService.DAL;
 
 public class MessageDbContext: DbContext
 {

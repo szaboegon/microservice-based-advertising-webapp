@@ -4,7 +4,7 @@ using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services;
-using AdvertisingService.DataAccess.Data;
+using AdvertisingService.DataAccess.DAL;
 using AdvertisingService.DataAccess.PipeLine;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;
@@ -17,14 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Add Database Context dependency injection
-
-var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-
-var connectionString = $"Data Source={dbHost};Initial Catalog={dbName};User ID=sa;Password={dbPassword};TrustServerCertificate=true";
+var connectionString = ConnectionHandler.GetAdvertisementDbConnectionString();
 builder.Services.AddDbContext<AdvertisementDbContext>(opt => opt.UseSqlServer(connectionString));
-
 
 // Repositories
 builder.Services.AddScoped<IAdvertisementRepository, AdvertisementRepository>();

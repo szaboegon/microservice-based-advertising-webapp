@@ -1,5 +1,4 @@
-﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
-using AdvertisingService.BusinessLogic.Models;
+﻿using AdvertisingService.BusinessLogic.Models;
 
 
 namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;

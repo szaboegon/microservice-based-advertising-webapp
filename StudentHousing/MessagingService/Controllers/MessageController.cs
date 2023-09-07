@@ -1,7 +1,7 @@
-using MessagingService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
+using MessagingService.DataTransferObjects;
 using MessagingService.Services;
 
 namespace MessagingService.Controllers;
@@ -20,7 +20,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("user_chats")]
-    public async Task<ActionResult<IEnumerable<PrivateChat>>> GetPrivateChatsByUserAsync() 
+    public async Task<ActionResult<IEnumerable<PrivateChatDto>>> GetPrivateChatsByUserAsync() 
     {
            
         try
@@ -59,7 +59,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("messages/{uniqueName}")]
-    public async Task<ActionResult<IEnumerable<Message>>> GetMessagesByPrivateChatUniqueNameAsync(string uniqueName)
+    public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesByPrivateChatUniqueNameAsync(string uniqueName)
     {
         try
         {

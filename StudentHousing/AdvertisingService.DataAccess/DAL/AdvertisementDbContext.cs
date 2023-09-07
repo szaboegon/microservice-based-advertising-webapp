@@ -1,7 +1,7 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AdvertisingService.DataAccess.Data;
+namespace AdvertisingService.DataAccess.DAL;
 
 public class AdvertisementDbContext : DbContext
 {
