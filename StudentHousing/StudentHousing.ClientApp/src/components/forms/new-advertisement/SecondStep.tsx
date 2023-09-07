@@ -125,11 +125,11 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     required: "This field is required",
                     maxLength: {
                       value: 4,
-                      message: "Postal code should have a lenght of 4",
+                      message: "Postal code should have a length of 4",
                     },
                     minLength: {
                       value: 4,
-                      message: "Postal code should have a lenght of 4",
+                      message: "Postal code should have a length of 4",
                     },
                   })}
                   id="postalCode"
@@ -189,7 +189,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 required: "This field is required",
                 maxLength: {
                   value: 40,
-                  message: "Street name should have a max lenght of 40",
+                  message: "Street name should have a max length of 40",
                 },
                 pattern: {
                   value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
@@ -225,7 +225,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                     required: "This field is required",
                     maxLength: {
                       value: 20,
-                      message: "Street number should have a max lenght of 20",
+                      message: "Street number should have a max length of 20",
                     },
                     pattern: {
                       value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
@@ -259,7 +259,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                   {...register("unitNumber", {
                     maxLength: {
                       value: 20,
-                      message: "Unit number should have a max lenght of 20",
+                      message: "Unit number should have a max length of 20",
                     },
                     pattern: {
                       value: /^[a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ0-9\s/.,-]+$/,
