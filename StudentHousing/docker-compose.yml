@@ -158,5 +158,15 @@ services:
     ports:
        - 8003:1433  # Only needed for dev, remove in prod
 
-
+  rabbitmq:
+    container_name: rabbit_mq
+    image: rabbitmq:3-management
+    environment: 
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - mynetwork
 
