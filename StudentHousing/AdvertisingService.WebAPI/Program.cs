@@ -3,6 +3,7 @@ using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.Models.Validators;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services;
+using AdvertisingService.BusinessLogic.Services.Interfaces;
 using AdvertisingService.DataAccess.DAL;
 using AdvertisingService.DataAccess.Repositories;
 using FluentValidation;
@@ -25,8 +26,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 // Services
-builder.Services.AddScoped<AdvertisementService, AdvertisementService>();
-builder.Services.AddScoped<ImageService, ImageService>();
+builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 // Validators
 builder.Services.AddScoped<IValidator<Address>, AddressValidator>();

@@ -3,16 +3,18 @@ using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
 using MessagingService.DataTransferObjects;
 using MessagingService.Services;
+using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Controllers;
 
 [Route("api/message")]
 [ApiController]
+
 public class MessageController : ControllerBase
 {
-    private readonly MessageService _messageService;
+    private readonly IMessageService _messageService;
     private readonly JwtSecurityTokenHandler _tokenHandler;
-    public MessageController(MessageService messageService)
+    public MessageController(IMessageService messageService)
     {
         _messageService = messageService;
         _tokenHandler = new JwtSecurityTokenHandler();

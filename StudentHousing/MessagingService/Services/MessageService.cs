@@ -2,10 +2,11 @@
 using MessagingService.Extensions;
 using MessagingService.Models;
 using MessagingService.Repositories.Interfaces;
+using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Services;
 
-public class MessageService
+public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;

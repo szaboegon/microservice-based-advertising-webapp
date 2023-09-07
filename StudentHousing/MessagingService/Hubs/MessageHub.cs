@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.IdentityModel.Tokens.Jwt;
 using MessagingService.Services;
+using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Hubs;
 
 public class MessageHub : Hub
 {
     private readonly JwtSecurityTokenHandler _tokenHandler;
-    private readonly MessageService _messageService;
+    private readonly IMessageService _messageService;
 
-    public MessageHub(MessageService messageService)
+    public MessageHub(IMessageService messageService)
     {
         _messageService = messageService;
         _tokenHandler = new JwtSecurityTokenHandler();

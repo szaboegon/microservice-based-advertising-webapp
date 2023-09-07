@@ -1,11 +1,12 @@
 ﻿using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using AdvertisingService.BusinessLogic.Services.Interfaces;
 using FluentValidation;
 
 
 namespace AdvertisingService.BusinessLogic.Services;
 
-public class ImageService
+public class ImageService : IImageService
 {
     private readonly IAdvertisementRepository _advertisementRepository;
     private readonly IImageRepository _imageRepository;

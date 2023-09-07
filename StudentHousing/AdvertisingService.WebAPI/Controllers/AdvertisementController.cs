@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
@@ -10,10 +11,10 @@ namespace AdvertisingService.WebAPI.Controllers;
 [ApiController]
 public class AdvertisementController : ControllerBase
 {
-    private readonly AdvertisementService _advertisementService;
-    private readonly ImageService _imageService;
+    private readonly IAdvertisementService _advertisementService;
+    private readonly IImageService _imageService;
     private readonly JwtSecurityTokenHandler _tokenHandler;
-    public AdvertisementController(AdvertisementService advertisementService, ImageService imageService)
+    public AdvertisementController(IAdvertisementService advertisementService, IImageService imageService)
     {
         _advertisementService = advertisementService;
         _imageService = imageService;

@@ -1,6 +1,7 @@
 ﻿using IdentityService.DataTransferObjects;
 using IdentityService.Models;
 using IdentityService.Services;
+using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,8 @@ namespace IdentityService.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
-    public UserController(UserService userService)
+    private readonly IUserService _userService;
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }

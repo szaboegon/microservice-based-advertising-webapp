@@ -2,11 +2,12 @@
 using AdvertisingService.BusinessLogic.Extensions;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
+using AdvertisingService.BusinessLogic.Services.Interfaces;
 using FluentValidation;
 
 namespace AdvertisingService.BusinessLogic.Services;
 
-public class AdvertisementService
+public class AdvertisementService : IAdvertisementService
 {
     private readonly IAdvertisementRepository _advertisementRepository;
     private readonly IAddressRepository _addressRepository;

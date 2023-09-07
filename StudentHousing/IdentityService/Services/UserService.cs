@@ -3,11 +3,12 @@ using IdentityService.DataTransferObjects;
 using IdentityService.Extensions;
 using IdentityService.Helpers;
 using IdentityService.Models;
+using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;

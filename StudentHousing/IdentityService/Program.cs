@@ -5,6 +5,7 @@ using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Models.Validators;
 using IdentityService.Services;
+using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 
 // Services
-builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Validators
 builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
