@@ -1,11 +1,36 @@
-﻿using MessagingService.Services.Interfaces;
+﻿using System.Text;
+using System.Text.Json;
+using MessagingService.Models.Options;
+using MessagingService.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
 
 namespace MessagingService.Services;
 
-public class MessageProducer : IMessageProducer
+public class MessageProducer: IMessageProducer
 {
-    public void SendMessage<T>(T message)
+    private readonly RabbitMqOptions _options;
+    public MessageProducer(IOptions<RabbitMqOptions> options)
     {
+        _options = options.Value;
+    }
+    public void SendMessage<T>(T message)
+    { 
+        var connFactory = new ConnectionFactory()
+        {
+            HostName = "rabbitmq"
+        };
 
+        using var connection = connFactory.CreateConnection();
+        using var channel = connection.CreateModel();
+
+        channel.ExchangeDeclare(_options.ExchangeName, ExchangeType.Fanout);
+        channel.QueueDeclare(_options.QueueName, exclusive: false, autoDelete: false, durable: true);
+        channel.QueueBind( queue: _options.QueueName, exchange: _options.ExchangeName, "");
+
+        var json = JsonSerializer.Serialize(message);
+        var messageBody = Encoding.UTF8.GetBytes(json);
+
+        channel.BasicPublish(exchange: _options.ExchangeName, routingKey: "", body: messageBody);
     }
 }

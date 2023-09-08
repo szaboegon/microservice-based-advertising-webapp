@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.IdentityModel.Tokens.Jwt;
-using MessagingService.Services;
 using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Hubs;

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MessagingService.DataTransferObjects;
+﻿namespace MessagingService.DataTransferObjects;
 
 public record UserDetailsDto
 {

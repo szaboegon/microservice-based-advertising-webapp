@@ -35,8 +35,8 @@ public class MessageService : IMessageService
         await _messageRepository.Add(message);
 
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
-        var receiverUser = _userDataProvider.GetUserDataByIdAsync(receiverId);
-        //TODO send message
+        var receiverUser = await _userDataProvider.GetUserDataByIdAsync(receiverId);
+        _messageProducer.SendMessage(receiverUser);
 
         return message.ToDto();
     }

@@ -21,6 +21,7 @@ import { User } from "../../models/user";
 import MessagingService from "../../services/MessagingService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
+import userService from "../../services/UserService";
 
 interface IAdvertiserInfoProps {
   advertiser: User | undefined;
@@ -60,7 +61,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
         <CardHeader height="120px">
           <HStack>
             <Avatar
-              name={`${advertiser?.firstName ?? "unkown"} ${
+              name={`${advertiser?.firstName ?? "unknown"} ${
                 advertiser?.lastName ?? "unknown"
               }`}
               size="lg"
@@ -71,7 +72,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
                 textColor="gray.600"
                 fontWeight="semibold"
               >
-                {`${advertiser?.firstName ?? "unkown"} ${
+                {`${advertiser?.firstName ?? "unknown"} ${
                   advertiser?.lastName ?? "unknown"
                 }`}
               </Text>
@@ -81,13 +82,13 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
                 textColor="gray"
                 fontWeight="semibold"
               >
-                {`${advertiser?.email ?? "email unkown"}`}
+                {`${advertiser?.email ?? "email unknown"}`}
               </Text>
             </VStack>
           </HStack>
         </CardHeader>
         <CardBody>
-          {isLoggedIn ? (
+          {(isLoggedIn && advertiser?.id != userService.getCurrentUser()?.id) ? (
             <form onSubmit={handleSubmit(submit)}>
               <VStack alignItems="start">
                 <Text
@@ -128,7 +129,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
               textColor="gray.600"
               textAlign="center"
             >
-              Please login to send messages to the advertiser
+              {advertiser?.id != userService.getCurrentUser()?.id ? "Please login to send messages to the advertiser" : "This is your own advertisement"}
             </Text>
           )}
           <Flex justifyContent="center" alignItems="center" marginTop="10px">

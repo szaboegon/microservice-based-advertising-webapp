@@ -1,5 +1,6 @@
 using MessagingService.DAL;
 using MessagingService.Hubs;
+using MessagingService.Models.Options;
 using MessagingService.Repositories;
 using MessagingService.Repositories.Interfaces;
 using MessagingService.Services;
@@ -14,6 +15,13 @@ var connectionString = ConnectionHandler.GetMessageDbConnectionString();
 builder.Services.AddDbContext<MessageDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+// Options 
+builder.Services
+    .AddOptions<RabbitMqOptions>()
+    .Bind(builder.Configuration.GetSection(RabbitMqOptions.ConfigSectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 // Repositories
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
@@ -21,7 +29,7 @@ builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
 // Services
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();
-builder.Services.AddScoped<IMessageProducer, MessageProducer>();
+builder.Services.AddSingleton<IMessageProducer, MessageProducer>();
 
 /*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
     builder

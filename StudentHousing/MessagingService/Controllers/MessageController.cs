@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.IdentityModel.Tokens.Jwt;
 using MessagingService.DataTransferObjects;
-using MessagingService.Services;
 using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Controllers;
