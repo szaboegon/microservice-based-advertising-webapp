@@ -6,19 +6,20 @@ using RabbitMQ.Client.Events;
 using System.Threading.Channels;
 using EmailNotificationService.DataTransferObjects;
 using EmailNotificationService.Models.Options;
+using EmailNotificationService.Services.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace EmailNotificationService.Services;
 
 public class ConsumerService: IHostedService
 {
+    private readonly IEmailSenderService _emailSenderService;
     private readonly RabbitMqOptions _options;
     private readonly IConnection _connection;
-    private readonly IHostApplicationLifetime _lifetime;
-    public ConsumerService(IOptions<RabbitMqOptions> options, IHostApplicationLifetime lifetime)
+    public ConsumerService(IEmailSenderService emailSenderService, IOptions<RabbitMqOptions> options)
     {
+        _emailSenderService = emailSenderService;
         _options = options.Value;
-        _lifetime = lifetime;
 
         var connFactory = new ConnectionFactory()
         {
@@ -70,7 +71,6 @@ public class ConsumerService: IHostedService
         var receivedJson = Encoding.UTF8.GetString(messageBody);
 
         var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson);
-
-        var user2 = user;
+        _emailSenderService.SendEmail("szabo.egon2001@gmail.com", "Test", "Test");  //TODO
     }
 }
