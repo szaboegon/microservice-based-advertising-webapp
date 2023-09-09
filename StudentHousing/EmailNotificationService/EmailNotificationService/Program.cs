@@ -19,7 +19,10 @@ builder.Services
 builder.Services
     .AddOptions<EmailOptions>()
     .BindConfiguration(EmailOptions.ConfigSectionName)
-    .Validate(options => !string.IsNullOrEmpty(options.SmtpServer) && !string.IsNullOrEmpty(options.SenderAddress) && !string.IsNullOrEmpty(options.SenderPassword));
+    .Validate(options => !string.IsNullOrEmpty(options.SmtpServer) && 
+                         !string.IsNullOrEmpty(options.SenderAddress) && 
+                         !string.IsNullOrEmpty(options.SenderPassword) &&
+                         !string.IsNullOrEmpty(options.SenderName));
 
 
 builder.Services.AddSingleton<IEmailSenderService, EmailSenderService>();

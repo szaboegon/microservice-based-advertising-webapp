@@ -34,7 +34,7 @@ public class ConsumerService: IHostedService
         Console.WriteLine("Email notification service started.");
         try
         {
-            return Start();
+            return StartConsumer();
         }
         catch (Exception ex)
         {
@@ -50,7 +50,7 @@ public class ConsumerService: IHostedService
     }
 
 
-    public Task Start()
+    private Task StartConsumer()
     {
         using var channel = _connection.CreateModel();
 
@@ -73,13 +73,16 @@ public class ConsumerService: IHostedService
             var messageBody = e.Body.ToArray();
             var receivedJson = Encoding.UTF8.GetString(messageBody);
 
-            var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson);
-            if (user == null)
-            {
-                throw new SerializationException("Failed to deserialize user");
-            }
+            var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson) ?? throw new SerializationException("Failed to deserialize user");
 
-            _emailSenderService.SendEmail("szabo.egon2001@gmail.com", $"{user.FirstName} {user.LastName}", "Message Notification", "Test"); //TODO
+            var notificationMessage =
+                $"Dear {user.FirstName}!\n\n" +
+                $"You have a new message waiting for you on Student Housing. " +
+                $"To check and respond to the message, go to the site and open the messages tab.\n\n" +
+                $"This is an auto generated email, please do not respond to it.\n\n";
+
+            _emailSenderService.SendEmail("szabo.egon2001@gmail.com", $"{user.FirstName} {user.LastName}", //TODO change this to actual email
+                "Message Notification", notificationMessage); 
         }
         catch (Exception ex)
         {

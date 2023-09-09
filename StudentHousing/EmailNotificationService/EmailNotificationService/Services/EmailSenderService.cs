@@ -29,7 +29,7 @@ public class EmailSenderService: IEmailSenderService
     {
         var mimeMessage= new MimeMessage();
 
-        mimeMessage.From.Add(new MailboxAddress("Student Housing",_options.SenderAddress));
+        mimeMessage.From.Add(new MailboxAddress(_options.SenderName,_options.SenderAddress));
         mimeMessage.To.Add(new MailboxAddress(receiverName, receiverAddress));
         mimeMessage.Subject = subject;
         mimeMessage.Body = new TextPart("plain")
