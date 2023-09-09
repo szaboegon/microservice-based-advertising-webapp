@@ -159,12 +159,15 @@ services:
        - 8003:1433  # Only needed for dev, remove in prod
 
   emailnotificationservice:
+    container_name: email_notification_service
     image: ${DOCKER_REGISTRY-}emailnotificationservice
     build:
       context: .
       dockerfile: EmailNotificationService/EmailNotificationService/Dockerfile
     networks:
       - mynetwork
+    depends_on:
+      - rabbitmq
 
   rabbitmq:
     container_name: rabbit_mq

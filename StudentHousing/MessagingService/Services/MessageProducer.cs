@@ -10,19 +10,20 @@ namespace MessagingService.Services;
 public class MessageProducer: IMessageProducer
 {
     private readonly RabbitMqOptions _options;
+    private readonly IConnection _connection;
     public MessageProducer(IOptions<RabbitMqOptions> options)
     {
         _options = options.Value;
-    }
-    public void SendMessage<T>(T message)
-    { 
+
         var connFactory = new ConnectionFactory()
         {
             HostName = "rabbitmq"
         };
-
-        using var connection = connFactory.CreateConnection();
-        using var channel = connection.CreateModel();
+        _connection = connFactory.CreateConnection();
+    }
+    public void SendMessage<T>(T message)
+    { 
+        using var channel = _connection.CreateModel();
 
         channel.ExchangeDeclare(_options.ExchangeName, ExchangeType.Fanout);
         channel.QueueDeclare(_options.QueueName, exclusive: false, autoDelete: false, durable: true);
