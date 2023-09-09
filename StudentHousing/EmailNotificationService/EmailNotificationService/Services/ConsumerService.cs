@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -67,10 +68,22 @@ public class ConsumerService: IHostedService
 
     private void OnMessageReceived(object? sender, BasicDeliverEventArgs e)
     {
-        var messageBody = e.Body.ToArray();
-        var receivedJson = Encoding.UTF8.GetString(messageBody);
+        try
+        {
+            var messageBody = e.Body.ToArray();
+            var receivedJson = Encoding.UTF8.GetString(messageBody);
 
-        var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson);
-        _emailSenderService.SendEmail("szabo.egon2001@gmail.com", "Test", "Test");  //TODO
+            var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson);
+            if (user == null)
+            {
+                throw new SerializationException("Failed to deserialize user");
+            }
+
+            _emailSenderService.SendEmail("szabo.egon2001@gmail.com", $"{user.FirstName} {user.LastName}", "Message Notification", "Test"); //TODO
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
     }
 }
