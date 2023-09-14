@@ -1,4 +1,7 @@
-﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+﻿using System.Diagnostics;
+using System.Linq.Expressions;
+using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Helpers;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.DataAccess.DAL;
@@ -6,8 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisingService.DataAccess.Repositories;
 
-public class 
-    AdvertisementRepository : IAdvertisementRepository
+public class AdvertisementRepository : IAdvertisementRepository
 {
     private readonly AdvertisementDbContext _dbcontext;
     public AdvertisementRepository(AdvertisementDbContext dbcontext)
@@ -52,19 +54,6 @@ public class
         _dbcontext.SaveChanges();
     }
 
-    public void RemoveRange(IEnumerable<Advertisement> advertisements)
-    {
-        _dbcontext.Advertisements.RemoveRange(advertisements);
-        _dbcontext.SaveChanges();
-    }
-
-    public IQueryable<Advertisement> GetAllAsIQueryable()
-    {
-        var list = _dbcontext.Advertisements.Where(_ => true);
-        return list;
-    }
-
-
     public async Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id)
     {
         return await _dbcontext.Advertisements
@@ -86,9 +75,31 @@ public class
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Advertisement>> GetByQuery(QueryParamsDto query)
+    public async Task<PagedList<Advertisement>> GetByQuery(QueryParamsDto query)
     {
-        return await _dbcontext.Advertisements
+        var advertisementQuery = ApplyQueryParams(query);
+        var totalItemCount = advertisementQuery.Count();
+
+        Expression<Func<Advertisement, object>> keySelector = query.SortColumn?.ToLower() switch
+        {
+            "size" => advertisement => advertisement.Size,
+            "monthlyprice" => advertisement => advertisement.MonthlyPrice,
+            _ => advertisement => advertisement.Id
+        };
+
+        advertisementQuery = query.SortOrder?.ToLower() == "desc" ? advertisementQuery.OrderByDescending(keySelector) : advertisementQuery.OrderBy(keySelector);
+
+        if (query is not { CurrentPage: >= 1, PageItemCount: > 0 })
+        {
+            throw new ArgumentException("Invalid paging values");
+        }
+
+        return new PagedList<Advertisement>(advertisementQuery, query.CurrentPage, query.PageItemCount);
+    }
+
+    private IQueryable<Advertisement> ApplyQueryParams(QueryParamsDto query)
+    {
+        var advertisementQuery = _dbcontext.Advertisements
             .Include(a => a.Address)
             .Include(a => a.Category)
             .Include(a => a.Images)
@@ -100,7 +111,7 @@ public class
             .Where(a => (query.MinMonthlyPrice == null || a.MonthlyPrice >= query.MinMonthlyPrice))
             .Where(a => (query.MaxMonthlyPrice == null || a.MonthlyPrice <= query.MaxMonthlyPrice))
             .Where(a => (query.Furnished == null || a.Furnished == query.Furnished))
-            .Where(a => (query.Parking == null || a.Parking == query.Parking))
-            .ToListAsync();
+            .Where(a => (query.Parking == null || a.Parking == query.Parking));
+        return advertisementQuery;
     }
 }

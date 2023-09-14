@@ -1,7 +1,7 @@
 import { Flex, Image, Box, Heading, Card, Spinner } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import BannerImg from "../../assets/images/bannerimg.jpg";
-import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import AdvertisementService from "../../services/AdvertisementService";
 import AdvertisementCard from "../advertisement/AdvertisementCard";
 import SearchBar from "../shared/SearchBar";
@@ -10,7 +10,7 @@ import { ErrorAlert } from "../alerts/ErrorAlert";
 import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
 
 export const Home = () => {
-  const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
+  const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
     []
   );
 
@@ -27,7 +27,7 @@ export const Home = () => {
     queryFn: async () => {
       return await AdvertisementService.getLatests(3);
     },
-    onSuccess: (data: AdvertisementCardData[]) => setAdvertisements(data),
+    onSuccess: (data: AdvertisementCardDto[]) => setAdvertisements(data),
     refetchOnWindowFocus: false,
   });
 

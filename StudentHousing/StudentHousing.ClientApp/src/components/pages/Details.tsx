@@ -2,7 +2,7 @@ import { Flex, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AdvertisementDetails from "../advertisement/details/AdvertisementDetails";
-import { AdvertisementDetailsData } from "../../models/advertisement/advertisementDetailsData";
+import { AdvertisementDetailsDto } from "../../models/advertisement/advertisementDetailsDto";
 import AdvertisementService from "../../services/AdvertisementService";
 import { useQuery } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
@@ -13,7 +13,7 @@ interface IDetailsProps {
 
 const Details: React.FunctionComponent<IDetailsProps> = ({ isLoggedIn }) => {
   const [advertisement, setAdvertisement] =
-    useState<AdvertisementDetailsData>();
+    useState<AdvertisementDetailsDto>();
 
   let params = useParams();
 
@@ -24,7 +24,7 @@ const Details: React.FunctionComponent<IDetailsProps> = ({ isLoggedIn }) => {
         return await AdvertisementService.findById(+params.id);
       }
     },
-    onSuccess: (data: AdvertisementDetailsData) => setAdvertisement(data),
+    onSuccess: (data: AdvertisementDetailsDto) => setAdvertisement(data),
     refetchOnWindowFocus: false,
   });
 

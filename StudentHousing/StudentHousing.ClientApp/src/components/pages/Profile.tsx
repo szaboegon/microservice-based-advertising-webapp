@@ -7,7 +7,7 @@ import AdvertisementService from "../../services/AdvertisementService";
 import AdvertisementListItem from "../advertisement/AdvertisementListItem";
 import { WarningAlert } from "../alerts/WarningAlert";
 import { ErrorAlert } from "../alerts/ErrorAlert";
-import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
 
 interface IProfileProps {
@@ -15,7 +15,7 @@ interface IProfileProps {
 }
 
 const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
-  const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
+  const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
     []
   );
 
@@ -32,7 +32,7 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
     queryFn: async () => {
       return await AdvertisementService.findByUser();
     },
-    onSuccess: (data: AdvertisementCardData[]) => setAdvertisements(data),
+    onSuccess: (data: AdvertisementCardDto[]) => setAdvertisements(data),
     refetchOnWindowFocus: false,
   });
 

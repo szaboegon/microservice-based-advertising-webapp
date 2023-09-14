@@ -13,11 +13,11 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import ImageService from "../../services/ImageService";
 
 interface IAdvertisementCardProps {
-  advertisement: AdvertisementCardData;
+  advertisement: AdvertisementCardDto;
 }
 
 const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({

@@ -65,11 +65,12 @@ public class AdvertisementService : IAdvertisementService
         return newAdvertisement.Id;
     }
 
-    public async Task<IEnumerable<AdvertisementDto>> GetAllAdvertisementsAsync(QueryParamsDto queryParams)
+    public async Task<PagedQueryResponse<AdvertisementDto>> GetAdvertisementsByQueryAsync(QueryParamsDto queryParams)
     {
         var advertisements = await _advertisementRepository.GetByQuery(queryParams);
 
-        return advertisements.Select(a => a.ToDto());
+        return new PagedQueryResponse<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(), advertisements.CurrentPage,
+            advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
     }
 
     public async Task<AdvertisementDetailsDto> GetAdvertisementDetailsAsync(int id)

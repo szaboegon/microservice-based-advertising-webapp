@@ -16,12 +16,13 @@ import AdvertisementCard from "../advertisement/AdvertisementCard";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { WarningAlert } from "../alerts/WarningAlert";
 import SearchBar from "../shared/SearchBar";
-import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import AdvertisementService from "../../services/AdvertisementService";
+import {PagedQueryResponse} from "../../models/pagedQueryResponse";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [advertisements, setAdvertisements] = useState<AdvertisementCardData[]>(
+  const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
     []
   );
 
@@ -38,7 +39,7 @@ export const Search = () => {
     queryFn: async () => {
       return await AdvertisementService.findBySearchParams(searchParams);
     },
-    onSuccess: (data: AdvertisementCardData[]) => setAdvertisements(data),
+    onSuccess: (data: PagedQueryResponse<AdvertisementCardDto>) => setAdvertisements(data.items),
     refetchOnWindowFocus: false,
   });
 

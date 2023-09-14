@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Heading, Text, HStack } from "@chakra-ui/react";
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { AdvertisementDetailsData } from "../../../models/advertisement/advertisementDetailsData";
+import { AdvertisementDetailsDto } from "../../../models/advertisement/advertisementDetailsDto";
 import { User } from "../../../models/user";
 import ImageService from "../../../services/ImageService";
 import UserService from "../../../services/UserService";
@@ -9,7 +9,7 @@ import { detailsHeadingStyles } from "../../../styles/detailsHeadingStyles";
 import AdvertiserInfo from "../../messaging/AdvertiserInfo";
 
 interface IAdvertisementDetailsProps {
-  advertisement: AdvertisementDetailsData;
+  advertisement: AdvertisementDetailsDto;
   isLoggedIn: boolean;
 }
 

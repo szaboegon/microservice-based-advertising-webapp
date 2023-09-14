@@ -1,4 +1,4 @@
-export interface AdvertisementCardData {
+export interface AdvertisementCardDto {
   id: number;
   categoryName: string;
   city: string;

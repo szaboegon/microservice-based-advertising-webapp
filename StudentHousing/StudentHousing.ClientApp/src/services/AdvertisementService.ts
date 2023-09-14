@@ -1,7 +1,8 @@
 import axios from "axios";
-import { AdvertisementCardData } from "../models/advertisement/advertisementCardData.";
-import { AdvertisementDetailsData } from "../models/advertisement/advertisementDetailsData";
+import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
+import { AdvertisementDetailsDto } from "../models/advertisement/advertisementDetailsDto";
 import authHeader from "./auth/authHeader";
+import {PagedQueryResponse} from "../models/pagedQueryResponse";
 
 const apiClient = axios.create({
   baseURL: "/api/advertisement",
@@ -19,15 +20,15 @@ const formDataClient = axios.create({
 
 const findBySearchParams = async (
   searchParams: URLSearchParams
-): Promise<AdvertisementCardData[]> => {
-  const response = await apiClient.get<AdvertisementCardData[]>(
+): Promise<PagedQueryResponse<AdvertisementCardDto>> => {
+  const response = await apiClient.get<PagedQueryResponse<AdvertisementCardDto>>(
     "/public/advertisement_cards?" + searchParams
   );
   return response.data;
 };
 
-const findById = async (id: number): Promise<AdvertisementDetailsData> => {
-  const response = await apiClient.get<AdvertisementDetailsData>(
+const findById = async (id: number): Promise<AdvertisementDetailsDto> => {
+  const response = await apiClient.get<AdvertisementDetailsDto>(
     `/public/advertisement_details/${id}`
   );
   return response.data;
@@ -49,8 +50,8 @@ const remove = async (id: number) => {
   return response.data;
 };
 
-const findByUser = async (): Promise<AdvertisementCardData[]> => {
-  const response = await apiClient.get<AdvertisementCardData[]>(
+const findByUser = async (): Promise<AdvertisementCardDto[]> => {
+  const response = await apiClient.get<AdvertisementCardDto[]>(
     "/private/advertisements_by_user",
     {
       headers: authHeader(),
@@ -60,7 +61,7 @@ const findByUser = async (): Promise<AdvertisementCardData[]> => {
 };
 
 const getLatests = async (count: number) => {
-  const response = await apiClient.get<AdvertisementCardData[]>(
+  const response = await apiClient.get<AdvertisementCardDto[]>(
     `/public/latest_advertisements/${count}`
   );
   return response.data;

@@ -1,4 +1,4 @@
-export interface AdvertisementDetailsData {
+export interface AdvertisementDetailsDto {
   id: number;
   categoryName: string;
   region: string;

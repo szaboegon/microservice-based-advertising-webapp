@@ -17,13 +17,13 @@ import {
 import * as React from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { AdvertisementCardData } from "../../models/advertisement/advertisementCardData.";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import AdvertisementService from "../../services/AdvertisementService";
 import ImageService from "../../services/ImageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 
 interface IAdvertisementListItemProps {
-  advertisement: AdvertisementCardData;
+  advertisement: AdvertisementCardDto;
   refetch: Function;
 }
 
