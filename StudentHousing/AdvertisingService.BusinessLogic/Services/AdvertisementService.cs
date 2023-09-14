@@ -68,7 +68,6 @@ public class AdvertisementService : IAdvertisementService
     public async Task<PagedQueryResponse<AdvertisementDto>> GetAdvertisementsByQueryAsync(QueryParamsDto queryParams)
     {
         var advertisements = await _advertisementRepository.GetByQuery(queryParams);
-
         return new PagedQueryResponse<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(), advertisements.CurrentPage,
             advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
     }

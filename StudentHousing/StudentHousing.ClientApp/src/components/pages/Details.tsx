@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import AdvertisementDetails from "../advertisement/details/AdvertisementDetails";
 import { AdvertisementDetailsDto } from "../../models/advertisement/advertisementDetailsDto";
-import AdvertisementService from "../../services/AdvertisementService";
+import AdvertisementService from "../../services/advertisementService";
 import { useQuery } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 

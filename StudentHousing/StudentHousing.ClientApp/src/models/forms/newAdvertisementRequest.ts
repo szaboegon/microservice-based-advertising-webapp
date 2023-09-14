@@ -1,4 +1,4 @@
-export interface NewAdvertisementFormData {
+export interface NewAdvertisementRequest {
   categoryName: string;
   region: string;
   postalCode: string;

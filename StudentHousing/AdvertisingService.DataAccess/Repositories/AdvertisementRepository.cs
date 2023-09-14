@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
-using AdvertisingService.BusinessLogic.Helpers;
+using AdvertisingService.BusinessLogic.Helpers.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.DataAccess.DAL;
+using AdvertisingService.DataAccess.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdvertisingService.DataAccess.Repositories;
@@ -75,7 +76,7 @@ public class AdvertisementRepository : IAdvertisementRepository
             .ToListAsync();
     }
 
-    public async Task<PagedList<Advertisement>> GetByQuery(QueryParamsDto query)
+    public async Task<IPagedList<Advertisement>> GetByQuery(QueryParamsDto query)
     {
         var advertisementQuery = ApplyQueryParams(query);
         var totalItemCount = advertisementQuery.Count();
@@ -94,7 +95,7 @@ public class AdvertisementRepository : IAdvertisementRepository
             throw new ArgumentException("Invalid paging values");
         }
 
-        return new PagedList<Advertisement>(advertisementQuery, query.CurrentPage, query.PageItemCount);
+        return await PagedList<Advertisement>.CreateAsync(advertisementQuery, query.CurrentPage, query.PageItemCount);
     }
 
     private IQueryable<Advertisement> ApplyQueryParams(QueryParamsDto query)

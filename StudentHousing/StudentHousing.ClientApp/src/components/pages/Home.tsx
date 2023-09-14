@@ -2,17 +2,21 @@ import { Flex, Image, Box, Heading, Card, Spinner } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import BannerImg from "../../assets/images/bannerimg.jpg";
 import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
-import AdvertisementService from "../../services/AdvertisementService";
+import AdvertisementService from "../../services/advertisementService";
 import AdvertisementCard from "../advertisement/AdvertisementCard";
 import SearchBar from "../shared/SearchBar";
 import { useState } from "react";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
+import {useNavigate} from "react-router-dom";
+import {AdvertisementSearchParamsDto} from "../../models/queryParams/advertisementSearchParamsDto";
+import SearchParamsHelper from "../../helpers/searchParamsHelper";
 
 export const Home = () => {
   const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
     []
   );
+  const navigate = useNavigate();
 
   const {
     isSuccess,
@@ -30,6 +34,13 @@ export const Home = () => {
     onSuccess: (data: AdvertisementCardDto[]) => setAdvertisements(data),
     refetchOnWindowFocus: false,
   });
+
+  const onSearchSubmitted = (newParams: AdvertisementSearchParamsDto) => {
+    let searchParams = SearchParamsHelper.addSearchParams(new URLSearchParams(), newParams);
+    searchParams.set("pageItemCount", "1");
+    searchParams.set("currentPage","1");
+    navigate("/search?" + searchParams, {});
+  }
 
   return (
     <>
@@ -66,7 +77,7 @@ export const Home = () => {
           >
             For Students
           </Heading>
-          <SearchBar minWidth="75%"></SearchBar>
+          <SearchBar minWidth="75%" onSearchParamsChanged={onSearchSubmitted}></SearchBar>
         </Flex>
       </Flex>
       <Heading sx={pageSubheadingStyles}>Recent Advertisements</Heading>

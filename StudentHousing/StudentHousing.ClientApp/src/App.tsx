@@ -8,7 +8,7 @@ import Details from "./components/pages/Details";
 import { Login } from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import { useEffect, useState } from "react";
-import UserService from "./services/UserService";
+import UserService from "./services/userService";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
 import { NewAdvertisement } from "./components/pages/NewAdvertisement";
 import { User } from "./models/user";

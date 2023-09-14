@@ -3,8 +3,8 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { AdvertisementDetailsDto } from "../../../models/advertisement/advertisementDetailsDto";
 import { User } from "../../../models/user";
-import ImageService from "../../../services/ImageService";
-import UserService from "../../../services/UserService";
+import ImageService from "../../../services/imageService";
+import UserService from "../../../services/userService";
 import { detailsHeadingStyles } from "../../../styles/detailsHeadingStyles";
 import AdvertiserInfo from "../../messaging/AdvertiserInfo";
 

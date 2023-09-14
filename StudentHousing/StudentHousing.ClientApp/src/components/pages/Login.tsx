@@ -14,8 +14,8 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
-import { LoginData } from "../../models/formInterfaces/loginData";
-import UserService from "../../services/UserService";
+import { LoginRequest } from "../../models/forms/loginRequest";
+import UserService from "../../services/userService";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
@@ -29,7 +29,7 @@ export const Login = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<LoginData>();
+  } = useForm<LoginRequest>();
 
   const {
     isSuccess,
@@ -38,13 +38,13 @@ export const Login = () => {
     error,
     mutateAsync: submitLogin,
   } = useMutation({
-    mutationFn: async (data: LoginData) => {
+    mutationFn: async (data: LoginRequest) => {
       return await UserService.login(data);
     },
   });
 
   const navigate = useNavigate();
-  const submit = async (data: LoginData) => {
+  const submit = async (data: LoginRequest) => {
     const response = await submitLogin(data).then(() => {
       navigate("/search");
       window.location.reload();

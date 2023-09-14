@@ -3,12 +3,12 @@ import { useState } from "react";
 import * as React from "react";
 import { User } from "../../models/user";
 import { useQuery } from "react-query";
-import MessagingService from "../../services/MessagingService";
+import MessagingService from "../../services/messagingService";
 import ChatTab from "./ChatTab";
 import { AxiosError } from "axios";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { WarningAlert } from "../alerts/WarningAlert";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userService";
 
 interface IPartnersSidebarProps {
   setSelectedChatPartner: React.Dispatch<

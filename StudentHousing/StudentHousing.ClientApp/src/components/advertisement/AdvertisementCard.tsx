@@ -14,7 +14,7 @@ import {
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
-import ImageService from "../../services/ImageService";
+import ImageService from "../../services/imageService";
 
 interface IAdvertisementCardProps {
   advertisement: AdvertisementCardDto;

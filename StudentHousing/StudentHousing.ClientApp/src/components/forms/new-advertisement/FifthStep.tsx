@@ -15,13 +15,13 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdvertisementFormData";
-import ImageService from "../../../services/ImageService";
+import { NewAdvertisementRequest } from "../../../models/forms/newAdvertisementRequest";
+import ImageService from "../../../services/imageService";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 
 interface IFifthStepProps {
   setImage: React.Dispatch<File>;
-  submitData: (data: NewAdvertisementFormData) => void;
+  submitData: (data: NewAdvertisementRequest) => void;
 }
 
 const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
@@ -43,7 +43,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
     }
   };
 
-  const { handleSubmit } = useForm<NewAdvertisementFormData>();
+  const { handleSubmit } = useForm<NewAdvertisementRequest>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (

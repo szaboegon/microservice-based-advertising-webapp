@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
-import MessagingService from "../../services/MessagingService";
+import MessagingService from "../../services/messagingService";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { Avatar, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import MessageBubble from "../messaging/MessageBubble";
 import MessageInput from "../messaging/MessageInput";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userService";
 import PartnersSidebar from "../messaging/PartnersSidebar";
 
 interface IMessagesProps {

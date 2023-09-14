@@ -15,18 +15,18 @@ import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
-import UserService from "../../services/UserService";
+import UserService from "../../services/userService";
 import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../styles/formLabelStyles";
 import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
 import { Link } from "react-router-dom";
-import { RegistrationData } from "../../models/formInterfaces/registrationData";
+import { RegistrationRequest } from "../../models/forms/registrationRequest";
 import { placeholderStyles } from "../../styles/placeholderStyles";
 
 interface IRegisterProps {}
 
 const Register: React.FunctionComponent<IRegisterProps> = (props) => {
-  const initialFormValues: RegistrationData = {
+  const initialFormValues: RegistrationRequest = {
     firstName: "",
     lastName: "",
     email: "",
@@ -40,7 +40,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
     register,
     watch,
     formState: { errors },
-  } = useForm<RegistrationData>();
+  } = useForm<RegistrationRequest>();
 
   const {
     isSuccess,
@@ -49,12 +49,12 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
     error,
     mutateAsync: submitRegistration,
   } = useMutation({
-    mutationFn: async (data: RegistrationData) => {
+    mutationFn: async (data: RegistrationRequest) => {
       return await UserService.register(data);
     },
   });
 
-  const submit = async (data: RegistrationData) => {
+  const submit = async (data: RegistrationRequest) => {
     var response = await submitRegistration(data);
   };
 

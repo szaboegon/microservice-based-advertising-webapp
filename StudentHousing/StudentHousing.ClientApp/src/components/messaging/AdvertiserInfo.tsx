@@ -16,12 +16,12 @@ import { AxiosError } from "axios";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { MessageInputData } from "../../models/formInterfaces/messageInputData";
+import { MessageInputData } from "../../models/forms/messageInputData";
 import { User } from "../../models/user";
-import MessagingService from "../../services/MessagingService";
+import MessagingService from "../../services/messagingService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { SuccessAlert } from "../alerts/SuccessAlert";
-import userService from "../../services/UserService";
+import userService from "../../services/userService";
 
 interface IAdvertiserInfoProps {
   advertiser: User | undefined;

@@ -2,8 +2,8 @@ import { Box, Button, HStack, Textarea } from "@chakra-ui/react";
 import { HubConnection } from "@microsoft/signalr";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { MessageInputData } from "../../models/formInterfaces/messageInputData";
-import MessagingService from "../../services/MessagingService";
+import { MessageInputData } from "../../models/forms/messageInputData";
+import MessagingService from "../../services/messagingService";
 
 interface IMessageInputProps {
   connection: HubConnection | null;

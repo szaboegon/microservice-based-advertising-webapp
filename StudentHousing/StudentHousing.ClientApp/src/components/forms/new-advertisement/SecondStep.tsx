@@ -14,14 +14,14 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import districts from "../../../assets/literals/districts";
 import regions from "../../../assets/literals/regions";
-import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdvertisementFormData";
+import { NewAdvertisementRequest } from "../../../models/forms/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
 interface ISecondStepProps {
-  formValues: NewAdvertisementFormData;
-  setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementFormData>>;
+  formValues: NewAdvertisementRequest;
+  setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
@@ -35,11 +35,11 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
     register,
     watch,
     formState: { errors },
-  } = useForm<NewAdvertisementFormData>();
+  } = useForm<NewAdvertisementRequest>();
 
   const city = watch("city");
 
-  const saveData = (data: NewAdvertisementFormData) => {
+  const saveData = (data: NewAdvertisementRequest) => {
     setFormValues({ ...formValues, ...data });
     nextStep();
   };

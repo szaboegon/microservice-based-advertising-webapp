@@ -13,7 +13,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { NewAdvertisementFormData } from "../../models/formInterfaces/newAdvertisementFormData";
+import { NewAdvertisementRequest } from "../../models/forms/newAdvertisementRequest";
 import FirstStep from "../forms/new-advertisement/FirstStep";
 import SecondStep from "../forms/new-advertisement/SecondStep";
 import ThirdStep from "../forms/new-advertisement/ThirdStep";
@@ -22,12 +22,12 @@ import FifthStep from "../forms/new-advertisement/FifthStep";
 import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
 import { formHeadingStyles } from "../../styles/formHeadingStyles";
 import { useMutation } from "react-query";
-import AdvertisementService from "../../services/AdvertisementService";
+import AdvertisementService from "../../services/advertisementService";
 import { SuccessAlert } from "../alerts/SuccessAlert";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 
 export const NewAdvertisement = () => {
-  const initialFormValues: NewAdvertisementFormData = {
+  const initialFormValues: NewAdvertisementRequest = {
     categoryName: "",
     region: "",
     postalCode: "",
@@ -48,7 +48,7 @@ export const NewAdvertisement = () => {
   const [formValues, setFormValues] = useState(initialFormValues);
   const [image, setImage] = useState<File>();
 
-  const submitData = async (data: NewAdvertisementFormData) => {
+  const submitData = async (data: NewAdvertisementRequest) => {
     await postAdvertisement();
   };
 

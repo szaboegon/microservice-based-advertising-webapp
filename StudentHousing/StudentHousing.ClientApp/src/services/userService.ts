@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { LoginData } from "../models/formInterfaces/loginData";
-import { RegistrationData } from "../models/formInterfaces/registrationData";
+import { LoginRequest } from "../models/forms/loginRequest";
+import { RegistrationRequest } from "../models/forms/registrationRequest";
 import { Session } from "../models/session";
 import { TokenClaims } from "../models/tokenClaims";
 import { User } from "../models/user";
@@ -14,7 +14,7 @@ const apiClient = axios.create({
   },
 });
 
-const login = async (loginData: LoginData): Promise<Session> => {
+const login = async (loginData: LoginRequest): Promise<Session> => {
   return await apiClient.post("/login", loginData).then((response) => {
     if (response.data.token) {
       localStorage.setItem("token", JSON.stringify(response.data.token));
@@ -45,7 +45,7 @@ const getCurrentUser = () => {
   return user;
 };
 
-const register = async (registrationData: RegistrationData) => {
+const register = async (registrationData: RegistrationRequest) => {
   return await apiClient.post("/register", registrationData);
 };
 

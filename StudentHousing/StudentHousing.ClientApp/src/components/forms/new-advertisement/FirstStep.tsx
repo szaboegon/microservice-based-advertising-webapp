@@ -11,14 +11,14 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { NewAdvertisementFormData } from "../../../models/formInterfaces/newAdvertisementFormData";
+import { NewAdvertisementRequest } from "../../../models/forms/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
 interface IFirstStepProps {
-  formValues: NewAdvertisementFormData;
-  setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementFormData>>;
+  formValues: NewAdvertisementRequest;
+  setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
@@ -31,9 +31,9 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<NewAdvertisementFormData>();
+  } = useForm<NewAdvertisementRequest>();
 
-  const saveData = (data: NewAdvertisementFormData) => {
+  const saveData = (data: NewAdvertisementRequest) => {
     setFormValues({ ...formValues, ...data });
     nextStep();
   };

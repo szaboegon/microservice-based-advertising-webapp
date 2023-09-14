@@ -12,16 +12,16 @@ import {
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { SearchParamsFormData } from "../../models/formInterfaces/searchParamsFormData";
+import { AdvertisementSearchParamsDto } from "../../models/queryParams/advertisementSearchParamsDto";
 
 interface ISearchBarProps {
   minWidth?: string;
+  existingSearchParams?: URLSearchParams
+  onSearchParamsChanged: (newParams: AdvertisementSearchParamsDto) => void
 }
 
-const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
-  const navigate = useNavigate();
-  const initialFormValues: SearchParamsFormData = {
+const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existingSearchParams, onSearchParamsChanged }) => {
+  const initialFormValues: AdvertisementSearchParamsDto = {
     categoryName: "",
     city: "",
     numberOfRooms: "",
@@ -32,42 +32,33 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth }) => {
     furnished: "",
     parking: "",
   };
-  const [searchParams, setSearchParams] = useSearchParams({});
-
   const {
     handleSubmit,
     setValue,
     getValues,
     register,
     formState: { errors },
-  } = useForm<SearchParamsFormData>();
+  } = useForm<AdvertisementSearchParamsDto>();
 
-  const submit = (data: SearchParamsFormData) => {
+  const submit = (data: AdvertisementSearchParamsDto) => {
     for (const property in getValues()) {
       setValue(
-        property as keyof SearchParamsFormData,
-        data[property as keyof SearchParamsFormData]
+        property as keyof AdvertisementSearchParamsDto,
+        data[property as keyof AdvertisementSearchParamsDto]
       );
-      searchParams.delete(property);
-      if (data[property as keyof SearchParamsFormData] != "") {
-        searchParams.set(
-          property as keyof SearchParamsFormData,
-          data[property as keyof SearchParamsFormData]
-        );
-      }
     }
-    navigate("/search?" + searchParams, {});
+    onSearchParamsChanged(data);
   };
 
   useEffect(() => {
-    var updatedState = { ...initialFormValues };
+    let updatedState = { ...initialFormValues };
     for (const property in getValues()) {
-      if (searchParams.has(property)) {
-        updatedState[property as keyof SearchParamsFormData] =
-          searchParams.get(property)!;
+      if (existingSearchParams?.has(property)) {
+        updatedState[property as keyof AdvertisementSearchParamsDto] =
+          existingSearchParams.get(property)!;
         setValue(
-          property as keyof SearchParamsFormData,
-          searchParams.get(property)!
+          property as keyof AdvertisementSearchParamsDto,
+          existingSearchParams.get(property)!
         );
       }
     }

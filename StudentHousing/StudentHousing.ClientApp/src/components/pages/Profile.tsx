@@ -3,7 +3,7 @@ import ProfileCard from "../profile/ProfileCard";
 import { User } from "../../models/user";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import AdvertisementService from "../../services/AdvertisementService";
+import AdvertisementService from "../../services/advertisementService";
 import AdvertisementListItem from "../advertisement/AdvertisementListItem";
 import { WarningAlert } from "../alerts/WarningAlert";
 import { ErrorAlert } from "../alerts/ErrorAlert";

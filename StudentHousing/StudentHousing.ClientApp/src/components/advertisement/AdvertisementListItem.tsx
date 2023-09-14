@@ -18,8 +18,8 @@ import * as React from "react";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
-import AdvertisementService from "../../services/AdvertisementService";
-import ImageService from "../../services/ImageService";
+import AdvertisementService from "../../services/advertisementService";
+import ImageService from "../../services/imageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 
 interface IAdvertisementListItemProps {
