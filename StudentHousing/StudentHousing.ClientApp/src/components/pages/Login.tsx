@@ -23,6 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { placeholderStyles } from "../../styles/placeholderStyles";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
+import SearchParamsHelper from "../../helpers/searchParamsHelper";
 
 export const Login = () => {
   const {
@@ -46,7 +47,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const submit = async (data: LoginRequest) => {
     const response = await submitLogin(data).then(() => {
-      navigate("/search");
+      let searchParams = SearchParamsHelper.addPaginationParams(new URLSearchParams());
+      navigate("/search?" + searchParams, {});
       window.location.reload();
     });
   };

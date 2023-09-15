@@ -57,7 +57,6 @@ const AdvertisementListItem: React.FunctionComponent<
     return validDate.toDateString();
   }
 
-  console.log(advertisement.uploadDate);
   let base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>

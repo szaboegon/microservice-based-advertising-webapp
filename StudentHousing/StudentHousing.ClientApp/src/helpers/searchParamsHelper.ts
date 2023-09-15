@@ -10,18 +10,23 @@ const addSearchParams = (searchParams: URLSearchParams, paramsToAdd: Advertiseme
     return searchParams;
 }
 
-const addPaginationParams = (searchParams: URLSearchParams, paramsToAdd: PaginationParamsDto) => {
-    Object.entries(paramsToAdd)
-        .forEach(([key, value]) => {
-            if(value != ""){
-                searchParams.set(key, value);
-            }
-        });
+const addPaginationParams = (searchParams: URLSearchParams, paramsToAdd?: PaginationParamsDto) => {
+    if (paramsToAdd) {
+        Object.entries(paramsToAdd)
+            .forEach(([key, value]) => {
+                if (value != "") {
+                    searchParams.set(key, value);
+                }
+            });
+    } else {
+        searchParams.set("currentPage", "1");
+        searchParams.set("pageItemCount", "8");
+    }
 
     return searchParams;
 }
 
-const SearchParamsHelper ={
+const SearchParamsHelper = {
     addSearchParams,
     addPaginationParams
 }

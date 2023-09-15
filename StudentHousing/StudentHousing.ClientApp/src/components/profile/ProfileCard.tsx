@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { User } from "../../models/user";
-import ProfilePic from "../../assets/images/profilepic.jpg";
 
 interface IProfileCardProps {
   user: User;

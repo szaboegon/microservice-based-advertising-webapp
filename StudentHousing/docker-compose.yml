@@ -177,6 +177,7 @@ services:
       - mynetwork
     depends_on:
       - rabbitmq
+      - messagingservice
 
   rabbitmq:
     container_name: rabbit_mq
