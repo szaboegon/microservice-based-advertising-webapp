@@ -13,18 +13,18 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { NewAdvertisementRequest } from "../../models/forms/newAdvertisementRequest";
-import FirstStep from "../forms/new-advertisement/FirstStep";
-import SecondStep from "../forms/new-advertisement/SecondStep";
-import ThirdStep from "../forms/new-advertisement/ThirdStep";
-import FourthStep from "../forms/new-advertisement/FourthStep";
-import FifthStep from "../forms/new-advertisement/FifthStep";
-import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
-import { formHeadingStyles } from "../../styles/formHeadingStyles";
+import { NewAdvertisementRequest } from "../models/forms/newAdvertisementRequest";
+import FirstStep from "../components/forms/new-advertisement/FirstStep";
+import SecondStep from "../components/forms/new-advertisement/SecondStep";
+import ThirdStep from "../components/forms/new-advertisement/ThirdStep";
+import FourthStep from "../components/forms/new-advertisement/FourthStep";
+import FifthStep from "../components/forms/new-advertisement/FifthStep";
+import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
+import { formHeadingStyles } from "../styles/formHeadingStyles";
 import { useMutation } from "react-query";
-import AdvertisementService from "../../services/advertisementService";
-import { SuccessAlert } from "../alerts/SuccessAlert";
-import { ErrorAlert } from "../alerts/ErrorAlert";
+import AdvertisementService from "../services/advertisementService";
+import { SuccessAlert } from "../components/alerts/SuccessAlert";
+import { ErrorAlert } from "../components/alerts/ErrorAlert";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementRequest = {

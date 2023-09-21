@@ -1,18 +1,19 @@
-import {Flex, Spinner, VStack,} from "@chakra-ui/react";
+import {Box, Flex, Spinner, Stack, VStack,} from "@chakra-ui/react";
 import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import AdvertisementCard from "../advertisement/AdvertisementCard";
-import {ErrorAlert} from "../alerts/ErrorAlert";
-import {WarningAlert} from "../alerts/WarningAlert";
-import SearchBar from "../shared/SearchBar";
-import {AdvertisementCardDto} from "../../models/advertisement/advertisementCardDto";
-import AdvertisementService from "../../services/advertisementService";
-import {PagedQueryResponse} from "../../models/pagedQueryResponse";
-import {AdvertisementSearchParamsDto} from "../../models/queryParams/advertisementSearchParamsDto";
-import SearchParamsHelper from "../../helpers/searchParamsHelper";
-import PaginationFooter from "../shared/PaginationFooter";
-import {PaginationParamsDto} from "../../models/queryParams/paginationParamsDto";
+import AdvertisementCard from "../components/advertisement/AdvertisementCard";
+import {ErrorAlert} from "../components/alerts/ErrorAlert";
+import {WarningAlert} from "../components/alerts/WarningAlert";
+import SearchBar from "../components/shared/SearchBar";
+import {AdvertisementCardDto} from "../models/advertisement/advertisementCardDto";
+import AdvertisementService from "../services/advertisementService";
+import {PagedQueryResponse} from "../models/pagedQueryResponse";
+import {AdvertisementSearchParamsDto} from "../models/queryParams/advertisementSearchParamsDto";
+import SearchParamsHelper from "../helpers/searchParamsHelper";
+import PaginationFooter from "../components/shared/PaginationFooter";
+import {PaginationParamsDto} from "../models/queryParams/paginationParamsDto";
+import OrderingSelector from "../components/shared/OrderingSelector";
 
 export const Search = () => {
     const [searchParams, setSearchParams] = useSearchParams({});
@@ -66,19 +67,16 @@ export const Search = () => {
                 alignItems="center"
                 justifyContent="center"
                 flexWrap="wrap"
-                marginX="auto"
+                marginX={{ base:"0px", xl:"10%"}}
+                marginTop="50px"
+                marginBottom="70px"
             >
-                <VStack marginTop="3rem" width={{base: "100%", xl: "80%"}}>
-                    <SearchBar minWidth="100%" existingSearchParams={searchParams}
-                               onSearchParamsChanged={onSearchParamsChanged}></SearchBar>
-                </VStack>
-            </Flex>
-            <Flex
-                marginY="30px"
-                marginX="auto"
-                flexWrap="wrap"
-                justifyContent="center"
-            >
+                <SearchBar minWidth="100%" existingSearchParams={searchParams}
+                           onSearchParamsChanged={onSearchParamsChanged}></SearchBar>
+                <Flex flexBasis="100%" marginY="10px" justifyContent="center">
+                    <OrderingSelector width="200px"/>
+                </Flex>
+
                 {(isLoading || isRefetching) && advertisements.length <= 0 && (
                     <Spinner/>
                 )}

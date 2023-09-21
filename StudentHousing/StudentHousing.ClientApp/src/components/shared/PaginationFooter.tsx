@@ -18,7 +18,7 @@ interface IPaginationFooterProps {
 
 const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({totalPages, notifyPageChanged}) => {
 
-    const PAGE_ITEM_COUNT = 8;
+    const PAGE_ITEM_COUNT = 12;
     const {
         currentPage,
         setCurrentPage,

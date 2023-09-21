@@ -2,19 +2,19 @@ import "./App.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
-import { Home } from "./components/pages/Home";
-import { Search } from "./components/pages/Search";
-import Details from "./components/pages/Details";
-import { Login } from "./components/pages/Login";
-import Register from "./components/pages/Register";
+import { Home } from "./pages/Home";
+import { Search } from "./pages/Search";
+import Details from "./pages/Details";
+import { Login } from "./pages/Login";
+import Register from "./pages/Register";
 import { useEffect, useState } from "react";
 import UserService from "./services/userService";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
-import { NewAdvertisement } from "./components/pages/NewAdvertisement";
+import { NewAdvertisement } from "./pages/NewAdvertisement";
 import { User } from "./models/user";
 import { AuthVerify } from "./services/auth/AuthVerify";
-import Profile from "./components/pages/Profile";
-import Messages from "./components/pages/Messages";
+import Profile from "./pages/Profile";
+import Messages from "./pages/Messages";
 
 function App() {
   const theme = extendTheme({

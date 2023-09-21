@@ -68,7 +68,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existin
     <>
       <Flex
         backgroundColor="white"
-        borderWidth="5px"
+        borderWidth="4px"
         borderColor="brandGreen.500"
         borderRadius="30px"
         paddingLeft="20px"
@@ -191,14 +191,13 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existin
             </Select>
           </FormControl>
 
-          <Flex backgroundColor="brandGreen.500" borderRightRadius="15px">
+          <Flex backgroundColor="brandGreen.500" borderRightRadius="15px" >
             <Button
               type="submit"
               variant="link"
               textColor="white"
               height="100%"
-              maxWidth="120px"
-              minWidth="100px"
+              width="110px"
               leftIcon={<SearchIcon />}
             >
               Search

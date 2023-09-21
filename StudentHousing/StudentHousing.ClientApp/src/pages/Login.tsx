@@ -12,18 +12,18 @@ import {
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { ErrorAlert } from "../alerts/ErrorAlert";
-import { SuccessAlert } from "../alerts/SuccessAlert";
-import { LoginRequest } from "../../models/forms/loginRequest";
-import UserService from "../../services/userService";
-import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
-import { formLabelStyles } from "../../styles/formLabelStyles";
-import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
+import { ErrorAlert } from "../components/alerts/ErrorAlert";
+import { SuccessAlert } from "../components/alerts/SuccessAlert";
+import { LoginRequest } from "../models/forms/loginRequest";
+import UserService from "../services/userService";
+import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
+import { formLabelStyles } from "../styles/formLabelStyles";
+import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { placeholderStyles } from "../../styles/placeholderStyles";
+import { placeholderStyles } from "../styles/placeholderStyles";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
-import SearchParamsHelper from "../../helpers/searchParamsHelper";
+import SearchParamsHelper from "../helpers/searchParamsHelper";
 
 export const Login = () => {
   const {

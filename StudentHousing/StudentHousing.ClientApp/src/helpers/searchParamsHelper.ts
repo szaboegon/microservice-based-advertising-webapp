@@ -20,7 +20,7 @@ const addPaginationParams = (searchParams: URLSearchParams, paramsToAdd?: Pagina
             });
     } else {
         searchParams.set("currentPage", "1");
-        searchParams.set("pageItemCount", "8");
+        searchParams.set("pageItemCount", "12");
     }
 
     return searchParams;

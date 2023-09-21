@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Heading, Text, HStack } from "@chakra-ui/react";
+import {Box, Flex, Image, Heading, Text, HStack, Badge} from "@chakra-ui/react";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { AdvertisementDetailsDto } from "../../../models/advertisement/advertisementDetailsDto";
@@ -32,11 +32,14 @@ const AdvertisementDetails: React.FunctionComponent<
   };
   return (
     <>
-      <Box width={{ base: "1000%", lg: "75%", xl: "55%" }}>
-        <Heading sx={detailsHeadingStyles} marginBottom="1rem">
-          {advertisement.categoryName.charAt(0).toUpperCase() +
-            advertisement.categoryName.slice(1)}
-        </Heading>
+      <Box width={{ base: "100%", lg: "75%", xl: "55%" }}>
+        <Flex
+            position="absolute"
+        >
+          <Badge fontSize="1.1rem" variant="solid">
+            {advertisement.categoryName}
+          </Badge>
+        </Flex>
         <Flex flexWrap="nowrap">
           <Flex
             width="700px"

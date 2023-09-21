@@ -85,7 +85,8 @@ public class AdvertisementRepository : IAdvertisementRepository
         {
             "size" => advertisement => advertisement.Size,
             "monthlyprice" => advertisement => advertisement.MonthlyPrice,
-            _ => advertisement => advertisement.Id
+            "uploaddate" => advertisement => advertisement.UploadDate,
+            _ => advertisement => advertisement.Id                                                                                                                                                                                                                                                                                                          
         };
 
         advertisementQuery = query.SortOrder?.ToLower() == "desc" ? advertisementQuery.OrderByDescending(keySelector) : advertisementQuery.OrderBy(keySelector);

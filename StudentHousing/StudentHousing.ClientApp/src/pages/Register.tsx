@@ -13,15 +13,15 @@ import {
 import * as React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useMutation } from "react-query";
-import { ErrorAlert } from "../alerts/ErrorAlert";
-import { SuccessAlert } from "../alerts/SuccessAlert";
-import UserService from "../../services/userService";
-import { formErrorMessageStyles } from "../../styles/formErrorMessageStyles";
-import { formLabelStyles } from "../../styles/formLabelStyles";
-import ApartmentBuilding1 from "../../assets/images/apartment-building1.jpg";
+import { ErrorAlert } from "../components/alerts/ErrorAlert";
+import { SuccessAlert } from "../components/alerts/SuccessAlert";
+import UserService from "../services/userService";
+import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
+import { formLabelStyles } from "../styles/formLabelStyles";
+import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import { Link } from "react-router-dom";
-import { RegistrationRequest } from "../../models/forms/registrationRequest";
-import { placeholderStyles } from "../../styles/placeholderStyles";
+import { RegistrationRequest } from "../models/forms/registrationRequest";
+import { placeholderStyles } from "../styles/placeholderStyles";
 
 interface IRegisterProps {}
 

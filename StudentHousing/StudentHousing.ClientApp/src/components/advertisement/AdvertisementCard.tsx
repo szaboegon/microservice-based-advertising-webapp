@@ -9,7 +9,7 @@ import {
   LinkOverlay,
   VStack,
   HStack,
-  Text,
+  Text, Badge, Box,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,37 +34,33 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
     <>
       <LinkBox>
         <Card
-          width="410px"
+          width="350px"
           variant="filled"
           margin="12px"
           borderBottom="4px"
-          borderColor="brandYellow.500"
+          borderColor="brandGreen.300"
+          borderRadius="8px"
         >
           <CardHeader
-            height="280px"
+            height="250px"
             padding="0px"
             position="relative"
             overflow="hidden"
+            borderRadius="8px"
           >
             <Flex
-              backgroundColor="brandYellow.700"
-              position="absolute"
-              width="25%"
-              height="10%"
-              justifyContent="center"
-              alignItems="center"
-              borderRightRadius="25px"
+                position="absolute"
             >
-              <Text fontSize="1.2rem" fontWeight="600" textColor="white">
-                {advertisement.categoryName.charAt(0).toUpperCase() +
-                  advertisement.categoryName.slice(1)}
-              </Text>
+              <Badge fontSize="1rem" variant="solid">
+                {advertisement.categoryName}
+              </Badge>
             </Flex>
-            <Flex justifyContent="center" alignItems="center">
+            <Flex justifyContent="center" alignItems="center" height="100%">
               <Image
                 src={base64Image}
-                minWidth="100%"
-                minHeight="100%"
+                width="100%"
+                height="100%"
+                objectFit="cover"
                 //src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
               ></Image>
             </Flex>
@@ -73,40 +69,41 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
             <HStack>
               <Heading
                 alignSelf="end"
-                fontSize="1.5rem"
-                textColor="brandGreen.500"
+                fontSize="1.4rem"
+                textColor="brandGreen.400"
               >
-                {advertisement.monthlyPrice}
+                {"HUF " + advertisement.monthlyPrice}
               </Heading>
-              <Heading fontSize="1.0rem" paddingTop="5px">
-                Ft/month
+              <Heading fontSize="1.0rem" paddingTop="5px" textColor="gray.600">
+                /month
               </Heading>
             </HStack>
             <LinkOverlay onClick={openDetails}></LinkOverlay>
             <VStack alignItems="space-between">
-              <Text fontSize="1.2rem" fontWeight="600">
-                {advertisement.streetName + " " + advertisement.streetNumber}
+              <HStack justifyContent="start" textColor="gray.600">
+                <Text fontSize="1.1rem" fontWeight="600">
+                  {advertisement.numberOfRooms == 1
+                      ? advertisement.numberOfRooms + " " + "room"
+                      : advertisement.numberOfRooms + " " + "rooms"}
+                </Text>
+                <Box className="material-icons" fontSize="0.4rem" marginTop="2px">fiber_manual_record</Box>
+                <Text fontSize="1.1rem" fontWeight="600">
+                  {advertisement.size} m²
+                </Text>
+              </HStack>
+              <Text fontSize="1.05rem" fontWeight="600" textColor="gray.600">
+                {advertisement.streetName}
               </Text>
               <Text
-                fontSize="1.2rem"
+                fontSize="1.05rem"
                 fontWeight="600"
                 className="card-text"
-                textColor="gray.500"
+                textColor="gray.600"
               >
                 {advertisement.city.toUpperCase() == "BUDAPEST"
                   ? advertisement.district + " " + advertisement.city
                   : advertisement.city}
               </Text>
-              <HStack justifyContent="space-between">
-                <Text fontSize="1.1rem" fontWeight="600">
-                  {advertisement.numberOfRooms == 1
-                    ? advertisement.numberOfRooms + " " + "room"
-                    : advertisement.numberOfRooms + " " + "rooms"}
-                </Text>
-                <Text fontSize="1.1rem" fontWeight="600">
-                  {advertisement.size} m²
-                </Text>
-              </HStack>
             </VStack>
           </CardBody>
         </Card>

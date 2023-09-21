@@ -1,16 +1,16 @@
 import {Flex, Heading, Image, Spinner} from "@chakra-ui/react";
 import {useQuery} from "react-query";
-import BannerImg from "../../assets/images/bannerimg.jpg";
-import {AdvertisementCardDto} from "../../models/advertisement/advertisementCardDto";
-import AdvertisementService from "../../services/advertisementService";
-import AdvertisementCard from "../advertisement/AdvertisementCard";
-import SearchBar from "../shared/SearchBar";
+import BannerImg from "../assets/images/bannerimg.jpg";
+import {AdvertisementCardDto} from "../models/advertisement/advertisementCardDto";
+import AdvertisementService from "../services/advertisementService";
+import AdvertisementCard from "../components/advertisement/AdvertisementCard";
+import SearchBar from "../components/shared/SearchBar";
 import {useState} from "react";
-import {ErrorAlert} from "../alerts/ErrorAlert";
-import {pageSubheadingStyles} from "../../styles/pageSubheadingStyles";
+import {ErrorAlert} from "../components/alerts/ErrorAlert";
+import {pageSubheadingStyles} from "../styles/pageSubheadingStyles";
 import {useNavigate} from "react-router-dom";
-import {AdvertisementSearchParamsDto} from "../../models/queryParams/advertisementSearchParamsDto";
-import SearchParamsHelper from "../../helpers/searchParamsHelper";
+import {AdvertisementSearchParamsDto} from "../models/queryParams/advertisementSearchParamsDto";
+import SearchParamsHelper from "../helpers/searchParamsHelper";
 
 export const Home = () => {
     const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
@@ -29,7 +29,7 @@ export const Home = () => {
     } = useQuery({
         queryKey: ["advertismentcards"],
         queryFn: async () => {
-            return await AdvertisementService.getLatests(3);
+            return await AdvertisementService.getLatests(4);
         },
         onSuccess: (data: AdvertisementCardDto[]) => setAdvertisements(data),
         refetchOnWindowFocus: false,

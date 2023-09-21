@@ -1,14 +1,14 @@
 import { Flex, Heading, Spinner } from "@chakra-ui/react";
-import ProfileCard from "../profile/ProfileCard";
-import { User } from "../../models/user";
+import ProfileCard from "../components/profile/ProfileCard";
+import { User } from "../models/user";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import AdvertisementService from "../../services/advertisementService";
-import AdvertisementListItem from "../advertisement/AdvertisementListItem";
-import { WarningAlert } from "../alerts/WarningAlert";
-import { ErrorAlert } from "../alerts/ErrorAlert";
-import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
-import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
+import AdvertisementService from "../services/advertisementService";
+import AdvertisementListItem from "../components/advertisement/AdvertisementListItem";
+import { WarningAlert } from "../components/alerts/WarningAlert";
+import { ErrorAlert } from "../components/alerts/ErrorAlert";
+import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
+import { pageSubheadingStyles } from "../styles/pageSubheadingStyles";
 
 interface IProfileProps {
   user: User;
