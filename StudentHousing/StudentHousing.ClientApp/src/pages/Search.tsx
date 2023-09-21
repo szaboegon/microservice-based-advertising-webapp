@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Stack, VStack } from "@chakra-ui/react";
+import { Box, Card, Flex, Spinner, Stack, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -88,43 +88,42 @@ export const Search = () => {
         alignItems="center"
         justifyContent="center"
         flexWrap="wrap"
-        marginX={{ base: "0px", xl: "10%" }}
-        marginTop="50px"
-        marginBottom="30px"
+        marginX={{ base: "0px", "2xl": "10%" }}
       >
-        <SearchBar
-          minWidth="100%"
-          existingSearchParams={searchParams}
-          onSearchParamsChanged={onSearchParamsChanged}
-        ></SearchBar>
-        <Flex
-          flexBasis="100%"
-          marginY="15px"
-          alignItems="center"
-          position="relative"
-          flexDir="column"
-        >
+        <Card variant="elevated" width="100%" padding="20px" marginY="20px">
+          <SearchBar
+            minWidth="100%"
+            existingSearchParams={searchParams}
+            onSearchParamsChanged={onSearchParamsChanged}
+          ></SearchBar>
           <Flex
-            alignSelf="center"
-            position={{ base: "inherit", md: "absolute" }}
-            right="20px"
-            marginBottom="10px"
+            flexBasis="100%"
+            marginTop="15px"
+            alignItems="center"
+            position="relative"
+            flexDir="column"
           >
-            <OrderingSelector
-              prevParams={SearchParamsHelper.getOrderingFromParams(
-                searchParams,
-              )}
-              width="200px"
-              notifyOrderingChanged={onOrderingChanged}
+            <Flex
+              alignSelf="center"
+              position={{ base: "inherit", md: "absolute" }}
+              right="20px"
+              marginBottom="10px"
+            >
+              <OrderingSelector
+                prevParams={SearchParamsHelper.getOrderingFromParams(
+                  searchParams,
+                )}
+                width="200px"
+                notifyOrderingChanged={onOrderingChanged}
+              />
+            </Flex>
+            <PaginationFooter
+              prevCurrentPage={currentPage}
+              totalPages={totalPages}
+              notifyPageChanged={onPageChanged}
             />
           </Flex>
-          <PaginationFooter
-            prevCurrentPage={currentPage}
-            totalPages={totalPages}
-            notifyPageChanged={onPageChanged}
-          />
-        </Flex>
-
+        </Card>
         {(isLoading || isRefetching) && advertisements.length <= 0 && (
           <Spinner />
         )}
@@ -140,13 +139,21 @@ export const Search = () => {
         {isSuccess && advertisements.length <= 0 && !isRefetching && (
           <WarningAlert message="There are no matching advertisements for your search filters." />
         )}
-      </Flex>
-      <Flex justifyContent="center" marginBottom={10}>
-        <PaginationFooter
-          prevCurrentPage={currentPage}
-          totalPages={totalPages}
-          notifyPageChanged={onPageChanged}
-        />
+        <Card
+          variant="elevated"
+          width="100%"
+          padding="20px"
+          marginY="20px"
+          justifyContent="alignItems"
+        >
+          <Flex width="100%" justifyContent="center">
+            <PaginationFooter
+              prevCurrentPage={currentPage}
+              totalPages={totalPages}
+              notifyPageChanged={onPageChanged}
+            />
+          </Flex>
+        </Card>
       </Flex>
     </>
   );

@@ -19,7 +19,7 @@ export const ErrorAlert: React.FunctionComponent<IErrorAlertProps> = ({
     <>
       <Alert status="error" maxWidth={maxWidth ? maxWidth : "600px"}>
         <AlertIcon />
-        <AlertTitle>An error occured: </AlertTitle>
+        <AlertTitle>Error: </AlertTitle>
         <AlertDescription>
           {error instanceof AxiosError &&
           error.response?.data &&

@@ -9,7 +9,9 @@ import {
   LinkOverlay,
   VStack,
   HStack,
-  Text, Badge, Box,
+  Text,
+  Badge,
+  Box,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +37,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
       <LinkBox>
         <Card
           width="350px"
-          variant="filled"
+          variant="elevated"
           margin="12px"
           borderBottom="4px"
           borderColor="brandGreen.300"
@@ -48,10 +50,13 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
             overflow="hidden"
             borderRadius="8px"
           >
-            <Flex
-                position="absolute"
-            >
-              <Badge fontSize="1rem" variant="solid">
+            <Flex position="absolute">
+              <Badge
+                fontSize="1rem"
+                fontWeight="500"
+                variant="solid"
+                backgroundColor="gray.400"
+              >
                 {advertisement.categoryName}
               </Badge>
             </Flex>
@@ -83,27 +88,36 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
               <HStack justifyContent="start" textColor="gray.600">
                 <Text fontSize="1.1rem" fontWeight="600">
                   {advertisement.numberOfRooms == 1
-                      ? advertisement.numberOfRooms + " " + "room"
-                      : advertisement.numberOfRooms + " " + "rooms"}
+                    ? advertisement.numberOfRooms + " " + "room"
+                    : advertisement.numberOfRooms + " " + "rooms"}
                 </Text>
-                <Box className="material-icons" fontSize="0.4rem" marginTop="2px">fiber_manual_record</Box>
+                <Box
+                  className="material-icons"
+                  fontSize="0.4rem"
+                  marginTop="2px"
+                >
+                  fiber_manual_record
+                </Box>
                 <Text fontSize="1.1rem" fontWeight="600">
                   {advertisement.size} m²
                 </Text>
               </HStack>
-              <Text fontSize="1.05rem" fontWeight="600" textColor="gray.600">
-                {advertisement.streetName}
-              </Text>
-              <Text
-                fontSize="1.05rem"
-                fontWeight="600"
-                className="card-text"
-                textColor="gray.600"
-              >
-                {advertisement.city.toUpperCase() == "BUDAPEST"
-                  ? advertisement.district + " " + advertisement.city
-                  : advertisement.city}
-              </Text>
+              <HStack>
+                <Text
+                  fontSize="1.05rem"
+                  fontWeight="600"
+                  className="card-text"
+                  textColor="gray.600"
+                  overflow="hidden"
+                >
+                  {advertisement.city.toUpperCase() == "BUDAPEST"
+                    ? advertisement.district + " " + advertisement.city + ", "
+                    : advertisement.city + ", "}
+                </Text>
+                <Text fontSize="1.05rem" fontWeight="600" textColor="gray.600">
+                  {advertisement.streetName}
+                </Text>
+              </HStack>
             </VStack>
           </CardBody>
         </Card>

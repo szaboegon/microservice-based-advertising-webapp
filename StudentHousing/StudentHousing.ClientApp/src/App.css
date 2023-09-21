@@ -1,17 +1,23 @@
 /*some Chakra UI rules can only be overwritten by using !important*/
-* { border: 1px dashed red;} 
+* {
+    border: 1px dashed red;
+}
 
-form.filterBar{
+.App {
+    background-color: lightgray;
+}
+
+form.filterBar {
     display: flex;
     width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.card-text{    
+.card-text {
     margin-top: 0 !important;
 }
 
-.chat-tab-container{
+.chat-tab-container {
     margin-top: 2px !important;
 }

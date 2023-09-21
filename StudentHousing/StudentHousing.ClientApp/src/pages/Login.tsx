@@ -8,6 +8,7 @@ import {
   Input,
   Image,
   Spinner,
+  Card,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -47,7 +48,9 @@ export const Login = () => {
   const navigate = useNavigate();
   const submit = async (data: LoginRequest) => {
     const response = await submitLogin(data).then(() => {
-      let searchParams = SearchParamsHelper.addPaginationParams(new URLSearchParams());
+      let searchParams = SearchParamsHelper.addPaginationParams(
+        new URLSearchParams(),
+      );
       navigate("/search?" + searchParams, {});
       window.location.reload();
     });
@@ -80,72 +83,79 @@ export const Login = () => {
           width={{ base: "100%", xl: "50%" }}
           alignItems="center"
           height="100%"
-          flexDirection="column"
         >
-          <form onSubmit={handleSubmit(submit)}>
-            <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
-              <FormLabel sx={formLabelStyles} htmlFor="userName">
-                Username:
-              </FormLabel>
-              <Input
-                {...register("userName", {
-                  required: "This field is required",
-                })}
-                id="userName"
-                borderColor="brandYellow.800"
+          <Card
+            justifyContent="center"
+            alignItems="center"
+            paddingX="30px"
+            paddingY="40px"
+            variant="elevated"
+          >
+            <form onSubmit={handleSubmit(submit)}>
+              <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
+                <FormLabel sx={formLabelStyles} htmlFor="userName">
+                  Username:
+                </FormLabel>
+                <Input
+                  {...register("userName", {
+                    required: "This field is required",
+                  })}
+                  id="userName"
+                  borderColor="brandYellow.800"
+                  size="lg"
+                ></Input>
+                {errors.userName ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.userName.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
+                )}
+              </FormControl>
+              <FormControl maxWidth="400px" isInvalid={!!errors.password}>
+                <FormLabel sx={formLabelStyles} htmlFor="password">
+                  Password:
+                </FormLabel>
+                <Input
+                  id="password"
+                  {...register("password", {
+                    required: "This field is required",
+                  })}
+                  type="password"
+                  borderColor="brandYellow.800"
+                  size="lg"
+                ></Input>
+                {errors.password ? (
+                  <FormErrorMessage sx={formErrorMessageStyles}>
+                    {errors.password.message}
+                  </FormErrorMessage>
+                ) : (
+                  <Box sx={placeholderStyles}>Placeholder text</Box>
+                )}
+              </FormControl>
+              <Button
                 size="lg"
-              ></Input>
-              {errors.userName ? (
-                <FormErrorMessage sx={formErrorMessageStyles}>
-                  {errors.userName.message}
-                </FormErrorMessage>
-              ) : (
-                <Box sx={placeholderStyles}>Placeholder text</Box>
+                type="submit"
+                width="350px"
+                height="40px"
+                bgColor="brandGreen.500"
+                textColor="white"
+                _hover={{ background: "brandGreen.700" }}
+                marginBottom="20px"
+                marginTop="10px"
+              >
+                Login
+              </Button>
+            </form>
+            <Link to="/register">Don't have an account yet?</Link>
+            <Flex>
+              {isLoading && <Spinner />}
+              {isError && error instanceof AxiosError && (
+                <ErrorAlert error={error}></ErrorAlert>
               )}
-            </FormControl>
-            <FormControl maxWidth="400px" isInvalid={!!errors.password}>
-              <FormLabel sx={formLabelStyles} htmlFor="password">
-                Password:
-              </FormLabel>
-              <Input
-                id="password"
-                {...register("password", {
-                  required: "This field is required",
-                })}
-                type="password"
-                borderColor="brandYellow.800"
-                size="lg"
-              ></Input>
-              {errors.password ? (
-                <FormErrorMessage sx={formErrorMessageStyles}>
-                  {errors.password.message}
-                </FormErrorMessage>
-              ) : (
-                <Box sx={placeholderStyles}>Placeholder text</Box>
-              )}
-            </FormControl>
-            <Button
-              size="lg"
-              type="submit"
-              width="350px"
-              height="40px"
-              bgColor="brandGreen.500"
-              textColor="white"
-              _hover={{ background: "brandGreen.700" }}
-              marginBottom="20px"
-              marginTop="10px"
-            >
-              Login
-            </Button>
-          </form>
-          <Link to="/register">Don't have an account yet?</Link>
-          <Flex>
-            {isLoading && <Spinner />}
-            {isError && error instanceof AxiosError && (
-              <ErrorAlert error={error}></ErrorAlert>
-            )}
-            {isSuccess && <SuccessAlert message="Login was successful!" />}
-          </Flex>
+              {isSuccess && <SuccessAlert message="Login was successful!" />}
+            </Flex>
+          </Card>
         </Flex>
       </Box>
     </>

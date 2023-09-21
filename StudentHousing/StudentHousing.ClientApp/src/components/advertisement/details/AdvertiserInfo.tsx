@@ -16,12 +16,12 @@ import { AxiosError } from "axios";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { MessageInputData } from "../../models/forms/messageInputData";
-import { User } from "../../models/user";
-import MessagingService from "../../services/messagingService";
-import { ErrorAlert } from "../alerts/ErrorAlert";
-import { SuccessAlert } from "../alerts/SuccessAlert";
-import userService from "../../services/userService";
+import { MessageInputData } from "../../../models/forms/messageInputData";
+import { User } from "../../../models/user";
+import MessagingService from "../../../services/messagingService";
+import { ErrorAlert } from "../../alerts/ErrorAlert";
+import { SuccessAlert } from "../../alerts/SuccessAlert";
+import userService from "../../../services/userService";
 
 interface IAdvertiserInfoProps {
   advertiser: User | undefined;
@@ -45,7 +45,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
       if (!advertiser) return;
       return await MessagingService.sendMessageToAdvertiser(
         advertiser?.id,
-        data.content
+        data.content,
       );
     },
     onSuccess: () => reset(),
@@ -57,7 +57,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
 
   return (
     <>
-      <Card minW="350px" variant="filled">
+      <Card minW="350px" variant="elevated">
         <CardHeader height="120px">
           <HStack>
             <Avatar
@@ -88,7 +88,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
           </HStack>
         </CardHeader>
         <CardBody>
-          {(isLoggedIn && advertiser?.id != userService.getCurrentUser()?.id) ? (
+          {isLoggedIn && advertiser?.id != userService.getCurrentUser()?.id ? (
             <form onSubmit={handleSubmit(submit)}>
               <VStack alignItems="start">
                 <Text
@@ -129,7 +129,9 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
               textColor="gray.600"
               textAlign="center"
             >
-              {advertiser?.id != userService.getCurrentUser()?.id ? "Please login to send messages to the advertiser" : "This is your own advertisement"}
+              {advertiser?.id != userService.getCurrentUser()?.id
+                ? "Please login to send messages to the advertiser"
+                : "This is your own advertisement"}
             </Text>
           )}
           <Flex justifyContent="center" alignItems="center" marginTop="10px">

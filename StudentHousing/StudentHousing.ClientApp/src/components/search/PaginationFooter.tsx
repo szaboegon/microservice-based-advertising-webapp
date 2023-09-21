@@ -49,12 +49,13 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
     >
       <PaginationContainer>
         <PaginationPrevious
+          marginRight="4px"
           w="10px"
-          bg="gray.200"
+          bg="gray.300"
           _hover={{
             bg: "brandGreen.100",
           }}
-          _disabled={{ bg: "gray.50" }}
+          _disabled={{ bg: "gray.100" }}
         >
           <ChevronLeftIcon />
         </PaginationPrevious>
@@ -64,7 +65,7 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
               key={`pagination_page_${page}`}
               page={page}
               w="25px"
-              bg="gray.200"
+              bg="gray.300"
               _hover={{
                 bg: "brandGreen.100",
               }}
@@ -73,12 +74,13 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
           ))}
         </PaginationPageGroup>
         <PaginationNext
+          marginLeft="4px"
           w="10px"
-          bg="gray.200"
+          bg="gray.300"
           _hover={{
             bg: "brandGreen.100",
           }}
-          _disabled={{ bg: "gray.50" }}
+          _disabled={{ bg: "gray.100" }}
         >
           <ChevronRightIcon />
         </PaginationNext>
