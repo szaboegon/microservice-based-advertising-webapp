@@ -23,6 +23,9 @@ export const Search = () => {
     [],
   );
 
+  const [currentPage, setCurrentPage] = useState(
+    SearchParamsHelper.getCurrentPageFromParams(searchParams),
+  );
   const [totalPages, setTotalPages] = useState(0);
 
   const navigate = useNavigate();
@@ -66,6 +69,7 @@ export const Search = () => {
       paginationParams,
     );
     setSearchParams(changedParams);
+    setCurrentPage(parseInt(paginationParams.currentPage));
     navigate("/search?" + searchParams, {});
   };
 
@@ -93,11 +97,31 @@ export const Search = () => {
           existingSearchParams={searchParams}
           onSearchParamsChanged={onSearchParamsChanged}
         ></SearchBar>
-        <Flex flexBasis="100%" marginY="10px" justifyContent="center">
-          <OrderingSelector
-            prevParams={SearchParamsHelper.getOrderingFromParams(searchParams)}
-            width="200px"
-            notifyOrderingChanged={onOrderingChanged}
+        <Flex
+          flexBasis="100%"
+          marginY="15px"
+          alignItems="center"
+          position="relative"
+          flexDir="column"
+        >
+          <Flex
+            alignSelf="center"
+            position={{ base: "inherit", md: "absolute" }}
+            right="20px"
+            marginBottom="10px"
+          >
+            <OrderingSelector
+              prevParams={SearchParamsHelper.getOrderingFromParams(
+                searchParams,
+              )}
+              width="200px"
+              notifyOrderingChanged={onOrderingChanged}
+            />
+          </Flex>
+          <PaginationFooter
+            prevCurrentPage={currentPage}
+            totalPages={totalPages}
+            notifyPageChanged={onPageChanged}
           />
         </Flex>
 
@@ -119,9 +143,7 @@ export const Search = () => {
       </Flex>
       <Flex justifyContent="center" marginBottom={10}>
         <PaginationFooter
-          prevCurrentPage={SearchParamsHelper.getCurrentPageFromParams(
-            searchParams,
-          )}
+          prevCurrentPage={currentPage}
           totalPages={totalPages}
           notifyPageChanged={onPageChanged}
         />

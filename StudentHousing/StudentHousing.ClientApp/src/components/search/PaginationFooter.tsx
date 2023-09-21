@@ -23,7 +23,7 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
   notifyPageChanged,
 }) => {
   const PAGE_ITEM_COUNT = 12;
-  const { currentPage, setCurrentPage, pagesCount, pages } = usePagination({
+  const { setCurrentPage, pagesCount, pages } = usePagination({
     pagesCount: totalPages,
     initialState: { currentPage: prevCurrentPage },
     limits: {
@@ -44,7 +44,7 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
   return (
     <Pagination
       pagesCount={pagesCount}
-      currentPage={currentPage}
+      currentPage={prevCurrentPage}
       onPageChange={onPageChange}
     >
       <PaginationContainer>
