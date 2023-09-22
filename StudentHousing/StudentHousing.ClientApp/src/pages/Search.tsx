@@ -86,11 +86,12 @@ export const Search = () => {
     <>
       <Flex
         alignItems="center"
-        justifyContent="center"
+        justifyContent={{ base: "center", md: "space-between" }}
         flexWrap="wrap"
-        marginX={{ base: "0px", "2xl": "10%" }}
+        gap="20px"
+        marginX={{ base: "0px", "2xl": "12%" }}
       >
-        <Card variant="elevated" width="100%" padding="20px" marginY="20px">
+        <Card variant="elevated" width="100%" padding="20px">
           <SearchBar
             minWidth="100%"
             existingSearchParams={searchParams}
@@ -143,7 +144,7 @@ export const Search = () => {
           variant="elevated"
           width="100%"
           padding="20px"
-          marginY="20px"
+          marginBottom="20px"
           justifyContent="alignItems"
         >
           <Flex width="100%" justifyContent="center">

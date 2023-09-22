@@ -34,11 +34,16 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
 
   return (
     <>
-      <LinkBox>
+      <LinkBox
+        display="flex"
+        flexBasis="320px"
+        flexShrink="0"
+        flexGrow="1"
+        maxWidth="380px"
+      >
         <Card
-          width="350px"
+          width="100%"
           variant="elevated"
-          margin="12px"
           borderBottom="4px"
           borderColor="brandGreen.300"
           borderRadius="8px"
@@ -108,7 +113,6 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
                   fontWeight="600"
                   className="card-text"
                   textColor="gray.600"
-                  overflow="hidden"
                 >
                   {advertisement.city.toUpperCase() == "BUDAPEST"
                     ? advertisement.district + " " + advertisement.city + ", "
