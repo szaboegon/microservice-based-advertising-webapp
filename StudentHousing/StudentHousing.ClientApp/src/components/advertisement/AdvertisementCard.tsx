@@ -36,10 +36,22 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
     <>
       <LinkBox
         display="flex"
-        flexBasis="320px"
         flexShrink="0"
         flexGrow="1"
-        maxWidth="380px"
+        flexBasis={{
+          base: "70%",
+          sm: "45%",
+          md: "30%",
+          xl: "27%",
+          "2xl": "23%",
+        }}
+        maxWidth={{
+          base: "70%",
+          sm: "45%",
+          md: "30%",
+          xl: "27%",
+          "2xl": "23%",
+        }}
       >
         <Card
           width="100%"
@@ -47,6 +59,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
           borderBottom="4px"
           borderColor="brandGreen.300"
           borderRadius="8px"
+          height="380"
         >
           <CardHeader
             height="250px"

@@ -85,6 +85,7 @@ export const Search = () => {
   return (
     <>
       <Flex
+        marginTop="20px"
         alignItems="center"
         justifyContent={{ base: "center", md: "space-between" }}
         flexWrap="wrap"
