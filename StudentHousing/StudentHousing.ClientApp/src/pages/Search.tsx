@@ -126,36 +126,40 @@ export const Search = () => {
             />
           </Flex>
         </Card>
-        {(isLoading || isRefetching) && advertisements.length <= 0 && (
-          <Spinner />
-        )}
-        {isError && !isLoading && !isRefetching && error instanceof Error && (
-          <ErrorAlert error={error} />
-        )}
         {advertisements.map((advertisement) => (
           <AdvertisementCard
             key={advertisement.id}
             advertisement={advertisement}
           ></AdvertisementCard>
         ))}
-        {isSuccess && advertisements.length <= 0 && !isRefetching && (
-          <WarningAlert message="There are no matching advertisements for your search filters." />
+        <Flex flexDirection="column" alignItems="center" width="100%">
+          {(isLoading || isRefetching) && advertisements.length <= 0 && (
+            <Spinner />
+          )}
+          {isError && !isLoading && !isRefetching && error instanceof Error && (
+            <ErrorAlert error={error} />
+          )}
+          {isSuccess && advertisements.length <= 0 && !isRefetching && (
+            <WarningAlert message="There are no matching advertisements for your search filters." />
+          )}
+        </Flex>
+        {isSuccess && advertisements.length > 0 && !isRefetching && (
+          <Card
+            variant="elevated"
+            width="100%"
+            padding="20px"
+            marginBottom="20px"
+            justifyContent="alignItems"
+          >
+            <Flex width="100%" justifyContent="center">
+              <PaginationFooter
+                prevCurrentPage={currentPage}
+                totalPages={totalPages}
+                notifyPageChanged={onPageChanged}
+              />
+            </Flex>
+          </Card>
         )}
-        <Card
-          variant="elevated"
-          width="100%"
-          padding="20px"
-          marginBottom="20px"
-          justifyContent="alignItems"
-        >
-          <Flex width="100%" justifyContent="center">
-            <PaginationFooter
-              prevCurrentPage={currentPage}
-              totalPages={totalPages}
-              notifyPageChanged={onPageChanged}
-            />
-          </Flex>
-        </Card>
       </Flex>
     </>
   );

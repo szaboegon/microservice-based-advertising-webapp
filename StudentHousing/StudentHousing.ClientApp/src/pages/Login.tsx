@@ -9,6 +9,7 @@ import {
   Image,
   Spinner,
   Card,
+  Heading,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
@@ -25,6 +26,7 @@ import { placeholderStyles } from "../styles/placeholderStyles";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import SearchParamsHelper from "../helpers/searchParamsHelper";
+import { formTitleStyles } from "../styles/formTitleStyles";
 
 export const Login = () => {
   const {
@@ -91,6 +93,7 @@ export const Login = () => {
             paddingY="40px"
             variant="elevated"
           >
+            <Heading sx={formTitleStyles}>Sign In</Heading>
             <form onSubmit={handleSubmit(submit)}>
               <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
                 <FormLabel sx={formLabelStyles} htmlFor="userName">

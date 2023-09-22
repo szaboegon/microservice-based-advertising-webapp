@@ -11,6 +11,7 @@ import {
   Box,
   Image,
   Spinner,
+  Card,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { NewAdvertisementRequest } from "../models/forms/newAdvertisementRequest";
@@ -136,75 +137,84 @@ export const NewAdvertisement = () => {
           height="100%"
           scrollBehavior="smooth"
         >
-          <Flex flexDirection="column" alignItems="center">
-            <Tabs
-              index={step}
-              isFitted
-              variant="soft-rounded"
-              colorScheme="green"
-            >
-              <TabList>
-                <Tab>Category</Tab>
-                <Tab>Address</Tab>
-                <Tab>Details</Tab>
-                <Tab>Description</Tab>
-                <Tab>Image</Tab>
-              </TabList>
-              {step != 0 ? (
-                <Button
-                  variant="link"
-                  leftIcon={<ArrowLeftIcon />}
-                  onClick={prevStep}
-                  marginLeft="30px"
-                  marginTop="10px"
-                  color="brandYellow.800"
-                >
-                  Back
-                </Button>
-              ) : (
-                <></>
+          <Card
+            justifyContent="center"
+            alignItems="center"
+            padding="20px"
+            variant="elevated"
+          >
+            <Flex flexDirection="column" alignItems="center">
+              <Tabs
+                index={step}
+                isFitted
+                variant="soft-rounded"
+                colorScheme="green"
+              >
+                <TabList>
+                  <Tab>Category</Tab>
+                  <Tab>Address</Tab>
+                  <Tab>Details</Tab>
+                  <Tab>Description</Tab>
+                  <Tab>Image</Tab>
+                </TabList>
+                {step != 0 ? (
+                  <Button
+                    variant="link"
+                    leftIcon={<ArrowLeftIcon />}
+                    onClick={prevStep}
+                    marginLeft="30px"
+                    marginTop="10px"
+                    color="brandYellow.800"
+                  >
+                    Back
+                  </Button>
+                ) : (
+                  <></>
+                )}
+                {conditionalHeader()}
+                <TabPanels>
+                  <TabPanel>
+                    <FirstStep
+                      formValues={formValues}
+                      setFormValues={setFormValues}
+                      nextStep={nextStep}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <SecondStep
+                      formValues={formValues}
+                      setFormValues={setFormValues}
+                      nextStep={nextStep}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <ThirdStep
+                      formValues={formValues}
+                      setFormValues={setFormValues}
+                      nextStep={nextStep}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <FourthStep
+                      formValues={formValues}
+                      setFormValues={setFormValues}
+                      nextStep={nextStep}
+                    />
+                  </TabPanel>
+                  <TabPanel>
+                    <FifthStep setImage={setImage} submitData={submitData} />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+              {isSuccess && (
+                <SuccessAlert message="Creating your advertisement was successful." />
               )}
-              {conditionalHeader()}
-              <TabPanels>
-                <TabPanel>
-                  <FirstStep
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                    nextStep={nextStep}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <SecondStep
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                    nextStep={nextStep}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <ThirdStep
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                    nextStep={nextStep}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <FourthStep
-                    formValues={formValues}
-                    setFormValues={setFormValues}
-                    nextStep={nextStep}
-                  />
-                </TabPanel>
-                <TabPanel>
-                  <FifthStep setImage={setImage} submitData={submitData} />
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
-            {isSuccess && (
-              <SuccessAlert message="Creating your advertisement was successful." />
-            )}
-            {isLoading && <Spinner />}
-            {isError && error instanceof Error && <ErrorAlert error={error} />}
-          </Flex>
+              {isLoading && <Spinner />}
+              {isError && error instanceof Error && (
+                <ErrorAlert error={error} />
+              )}
+            </Flex>
+          </Card>
         </Flex>
       </Box>
     </>

@@ -10,6 +10,7 @@ import {
   Spinner,
   HStack,
   Card,
+  Heading,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -23,6 +24,7 @@ import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import { Link } from "react-router-dom";
 import { RegistrationRequest } from "../models/forms/registrationRequest";
 import { placeholderStyles } from "../styles/placeholderStyles";
+import { formTitleStyles } from "../styles/formTitleStyles";
 
 interface IRegisterProps {}
 
@@ -89,6 +91,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
             paddingY="40px"
             variant="elevated"
           >
+            <Heading sx={formTitleStyles}>Register an account</Heading>
             <form onSubmit={handleSubmit(submit)}>
               <Flex flexDirection="column" alignItems="center" maxWidth="400px">
                 <HStack>

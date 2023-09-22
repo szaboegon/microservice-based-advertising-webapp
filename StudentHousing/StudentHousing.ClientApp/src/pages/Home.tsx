@@ -93,16 +93,18 @@ export const Home = () => {
         gap="20px"
         marginX={{ base: "0px", "2xl": "12%" }}
       >
-        {(isLoading || isRefetching) && <Spinner />}
-        {isError && !isLoading && !isRefetching && error instanceof Error && (
-          <ErrorAlert error={error} />
-        )}
         {advertisements.map((advertisement) => (
           <AdvertisementCard
             key={advertisement.id}
             advertisement={advertisement}
           ></AdvertisementCard>
         ))}
+      </Flex>
+      <Flex flexDirection="column" alignItems="center" width="100%">
+        {(isLoading || isRefetching) && <Spinner />}
+        {isError && !isLoading && !isRefetching && error instanceof Error && (
+          <ErrorAlert error={error} />
+        )}
       </Flex>
     </>
   );
