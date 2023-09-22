@@ -25,6 +25,8 @@ import { Link } from "react-router-dom";
 import { RegistrationRequest } from "../models/forms/registrationRequest";
 import { placeholderStyles } from "../styles/placeholderStyles";
 import { formTitleStyles } from "../styles/formTitleStyles";
+import { NAVBAR_HEIGHT } from "../assets/literals/constants";
+import BgImage from "../assets/images/large-bg.jpg";
 
 interface IRegisterProps {}
 
@@ -63,23 +65,22 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
 
   return (
     <>
-      <Box height="900px">
-        <Flex
-          width={{ base: "0%", xl: "50%" }}
-          overflow="hidden"
-          float="left"
-          height="100%"
-        >
-          <Image
-            maxWidth="950px"
-            height="auto"
-            alignSelf="end"
-            src={ApartmentBuilding1}
-          ></Image>
-        </Flex>
+      <Box
+        width="100%"
+        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+        position="relative"
+        backgroundImage={BgImage}
+        backgroundSize="cover"
+        backgroundPosition="center"
+      >
+        <Box
+          width="100%"
+          height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+          backgroundColor="rgba(0, 0, 0, 0.6)"
+          position="absolute"
+        />
         <Flex
           justifyContent="center"
-          width={{ base: "100%", xl: "50%" }}
           alignItems="center"
           height="100%"
           flexDirection="column"
@@ -87,8 +88,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
           <Card
             justifyContent="center"
             alignItems="center"
-            paddingX="30px"
-            paddingY="40px"
+            padding="40px"
             variant="elevated"
           >
             <Heading sx={formTitleStyles}>Register an account</Heading>

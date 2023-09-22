@@ -21,12 +21,14 @@ import UserService from "../services/userService";
 import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../styles/formLabelStyles";
 import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
+import BgImage from "../assets/images/large-bg.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { placeholderStyles } from "../styles/placeholderStyles";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import SearchParamsHelper from "../helpers/searchParamsHelper";
 import { formTitleStyles } from "../styles/formTitleStyles";
+import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 
 export const Login = () => {
   const {
@@ -66,31 +68,25 @@ export const Login = () => {
 
   return (
     <>
-      <Box height="900px">
-        <Flex
-          width={{ base: "0%", xl: "50%" }}
-          overflow="hidden"
-          float="left"
-          height="100%"
-        >
-          <Image
-            maxWidth="950px"
-            height="auto"
-            alignSelf="end"
-            src={ApartmentBuilding1}
-          ></Image>
-        </Flex>
-        <Flex
-          justifyContent="center"
-          width={{ base: "100%", xl: "50%" }}
-          alignItems="center"
-          height="100%"
-        >
+      <Box
+        width="100%"
+        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+        position="relative"
+        backgroundImage={BgImage}
+        backgroundSize="cover"
+        backgroundPosition="center"
+      >
+        <Box
+          width="100%"
+          height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+          backgroundColor="rgba(0, 0, 0, 0.6)"
+          position="absolute"
+        />
+        <Flex justifyContent="center" alignItems="center" height="100%">
           <Card
             justifyContent="center"
             alignItems="center"
-            paddingX="30px"
-            paddingY="40px"
+            padding="40px"
             variant="elevated"
           >
             <Heading sx={formTitleStyles}>Sign In</Heading>

@@ -15,6 +15,7 @@ import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
 import authHeader from "../../services/auth/authHeader";
 import { User } from "../../models/user";
+import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 
 interface INavbarProps {
   user: User | undefined;
@@ -36,7 +37,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
     <>
       <Flex
         as="nav"
-        minH="80px"
+        h={NAVBAR_HEIGHT}
         bg="brandGreen.500"
         alignItems="center"
         gap="10px"
