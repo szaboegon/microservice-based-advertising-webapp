@@ -13,7 +13,6 @@ public class Advertisement
     public int AdvertiserId { get; set; }
     public int CategoryId { get; set; }
 
-
     private Category? _category;
 
     public Category Category

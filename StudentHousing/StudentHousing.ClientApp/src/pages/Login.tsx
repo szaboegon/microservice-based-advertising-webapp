@@ -150,7 +150,7 @@ export const Login = () => {
             <Flex>
               {isLoading && <Spinner />}
               {isError && error instanceof AxiosError && (
-                <ErrorAlert error={error}></ErrorAlert>
+                <ErrorAlert error={error} maxWidth="350px"></ErrorAlert>
               )}
               {isSuccess && <SuccessAlert message="Login was successful!" />}
             </Flex>

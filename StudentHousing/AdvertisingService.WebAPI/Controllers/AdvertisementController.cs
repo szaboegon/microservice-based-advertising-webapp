@@ -1,9 +1,10 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using System.ComponentModel.DataAnnotations;
+using AdvertisingService.BusinessLogic.Extensions;
 
 namespace AdvertisingService.WebAPI.Controllers;
 
@@ -23,7 +24,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<PagedQueryResponse<AdvertisementDto>>> GetAdvertisementCardsAsync([FromQuery]QueryParamsDto queryParams)
+    public async Task<ActionResult<PagedQueryResponse<AdvertisementDto>>> GetAdvertisements([FromQuery]QueryParamsDto queryParams)
     {
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
         return Ok(advertisements);
@@ -31,17 +32,21 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_details/{id:int}")]
-    public async Task<ActionResult<AdvertisementDetailsDto>> GetAdvertisementDetailsAsync(int id)
+    public async Task<ActionResult<AdvertisementDetailsDto>> GetAdvertisement(int id)
     {
         var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
+        if(advertisement == null)
+        {
+            return NotFound();
+        }
+
         return Ok(advertisement);
     }
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> PostNewAdvertisementAsync([FromForm] AdvertisementDetailsDto data)
+    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementDetailsDto data)   //look into files so it can be uploaded from swagger
     {
-        int newAdvertisementId;
         try
         {
             if (Request.Form.Files.Count == 0)
@@ -50,30 +55,40 @@ public class AdvertisementController : ControllerBase
             }
 
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+
+            if(tokenString == null)     //TODO implement this in other places --> probably a middleware (nick chapsas?)
+            {
+                return Unauthorized();
+            }
+
             var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
 
             if (jwtSecurityToken == null)
             {
-                return BadRequest("Token is invalid.");
+                return Unauthorized();
             }
 
             var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
 
-            newAdvertisementId = await _advertisementService.CreateNewAdvertisementAsync(data, int.Parse(advertiserId));
+            var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(data, int.Parse(advertiserId));
 
             var file = Request.Form.Files[0];
             var bytes = await ConvertFileDataToBytesAsync(file);
             if (file.Length > 0)
             {
-                await _imageService.CreateNewImageAsync(bytes, newAdvertisementId);
+                await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
             }
+
+            return CreatedAtAction(nameof(GetAdvertisement), new{ id = newAdvertisement.Id }, newAdvertisement.ToDetailsDto());
         }
-        catch (Exception ex)
+        catch (ValidationException ex)
         {
             return BadRequest(ex.Message);
         }
-
-        return Ok(newAdvertisementId);
+        catch(Exception) 
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
+        }
 
         async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
         {
@@ -87,7 +102,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpDelete]
     [Route("private/advertisements/{id:int}")]
-    public async Task<ActionResult> DeleteAdvertisementAsync(int id)
+    public async Task<ActionResult> DeleteAdvertisement(int id) //TODO fix error handling
     {
         try
         {
@@ -96,7 +111,7 @@ public class AdvertisementController : ControllerBase
 
             if (jwtSecurityToken == null)
             {
-                return BadRequest("Token is invalid.");
+                return Unauthorized();
             }
 
             var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
@@ -111,7 +126,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("private/advertisements_by_user")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementsByUserAsync(int id)
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId(int id) //TODO fix error handling
     {
         try
         {
@@ -120,7 +135,7 @@ public class AdvertisementController : ControllerBase
 
             if (jwtSecurityToken == null)
             {
-                return BadRequest("Token is invalid");
+                return Unauthorized();
             }
 
             var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
@@ -135,16 +150,9 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/latest_advertisements/{count:int}")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisementsAsync(int count)
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisements(int count)
     {
-        try
-        {
-            var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
-            return Ok(result);
-        }
-        catch(Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
+        return Ok(result);
     }
 }

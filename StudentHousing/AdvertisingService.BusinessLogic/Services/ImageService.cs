@@ -30,15 +30,7 @@ public class ImageService : IImageService
             Advertisement=advertisement
         };
 
-        var validationResult = await _imageValidator.ValidateAsync(newImage);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
-
+        await _imageValidator.ValidateAndThrowAsync(newImage);
         await _imageRepository.Add(newImage);
 
         return newImage.Id;

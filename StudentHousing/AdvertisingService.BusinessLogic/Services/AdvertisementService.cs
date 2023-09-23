@@ -33,7 +33,7 @@ public class AdvertisementService : IAdvertisementService
         _categoryValidator = categoryValidator;
     }
 
-    public async Task<int> CreateNewAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId)
+    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId)
     {
         var newCategory = await CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
         var newAddress = await CreateNewAddressAsync(data);
@@ -52,17 +52,10 @@ public class AdvertisementService : IAdvertisementService
             UploadDate = DateTime.Now
         };
 
-        var validationResult = await _advertisementValidator.ValidateAsync(newAdvertisement);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
-
+        await _advertisementValidator.ValidateAndThrowAsync(newAdvertisement);
+   
         await _advertisementRepository.Add(newAdvertisement);
-        return newAdvertisement.Id;
+        return newAdvertisement;
     }
 
     public async Task<PagedQueryResponse<AdvertisementDto>> GetAdvertisementsByQueryAsync(QueryParamsDto queryParams)
@@ -72,12 +65,10 @@ public class AdvertisementService : IAdvertisementService
             advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
     }
 
-    public async Task<AdvertisementDetailsDto> GetAdvertisementDetailsAsync(int id)
+    public async Task<AdvertisementDetailsDto?> GetAdvertisementDetailsAsync(int id)
     {
         var advertisement= await _advertisementRepository.Get(id);
-        if (advertisement == null) throw new Exception("Advertisement with this id does not exist");
-
-        return advertisement.ToDetailsDto();
+        return advertisement?.ToDetailsDto();
     }
 
     public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
@@ -125,14 +116,7 @@ public class AdvertisementService : IAdvertisementService
             UnitNumber = data.UnitNumber,
         };
 
-        var validationResult = await _addressValidator.ValidateAsync(newAddress);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
+        await _addressValidator.ValidateAndThrowAsync(newAddress);
         return newAddress;
     }
 
@@ -151,14 +135,7 @@ public class AdvertisementService : IAdvertisementService
             Name = categoryName,
         };
 
-        var validationResult = await _categoryValidator.ValidateAsync(newCategory);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
+        await _categoryValidator.ValidateAndThrowAsync(newCategory);
         return newCategory;
     }
 }
