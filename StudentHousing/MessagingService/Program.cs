@@ -1,4 +1,5 @@
 using MessagingService.DAL;
+using MessagingService.Helpers;
 using MessagingService.Hubs;
 using MessagingService.Models.Options;
 using MessagingService.Repositories;
@@ -28,16 +29,11 @@ builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
 
 // Services
 builder.Services.AddScoped<IMessageService, MessageService>();
-builder.Services.AddScoped<IUserDataProvider, UserDataProvider>();
+builder.Services.AddScoped<IIdentityProvider, IdentityProvider>();
 builder.Services.AddSingleton<IMessageProducer, MessageProducer>();
 
-/*builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
-    builder
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials()
-    .WithOrigins("http://localhost:80");
-}));*/
+//Helpers
+builder.Services.AddSingleton<JwtTokenHelper, JwtTokenHelper>();
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();

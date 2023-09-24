@@ -111,7 +111,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("private/advertisements_by_user")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId() //TODO fix error handling
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId()
     {
         try
         {
@@ -135,8 +135,15 @@ public class AdvertisementController : ControllerBase
     [Route("public/latest_advertisements/{count:int}")]
     public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisements(int count)
     {
-        var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
-        return Ok(result);
+        try
+        {
+            var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
+            return Ok(result);
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     private int GetAdvertiserIdFromToken(string? tokenString)

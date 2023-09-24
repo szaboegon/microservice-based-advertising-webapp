@@ -23,7 +23,7 @@ public class ImageService : IImageService
         var advertisement= await _advertisementRepository.Get(advertisementId);
         if (advertisement == null)
         {
-            throw new ValidationException($"{nameof(advertisement)} cannot be null.");
+            throw new KeyNotFoundException($"{nameof(advertisement)} cannot be null.");
         }
 
         var newImage = new Image

@@ -4,9 +4,25 @@ using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Services;
 
-public class UserDataProvider : IUserDataProvider
+public class IdentityProvider : IIdentityProvider
 {
     private readonly HttpClient _httpClient = new();
+
+    public async Task<bool> CheckTokenValidity(string? token)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"http://identityservice:80/api/user/auth");
+            response.EnsureSuccessStatusCode();
+
+            return true;
+        }
+        catch(HttpRequestException ex)
+        {
+            return false;
+        }
+    }
+
     public async Task<UserDetailsDto?> GetUserDataByIdAsync(int userId)
     {
         try
@@ -17,7 +33,7 @@ public class UserDataProvider : IUserDataProvider
             var user = JsonSerializer.Deserialize<UserDetailsDto>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions(JsonSerializerDefaults.Web));
             return user;
         }
-        catch (Exception ex)
+        catch (HttpRequestException)
         {
             return null;
         }

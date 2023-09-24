@@ -98,7 +98,7 @@ public class AdvertisementService : IAdvertisementService
     {
         if (count < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(count));
+            throw new ArgumentOutOfRangeException($"{nameof(count)} must be bigger than 0.");
         }
         var result = await _advertisementRepository.GetLatest(count);
         return result.Select(a => a.ToDto());

@@ -1,4 +1,5 @@
-﻿using MessagingService.DataTransferObjects;
+﻿using System.ComponentModel.DataAnnotations;
+using MessagingService.DataTransferObjects;
 using MessagingService.Extensions;
 using MessagingService.Models;
 using MessagingService.Repositories.Interfaces;
@@ -10,20 +11,20 @@ public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;
-    private readonly IUserDataProvider _userDataProvider;
+    private readonly IIdentityProvider _identityProvider;
     private readonly IMessageProducer _messageProducer;
 
-    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IUserDataProvider userDataProvider, IMessageProducer messageProducer)
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IIdentityProvider identityProvider, IMessageProducer messageProducer)
     {
         _messageRepository = messageRepository;
         _privateChatRepository = privateChatRepository;
-        _userDataProvider = userDataProvider;
+        _identityProvider = identityProvider;
         _messageProducer = messageProducer;
     }
 
     public async Task<MessageDto> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
     {
-        var privateChat = await _privateChatRepository.GetByUniqueName(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist");
+        var privateChat = await _privateChatRepository.GetByUniqueName(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist.");
         var message = new Message
         {
             SenderId = senderId,
@@ -35,7 +36,13 @@ public class MessageService : IMessageService
         await _messageRepository.Add(message);
 
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
-        var receiverUser = await _userDataProvider.GetUserDataByIdAsync(receiverId);
+        var receiverUser = await _identityProvider.GetUserDataByIdAsync(receiverId);
+
+        if (receiverUser == null)
+        {
+            //TODO retry or even better --> put this whole thing in email notif service
+        }
+
         _messageProducer.SendMessage(receiverUser);
 
         return message.ToDto();

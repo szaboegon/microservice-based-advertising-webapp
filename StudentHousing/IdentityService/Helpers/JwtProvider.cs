@@ -36,7 +36,7 @@ public class JwtProvider
             signingCredentials: signingCredentials
         );
 
-        string tokenValue = new JwtSecurityTokenHandler()
+        var tokenValue = new JwtSecurityTokenHandler()
             .WriteToken(token);
         return tokenValue;
     }

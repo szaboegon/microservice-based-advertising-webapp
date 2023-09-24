@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using System.IdentityModel.Tokens.Jwt;
 using MessagingService.DataTransferObjects;
+using MessagingService.Helpers;
 using MessagingService.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MessagingService.Controllers;
 
@@ -12,30 +13,28 @@ namespace MessagingService.Controllers;
 public class MessageController : ControllerBase
 {
     private readonly IMessageService _messageService;
-    private readonly JwtSecurityTokenHandler _tokenHandler;
-    public MessageController(IMessageService messageService)
+    private readonly JwtTokenHelper _jwtTokenHelper;
+    public MessageController(IMessageService messageService, JwtTokenHelper jwtTokenHelper)
     {
         _messageService = messageService;
-        _tokenHandler = new JwtSecurityTokenHandler();
+        _jwtTokenHelper = jwtTokenHelper;
     }
 
     [HttpGet]
     [Route("user_chats")]
     public async Task<ActionResult<IEnumerable<PrivateChatDto>>> GetPrivateChatsByUserAsync() 
     {
-           
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-            var userId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
-            var chats = await _messageService.GetPrivateChatsForUserAsync(int.Parse(userId));
+            var chats = await _messageService.GetPrivateChatsForUserAsync(userId);
             return Ok(chats);
         }
-        catch (Exception ex)
+        catch (SecurityTokenValidationException ex)
         {
-            return BadRequest(ex.Message);
+            return Unauthorized(ex.Message);
         }
     }
 
@@ -46,15 +45,14 @@ public class MessageController : ControllerBase
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-            var userId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
-            var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(int.Parse(userId));
+            var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(userId);
             return Ok(partnerIds);
         }
-        catch (Exception ex)
+        catch (SecurityTokenValidationException ex)
         {
-            return BadRequest(ex.Message);
+            return Unauthorized(ex.Message);
         }
     }
 
@@ -67,9 +65,9 @@ public class MessageController : ControllerBase
             var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
             return Ok(messages);
         }
-        catch (Exception ex)
+        catch (SecurityTokenValidationException ex)
         {
-            return BadRequest(ex.Message);
+            return Unauthorized(ex.Message);
         }
     }
 
@@ -80,18 +78,17 @@ public class MessageController : ControllerBase
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-            var senderId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            var senderId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var privateChat =
-                await _messageService.CreatePrivateChatIfDoesNotExistAsync(int.Parse(senderId), receiverId);
-            await _messageService.SendMessageToPrivateChatAsync(int.Parse(senderId), privateChat.UniqueName,
+                await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, receiverId);
+            await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName,
                 messageContent);
             return Ok();
         }
-        catch (Exception ex)
+        catch (SecurityTokenValidationException ex)
         {
-            return BadRequest(ex.Message);
+            return Unauthorized(ex.Message);
         }
     }
 }

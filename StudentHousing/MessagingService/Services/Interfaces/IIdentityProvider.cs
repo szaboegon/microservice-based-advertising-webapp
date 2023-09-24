@@ -2,7 +2,8 @@
 
 namespace MessagingService.Services.Interfaces;
 
-public interface IUserDataProvider
+public interface IIdentityProvider
 {
+    Task<bool> CheckTokenValidity(string? token);
     Task<UserDetailsDto?> GetUserDataByIdAsync(int userId);
 }
