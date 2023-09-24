@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.ComponentModel.DataAnnotations;
 using AdvertisingService.BusinessLogic.Extensions;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AdvertisingService.WebAPI.Controllers;
 
@@ -55,22 +56,9 @@ public class AdvertisementController : ControllerBase
             }
 
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var advertiserId = GetAdvertiserIdFromToken(tokenString);
 
-            if(tokenString == null)     //TODO implement this in other places --> probably a middleware (nick chapsas?)
-            {
-                return Unauthorized();
-            }
-
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
-
-            if (jwtSecurityToken == null)
-            {
-                return Unauthorized();
-            }
-
-            var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
-
-            var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(data, int.Parse(advertiserId));
+            var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(data, advertiserId);
 
             var file = Request.Form.Files[0];
             var bytes = await ConvertFileDataToBytesAsync(file);
@@ -79,15 +67,16 @@ public class AdvertisementController : ControllerBase
                 await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
             }
 
-            return CreatedAtAction(nameof(GetAdvertisement), new{ id = newAdvertisement.Id }, newAdvertisement.ToDetailsDto());
+            return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
+                newAdvertisement.ToDetailsDto());
+        }
+        catch (SecurityTokenValidationException ex)
+        {
+            return Unauthorized(ex.Message);
         }
         catch (ValidationException ex)
         {
             return BadRequest(ex.Message);
-        }
-        catch(Exception) 
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong");
         }
 
         async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
@@ -102,23 +91,27 @@ public class AdvertisementController : ControllerBase
 
     [HttpDelete]
     [Route("private/advertisements/{id:int}")]
-    public async Task<ActionResult> DeleteAdvertisement(int id) //TODO fix error handling
+    public async Task<ActionResult> DeleteAdvertisement(int id) 
     {
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
+            var advertiserId = GetAdvertiserIdFromToken(tokenString);
 
-            if (jwtSecurityToken == null)
+            var deletedAdvertisement = await _advertisementService.DeleteAdvertisementAsync(id, advertiserId);
+
+            if (deletedAdvertisement == null)
             {
-                return Unauthorized();
+                return NotFound();
             }
 
-            var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
-            await _advertisementService.DeleteAdvertisementAsync(id, int.Parse(advertiserId));
-            return Ok();
+            return NoContent();
         }
-        catch (Exception ex)
+        catch (SecurityTokenValidationException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (ValidationException ex)
         {
             return BadRequest(ex.Message);
         }
@@ -126,25 +119,23 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("private/advertisements_by_user")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId(int id) //TODO fix error handling
+    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId() //TODO fix error handling
     {
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
 
-            if (jwtSecurityToken == null)
-            {
-                return Unauthorized();
-            }
-
-            var advertiserId = jwtSecurityToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
-            var result = await _advertisementService.GetAdvertisementsByUserAsync(int.Parse(advertiserId));
+            var advertiserId = GetAdvertiserIdFromToken(tokenString);
+            var result = await _advertisementService.GetAdvertisementsByUserAsync(advertiserId);
             return Ok(result);
+        }
+        catch (SecurityTokenValidationException ex)
+        {
+            return Unauthorized(ex.Message);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 
@@ -154,5 +145,20 @@ public class AdvertisementController : ControllerBase
     {
         var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
         return Ok(result);
+    }
+
+    private int GetAdvertiserIdFromToken(string? tokenString)
+    {
+        if(tokenString == null)
+        {
+            throw new SecurityTokenValidationException("Request contains no security token.");
+        }
+
+        var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
+        var advertiserId = jwtSecurityToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
+
+        return advertiserId == null
+            ? throw new SecurityTokenValidationException("Advertiser id could not be determined from security token.")
+            : int.Parse(advertiserId);
     }
 }

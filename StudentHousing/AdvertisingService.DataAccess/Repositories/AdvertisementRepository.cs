@@ -28,24 +28,9 @@ public class AdvertisementRepository : IAdvertisementRepository
             .SingleOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Advertisement>> GetAll()
-    {
-        return await _dbcontext.Advertisements
-            .Include(a => a.Address)
-            .Include(a => a.Category)
-            .Include(a => a.Images)
-            .ToListAsync();
-    }
-
     public async Task Add(Advertisement advertisement)
     {
         await _dbcontext.Advertisements.AddAsync(advertisement);
-        await _dbcontext.SaveChangesAsync();
-    }
-
-    public async Task AddRange(IEnumerable<Advertisement> advertisements)
-    {
-        await _dbcontext.Advertisements.AddRangeAsync(advertisements);
         await _dbcontext.SaveChangesAsync();
     }
 

@@ -8,7 +8,6 @@ namespace AdvertisingService.BusinessLogic.RepositoryInterfaces;
 public interface IAdvertisementRepository
 {
     Task<Advertisement?> Get(int id);
-    Task<IEnumerable<Advertisement>> GetAll();
     Task Add(Advertisement advertisement);
     void Remove(Advertisement advertisement);
     Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id);

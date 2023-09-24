@@ -8,7 +8,7 @@ public interface IAdvertisementService
     Task<Advertisement> CreateAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId);
     Task<PagedQueryResponse<AdvertisementDto>> GetAdvertisementsByQueryAsync(QueryParamsDto queryParams);
     Task<AdvertisementDetailsDto?> GetAdvertisementDetailsAsync(int id);
-    Task DeleteAdvertisementAsync(int advertisementId, int advertiserId);
+    Task<Advertisement?> DeleteAdvertisementAsync(int advertisementId, int advertiserId);
     Task<IEnumerable<AdvertisementDto>> GetAdvertisementsByUserAsync(int advertiserId);
     Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count);
 }

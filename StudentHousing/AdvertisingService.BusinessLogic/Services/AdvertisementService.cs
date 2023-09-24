@@ -71,19 +71,20 @@ public class AdvertisementService : IAdvertisementService
         return advertisement?.ToDetailsDto();
     }
 
-    public async Task DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
+    public async Task<Advertisement?> DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
     {
         var advertisement = await _advertisementRepository.Get(advertisementId);
         if (advertisement == null)
         {
-            throw new Exception("Advertisement with this id does not exist");
+            return null;
         }
 
         if (advertisement.AdvertiserId != advertiserId)
         {
-            throw new Exception("Advertisement does not belong to this advertiser");
+            throw new ValidationException("Advertisement does not belong to this advertiser");
         }
         _advertisementRepository.Remove(advertisement);
+        return advertisement;
     }
 
     public async Task<IEnumerable<AdvertisementDto>> GetAdvertisementsByUserAsync(int advertiserId)
