@@ -46,26 +46,18 @@ public class AdvertisementController : ControllerBase
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementDetailsDto data)   //look into files so it can be uploaded from swagger
+    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementCreate advertisementCreate, [FromForm] IFormFile image) 
     {
         try
         {
-            if (Request.Form.Files.Count == 0)
-            {
-                return BadRequest("List of files was empty. Please upload a file.");
-            }
-
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var advertiserId = GetAdvertiserIdFromToken(tokenString);
 
-            var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(data, advertiserId);
+            var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(advertisementCreate, advertiserId);
 
-            var file = Request.Form.Files[0];
-            var bytes = await ConvertFileDataToBytesAsync(file);
-            if (file.Length > 0)
-            {
-                await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
-            }
+            var bytes = await ConvertFileDataToBytesAsync(image);
+            await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
+            
 
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
                 newAdvertisement.ToDetailsDto());

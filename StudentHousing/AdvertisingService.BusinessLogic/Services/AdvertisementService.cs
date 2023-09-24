@@ -33,19 +33,19 @@ public class AdvertisementService : IAdvertisementService
         _categoryValidator = categoryValidator;
     }
 
-    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementDetailsDto data, int advertiserId)
+    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementCreate advertisementCreate, int advertiserId)
     {
-        var newCategory = await CreateNewCategoryIfDoesNotExistAsync(data.CategoryName);
-        var newAddress = await CreateNewAddressAsync(data);
+        var newCategory = await CreateNewCategoryIfDoesNotExistAsync(advertisementCreate.CategoryName);
+        var newAddress = await CreateNewAddressAsync(advertisementCreate);
 
         var newAdvertisement = new Advertisement()
         {
-            NumberOfRooms = data.NumberOfRooms,
-            Size = data.Size,
-            Furnished = data.Furnished,
-            Parking = data.Parking,
-            MonthlyPrice = data.MonthlyPrice,
-            Description = data.Description,
+            NumberOfRooms = advertisementCreate.NumberOfRooms,
+            Size = advertisementCreate.Size,
+            Furnished = advertisementCreate.Furnished,
+            Parking = advertisementCreate.Parking,
+            MonthlyPrice = advertisementCreate.MonthlyPrice,
+            Description = advertisementCreate.Description,
             AdvertiserId = advertiserId,
             Category = newCategory,
             Address = newAddress,
@@ -104,17 +104,17 @@ public class AdvertisementService : IAdvertisementService
         return result.Select(a => a.ToDto());
     }
 
-    private async Task<Address> CreateNewAddressAsync(AdvertisementDetailsDto data)
+    private async Task<Address> CreateNewAddressAsync(AdvertisementCreate advertisementCreate)
     {
         var newAddress = new Address()
         {
-            Region = data.Region,
-            PostalCode = data.PostalCode,
-            City = data.City,
-            District = data.District,
-            StreetName = data.StreetName,
-            StreetNumber = data.StreetNumber,
-            UnitNumber = data.UnitNumber,
+            Region = advertisementCreate.Region,
+            PostalCode = advertisementCreate.PostalCode,
+            City = advertisementCreate.City,
+            District = advertisementCreate.District,
+            StreetName = advertisementCreate.StreetName,
+            StreetNumber = advertisementCreate.StreetNumber,
+            UnitNumber = advertisementCreate.UnitNumber,
         };
 
         await _addressValidator.ValidateAndThrowAsync(newAddress);
