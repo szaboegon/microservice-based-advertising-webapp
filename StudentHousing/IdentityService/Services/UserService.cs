@@ -28,14 +28,7 @@ public class UserService : IUserService
 
     public async Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request)
     {
-        var validationResult = await _authenticationRequestValidator.ValidateAsync(request);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
+        await _authenticationRequestValidator.ValidateAndThrowAsync(request);
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
@@ -70,14 +63,7 @@ public class UserService : IUserService
 
     public async Task<IdentityResult> RegisterAsync(RegistrationRequest request)
     {
-        var validationResult = await _registrationRequestValidator.ValidateAsync(request);
-        if (!validationResult.IsValid)
-        {
-            foreach (var error in validationResult.Errors)
-            {
-                throw new ValidationException(error.ErrorMessage);
-            }
-        }
+        await _registrationRequestValidator.ValidateAndThrowAsync(request);
         var user = new AppUser()
         {
             FirstName = request.FirstName,
@@ -89,9 +75,9 @@ public class UserService : IUserService
         return await _userManager.CreateAsync(user, request.Password);
     }
 
-    public async Task<AppUserDto> GetUserDetailsByIdAsync(int userId)
+    public async Task<AppUserDto?> GetUserDetailsByIdAsync(int userId)
     {
-        var user = await _userManager.FindByIdAsync(userId.ToString()) ?? throw new KeyNotFoundException($"User with id: {userId} does not exist.");
-        return user.ToDto();
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        return user?.ToDto();
     }
 }

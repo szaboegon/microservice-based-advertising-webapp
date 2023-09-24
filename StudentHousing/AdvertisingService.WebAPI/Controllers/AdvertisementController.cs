@@ -141,7 +141,7 @@ public class AdvertisementController : ControllerBase
 
     private int GetAdvertiserIdFromToken(string? tokenString)
     {
-        if(tokenString == null)
+        if(string.IsNullOrEmpty(tokenString))
         {
             throw new SecurityTokenValidationException("Request contains no security token.");
         }

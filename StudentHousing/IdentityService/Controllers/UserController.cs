@@ -1,9 +1,8 @@
-﻿using IdentityService.DataTransferObjects;
+﻿using FluentValidation;
+using IdentityService.DataTransferObjects;
 using IdentityService.Models;
-using IdentityService.Services;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
@@ -23,49 +22,47 @@ public class UserController : ControllerBase
     [Route("login")]
     public async Task<ActionResult> LoginAsync([FromBody] AuthenticationRequest request)
     {
-        AuthenticationResponse response;
         try
         {
-            response = await _userService.LoginAsync(request);
+            var response = await _userService.LoginAsync(request);
+
+            if (response.SignInResult != SignInResult.Success)
+            {
+                return Unauthorized(response.Message);
+            }
+
+            return Ok(new
+            {
+                response.Message,
+                response.UserName,
+                response.Token
+            });
         }
-        catch(Exception e)
+        catch(ValidationException e)
         {
             return BadRequest(e.Message);
         }
-
-        if (response.SignInResult != SignInResult.Success)
-        {
-            return BadRequest(response.Message);
-        }
-           
-        return Ok(new
-        {
-            response.Message,
-            response.UserName,
-            response.Token
-        });
     }
 
     [HttpPost]
     [Route("register")]
     public async Task<ActionResult> RegisterAsync([FromBody] RegistrationRequest request)
     {
-        IdentityResult result;
         try
         {
-            result = await _userService.RegisterAsync(request);
+            var result = await _userService.RegisterAsync(request);
+
+            if (result.Succeeded)
+            {
+                return Ok("Registration was successful.");
+            }
+
+            return BadRequest(result.Errors.First().Description);
         }
-        catch(Exception e)
+        catch(ValidationException e)
         {
             return BadRequest(e.Message);
         }
-
-        if (result.Succeeded)
-        {
-            return Ok("Registration was successful.");
-        }
-            
-        return BadRequest(result.Errors.First().Description);
     }
 
     [HttpGet]
@@ -80,34 +77,31 @@ public class UserController : ControllerBase
     [Route("user_details/{id}")]
     public async Task<ActionResult<List<AppUserDto>>> GetUserDetailsAsync(int id)
     {
-        try
+        var userDetails = await _userService.GetUserDetailsByIdAsync(id);
+        if (userDetails == null)
         {
-            var userDetails = await _userService.GetUserDetailsByIdAsync(id);
-            return Ok(userDetails);
+            return NotFound();
         }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+
+        return Ok(userDetails);
     }
 
     [HttpGet]
     [Route("multiple_user_details")]
     public async Task<ActionResult<List<AppUserDto>>> GetMultipleUserDetailsAsync([FromQuery] List<int> id)
     {
-        try
+        var result = new List<AppUserDto>();
+        foreach (var userId in id)
         {
-            var result = new List<AppUserDto>();
-            foreach (var userId in id)
+            var userDetails = await _userService.GetUserDetailsByIdAsync(userId);
+            if (userDetails == null)
             {
-                var userDetails = await _userService.GetUserDetailsByIdAsync(userId);
-                result.Add(userDetails);
+                return NotFound($"User with id: {userId} does not exist");
             }
-            return Ok(result);
+
+            result.Add(userDetails);
         }
-        catch(Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+
+        return Ok(result);
     }
 }

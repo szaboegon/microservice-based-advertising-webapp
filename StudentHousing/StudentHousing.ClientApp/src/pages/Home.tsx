@@ -1,4 +1,4 @@
-import { Flex, Heading, Image, Spinner } from "@chakra-ui/react";
+import { Flex, Heading, Image, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import BannerImg from "../assets/images/bannerimg.jpg";
 import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
@@ -86,11 +86,10 @@ export const Home = () => {
         </Flex>
       </Flex>
       <Heading sx={pageSubheadingStyles}>Recent Advertisements</Heading>
-      <Flex
+      <SimpleGrid
         margin="1rem"
-        flexWrap="wrap"
-        justifyContent={{ base: "center", md: "space-between" }}
-        gap="20px"
+        columns={{ base: 1, sm: 2, md: 3, xl: 4 }}
+        spacing="8"
         marginX={{ base: "0px", "2xl": "12%" }}
       >
         {advertisements.map((advertisement) => (
@@ -99,7 +98,7 @@ export const Home = () => {
             advertisement={advertisement}
           ></AdvertisementCard>
         ))}
-      </Flex>
+      </SimpleGrid>
       <Flex flexDirection="column" alignItems="center" width="100%">
         {(isLoading || isRefetching) && <Spinner />}
         {isError && !isLoading && !isRefetching && error instanceof Error && (

@@ -124,7 +124,11 @@ export const Search = () => {
             />
           </Flex>
         </Card>
-        <SimpleGrid columns={{ base: 2, md: 3, xl: 4 }} spacing="8">
+        <SimpleGrid
+          columns={{ base: 1, sm: 2, md: 3, xl: 4 }}
+          spacing="8"
+          width="100%"
+        >
           {advertisements.map((advertisement) => (
             <AdvertisementCard
               key={advertisement.id}
