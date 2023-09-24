@@ -27,11 +27,9 @@ public class AddressValidator : AbstractValidator<Address>
             .MaximumLength(30).WithMessage("The length of City must be less than 30 characters.");
 
         RuleFor(address => address.District)
-            .MaximumLength(20).WithMessage("The length of District must be less than 20 characters.");
-
-        RuleFor(address => address.District)
             .NotNull().WithMessage("District cannot be null")
             .NotEmpty().WithMessage("District cannot be empty")
+            .MaximumLength(20).WithMessage("The length of District must be less than 20 characters.")
             .When(address => (address.City?? "")
                 .ToLower().Equals("budapest")).WithMessage("District cannot be empty for City 'Budapest'");
 

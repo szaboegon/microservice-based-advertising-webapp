@@ -9,8 +9,5 @@ public class ImageValidator : AbstractValidator<Image>
         RuleFor(image => image.Data)
             .NotNull()
             .NotEmpty();
-
-        RuleFor(image => image.Advertisement)
-            .NotNull();
     }
 }

@@ -124,12 +124,16 @@ public class AdvertisementService : IAdvertisementService
     private async Task<Category> CreateNewCategoryIfDoesNotExistAsync(string? categoryName)
     {
         if (categoryName == null)
-            throw new ArgumentNullException(nameof(categoryName));
+        {
+            throw new ValidationException($"{nameof(categoryName)} cannot be null.");
+        }
 
         var newCategory = await _categoryRepository.GetByName(categoryName);
 
         if (newCategory != null)
+        {
             return newCategory;
+        }
 
         newCategory = new Category()
         {
