@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Spinner, Stack, VStack } from "@chakra-ui/react";
+import { Card, Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -15,7 +15,6 @@ import PaginationFooter from "../components/search/PaginationFooter";
 import { PaginationParamsDto } from "../models/queryParams/paginationParamsDto";
 import OrderingSelector from "../components/search/OrderingSelector";
 import { OrderingParamsDto } from "../models/queryParams/orderingParamsDto";
-import searchParamsHelper from "../helpers/searchParamsHelper";
 
 export const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
@@ -87,7 +86,6 @@ export const Search = () => {
       <Flex
         marginTop="20px"
         alignItems="center"
-        justifyContent={{ base: "center", md: "space-between" }}
         flexWrap="wrap"
         gap="20px"
         marginX={{ base: "0px", "2xl": "12%" }}
@@ -126,12 +124,14 @@ export const Search = () => {
             />
           </Flex>
         </Card>
-        {advertisements.map((advertisement) => (
-          <AdvertisementCard
-            key={advertisement.id}
-            advertisement={advertisement}
-          ></AdvertisementCard>
-        ))}
+        <SimpleGrid columns={{ base: 2, md: 3, xl: 4 }} spacing="8">
+          {advertisements.map((advertisement) => (
+            <AdvertisementCard
+              key={advertisement.id}
+              advertisement={advertisement}
+            ></AdvertisementCard>
+          ))}
+        </SimpleGrid>
         <Flex flexDirection="column" alignItems="center" width="100%">
           {(isLoading || isRefetching) && advertisements.length <= 0 && (
             <Spinner />

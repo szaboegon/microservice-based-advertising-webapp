@@ -34,25 +34,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
 
   return (
     <>
-      <LinkBox
-        display="flex"
-        flexShrink="0"
-        flexGrow="1"
-        flexBasis={{
-          base: "70%",
-          sm: "45%",
-          md: "30%",
-          xl: "27%",
-          "2xl": "23%",
-        }}
-        maxWidth={{
-          base: "70%",
-          sm: "45%",
-          md: "30%",
-          xl: "27%",
-          "2xl": "23%",
-        }}
-      >
+      <LinkBox>
         <Card
           width="100%"
           variant="elevated"
