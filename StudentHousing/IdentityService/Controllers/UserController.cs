@@ -20,7 +20,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<ActionResult> LoginAsync([FromBody] AuthenticationRequest request)
+    public async Task<ActionResult> Login([FromBody] AuthenticationRequest request)
     {
         try
         {
@@ -46,7 +46,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<ActionResult> RegisterAsync([FromBody] RegistrationRequest request)
+    public async Task<ActionResult> Register([FromBody] RegistrationRequest request)
     {
         try
         {
@@ -75,7 +75,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("user_details/{id}")]
-    public async Task<ActionResult<List<AppUserDto>>> GetUserDetailsAsync(int id)
+    public async Task<ActionResult<List<AppUserDto>>> GetUserDetails(int id)
     {
         var userDetails = await _userService.GetUserDetailsByIdAsync(id);
         if (userDetails == null)
@@ -88,7 +88,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("multiple_user_details")]
-    public async Task<ActionResult<List<AppUserDto>>> GetMultipleUserDetailsAsync([FromQuery] List<int> id)
+    public async Task<ActionResult<List<AppUserDto>>> GetMultipleUserDetails([FromQuery] List<int> id)
     {
         var result = new List<AppUserDto>();
         foreach (var userId in id)

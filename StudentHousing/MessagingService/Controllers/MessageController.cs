@@ -22,7 +22,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("user_chats")]
-    public async Task<ActionResult<IEnumerable<PrivateChatDto>>> GetPrivateChatsByUserAsync() 
+    public async Task<ActionResult<IEnumerable<PrivateChatDto>>> GetPrivateChatsByUser() 
     {
         try
         {
@@ -40,7 +40,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("user_partners")]
-    public async Task<ActionResult<List<int>>> GetChatPartnersByUserAsync()
+    public async Task<ActionResult<List<int>>> GetChatPartnersByUser()
     {
         try
         {
@@ -58,7 +58,7 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("messages/{uniqueName}")]
-    public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesByPrivateChatUniqueNameAsync(string uniqueName)
+    public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForPrivateChat(string uniqueName)
     {
         try
         {
@@ -73,7 +73,7 @@ public class MessageController : ControllerBase
 
     [HttpPost]
     [Route("send_message/{receiverId:int}")]
-    public async Task<ActionResult> SendMessageToUserAsync(int receiverId, [FromBody]string messageContent)
+    public async Task<ActionResult> SendMessageToUser(int receiverId, [FromBody]string messageContent)
     {
         try
         {
@@ -82,9 +82,9 @@ public class MessageController : ControllerBase
 
             var privateChat =
                 await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, receiverId);
-            await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName,
+            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName,
                 messageContent);
-            return Ok();
+            return CreatedAtAction(nameof(GetMessagesForPrivateChat), privateChat.UniqueName, message);
         }
         catch (SecurityTokenValidationException ex)
         {
