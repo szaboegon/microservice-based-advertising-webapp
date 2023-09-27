@@ -57,7 +57,6 @@ public class AdvertisementController : ControllerBase
 
             var bytes = await ConvertFileDataToBytesAsync(image);
             await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
-            
 
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
                 newAdvertisement.ToDetailsDto());
