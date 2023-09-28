@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
-import authHeader from "../../services/auth/authHeader";
+import authHeader from "../auth/authHeader";
 import { User } from "../../models/user";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 
@@ -23,16 +23,6 @@ interface INavbarProps {
 }
 
 const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
-  const test = () => {
-    axios
-      .get("/api/user/validate", { headers: authHeader() })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
     <>
       <Flex

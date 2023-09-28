@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { NewAdvertisementRequest } from "../../../models/forms/newAdvertisementRequest";
+import { NewAdvertisementRequest } from "../../../models/requests/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";

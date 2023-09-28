@@ -4,6 +4,7 @@ using IdentityService.Extensions;
 using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IdentityService.Services;
 
@@ -25,7 +26,7 @@ public class UserService : IUserService
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request)
+    public async Task<TokenDto?> LoginAsync(AuthenticationRequest request)
     {
         var validationResult = await _authenticationRequestValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -35,40 +36,24 @@ public class UserService : IUserService
                 throw new ValidationException(error.ErrorMessage);
             }
         }
+
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
-            return new AuthenticationResponse
-            {
-                SignInResult = SignInResult.Failed,
-                Message = "User with given name does not exist.",
-                AccessToken = null
-            };
+            return null;
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
         if (!result.Succeeded)
         {
-            return new AuthenticationResponse
-            {
-                SignInResult = SignInResult.Failed,
-                Message = "Wrong user name or password.",
-                AccessToken = null
-            };
+            return null;
         }
 
         var accessToken = _tokenProvider.GenerateAccessToken(user);
-        var refreshToken = _tokenProvider.GenerateRefreshToken();
+        var refreshToken = await UpdateUserRefreshTokenAsync(user);
 
-        user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = DateTime.Now.AddDays(3);
-
-        await _userManager.UpdateAsync(user);
-        return new AuthenticationResponse
+        return new TokenDto()
         {
-            SignInResult = SignInResult.Success,
-            Message = "Sign in was successful.",
-            UserName = user.UserName,
             AccessToken = accessToken,
             RefreshToken = refreshToken
         };
@@ -101,8 +86,39 @@ public class UserService : IUserService
         return user?.ToDto();
     }
 
-    public TokenDto RefreshToken(TokenDto request)
+    public async Task<TokenDto> RefreshTokenAsync(TokenDto request)
     {
-        throw new NotImplementedException();
+        var claimsPrincipal = _tokenProvider.GetPrincipalFromExpiredToken(request.AccessToken);
+
+        var userName = claimsPrincipal.Claims.FirstOrDefault(claim => claim.Type == "userName")?.Value 
+                       ?? throw new SecurityTokenException("Could not get user name from token");
+
+        var user = await _userManager.FindByNameAsync(userName);
+
+        if (user?.RefreshToken == null || user.RefreshToken != request.RefreshToken ||
+            user.RefreshTokenExpiry <= DateTime.Now)
+        {
+            throw new SecurityTokenException("Refresh token invalid or expired.");
+        }
+
+        var newAccessToken = _tokenProvider.GenerateAccessToken(user);
+        var newRefreshToken = await UpdateUserRefreshTokenAsync(user);
+
+        return new TokenDto()
+        {
+            AccessToken = newAccessToken,
+            RefreshToken = newRefreshToken
+        };
+    }
+
+    private async Task<string> UpdateUserRefreshTokenAsync(AppUser user)
+    {
+        var refreshToken = _tokenProvider.GenerateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.Now.AddDays(3);
+
+        await _userManager.UpdateAsync(user);
+        return refreshToken;
     }
 }

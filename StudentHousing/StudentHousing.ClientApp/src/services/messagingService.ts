@@ -1,14 +1,6 @@
-import {
-  DefaultHttpClient,
-  HttpTransportType,
-  HubConnectionBuilder,
-} from "@microsoft/signalr";
-import {
-  HubConnection,
-  HubConnectionState,
-} from "@microsoft/signalr/dist/esm/HubConnection";
-import axios from "axios";
-import authHeader from "./auth/authHeader";
+import {HubConnectionBuilder,} from "@microsoft/signalr";
+import {HubConnection, HubConnectionState,} from "@microsoft/signalr/dist/esm/HubConnection";
+import InterceptorApiClient from "../helpers/interceptorApiClient";
 
 /*const getAuthHeaders = () => ({
   Authorization: "Bearer " + localStorage.getItem("token") ?? "",
@@ -28,12 +20,12 @@ class CustomHttpClient extends DefaultHttpClient {
   }
 }*/
 
-const apiClient = axios.create({
-  baseURL: "/api/message",
-  headers: {
+const apiClient = InterceptorApiClient.createInstance(
+  "/api/message",
+  {
     "Content-type": "application/json",
   },
-});
+);
 
 const buildConnection = (): HubConnection | undefined => {
   const token = localStorage.getItem("token");
@@ -41,17 +33,15 @@ const buildConnection = (): HubConnection | undefined => {
     console.log("buildConnnection failed: no token available");
     return;
   }
-  const newConnection = new HubConnectionBuilder()
-    .withUrl("/hubs/message", {
-      //skipNegotiation: true,
-      //transport: HttpTransportType.WebSockets,
-      accessTokenFactory: () => JSON.parse(token),
-      //httpClient: new CustomHttpClient(),
-    })
-    .withAutomaticReconnect()
-    .build();
-
-  return newConnection;
+  return new HubConnectionBuilder()
+      .withUrl("/hubs/message", {
+        //skipNegotiation: true,
+        //transport: HttpTransportType.WebSockets,
+        accessTokenFactory: () => JSON.parse(token),
+        //httpClient: new CustomHttpClient(),
+      })
+      .withAutomaticReconnect()
+      .build();
 };
 
 const startPrivateChat = async (
@@ -85,14 +75,12 @@ const sendMessage = async (
 
 const getPrivateChatsForUser = async () => {
   const response = await apiClient.get(`/user_chats`, {
-    headers: authHeader(),
   });
   return response.data;
 };
 
 const getChatPartnersForUser = async () => {
   const response = await apiClient.get<Array<number>>(`/user_partners`, {
-    headers: authHeader(),
   });
   console.log(response.data);
   return response.data;
@@ -100,7 +88,6 @@ const getChatPartnersForUser = async () => {
 
 const getMessagesForPrivateChat = async (uniqueName: string) => {
   const response = await apiClient.get(`/messages/${uniqueName}`, {
-    headers: authHeader(),
   });
   return response.data;
 };
@@ -112,9 +99,6 @@ const sendMessageToAdvertiser = async (
   const response = await apiClient.post(
     `/send_message/${receiverId}`,
     messageContent,
-    {
-      headers: authHeader(),
-    }
   );
   return response.data;
 };

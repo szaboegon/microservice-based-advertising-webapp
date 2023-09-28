@@ -5,8 +5,8 @@ namespace IdentityService.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request);
+    Task<TokenDto?> LoginAsync(AuthenticationRequest request);
     Task<IdentityResult> RegisterAsync(RegistrationRequest request);
     Task<AppUserDto?> GetUserDetailsByIdAsync(int userId);
-    TokenDto RefreshToken(TokenDto request);
+    Task<TokenDto> RefreshTokenAsync(TokenDto request);
 }

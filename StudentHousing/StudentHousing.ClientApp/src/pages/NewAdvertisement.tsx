@@ -14,7 +14,7 @@ import {
   Card,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { NewAdvertisementRequest } from "../models/forms/newAdvertisementRequest";
+import { NewAdvertisementRequest } from "../models/requests/newAdvertisementRequest";
 import FirstStep from "../components/forms/new-advertisement/FirstStep";
 import SecondStep from "../components/forms/new-advertisement/SecondStep";
 import ThirdStep from "../components/forms/new-advertisement/ThirdStep";

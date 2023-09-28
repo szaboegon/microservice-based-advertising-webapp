@@ -4,7 +4,6 @@ using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace IdentityService.Controllers;
 
@@ -24,20 +23,14 @@ public class UserController : ControllerBase
     {
         try
         {
-            var response = await _userService.LoginAsync(request);
+            var tokens = await _userService.LoginAsync(request);
 
-            if (response.SignInResult != SignInResult.Success)
+            if (tokens == null)
             {
-                return Unauthorized(response.Message);
+                return Unauthorized("Wrong username or password.");
             }
 
-            return Ok(new
-            {
-                response.Message,
-                response.UserName,
-                response.AccessToken,
-                response.RefreshToken
-            });
+            return Ok(tokens);
         }
         catch(ValidationException e)
         {
@@ -69,24 +62,24 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("auth")]
     [Authorize]
-    public ActionResult ValidateToken()
+    public ActionResult Auth()
     {
         return Ok();
     }
 
     [HttpPost]
-    public ActionResult RefreshToken([FromBody] TokenDto request)
+    [Route("refresh_token")]
+    public async Task<ActionResult> RefreshToken([FromBody] TokenDto request)
     {
         try
         {
-            var refreshedTokens = _userService.RefreshToken(request);
+            var refreshedTokens = await _userService.RefreshTokenAsync(request);
             return Ok(refreshedTokens);
         }
-        catch(SecurityTokenException ex)
+        catch (SecurityTokenException ex)
         {
             return Unauthorized(ex.Message);
         }
-       
     }
 
     [HttpGet]

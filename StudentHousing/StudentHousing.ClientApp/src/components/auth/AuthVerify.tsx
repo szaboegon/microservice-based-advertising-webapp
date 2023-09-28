@@ -3,6 +3,7 @@ import jwtDecode from "jwt-decode";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { TokenClaims } from "../../models/tokenClaims";
+import TokenHelper from "../../helpers/tokenHelper";
 
 interface AuthVerifyProps {
   logout: Function;
@@ -14,14 +15,25 @@ export const AuthVerify: React.FunctionComponent<AuthVerifyProps> = ({
   let location = useLocation();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
+
+    const getNewTokens = async () => {
+      return await TokenHelper.refreshTokens()
+    }
 
     if (token) {
       const decodedJwt: TokenClaims = jwtDecode(token);
 
       if (decodedJwt.exp * 1000 < Date.now()) {
-        console.log("logged out by authVerify");
-        logout();
+        console.log("authVerify triggered");
+        getNewTokens().
+        then(newTokens =>{
+          if(!newTokens){
+            logout();
+          }
+        }).catch(error =>{
+          logout();
+        })
       }
     }
   }, [location]);

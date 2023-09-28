@@ -1,11 +1,11 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { LoginRequest } from "../models/forms/loginRequest";
-import { RegistrationRequest } from "../models/forms/registrationRequest";
-import { Session } from "../models/session";
+import { LoginRequest } from "../models/requests/loginRequest";
+import { RegistrationRequest } from "../models/requests/registrationRequest";
+import { AuthTokens } from "../models/authTokens";
 import { TokenClaims } from "../models/tokenClaims";
 import { User } from "../models/user";
-import authHeader from "./auth/authHeader";
+import TokenHelper from "../helpers/tokenHelper";
 
 const apiClient = axios.create({
   baseURL: "/api/user",
@@ -14,10 +14,11 @@ const apiClient = axios.create({
   },
 });
 
-const login = async (loginData: LoginRequest): Promise<Session> => {
+const login = async (loginData: LoginRequest): Promise<AuthTokens> => {
   return await apiClient.post("/login", loginData).then((response) => {
-    if (response.data.token) {
-      localStorage.setItem("token", JSON.stringify(response.data.token));
+    if (response.data.accessToken && response.data.refreshToken) {
+      localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
+      localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
     }
 
     return response.data;
@@ -25,15 +26,15 @@ const login = async (loginData: LoginRequest): Promise<Session> => {
 };
 
 const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("accessToken");
 };
 
 const getCurrentUser = () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
+  const accessToken = TokenHelper.getLocalAccessToken();
+  if (!accessToken) {
     return;
   }
-  const decoded: TokenClaims = jwtDecode(token);
+  const decoded: TokenClaims = jwtDecode(accessToken);
   const user: User = {
     id: parseInt(decoded.sub),
     firstName: decoded.firstName,
@@ -51,7 +52,6 @@ const register = async (registrationData: RegistrationRequest) => {
 
 const getUserDetails = async (ids: URLSearchParams) => {
   const response = await apiClient.get<Array<User>>("/multiple_user_details?" + ids, {
-    headers: authHeader(),
   });
   return response.data;
 };

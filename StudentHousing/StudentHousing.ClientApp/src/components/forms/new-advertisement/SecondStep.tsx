@@ -14,7 +14,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import districts from "../../../assets/literals/districts";
 import regions from "../../../assets/literals/regions";
-import { NewAdvertisementRequest } from "../../../models/forms/newAdvertisementRequest";
+import { NewAdvertisementRequest } from "../../../models/requests/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";

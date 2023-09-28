@@ -1,6 +1,6 @@
 import "./App.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
@@ -12,7 +12,7 @@ import UserService from "./services/userService";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
 import { NewAdvertisement } from "./pages/NewAdvertisement";
 import { User } from "./models/user";
-import { AuthVerify } from "./services/auth/AuthVerify";
+import { AuthVerify } from "./components/auth/AuthVerify";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
 
@@ -58,17 +58,17 @@ function App() {
   });
 
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
 
   const logout = () => {
     UserService.logout();
     setUser(undefined);
+    navigate("/login");
   };
 
   useEffect(() => {
     const user = UserService.getCurrentUser();
     setUser(user);
-    setLoaded(true);
   }, [logout]);
 
   return (

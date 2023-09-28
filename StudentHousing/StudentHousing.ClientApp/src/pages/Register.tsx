@@ -22,7 +22,7 @@ import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../styles/formLabelStyles";
 import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import { Link } from "react-router-dom";
-import { RegistrationRequest } from "../models/forms/registrationRequest";
+import { RegistrationRequest } from "../models/requests/registrationRequest";
 import { placeholderStyles } from "../styles/placeholderStyles";
 import { formTitleStyles } from "../styles/formTitleStyles";
 import { NAVBAR_HEIGHT } from "../assets/literals/constants";

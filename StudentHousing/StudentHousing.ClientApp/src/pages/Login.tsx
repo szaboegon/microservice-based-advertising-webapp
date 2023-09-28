@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { ErrorAlert } from "../components/alerts/ErrorAlert";
 import { SuccessAlert } from "../components/alerts/SuccessAlert";
-import { LoginRequest } from "../models/forms/loginRequest";
+import { LoginRequest } from "../models/requests/loginRequest";
 import UserService from "../services/userService";
 import { formErrorMessageStyles } from "../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../styles/formLabelStyles";

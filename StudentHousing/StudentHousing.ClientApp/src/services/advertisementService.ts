@@ -1,22 +1,21 @@
-import axios from "axios";
 import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
 import { AdvertisementDetailsDto } from "../models/advertisement/advertisementDetailsDto";
-import authHeader from "./auth/authHeader";
 import {PagedQueryResponse} from "../models/pagedQueryResponse";
+import InterceptorApiClient from "../helpers/interceptorApiClient";
 
-const apiClient = axios.create({
-  baseURL: "/api/advertisement",
-  headers: {
+const apiClient = InterceptorApiClient.createInstance(
+   "/api/advertisement",
+   {
     "Content-type": "application/json",
-  },
-});
+    },
+);
 
-const formDataClient = axios.create({
-  baseURL: "/api/advertisement",
-  headers: {
+const formDataClient = InterceptorApiClient.createInstance(
+   "/api/advertisement",
+   {
     "Content-type": "multipart/form-data",
   },
-});
+);
 
 const findBySearchParams = async (
   searchParams: URLSearchParams
@@ -38,14 +37,12 @@ const create = async (newAdvertisement: FormData) => {
   const response = await formDataClient.post<FormData>(
     "/private/advertisements",
     newAdvertisement,
-    { headers: authHeader() }
   );
   return response.data;
 };
 
 const remove = async (id: number) => {
   const response = await apiClient.delete(`/private/advertisements/${id}`, {
-    headers: authHeader(),
   });
   return response.data;
 };
@@ -54,7 +51,6 @@ const findByUser = async (): Promise<AdvertisementCardDto[]> => {
   const response = await apiClient.get<AdvertisementCardDto[]>(
     "/private/advertisements_by_user",
     {
-      headers: authHeader(),
     }
   );
   return response.data;

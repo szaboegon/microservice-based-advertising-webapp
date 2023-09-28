@@ -25,8 +25,8 @@ export const ErrorAlert: React.FunctionComponent<IErrorAlertProps> = ({
         <AlertTitle>Error: </AlertTitle>
         <AlertDescription>
           {error instanceof AxiosError &&
-          error.status &&
-          clientErrorRegExp.test(error.status.toString())  &&
+          error.response?.status &&
+          clientErrorRegExp.test(error.response.status.toString())  &&
           error.response?.data &&
           typeof error.response.data == "string"
             ? error.response?.data
