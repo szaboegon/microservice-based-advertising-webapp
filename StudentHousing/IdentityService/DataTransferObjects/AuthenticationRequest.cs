@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Models;
+﻿namespace IdentityService.DataTransferObjects;
 
 public record AuthenticationRequest
 {

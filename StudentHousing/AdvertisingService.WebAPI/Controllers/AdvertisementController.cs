@@ -58,12 +58,13 @@ public class AdvertisementController : ControllerBase
             var bytes = await ConvertFileDataToBytesAsync(image);
             await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
 
+  
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
                 newAdvertisement.ToDetailsDto());
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (ValidationException ex)
         {
@@ -98,9 +99,9 @@ public class AdvertisementController : ControllerBase
 
             return NoContent();
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (ValidationException ex)
         {
@@ -120,13 +121,9 @@ public class AdvertisementController : ControllerBase
             var result = await _advertisementService.GetAdvertisementsByUserAsync(advertiserId);
             return Ok(result);
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -149,14 +146,14 @@ public class AdvertisementController : ControllerBase
     {
         if(string.IsNullOrEmpty(tokenString))
         {
-            throw new SecurityTokenValidationException("Request contains no security token.");
+            throw new SecurityTokenException("Request contains no security token.");
         }
 
         var jwtSecurityToken = _tokenHandler.ReadJwtToken(tokenString);
         var advertiserId = jwtSecurityToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
 
         return advertiserId == null
-            ? throw new SecurityTokenValidationException("Advertiser id could not be determined from security token.")
+            ? throw new SecurityTokenException("Advertiser id could not be determined from security token.")
             : int.Parse(advertiserId);
     }
 }

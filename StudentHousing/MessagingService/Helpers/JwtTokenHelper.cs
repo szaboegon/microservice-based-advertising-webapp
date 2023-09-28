@@ -11,14 +11,14 @@ public class JwtTokenHelper
     {
         if (string.IsNullOrEmpty(tokenString))
         {
-            throw new SecurityTokenValidationException("Request contains no security token.");
+            throw new SecurityTokenException("Request contains no security token.");
         }
 
         var jwtSecurityToken = _jwtSecurityTokenHandler.ReadJwtToken(tokenString);
         var userId = jwtSecurityToken.Claims.FirstOrDefault(claim => claim.Type == JwtRegisteredClaimNames.Sub)?.Value;
 
         return userId == null
-            ? throw new SecurityTokenValidationException("Advertiser id could not be determined from security token.")
+            ? throw new SecurityTokenException("Advertiser id could not be determined from security token.")
             : int.Parse(userId);
     }
 }

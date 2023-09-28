@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using IdentityService.DataTransferObjects;
-using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +34,7 @@ public class UserController : ControllerBase
             {
                 response.Message,
                 response.UserName,
-                response.Token
+                Token = response.AccessToken
             });
         }
         catch(ValidationException e)

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using IdentityService.DataTransferObjects;
 using IdentityService.Extensions;
-using IdentityService.Helpers;
 using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -14,21 +13,28 @@ public class UserService : IUserService
     private readonly SignInManager<AppUser> _signInManager;
     private readonly IValidator<AuthenticationRequest> _authenticationRequestValidator;
     private readonly IValidator<RegistrationRequest> _registrationRequestValidator;
-    private readonly JwtProvider _jwtProvider;
+    private readonly ITokenProvider _tokenProvider;
 
     public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-        IValidator<AuthenticationRequest> authenticationRequestValidator, IValidator<RegistrationRequest> registrationRequestValidator, JwtProvider jwtProvider)
+        IValidator<AuthenticationRequest> authenticationRequestValidator, IValidator<RegistrationRequest> registrationRequestValidator, ITokenProvider tokenProvider)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _authenticationRequestValidator = authenticationRequestValidator;
         _registrationRequestValidator = registrationRequestValidator;
-        _jwtProvider = jwtProvider;
+        _tokenProvider = tokenProvider;
     }
 
     public async Task<AuthenticationResponse> LoginAsync(AuthenticationRequest request)
     {
-        await _authenticationRequestValidator.ValidateAndThrowAsync(request);
+        var validationResult = await _authenticationRequestValidator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                throw new ValidationException(error.ErrorMessage);
+            }
+        }
         var user = await _userManager.FindByNameAsync(request.UserName);
         if (user == null)
         {
@@ -36,7 +42,7 @@ public class UserService : IUserService
             {
                 SignInResult = SignInResult.Failed,
                 Message = "User with given name does not exist.",
-                Token = null
+                AccessToken = null
             };
         }
 
@@ -47,23 +53,30 @@ public class UserService : IUserService
             {
                 SignInResult = SignInResult.Failed,
                 Message = "Wrong user name or password.",
-                Token = null
+                AccessToken = null
             };
         }
 
-        var token = _jwtProvider.GenerateToken(user);
+        var token = _tokenProvider.GenerateAccessToken(user);
         return new AuthenticationResponse
         {
             SignInResult = SignInResult.Success,
             Message = "Sign in was successful.",
             UserName = user.UserName,
-            Token = token
+            AccessToken = token
         };
     }
 
     public async Task<IdentityResult> RegisterAsync(RegistrationRequest request)
     {
-        await _registrationRequestValidator.ValidateAndThrowAsync(request);
+        var validationResult = await _registrationRequestValidator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
+            {
+                throw new ValidationException(error.ErrorMessage);
+            }
+        }
         var user = new AppUser()
         {
             FirstName = request.FirstName,

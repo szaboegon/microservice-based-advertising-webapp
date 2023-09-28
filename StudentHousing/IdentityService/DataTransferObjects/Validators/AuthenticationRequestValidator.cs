@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace IdentityService.Models.Validators;
+namespace IdentityService.DataTransferObjects.Validators;
 
 public class AuthenticationRequestValidator : AbstractValidator<AuthenticationRequest>
 {

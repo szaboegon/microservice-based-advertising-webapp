@@ -1,5 +1,4 @@
 ﻿using IdentityService.DataTransferObjects;
-using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services.Interfaces;

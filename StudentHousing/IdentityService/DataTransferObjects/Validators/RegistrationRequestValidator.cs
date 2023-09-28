@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
+using IdentityService.DataTransferObjects;
 
-namespace IdentityService.Models.Validators;
+namespace IdentityService.DataTransferObjects.Validators;
 
-public class RegistrationRequestValidator: AbstractValidator<RegistrationRequest>
+public class RegistrationRequestValidator : AbstractValidator<RegistrationRequest>
 {
     public RegistrationRequestValidator()
     {

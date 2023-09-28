@@ -40,7 +40,7 @@ public class MessageHub : Hub
             var message = await _messageService.SendMessageToPrivateChatAsync(senderId, uniqueName, messageContent);
             await Clients.Group(uniqueName).SendAsync("ReceiveMessage", message);
         }
-        catch (SecurityTokenValidationException)
+        catch (SecurityTokenException)
         {
             Context.Abort();
             throw;
@@ -59,7 +59,7 @@ public class MessageHub : Hub
             await Groups.AddToGroupAsync(Context.ConnectionId, privateChat.UniqueName);
             return privateChat.UniqueName;
         }
-        catch (SecurityTokenValidationException)
+        catch (SecurityTokenException)
         {
             Context.Abort();
             throw;

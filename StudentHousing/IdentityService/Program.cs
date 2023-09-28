@@ -1,9 +1,9 @@
 using System.Text;
 using FluentValidation;
 using IdentityService.DAL;
-using IdentityService.Helpers;
+using IdentityService.DataTransferObjects;
+using IdentityService.DataTransferObjects.Validators;
 using IdentityService.Models;
-using IdentityService.Models.Validators;
 using IdentityService.Services;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,7 +45,7 @@ builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequ
 builder.Services.AddScoped<IValidator<RegistrationRequest>, RegistrationRequestValidator>();
 
 // Jwt provider
-builder.Services.AddSingleton<JwtProvider, JwtProvider>();
+builder.Services.AddSingleton<ITokenProvider, TokenProvider>();
 
 // Jwt token related configurations
 builder.Services.AddAuthentication(opt =>
@@ -64,7 +64,8 @@ builder.Services.AddAuthentication(opt =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = configuration["Jwt:Issuer"],
             ValidAudience = configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
+            ClockSkew = TimeSpan.Zero
         };
        // opt.AddQueryStringAuthentication();
     });

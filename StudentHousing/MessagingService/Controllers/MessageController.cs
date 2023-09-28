@@ -32,9 +32,9 @@ public class MessageController : ControllerBase
             var chats = await _messageService.GetPrivateChatsForUserAsync(userId);
             return Ok(chats);
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -50,9 +50,9 @@ public class MessageController : ControllerBase
             var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(userId);
             return Ok(partnerIds);
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -65,9 +65,9 @@ public class MessageController : ControllerBase
             var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
             return Ok(messages);
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -86,9 +86,9 @@ public class MessageController : ControllerBase
                 messageContent);
             return CreatedAtAction(nameof(GetMessagesForPrivateChat), privateChat.UniqueName, message);
         }
-        catch (SecurityTokenValidationException ex)
+        catch (SecurityTokenException ex)
         {
-            return Unauthorized(ex.Message);
+            return BadRequest(ex.Message);
         }
     }
 }
