@@ -4,16 +4,13 @@ import {
   Heading,
   Spacer,
   Button,
-  HStack,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import axios from "axios";
 import * as React from "react";
 import { Link, NavLink } from "react-router-dom";
-import authHeader from "../auth/authHeader";
 import { User } from "../../models/user";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 
