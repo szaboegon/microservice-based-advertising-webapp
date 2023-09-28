@@ -3,6 +3,7 @@ using IdentityService.DataTransferObjects;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace IdentityService.Controllers;
@@ -34,7 +35,8 @@ public class UserController : ControllerBase
             {
                 response.Message,
                 response.UserName,
-                Token = response.AccessToken
+                response.AccessToken,
+                response.RefreshToken
             });
         }
         catch(ValidationException e)
@@ -70,6 +72,21 @@ public class UserController : ControllerBase
     public ActionResult ValidateToken()
     {
         return Ok();
+    }
+
+    [HttpPost]
+    public ActionResult RefreshToken([FromBody] TokenDto request)
+    {
+        try
+        {
+            var refreshedTokens = _userService.RefreshToken(request);
+            return Ok(refreshedTokens);
+        }
+        catch(SecurityTokenException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+       
     }
 
     [HttpGet]

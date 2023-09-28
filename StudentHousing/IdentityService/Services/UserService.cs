@@ -57,13 +57,20 @@ public class UserService : IUserService
             };
         }
 
-        var token = _tokenProvider.GenerateAccessToken(user);
+        var accessToken = _tokenProvider.GenerateAccessToken(user);
+        var refreshToken = _tokenProvider.GenerateRefreshToken();
+
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.Now.AddDays(3);
+
+        await _userManager.UpdateAsync(user);
         return new AuthenticationResponse
         {
             SignInResult = SignInResult.Success,
             Message = "Sign in was successful.",
             UserName = user.UserName,
-            AccessToken = token
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
         };
     }
 
@@ -92,5 +99,10 @@ public class UserService : IUserService
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
         return user?.ToDto();
+    }
+
+    public TokenDto RefreshToken(TokenDto request)
+    {
+        throw new NotImplementedException();
     }
 }
