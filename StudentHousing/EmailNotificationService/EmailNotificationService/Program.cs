@@ -26,6 +26,7 @@ builder.Services
 
 
 builder.Services.AddSingleton<IEmailSenderService, EmailSenderService>();
+builder.Services.AddScoped<IUserDetailsProvider, UserDetailsProvider>();
 builder.Services.AddHostedService<ConsumerService>();
 
 var app = builder.Build();

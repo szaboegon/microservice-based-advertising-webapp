@@ -1,27 +1,12 @@
 ﻿using System.Text.Json;
-using MessagingService.DataTransferObjects;
-using MessagingService.Services.Interfaces;
+using EmailNotificationService.DataTransferObjects;
+using EmailNotificationService.Services.Interfaces;
 
-namespace MessagingService.Services;
+namespace EmailNotificationService.Services;
 
-public class IdentityProvider : IIdentityProvider
+public class UserDetailsProvider : IUserDetailsProvider
 {
     private readonly HttpClient _httpClient = new();
-
-    public async Task<bool> CheckTokenValidity(string? token)
-    {
-        try
-        {
-            var response = await _httpClient.GetAsync($"http://identityservice:80/api/user/auth");
-            response.EnsureSuccessStatusCode();
-
-            return true;
-        }
-        catch(HttpRequestException ex)
-        {
-            return false;
-        }
-    }
 
     public async Task<UserDetailsDto?> GetUserDataByIdAsync(int userId)
     {

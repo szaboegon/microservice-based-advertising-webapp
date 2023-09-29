@@ -82,9 +82,9 @@ public class MessageController : ControllerBase
 
             var privateChat =
                 await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, receiverId);
-            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName,
-                messageContent);
-            return CreatedAtAction(nameof(GetMessagesForPrivateChat), privateChat.UniqueName, message);
+            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName, messageContent);
+
+            return CreatedAtAction(nameof(GetMessagesForPrivateChat), new{ uniqueName = privateChat.UniqueName }, message);
         }
         catch (SecurityTokenException ex)
         {

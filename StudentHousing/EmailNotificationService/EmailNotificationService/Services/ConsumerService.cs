@@ -1,11 +1,8 @@
-﻿using System.Runtime.Serialization;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Threading.Channels;
-using EmailNotificationService.DataTransferObjects;
 using EmailNotificationService.Models.Options;
 using EmailNotificationService.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -15,11 +12,13 @@ namespace EmailNotificationService.Services;
 public class ConsumerService: IHostedService
 {
     private readonly IEmailSenderService _emailSenderService;
+    private readonly IUserDetailsProvider _identityProvider;
     private readonly RabbitMqOptions _options;
     private readonly IConnection _connection;
-    public ConsumerService(IEmailSenderService emailSenderService, IOptions<RabbitMqOptions> options)
+    public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider identityProvider, IOptions<RabbitMqOptions> options)
     {
         _emailSenderService = emailSenderService;
+        _identityProvider = identityProvider;
         _options = options.Value;
 
         var connFactory = new ConnectionFactory()
@@ -66,14 +65,15 @@ public class ConsumerService: IHostedService
         return Task.CompletedTask;
     }
 
-    private void OnMessageReceived(object? sender, BasicDeliverEventArgs e)
+    private async void OnMessageReceived(object? sender, BasicDeliverEventArgs e)
     {
         try
         {
             var messageBody = e.Body.ToArray();
             var receivedJson = Encoding.UTF8.GetString(messageBody);
 
-            var user = JsonSerializer.Deserialize<UserDetailsDto>(receivedJson) ?? throw new SerializationException("Failed to deserialize user");
+            var userId = JsonSerializer.Deserialize<int>(receivedJson);
+            var user = await _identityProvider.GetUserDataByIdAsync(userId) ?? throw new KeyNotFoundException("User with received id does not exist.");
 
             var notificationMessage =
                 $"Dear {user.FirstName}!\n\n" +

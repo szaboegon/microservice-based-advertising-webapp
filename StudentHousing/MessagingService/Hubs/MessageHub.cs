@@ -8,13 +8,11 @@ namespace MessagingService.Hubs;
 public class MessageHub : Hub
 {
     private readonly IMessageService _messageService;
-    private readonly IIdentityProvider _identityProvider;
     private readonly JwtTokenHelper _jwtTokenHelper;
 
-    public MessageHub(IMessageService messageService, IIdentityProvider identityProvider, JwtTokenHelper jwtTokenHelper)
+    public MessageHub(IMessageService messageService, JwtTokenHelper jwtTokenHelper)
     {
         _messageService = messageService;
-        _identityProvider = identityProvider;
         _jwtTokenHelper = jwtTokenHelper;
     }
     public override Task OnConnectedAsync()

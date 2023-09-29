@@ -11,14 +11,12 @@ public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;
-    private readonly IIdentityProvider _identityProvider;
     private readonly IMessageProducer _messageProducer;
 
-    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IIdentityProvider identityProvider, IMessageProducer messageProducer)
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IMessageProducer messageProducer)
     {
         _messageRepository = messageRepository;
         _privateChatRepository = privateChatRepository;
-        _identityProvider = identityProvider;
         _messageProducer = messageProducer;
     }
 
@@ -36,14 +34,7 @@ public class MessageService : IMessageService
         await _messageRepository.Add(message);
 
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
-        var receiverUser = await _identityProvider.GetUserDataByIdAsync(receiverId);
-
-        if (receiverUser == null)
-        {
-            //TODO retry or even better --> put this whole thing in email notif service
-        }
-
-        _messageProducer.SendMessage(receiverUser);
+        _messageProducer.SendMessage(receiverId);
 
         return message.ToDto();
     }
