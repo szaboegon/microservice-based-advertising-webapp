@@ -12,13 +12,13 @@ namespace EmailNotificationService.Services;
 public class ConsumerService: IHostedService
 {
     private readonly IEmailSenderService _emailSenderService;
-    private readonly IUserDetailsProvider _identityProvider;
+    private readonly IUserDetailsProvider _userDetailsProvider;
     private readonly RabbitMqOptions _options;
     private readonly IConnection _connection;
-    public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider identityProvider, IOptions<RabbitMqOptions> options)
+    public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider userDetailsProvider, IOptions<RabbitMqOptions> options)
     {
         _emailSenderService = emailSenderService;
-        _identityProvider = identityProvider;
+        _userDetailsProvider = userDetailsProvider;
         _options = options.Value;
 
         var connFactory = new ConnectionFactory()
@@ -73,7 +73,7 @@ public class ConsumerService: IHostedService
             var receivedJson = Encoding.UTF8.GetString(messageBody);
 
             var userId = JsonSerializer.Deserialize<int>(receivedJson);
-            var user = await _identityProvider.GetUserDataByIdAsync(userId) ?? throw new KeyNotFoundException("User with received id does not exist.");
+            var user = await _userDetailsProvider.GetUserDataByIdAsync(userId) ?? throw new KeyNotFoundException("User with received id does not exist.");
 
             var notificationMessage =
                 $"Dear {user.FirstName}!\n\n" +
