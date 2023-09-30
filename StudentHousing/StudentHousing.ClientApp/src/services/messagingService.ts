@@ -1,32 +1,11 @@
-import {HubConnectionBuilder,} from "@microsoft/signalr";
-import {HubConnection, HubConnectionState,} from "@microsoft/signalr/dist/esm/HubConnection";
+import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import InterceptorApiClient from "../helpers/interceptorApiClient";
 import TokenHelper from "../helpers/tokenHelper";
 
-/*const getAuthHeaders = () => ({
-  Authorization: "Bearer " + localStorage.getItem("token") ?? "",
+const apiClient = InterceptorApiClient.createInstance("/api/message", {
+  "Content-type": "application/json",
 });
-
-class CustomHttpClient extends DefaultHttpClient {
-  constructor() {
-    super(console);
-  }
-
-  public async send(
-    request: signalR.HttpRequest
-  ): Promise<signalR.HttpResponse> {
-    var authHeaders = authHeader();
-    request.headers = { ...request.headers, ...authHeaders };
-    return super.send(request);
-  }
-}*/
-
-const apiClient = InterceptorApiClient.createInstance(
-  "/api/message",
-  {
-    "Content-type": "application/json",
-  },
-);
 
 let connectionInstance: HubConnection | undefined;
 
@@ -36,25 +15,36 @@ const buildConnection = (): HubConnection | undefined => {
     console.log("buildConnnection failed: no token available");
     return;
   }
-  if(connectionInstance){
+  if (connectionInstance) {
     return connectionInstance;
   }
   connectionInstance = new HubConnectionBuilder()
-      .withUrl("/hubs/message", {
-        //skipNegotiation: true,
-        //transport: HttpTransportType.WebSockets,
-        accessTokenFactory: () => JSON.parse(token),
-        //httpClient: new CustomHttpClient(),
-      })
-      .withAutomaticReconnect()
-      .build();
+    .withUrl("/hubs/message", {
+      //skipNegotiation: true,
+      //transport: HttpTransportType.WebSockets,
+      accessTokenFactory: () => JSON.parse(token),
+      //httpClient: new CustomHttpClient(),
+    })
+    .withAutomaticReconnect()
+    .build();
 
   return connectionInstance;
 };
 
+const startConnection = async (connection: HubConnection) => {
+  if (
+    connection.state != HubConnectionState.Connected &&
+    connection.state != HubConnectionState.Connecting &&
+    connection.state != HubConnectionState.Reconnecting
+  ) {
+    await connection.start();
+  }
+  return connection;
+};
+
 const startPrivateChat = async (
   connection: HubConnection,
-  otherUserId: number
+  otherUserId: number,
 ): Promise<string> => {
   let groupName: string = "";
   try {
@@ -68,7 +58,7 @@ const startPrivateChat = async (
 const sendMessage = async (
   messageContent: string,
   connection: HubConnection,
-  groupName: string
+  groupName: string,
 ) => {
   if (connection.state == HubConnectionState.Connected) {
     try {
@@ -82,27 +72,24 @@ const sendMessage = async (
 };
 
 const getPrivateChatsForUser = async () => {
-  const response = await apiClient.get(`/user_chats`, {
-  });
+  const response = await apiClient.get(`/user_chats`, {});
   return response.data;
 };
 
 const getChatPartnersForUser = async () => {
-  const response = await apiClient.get<Array<number>>(`/user_partners`, {
-  });
+  const response = await apiClient.get<Array<number>>(`/user_partners`, {});
   console.log(response.data);
   return response.data;
 };
 
 const getMessagesForPrivateChat = async (uniqueName: string) => {
-  const response = await apiClient.get(`/messages/${uniqueName}`, {
-  });
+  const response = await apiClient.get(`/messages/${uniqueName}`, {});
   return response.data;
 };
 
 const sendMessageToAdvertiser = async (
   receiverId: number,
-  messageContent: string
+  messageContent: string,
 ) => {
   const response = await apiClient.post(
     `/send_message/${receiverId}`,
@@ -111,7 +98,10 @@ const sendMessageToAdvertiser = async (
   return response.data;
 };
 
-const markMessagesAsRead = async (connection: HubConnection, groupName: string) =>{
+const markMessagesAsRead = async (
+  connection: HubConnection,
+  groupName: string,
+) => {
   if (connection.state == HubConnectionState.Connected) {
     try {
       await connection.send("MarkMessagesAsRead", groupName);
@@ -121,16 +111,25 @@ const markMessagesAsRead = async (connection: HubConnection, groupName: string) 
   } else {
     console.log("No connection to server yet.");
   }
-}
+};
+
+const getUnreadMessageCount = async (): Promise<number> => {
+  return await apiClient("/unread_message_count").then((response) => {
+    return response.data;
+  });
+};
 
 const MessagingService = {
   buildConnection,
+  startConnection,
   startPrivateChat,
   sendMessage,
   sendMessageToAdvertiser,
   getPrivateChatsForUser,
   getChatPartnersForUser,
   getMessagesForPrivateChat,
+  markMessagesAsRead,
+  getUnreadMessageCount,
 };
 
 export default MessagingService;

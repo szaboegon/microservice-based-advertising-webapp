@@ -74,7 +74,7 @@ public class MessageService : IMessageService
         return messages.Select(m => m.ToDto());
     }
 
-    public async Task<int?> MarkMessagesAsReadAsync(string privateChatUniqueName, int receiverId)
+    public async Task<int?> MarkMessagesAsReadAsync(string privateChatUniqueName, int userId)
     {
         var privateChat = await _privateChatRepository.GetByUniqueName(privateChatUniqueName);
         if (privateChat == null)
@@ -82,7 +82,7 @@ public class MessageService : IMessageService
             return null;
         }
 
-        var messagesToUpdate = privateChat.Messages.Where(m => m.SenderId != receiverId).ToList();
+        var messagesToUpdate = privateChat.Messages.Where(m => m.SenderId != userId).ToList();
         messagesToUpdate.ForEach(m => m.IsUnread = false);
 
         return await _messageRepository.UpdateRange(messagesToUpdate);
@@ -91,7 +91,7 @@ public class MessageService : IMessageService
     public async Task<int> GetUnreadMessageCountAsync(int userId)
     {
         var chats = await _privateChatRepository.GetByUserId(userId);
-        var unreadCount = chats.Sum(c => c.Messages.Count(m => m.IsUnread));
+        var unreadCount = chats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
 
         return unreadCount;
     }

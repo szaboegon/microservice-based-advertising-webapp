@@ -21,6 +21,11 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
     reset();
   };
 
+  const handleFocus = async () => {
+    connection &&
+      (await MessagingService.markMessagesAsRead(connection, groupName));
+  };
+
   return (
     <>
       <Box width="700px">
@@ -35,6 +40,7 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
               height="50px"
               size="sm"
               borderColor="brandYellow.800"
+              onFocus={handleFocus}
             ></Textarea>
             <Button
               size="lg"

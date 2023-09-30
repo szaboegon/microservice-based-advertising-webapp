@@ -1,25 +1,27 @@
-import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
+  Box,
+  Button,
+  Divider,
   Flex,
   Heading,
-  Spacer,
-  Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Box,
   HStack,
   IconButton,
-  Icon,
-  Divider,
+  Spacer,
+  Tag,
+  TagLabel,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { User } from "../../models/user";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
-import { useState } from "react";
-import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
+import {
+  HubConnection,
+  HubConnectionState,
+} from "@microsoft/signalr/dist/esm/HubConnection";
+import MessagingService from "../../services/messagingService";
+import { Message } from "../../models/message";
+import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
 
 interface INavbarProps {
   user: User | undefined;
@@ -28,6 +30,37 @@ interface INavbarProps {
 
 const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
   const [connection, setConnection] = useState<HubConnection | undefined>();
+  const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
+
+  useEffect(() => {
+    const conn = MessagingService.buildConnection();
+    if (conn) {
+      setConnection(conn);
+    }
+    MessagingService.getUnreadMessageCount().then((count) => {
+      setUnreadMessageCount(count);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (connection) {
+      MessagingService.startConnection(connection)
+        .then(async (result) => {
+          connection.on("ReceiveMessage", (message: Message) => {
+            if (message.senderId != user?.id) {
+              setUnreadMessageCount(unreadMessageCount + 1);
+            }
+          });
+          connection.on("MessagesRead", (userId) => {
+            if (userId == user?.id) {
+              setUnreadMessageCount(0);
+            }
+          });
+        })
+        .catch((e) => console.log("Connection failed: ", e));
+    }
+  }, [connection]);
+
   return (
     <>
       <Flex
@@ -49,40 +82,54 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
           Student Housing
         </Heading>
         <Spacer />
-        <Button
-          marginRight="30px"
-          as={Link}
-          to="/newadvertisement"
-          minH="50px"
-          background="brandYellow.600"
-          textColor="white"
-          _hover={{ background: "brandYellow.1000" }}
-        >
-          New Advertisement
-        </Button>
         {user ? (
           <HStack
             verticalAlign="center"
             justifyContent="center"
             alignItems="center"
           >
-            <IconButton
-              as={Link}
-              to="/messages"
-              aria-label="Messages"
-              backgroundColor="brandGreen.500"
-              icon={
-                <Box className="material-icons" textColor="white">
-                  mail
-                </Box>
-              }
-            ></IconButton>
+            <Box position="relative">
+              <IconButton
+                as={Link}
+                to="/messages"
+                aria-label="Messages"
+                sx={navbarButtonStyles}
+                icon={
+                  <Box className="material-icons" textColor="white">
+                    mail
+                  </Box>
+                }
+              ></IconButton>
+              {unreadMessageCount > 0 && (
+                <Tag
+                  backgroundColor="red"
+                  position="absolute"
+                  size="sm"
+                  colorScheme="red"
+                  left="6"
+                  bottom="6"
+                  borderRadius="100"
+                  width="16px"
+                  height="16px"
+                  padding="0px"
+                >
+                  <TagLabel
+                    width="100%"
+                    textColor="white"
+                    fontWeight="600"
+                    fontSize="14"
+                    textAlign="center"
+                  >
+                    {unreadMessageCount}
+                  </TagLabel>
+                </Tag>
+              )}
+            </Box>
             <Button
               as={Link}
               to="/profile"
               aria-label="Profile"
-              backgroundColor="brandGreen.500"
-              textColor="white"
+              sx={navbarButtonStyles}
               leftIcon={
                 <Box className="material-icons" textColor="white">
                   account_circle
@@ -93,7 +140,20 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
             </Button>
           </HStack>
         ) : (
-          <></>
+          <Button
+            width="110px"
+            as={Link}
+            to="/register"
+            aria-label="Register"
+            sx={navbarButtonStyles}
+            leftIcon={
+              <Box className="material-icons" textColor="white">
+                person_add
+              </Box>
+            }
+          >
+            Sign up
+          </Button>
         )}
         <Divider
           orientation="vertical"
@@ -106,8 +166,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
         />
         {user ? (
           <IconButton
-            minH="50px"
-            textColor="white"
+            sx={navbarButtonStyles}
             onClick={logout}
             mr="40px"
             aria-label="Logout"
@@ -118,12 +177,17 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
           </IconButton>
         ) : (
           <Button
-            as={NavLink}
+            marginRight="20px"
+            width="85px"
+            as={Link}
             to="/login"
-            minH="50px"
-            variant="link"
-            textColor="white"
-            mr="40px"
+            aria-label="Login"
+            sx={navbarButtonStyles}
+            leftIcon={
+              <Box className="material-icons" textColor="white">
+                login
+              </Box>
+            }
           >
             Login
           </Button>

@@ -59,7 +59,6 @@ export const Search = () => {
       newParams,
     );
     setSearchParams(changedParams);
-    navigate("/search?" + searchParams, {});
   };
 
   const onPageChanged = (paginationParams: PaginationParamsDto) => {
@@ -69,7 +68,6 @@ export const Search = () => {
     );
     setSearchParams(changedParams);
     setCurrentPage(parseInt(paginationParams.currentPage));
-    navigate("/search?" + searchParams, {});
   };
 
   const onOrderingChanged = (orderingParams: OrderingParamsDto) => {
@@ -78,7 +76,6 @@ export const Search = () => {
       orderingParams,
     );
     setSearchParams(changedParams);
-    navigate("/search?" + searchParams, {});
   };
 
   return (

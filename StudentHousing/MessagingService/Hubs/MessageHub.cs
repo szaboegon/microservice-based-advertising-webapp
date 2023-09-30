@@ -66,5 +66,7 @@ public class MessageHub : Hub
 
         _ = await _messageService.MarkMessagesAsReadAsync(privateChatUniqueName, receiverId)
             ?? throw new KeyNotFoundException("Private chat with given name does not exist.");
+
+        await Clients.Group(privateChatUniqueName).SendAsync("MessagesRead", receiverId);
     }
 }

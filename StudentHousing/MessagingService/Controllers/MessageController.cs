@@ -100,4 +100,22 @@ public class MessageController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpGet]
+    [Route("unread_message_count")]
+    public async Task<ActionResult<int>> GetUnreadMessageCount()
+    {
+        try
+        {
+            var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+            var count = await _messageService.GetUnreadMessageCountAsync(userId);
+
+            return Ok(count);
+        }
+        catch (SecurityTokenException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

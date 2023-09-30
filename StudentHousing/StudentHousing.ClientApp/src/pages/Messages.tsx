@@ -31,12 +31,11 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   useEffect(() => {
     if (!selectedChatPartner) return;
     if (connection) {
-      connection
-        .start()
+      MessagingService.startConnection(connection)
         .then(async (result) => {
           const uniqueName = await MessagingService.startPrivateChat(
             connection,
-            selectedChatPartner.id
+            selectedChatPartner.id,
           );
           setGroupName(uniqueName);
           console.log("Name " + uniqueName);
