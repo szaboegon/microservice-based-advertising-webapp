@@ -20,11 +20,6 @@ public class MessageHub : Hub
         return base.OnConnectedAsync(); //TODO check auth
     }
 
-    public async Task SendMessage(string message)
-    {
-        await Clients.All.SendAsync("ReceiveMessage", message);
-    }
-
     public async Task SendMessageToGroup(string uniqueName, string messageContent)
     {
         try
@@ -61,5 +56,15 @@ public class MessageHub : Hub
             Context.Abort();
             throw;
         }
+    }
+
+    public async Task MarkMessagesAsRead(string privateChatUniqueName)
+    {
+        var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
+        //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        var receiverId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+
+        _ = await _messageService.MarkMessagesAsReadAsync(privateChatUniqueName, receiverId)
+            ?? throw new KeyNotFoundException("Private chat with given name does not exist.");
     }
 }

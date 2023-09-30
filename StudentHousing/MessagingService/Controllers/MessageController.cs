@@ -62,6 +62,15 @@ public class MessageController : ControllerBase
     {
         try
         {
+            var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+            var updateResult = await _messageService.MarkMessagesAsReadAsync(uniqueName, userId);
+
+            if (updateResult == null)
+            {
+                return NotFound("Private chat with given name does not exist.");
+            }
+
             var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
             return Ok(messages);
         }

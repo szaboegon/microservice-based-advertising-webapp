@@ -76,9 +76,9 @@ public class UserController : ControllerBase
             var refreshedTokens = await _userService.RefreshTokenAsync(request);
             return Ok(refreshedTokens);
         }
-        catch (SecurityTokenException ex)
+        catch (SecurityTokenException)
         {
-            return Unauthorized(ex.Message);
+            return Unauthorized("Token expired");
         }
     }
 

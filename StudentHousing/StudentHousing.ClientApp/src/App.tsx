@@ -1,6 +1,6 @@
 import "./App.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
 import { Home } from "./pages/Home";
 import { Search } from "./pages/Search";
@@ -69,7 +69,7 @@ function App() {
   useEffect(() => {
     const user = UserService.getCurrentUser();
     setUser(user);
-  }, [logout]);
+  }, []);
 
   return (
     <ChakraProvider theme={theme}>

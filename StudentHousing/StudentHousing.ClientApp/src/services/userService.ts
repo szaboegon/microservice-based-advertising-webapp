@@ -6,6 +6,7 @@ import { AuthTokens } from "../models/authTokens";
 import { TokenClaims } from "../models/tokenClaims";
 import { User } from "../models/user";
 import TokenHelper from "../helpers/tokenHelper";
+import InterceptorApiClient from "../helpers/interceptorApiClient";
 
 const apiClient = axios.create({
   baseURL: "/api/user",
@@ -14,11 +15,27 @@ const apiClient = axios.create({
   },
 });
 
+const interceptorClient = InterceptorApiClient.createInstance("/api/user", {
+  "Content-type": "application/json",
+});
+
+const checkAuth = async (): Promise<boolean> => {
+  return await interceptorClient.get("/auth").then((response) => {
+    return response.status == 200;
+  });
+};
+
 const login = async (loginData: LoginRequest): Promise<AuthTokens> => {
   return await apiClient.post("/login", loginData).then((response) => {
     if (response.data.accessToken && response.data.refreshToken) {
-      localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
-      localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(response.data.accessToken),
+      );
+      localStorage.setItem(
+        "refreshToken",
+        JSON.stringify(response.data.refreshToken),
+      );
     }
 
     return response.data;
@@ -51,12 +68,15 @@ const register = async (registrationData: RegistrationRequest) => {
 };
 
 const getUserDetails = async (ids: URLSearchParams) => {
-  const response = await apiClient.get<Array<User>>("/multiple_user_details?" + ids, {
-  });
+  const response = await apiClient.get<Array<User>>(
+    "/multiple_user_details?" + ids,
+    {},
+  );
   return response.data;
 };
 
 const UserService = {
+  checkAuth,
   login,
   logout,
   getCurrentUser,

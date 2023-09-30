@@ -24,4 +24,10 @@ public class MessageRepository : IMessageRepository
     {
         return await _dbcontext.Messages.Where(m => m.PrivateChat.UniqueName == privateChatUniqueName).ToListAsync();
     }
+
+    public async Task<int> UpdateRange(IEnumerable<Message> messagesToUpdate)
+    {
+        _dbcontext.Messages.UpdateRange(messagesToUpdate);
+        return await _dbcontext.SaveChangesAsync();
+    }
 }

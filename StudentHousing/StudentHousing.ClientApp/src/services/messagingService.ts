@@ -1,6 +1,7 @@
 import {HubConnectionBuilder,} from "@microsoft/signalr";
 import {HubConnection, HubConnectionState,} from "@microsoft/signalr/dist/esm/HubConnection";
 import InterceptorApiClient from "../helpers/interceptorApiClient";
+import TokenHelper from "../helpers/tokenHelper";
 
 /*const getAuthHeaders = () => ({
   Authorization: "Bearer " + localStorage.getItem("token") ?? "",
@@ -27,13 +28,18 @@ const apiClient = InterceptorApiClient.createInstance(
   },
 );
 
+let connectionInstance: HubConnection | undefined;
+
 const buildConnection = (): HubConnection | undefined => {
-  const token = localStorage.getItem("token");
+  const token = TokenHelper.getLocalAccessToken();
   if (!token) {
     console.log("buildConnnection failed: no token available");
     return;
   }
-  return new HubConnectionBuilder()
+  if(connectionInstance){
+    return connectionInstance;
+  }
+  connectionInstance = new HubConnectionBuilder()
       .withUrl("/hubs/message", {
         //skipNegotiation: true,
         //transport: HttpTransportType.WebSockets,
@@ -42,6 +48,8 @@ const buildConnection = (): HubConnection | undefined => {
       })
       .withAutomaticReconnect()
       .build();
+
+  return connectionInstance;
 };
 
 const startPrivateChat = async (
@@ -102,6 +110,18 @@ const sendMessageToAdvertiser = async (
   );
   return response.data;
 };
+
+const markMessagesAsRead = async (connection: HubConnection, groupName: string) =>{
+  if (connection.state == HubConnectionState.Connected) {
+    try {
+      await connection.send("MarkMessagesAsRead", groupName);
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    console.log("No connection to server yet.");
+  }
+}
 
 const MessagingService = {
   buildConnection,

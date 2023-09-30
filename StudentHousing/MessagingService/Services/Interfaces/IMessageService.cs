@@ -10,4 +10,5 @@ public interface IMessageService
     Task<IEnumerable<PrivateChatDto>> GetPrivateChatsForUserAsync(int userId);
     Task<List<int>> GetChatPartnerIdsForUserAsync(int userId);
     Task<IEnumerable<MessageDto>> GetMessagesForPrivateChatAsync(string uniqueName);
+    Task<int?> MarkMessagesAsReadAsync(string privateChatUniqueName, int receiverId);
 }

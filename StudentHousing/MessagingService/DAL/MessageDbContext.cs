@@ -35,6 +35,10 @@ public class MessageDbContext: DbContext
                 .HasColumnName("timeStamp")
                 .HasDefaultValue(DateTime.Now);
 
+            entity.Property(e => e.IsUnread)
+                .HasColumnName("isUnread")
+                .IsRequired();
+
             entity.Property(e => e.PrivateChatId)
                 .HasColumnName("privateChatId")
                 .IsRequired();

@@ -6,6 +6,7 @@ public class Message
     public int SenderId { get; set; }
     public required string Content { get; set; }
     public DateTime TimeStamp { get; set; }
+    public bool IsUnread { get; set; }
     public int PrivateChatId { get; set; }
 
     private PrivateChat? _privateChat;

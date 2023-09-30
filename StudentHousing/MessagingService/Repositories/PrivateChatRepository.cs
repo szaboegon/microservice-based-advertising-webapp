@@ -21,7 +21,7 @@ public class PrivateChatRepository : IPrivateChatRepository
 
     public async Task<IEnumerable<PrivateChat>> GetByUserId(int userId)
     {
-        return await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
+        return await _dbcontext.PrivateChats.Include(p => p.Messages).Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
     }
 
     public async Task<List<int>> GetChatPartnerIdsByUserId(int userId)
@@ -50,6 +50,6 @@ public class PrivateChatRepository : IPrivateChatRepository
 
     public async Task<PrivateChat?> GetByUniqueName(string uniqueName)
     {
-        return await _dbcontext.PrivateChats.Where(c => c.UniqueName == uniqueName).SingleOrDefaultAsync();
+        return await _dbcontext.PrivateChats.Include(p => p.Messages).Where(c => c.UniqueName == uniqueName).SingleOrDefaultAsync();
     }
 }
