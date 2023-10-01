@@ -4,11 +4,21 @@ import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../services/messagingService";
 import { Message } from "../models/message";
 import { User } from "../models/user";
-import { Avatar, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Card,
+  Flex,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import MessageBubble from "../components/messaging/MessageBubble";
 import MessageInput from "../components/messaging/MessageInput";
 import UserService from "../services/userService";
 import PartnersSidebar from "../components/messaging/PartnersSidebar";
+import { NAVBAR_HEIGHT } from "../assets/literals/constants";
+import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
 
 interface IMessagesProps {
   user: User;
@@ -58,24 +68,27 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
 
   return (
     <>
-      <Flex>
-        <PartnersSidebar setSelectedChatPartner={setSelectedChatPartner} />
-        <VStack
-          flex="80%"
-          justifyContent="center"
-          alignItems="center"
-          height="100%"
-        >
-          {selectedChatPartner ? (
+      <Flex height={`calc(100vh - ${NAVBAR_HEIGHT})`} justifyContent="center">
+        <PartnersSidebar
+          setSelectedChatPartner={setSelectedChatPartner}
+          width={{ base: "30%", xl: "25%" }}
+        />
+        {selectedChatPartner ? (
+          <Card
+            height="100%"
+            variant="outline"
+            alignItems="center"
+            width={{ base: "70%", xl: "55%" }}
+            flexDir="column"
+          >
             <HStack
-              backgroundColor="brandGreen.300"
               width="100%"
               alignSelf="start"
-              borderBottom="0"
-              borderLeft="0"
-              borderColor="brandGreen.500"
-              borderWidth="medium"
-              height="70px"
+              height="80px"
+              shadow="lg"
+              padding="20px"
+              backgroundColor="gray.50"
+              zIndex="1"
             >
               <Avatar
                 name={`${selectedChatPartner.firstName} ${selectedChatPartner.lastName}`}
@@ -83,50 +96,60 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
               />
               <Text
                 fontSize="1.6rem"
-                textColor="white"
                 marginLeft="10px"
+                textColor="gray.600"
                 fontWeight="semibold"
               >
                 {`${selectedChatPartner.firstName} ${selectedChatPartner.lastName}`}
               </Text>
             </HStack>
-          ) : (
-            <></>
-          )}
-          <VStack
-            overflowY="scroll"
-            height={"calc(100vh - 260px)"}
-            width="100%"
-            paddingX="2rem"
-          >
-            {messages.map((m) => (
-              <MessageBubble
-                key={Date.now() * Math.random()}
-                message={m}
-                backgroundColor={
-                  m.senderId == UserService.getCurrentUser()?.id
-                    ? "brandGreen.500"
-                    : "brandYellow.500"
-                }
-                alignment={
-                  m.senderId == UserService.getCurrentUser()?.id
-                    ? "end"
-                    : "start"
-                }
-              ></MessageBubble>
-            ))}
-          </VStack>
-          <Flex position="fixed" bottom="20px">
-            {connection ? (
+
+            <VStack
+              overflowY="scroll"
+              width="100%"
+              height="100%"
+              padding="2rem"
+              backgroundColor="gray.50"
+            >
+              {messages.map((m) => (
+                <MessageBubble
+                  key={Date.now() * Math.random()}
+                  message={m}
+                  backgroundColor={
+                    m.senderId == UserService.getCurrentUser()?.id
+                      ? "brandGreen.500"
+                      : "gray.400"
+                  }
+                  alignment={
+                    m.senderId == UserService.getCurrentUser()?.id
+                      ? "end"
+                      : "start"
+                  }
+                ></MessageBubble>
+              ))}
+            </VStack>
+            <Flex width="100%">
               <MessageInput
                 connection={connection}
                 groupName={groupName}
               ></MessageInput>
-            ) : (
               <></>
-            )}
-          </Flex>
-        </VStack>
+            </Flex>
+          </Card>
+        ) : (
+          <Card
+            height="100%"
+            variant="outline"
+            alignItems="center"
+            justifyContent="center"
+            width="55%"
+            flexDir="column"
+            backgroundColor="gray.50"
+          >
+            <Text fontSize="1.1rem">Select a chat to show messages</Text>
+          </Card>
+        )}
+        <RelatedAdvertisementInfo width={{ base: "0%", xl: "25%" }} />
       </Flex>
     </>
   );

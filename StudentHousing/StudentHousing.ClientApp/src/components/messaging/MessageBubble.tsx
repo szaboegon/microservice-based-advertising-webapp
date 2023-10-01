@@ -19,7 +19,7 @@ const MessageBubble: React.FunctionComponent<IMessageBubbleProps> = ({
         backgroundColor={backgroundColor}
         alignSelf={alignment}
         borderRadius="20"
-        padding="0.4rem"
+        padding="0.5rem"
       >
         <Text textColor="white" maxWidth="500px" whiteSpace="pre-wrap">
           {message.content}
