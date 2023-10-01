@@ -88,6 +88,21 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
             justifyContent="center"
             alignItems="center"
           >
+            <Button
+              as={Link}
+              to="/newadvertisement"
+              minH="50px"
+              background="brandYellow.600"
+              textColor="white"
+              leftIcon={
+                <Box className="material-icons" textColor="white">
+                  add_home
+                </Box>
+              }
+              _hover={{ background: "brandYellow.1000" }}
+            >
+              Add Advertisement
+            </Button>
             <Box position="relative">
               <IconButton
                 as={Link}
