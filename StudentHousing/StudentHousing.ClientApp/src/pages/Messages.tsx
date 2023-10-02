@@ -4,19 +4,11 @@ import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../services/messagingService";
 import { Message } from "../models/message";
 import { User } from "../models/user";
-import {
-  Avatar,
-  Box,
-  Card,
-  Flex,
-  HStack,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Avatar, Card, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import MessageBubble from "../components/messaging/MessageBubble";
 import MessageInput from "../components/messaging/MessageInput";
 import UserService from "../services/userService";
-import PartnersSidebar from "../components/messaging/PartnersSidebar";
+import UserChatsSidebar from "../components/messaging/UserChatsSidebar";
 import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
 
@@ -27,6 +19,7 @@ interface IMessagesProps {
 const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
   const [groupName, setGroupName] = useState<string>("");
+  const [advertisementId, setAdvertisementId] = useState<number | undefined>();
   const [messages, setMessages] = useState<Message[]>([]);
 
   const [selectedChatPartner, setSelectedChatPartner] = useState<User>();
@@ -39,13 +32,14 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   }, [selectedChatPartner]);
 
   useEffect(() => {
-    if (!selectedChatPartner) return;
+    if (!selectedChatPartner || !advertisementId) return;
     if (connection) {
       MessagingService.startConnection(connection)
         .then(async (result) => {
           const uniqueName = await MessagingService.startPrivateChat(
             connection,
             selectedChatPartner.id,
+            advertisementId,
           );
           setGroupName(uniqueName);
           console.log("Name " + uniqueName);
@@ -66,12 +60,17 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
     setMessages((messages) => [...messages, message]);
   };
 
+  const onChatSelected = (chatPartner: User, advertisementId: number) => {
+    setSelectedChatPartner(chatPartner);
+    setAdvertisementId(advertisementId);
+  };
+
   return (
     <>
       <Flex height={`calc(100vh - ${NAVBAR_HEIGHT})`} justifyContent="center">
-        <PartnersSidebar
-          setSelectedChatPartner={setSelectedChatPartner}
-          width={{ base: "30%", xl: "25%" }}
+        <UserChatsSidebar
+          selectChat={onChatSelected}
+          width={{ base: "30%", xl: "20%" }}
         />
         {selectedChatPartner ? (
           <Card
@@ -142,14 +141,17 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
             variant="outline"
             alignItems="center"
             justifyContent="center"
-            width="55%"
+            width={{ base: "70%", xl: "55%" }}
             flexDir="column"
             backgroundColor="gray.50"
           >
             <Text fontSize="1.1rem">Select a chat to show messages</Text>
           </Card>
         )}
-        <RelatedAdvertisementInfo width={{ base: "0%", xl: "25%" }} />
+        <RelatedAdvertisementInfo
+          advertisementId={advertisementId}
+          width={{ base: "0%", xl: "25%" }}
+        />
       </Flex>
     </>
   );

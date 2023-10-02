@@ -40,16 +40,17 @@ public class MessageService : IMessageService
         return message.ToDto();
     }
 
-    public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id)
+    public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id, int advertisementId)
     {
-        var privateChat = await _privateChatRepository.GetByUserIds(user1Id, user2Id);
+        var privateChat = await _privateChatRepository.GetByUserAndAdvertisementIds(user1Id, user2Id, advertisementId);
         if (privateChat != null) return privateChat;
 
         privateChat = new PrivateChat
         {
             User1Id = user1Id,
             User2Id = user2Id,
-            UniqueName = $"{user1Id}-{user2Id}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}"
+            UniqueName = $"{user1Id}-{user2Id}-{advertisementId}-{DateTime.UtcNow:yyyy-MM-dd-hh-mm-ss}",
+            AdvertisementId = advertisementId
         };
 
         await _privateChatRepository.Add(privateChat);
@@ -57,10 +58,10 @@ public class MessageService : IMessageService
         return privateChat;
     }
 
-    public async Task<IEnumerable<PrivateChatDto>> GetPrivateChatsForUserAsync(int userId)
+    public async Task<IEnumerable<UserChatInfoDto>> GetUserChatsAsync(int userId)
     {
         var privateChats = await _privateChatRepository.GetByUserId(userId);
-        return privateChats.Select(p => p.ToDto());
+        return privateChats.Select(p => p.ToInfoDto(userId));
     }
 
     public async Task<List<int>> GetChatPartnerIdsForUserAsync(int userId)

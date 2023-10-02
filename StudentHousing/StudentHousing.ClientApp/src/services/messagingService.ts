@@ -2,6 +2,8 @@ import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import InterceptorApiClient from "../helpers/interceptorApiClient";
 import TokenHelper from "../helpers/tokenHelper";
+import { SendMessageRequest } from "../models/requests/sendMessageRequest";
+import { UserChatDto } from "../models/userChatDto";
 
 const apiClient = InterceptorApiClient.createInstance("/api/message", {
   "Content-type": "application/json",
@@ -45,10 +47,15 @@ const startConnection = async (connection: HubConnection) => {
 const startPrivateChat = async (
   connection: HubConnection,
   otherUserId: number,
+  advertisementId: number,
 ): Promise<string> => {
   let groupName: string = "";
   try {
-    groupName = await connection.invoke("StartPrivateChat", otherUserId);
+    groupName = await connection.invoke(
+      "StartPrivateChat",
+      otherUserId,
+      advertisementId,
+    );
   } catch (e) {
     console.log(e);
   }
@@ -71,16 +78,16 @@ const sendMessage = async (
   }
 };
 
-const getPrivateChatsForUser = async () => {
+const getPrivateChatsForUser = async (): Promise<UserChatDto> => {
   const response = await apiClient.get(`/user_chats`, {});
   return response.data;
 };
 
-const getChatPartnersForUser = async () => {
+/*const getChatPartnersForUser = async () => {
   const response = await apiClient.get<Array<number>>(`/user_partners`, {});
   console.log(response.data);
   return response.data;
-};
+};*/
 
 const getMessagesForPrivateChat = async (uniqueName: string) => {
   const response = await apiClient.get(`/messages/${uniqueName}`, {});
@@ -89,12 +96,15 @@ const getMessagesForPrivateChat = async (uniqueName: string) => {
 
 const sendMessageToAdvertiser = async (
   receiverId: number,
+  advertisementId: number,
   messageContent: string,
 ) => {
-  const response = await apiClient.post(
-    `/send_message/${receiverId}`,
-    messageContent,
-  );
+  const requestData: SendMessageRequest = {
+    messageContent: messageContent,
+    advertisementId: advertisementId,
+    receiverId: receiverId,
+  };
+  const response = await apiClient.post("/send_message", requestData);
   return response.data;
 };
 
@@ -126,7 +136,6 @@ const MessagingService = {
   sendMessage,
   sendMessageToAdvertiser,
   getPrivateChatsForUser,
-  getChatPartnersForUser,
   getMessagesForPrivateChat,
   markMessagesAsRead,
   getUnreadMessageCount,

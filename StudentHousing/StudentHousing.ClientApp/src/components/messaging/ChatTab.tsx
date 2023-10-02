@@ -1,27 +1,26 @@
 import { Avatar, Card, Flex, Heading, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { User } from "../../models/user";
-import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 
 interface IChatTab {
   chatPartner: User;
-  setSelectedChatPartner: React.Dispatch<
-    React.SetStateAction<User | undefined>
-  >;
+  advertisementId: number;
   isSelected?: boolean;
+  selectChat: (chatPartner: User, advertisementId: number) => void;
 }
 
 const ChatTab: React.FunctionComponent<IChatTab> = ({
   isSelected,
   chatPartner,
-  setSelectedChatPartner,
+  advertisementId,
+  selectChat,
 }) => {
   return (
     <>
       <Flex
         padding="5px"
         width="100%"
-        onClick={() => setSelectedChatPartner(chatPartner)}
+        onClick={() => selectChat(chatPartner, advertisementId)}
         flexDirection="row"
         alignItems="center"
         background={isSelected ? "brandGreen.500" : "white"}

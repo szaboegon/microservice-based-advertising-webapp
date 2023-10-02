@@ -22,14 +22,14 @@ public class MessageController : ControllerBase
 
     [HttpGet]
     [Route("user_chats")]
-    public async Task<ActionResult<IEnumerable<PrivateChatDto>>> GetPrivateChatsByUser() 
+    public async Task<ActionResult<IEnumerable<UserChatInfoDto>>> GetPrivateChatsByUser() 
     {
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
-            var chats = await _messageService.GetPrivateChatsForUserAsync(userId);
+            var chats = await _messageService.GetUserChatsAsync(userId);
             return Ok(chats);
         }
         catch (SecurityTokenException ex)
@@ -38,51 +38,35 @@ public class MessageController : ControllerBase
         }
     }
 
-    [HttpGet]
-    [Route("user_partners")]
-    public async Task<ActionResult<List<int>>> GetChatPartnersByUser()
-    {
-        try
-        {
-            var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+    //[HttpGet]
+    //[Route("user_partners")]
+    //public async Task<ActionResult<List<int>>> GetChatPartnersByUser()
+    //{
+    //    try
+    //    {
+    //        var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+    //        var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
-            var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(userId);
-            return Ok(partnerIds);
-        }
-        catch (SecurityTokenException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
+    //        var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(userId);
+    //        return Ok(partnerIds);
+    //    }
+    //    catch (SecurityTokenException ex)
+    //    {
+    //        return BadRequest(ex.Message);
+    //    }
+    //}
 
     [HttpGet]
     [Route("messages/{uniqueName}")]
     public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForPrivateChat(string uniqueName)
     {
-        try
-        {
-            var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-            var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
-            var updateResult = await _messageService.MarkMessagesAsReadAsync(uniqueName, userId);
-
-            if (updateResult == null)
-            {
-                return NotFound("Private chat with given name does not exist.");
-            }
-
-            var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
-            return Ok(messages);
-        }
-        catch (SecurityTokenException ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
+        return Ok(messages);
     }
 
     [HttpPost]
-    [Route("send_message/{receiverId:int}")]
-    public async Task<ActionResult> SendMessageToUser(int receiverId, [FromBody]string messageContent)
+    [Route("send_message")]
+    public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequest messageCreate)
     {
         try
         {
@@ -90,8 +74,8 @@ public class MessageController : ControllerBase
             var senderId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var privateChat =
-                await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, receiverId);
-            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName, messageContent);
+                await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, messageCreate.ReceiverId, messageCreate.AdvertisementId);
+            var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName, messageCreate.MessageContent);
 
             return CreatedAtAction(nameof(GetMessagesForPrivateChat), new{ uniqueName = privateChat.UniqueName }, message);
         }

@@ -42,10 +42,11 @@ public class PrivateChatRepository : IPrivateChatRepository
         return ids;
     }
 
-    public async Task<PrivateChat?> GetByUserIds(int user1Id, int user2Id)
+    public async Task<PrivateChat?> GetByUserAndAdvertisementIds(int user1Id, int user2Id, int advertisementId)
     {
         return await _dbcontext.PrivateChats
-            .Where(c => (c.User1Id == user1Id && c.User2Id == user2Id) || (c.User1Id == user2Id && c.User2Id == user1Id)).SingleOrDefaultAsync();
+            .Where(c => (c.User1Id == user1Id && c.User2Id == user2Id) || (c.User1Id == user2Id && c.User2Id == user1Id))
+            .Where(c => c.AdvertisementId == advertisementId).SingleOrDefaultAsync();
     }
 
     public async Task<PrivateChat?> GetByUniqueName(string uniqueName)

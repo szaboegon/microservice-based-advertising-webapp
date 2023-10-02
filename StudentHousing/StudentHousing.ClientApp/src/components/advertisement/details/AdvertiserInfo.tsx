@@ -25,11 +25,13 @@ import userService from "../../../services/userService";
 
 interface IAdvertiserInfoProps {
   advertiser: User | undefined;
+  advertisementId: number;
   isLoggedIn: boolean;
 }
 
 const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
   advertiser,
+  advertisementId,
   isLoggedIn,
 }) => {
   const { handleSubmit, register, reset } = useForm<MessageInputData>();
@@ -44,7 +46,8 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
     mutationFn: async (data: MessageInputData) => {
       if (!advertiser) return;
       return await MessagingService.sendMessageToAdvertiser(
-        advertiser?.id,
+        advertiser.id,
+        advertisementId,
         data.content,
       );
     },

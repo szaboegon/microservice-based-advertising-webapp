@@ -68,6 +68,10 @@ public class MessageDbContext: DbContext
             entity.Property(e => e.User2Id)
                 .HasColumnName("user2Id")
                 .IsRequired();
+
+            entity.Property(e => e.AdvertisementId)
+                .HasColumnName("advertisementId")
+                .IsRequired();
         });
 
     }

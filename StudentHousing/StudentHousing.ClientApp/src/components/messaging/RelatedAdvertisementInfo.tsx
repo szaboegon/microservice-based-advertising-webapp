@@ -12,12 +12,13 @@ import UserService from "../../services/userService";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 
 interface RelatedAdvertisementInfo {
+  advertisementId: number | undefined;
   width?: any;
 }
 
 const RelatedAdvertisementInfo: React.FunctionComponent<
   RelatedAdvertisementInfo
-> = ({ width }) => {
+> = ({ advertisementId, width }) => {
   return (
     <Card
       width={width}

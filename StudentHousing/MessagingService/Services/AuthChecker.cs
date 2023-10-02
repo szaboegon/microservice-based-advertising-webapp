@@ -17,7 +17,7 @@ public class AuthChecker : IAuthChecker
 
             return true;
         }
-        catch(HttpRequestException ex)
+        catch(HttpRequestException)
         {
             return false;
         }

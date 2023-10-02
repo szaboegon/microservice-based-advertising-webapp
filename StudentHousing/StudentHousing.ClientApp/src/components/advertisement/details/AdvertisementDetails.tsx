@@ -63,7 +63,11 @@ const AdvertisementDetails: React.FunctionComponent<
               src={base64Image}
             ></Image>
           </Flex>
-          <AdvertiserInfo advertiser={advertiser} isLoggedIn={isLoggedIn} />
+          <AdvertiserInfo
+            advertiser={advertiser}
+            advertisementId={advertisement.id}
+            isLoggedIn={isLoggedIn}
+          />
         </Flex>
         <Card marginTop="20px" variant="elevated" padding="20px">
           <Heading sx={detailsHeadingStyles} marginY="1rem">

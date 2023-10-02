@@ -10,34 +10,32 @@ import { ErrorAlert } from "../alerts/ErrorAlert";
 import { WarningAlert } from "../alerts/WarningAlert";
 import UserService from "../../services/userService";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
+import { UserChatDto } from "../../models/userChatDto";
+import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 
 interface IPartnersSidebarProps {
-  setSelectedChatPartner: React.Dispatch<
-    React.SetStateAction<User | undefined>
-  >;
+  selectChat: (chatPartner: User, advertisementId: number) => void;
   width?: any;
 }
 
-const PartnersSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
-  setSelectedChatPartner,
+const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
+  selectChat,
   width,
 }) => {
-  const [chatPartnerIds, setChatPartnerIds] = useState<number[] | undefined>(
-    undefined,
-  );
+  const [chats, setChats] = useState<UserChatDto[]>([]);
   const [chatPartners, setChatPartners] = useState<User[]>([]);
   const {
-    isSuccess: isSuccessPartnerIds,
-    isLoading: isLoadingPartnerIds,
-    isError: isErrorPartnerIds,
-    isRefetching: isRefetchingPartnerIds,
-    error: errorPartnerIds,
+    isSuccess: isSuccessChats,
+    isLoading: isLoadingChats,
+    isError: isErrorChats,
+    isRefetching: isRefetchingChats,
+    error: errorChats,
   } = useQuery({
-    queryKey: ["partnerIds"],
+    queryKey: ["chats"],
     queryFn: async () => {
-      return await MessagingService.getChatPartnersForUser();
+      return await MessagingService.getPrivateChatsForUser();
     },
-    onSuccess: (data: number[]) => setChatPartnerIds(data),
+    onSuccess: (data: UserChatDto[]) => setChats(data),
     refetchOnWindowFocus: false,
   });
 
@@ -50,6 +48,7 @@ const PartnersSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
     queryKey: ["userDetails"],
     queryFn: async () => {
       const queryParams = new URLSearchParams();
+      const chatPartnerIds = chats?.map((c) => c.partnerId);
       chatPartnerIds?.forEach((id) => {
         queryParams.append("id", id.toString());
       });
@@ -57,7 +56,7 @@ const PartnersSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
     },
     onSuccess: (data: User[]) => setChatPartners(data),
     refetchOnWindowFocus: false,
-    enabled: !!chatPartnerIds,
+    enabled: chats.length > 0,
   });
 
   return (
@@ -79,26 +78,30 @@ const PartnersSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
                 <ChatTab
                   key={partner.id}
                   chatPartner={partner}
-                  setSelectedChatPartner={setSelectedChatPartner}
+                  advertisementId={
+                    chats.find((c) => c.partnerId == partner.id)
+                      ?.advertisementId!
+                  }
+                  selectChat={selectChat}
                 />
               ))}
-            {(isLoadingPartnerIds ||
-              isRefetchingPartnerIds ||
+            {(isLoadingChats ||
+              isRefetchingChats ||
               isLoadingPartnerData ||
               isRefetchingPartnerData) &&
               chatPartners.length <= 0 && <Spinner />}
 
-            {(isErrorPartnerIds || isErrorPartnerData) &&
-              !isLoadingPartnerIds &&
-              !isRefetchingPartnerIds &&
-              errorPartnerIds instanceof AxiosError && (
-                <ErrorAlert error={errorPartnerIds} />
+            {(isErrorChats || isErrorPartnerData) &&
+              !isLoadingChats &&
+              !isRefetchingChats &&
+              errorChats instanceof AxiosError && (
+                <ErrorAlert error={errorChats} />
               )}
 
             {isSuccessPartnerData &&
-              isSuccessPartnerIds &&
+              isSuccessChats &&
               chatPartners.length <= 0 &&
-              !isRefetchingPartnerIds &&
+              !isRefetchingChats &&
               !isRefetchingPartnerData && (
                 <WarningAlert message="You have no private chats yet." />
               )}
@@ -109,4 +112,4 @@ const PartnersSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
   );
 };
 
-export default PartnersSidebar;
+export default UserChatsSidebar;
