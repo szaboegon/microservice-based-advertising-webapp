@@ -53,7 +53,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
         })
         .catch((e) => console.log("Connection failed: ", e));
     }
-  }, [connection]);
+  }, [connection, selectedChatPartner, advertisementId]);
 
   const receiveMessage = (message: Message) => {
     console.log("Received: " + message);

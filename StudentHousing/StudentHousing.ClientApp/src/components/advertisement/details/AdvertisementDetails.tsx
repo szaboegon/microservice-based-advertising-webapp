@@ -7,6 +7,7 @@ import {
   HStack,
   Badge,
   Card,
+  Spinner,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useState, useEffect } from "react";
@@ -16,6 +17,11 @@ import ImageService from "../../../services/imageService";
 import UserService from "../../../services/userService";
 import { detailsHeadingStyles } from "../../../styles/detailsHeadingStyles";
 import AdvertiserInfo from "./AdvertiserInfo";
+import { useQuery } from "react-query";
+import AdvertisementService from "../../../services/advertisementService";
+import { PagedQueryResponse } from "../../../models/pagedQueryResponse";
+import { AdvertisementCardDto } from "../../../models/advertisement/advertisementCardDto";
+import { ErrorAlert } from "../../alerts/ErrorAlert";
 
 interface IAdvertisementDetailsProps {
   advertisement: AdvertisementDetailsDto;
@@ -26,19 +32,7 @@ const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
 > = ({ advertisement, isLoggedIn }) => {
   let base64Image = ImageService.convertToBase64Image(advertisement.image);
-  const [advertiser, setAdvertiser] = useState<User>();
 
-  useEffect(() => {
-    fetchAdvertisement();
-  }, []);
-
-  const fetchAdvertisement = async () => {
-    //TODO add react query
-    const searchParams = new URLSearchParams();
-    searchParams.append("id", advertisement.advertiserId.toString());
-    let userDetails = await UserService.getUserDetails(searchParams);
-    setAdvertiser(userDetails.at(0));
-  };
   return (
     <>
       <Box width={{ base: "100%", lg: "75%", xl: "60%" }}>
@@ -64,7 +58,7 @@ const AdvertisementDetails: React.FunctionComponent<
             ></Image>
           </Flex>
           <AdvertiserInfo
-            advertiser={advertiser}
+            advertiserId={advertisement.advertiserId}
             advertisementId={advertisement.id}
             isLoggedIn={isLoggedIn}
           />

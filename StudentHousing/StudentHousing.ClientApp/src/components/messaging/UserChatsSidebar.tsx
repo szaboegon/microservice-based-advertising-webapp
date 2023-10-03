@@ -72,16 +72,18 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
         zIndex="2"
       >
         <VStack width="100%">
-          <Flex justifyContent="center" alignItems="center" width="100%">
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            flexDirection="column"
+            width="100%"
+          >
             {isSuccessPartnerData &&
-              chatPartners.map((partner) => (
+              chats.map((chat) => (
                 <ChatTab
-                  key={partner.id}
-                  chatPartner={partner}
-                  advertisementId={
-                    chats.find((c) => c.partnerId == partner.id)
-                      ?.advertisementId!
-                  }
+                  key={chat.uniqueName}
+                  chatPartner={chatPartners.find((p) => p.id == chat.partnerId)}
+                  advertisementId={chat.advertisementId}
                   selectChat={selectChat}
                 />
               ))}

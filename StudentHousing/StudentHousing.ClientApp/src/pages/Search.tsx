@@ -29,28 +29,22 @@ export const Search = () => {
 
   const navigate = useNavigate();
 
-  const {
-    isSuccess,
-    isLoading,
-    isError,
-    isRefetching,
-    error,
-    refetch: getAdvertisements,
-  } = useQuery({
-    queryKey: ["advertismentcards"],
-    queryFn: async () => {
-      console.log(searchParams);
-      return await AdvertisementService.findBySearchParams(searchParams);
-    },
-    onSuccess: (data: PagedQueryResponse<AdvertisementCardDto>) => {
-      setAdvertisements(data.items);
-      setTotalPages(data.totalPages);
-    },
-    refetchOnWindowFocus: false,
-  });
+  const { isSuccess, isLoading, isError, isRefetching, error, refetch } =
+    useQuery({
+      queryKey: ["advertismentcards", searchParams],
+      queryFn: async () => {
+        console.log(searchParams);
+        return await AdvertisementService.findBySearchParams(searchParams);
+      },
+      onSuccess: (data: PagedQueryResponse<AdvertisementCardDto>) => {
+        setAdvertisements(data.items);
+        setTotalPages(data.totalPages);
+      },
+      refetchOnWindowFocus: false,
+    });
 
   useEffect(() => {
-    getAdvertisements();
+    refetch();
   }, [searchParams]);
 
   const onSearchParamsChanged = (newParams: AdvertisementSearchParamsDto) => {

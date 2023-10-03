@@ -91,7 +91,7 @@ public class AdvertisementRepository : IAdvertisementRepository
             .Include(a => a.Category)
             .Include(a => a.Images)
             .Where(a => (string.IsNullOrEmpty(query.CategoryName) || a.Category.Name == query.CategoryName))
-            .Where(a => (string.IsNullOrEmpty(query.City) || a.Address.City == query.City))
+            .Where(a => (string.IsNullOrEmpty(query.City) || (a.Address.City.ToLower()).Contains(query.City.ToLower())))
             .Where(a => (query.NumberOfRooms == null || Equals(a.NumberOfRooms, query.NumberOfRooms)))
             .Where(a => (query.MinSize == null || a.Size >= query.MinSize))
             .Where(a => (query.MaxSize == null || a.Size <= query.MaxSize))
