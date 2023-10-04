@@ -7,21 +7,20 @@ import TokenHelper from "../../helpers/tokenHelper";
 import InterceptorApiClient from "../../helpers/interceptorApiClient";
 import UserService from "../../services/userService";
 import { AxiosError } from "axios";
+import useAccessToken from "../../hooks/useAccessToken";
 
 interface AuthVerifyProps {
   logout: Function;
 }
-
 export const AuthVerify: React.FunctionComponent<AuthVerifyProps> = ({
   logout,
 }) => {
   let location = useLocation();
+  const { accessToken, saveAccessToken } = useAccessToken();
 
   useEffect(() => {
-    const token = TokenHelper.getLocalAccessToken();
-
-    if (token) {
-      const decodedJwt: TokenClaims = jwtDecode(token);
+    if (accessToken) {
+      const decodedJwt: TokenClaims = jwtDecode(accessToken);
 
       if (decodedJwt.exp * 1000 < Date.now()) {
         console.log("authVerify triggered");

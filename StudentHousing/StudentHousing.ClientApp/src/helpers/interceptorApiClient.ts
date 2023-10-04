@@ -28,7 +28,7 @@ const createInstance = (
     (config) => {
       const accessToken = TokenHelper.getLocalAccessToken();
       if (accessToken) {
-        config.headers.setAuthorization("Bearer " + JSON.parse(accessToken));
+        config.headers.setAuthorization("Bearer " + accessToken);
       }
       return config;
     },

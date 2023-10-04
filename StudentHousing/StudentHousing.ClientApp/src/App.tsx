@@ -15,7 +15,10 @@ import { User } from "./models/user";
 import { AuthVerify } from "./components/auth/AuthVerify";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
+import { createSignalRContext } from "react-signalr";
+import useAccessToken from "./hooks/useAccessToken";
 
+const SignalRContext = createSignalRContext();
 function App() {
   const theme = extendTheme({
     colors: {
@@ -58,6 +61,8 @@ function App() {
   });
 
   const [user, setUser] = useState<User | undefined>(undefined);
+  const { accessToken, saveAccessToken } = useAccessToken();
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -74,28 +79,36 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <Navbar logout={logout} user={user}></Navbar>
-      <Routes>
-        <Route
-          path="/newadvertisement"
-          element={<PrivateRoute isLoggedIn={!!user} />}
-        >
-          <Route path="/newadvertisement" element={<NewAdvertisement />} />
-        </Route>
-        <Route path="/profile" element={<PrivateRoute isLoggedIn={!!user} />}>
-          {user && <Route path="/profile" element={<Profile user={user} />} />}
-        </Route>
-        <Route path="/messages" element={<PrivateRoute isLoggedIn={!!user} />}>
-          {user && (
-            <Route path="/messages" element={<Messages user={user} />} />
-          )}
-        </Route>
-        <Route path="/" element={<Home />} />
-        <Route path="/search/*" element={<Search />} />
-        <Route path="/details/:id" element={<Details isLoggedIn={!!user} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/*" element={<Navigate to="/login" replace />} />
-      </Routes>
+        <Routes>
+          <Route
+            path="/newadvertisement"
+            element={<PrivateRoute isLoggedIn={!!user} />}
+          >
+            <Route path="/newadvertisement" element={<NewAdvertisement />} />
+          </Route>
+          <Route path="/profile" element={<PrivateRoute isLoggedIn={!!user} />}>
+            {user && (
+              <Route path="/profile" element={<Profile user={user} />} />
+            )}
+          </Route>
+          <Route
+            path="/messages"
+            element={<PrivateRoute isLoggedIn={!!user} />}
+          >
+            {user && (
+              <Route path="/messages" element={<Messages user={user} />} />
+            )}
+          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/search/*" element={<Search />} />
+          <Route
+            path="/details/:id"
+            element={<Details isLoggedIn={!!user} />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/*" element={<Navigate to="/login" replace />} />
+        </Routes>
       <AuthVerify logout={logout} />
     </ChakraProvider>
   );

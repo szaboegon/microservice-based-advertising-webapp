@@ -83,7 +83,7 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
                 <ChatTab
                   key={chat.uniqueName}
                   chatPartner={chatPartners.find((p) => p.id == chat.partnerId)}
-                  advertisementId={chat.advertisementId}
+                  chat={chat}
                   selectChat={selectChat}
                 />
               ))}

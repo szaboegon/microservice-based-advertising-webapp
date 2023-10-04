@@ -28,14 +28,8 @@ const checkAuth = async (): Promise<boolean> => {
 const login = async (loginData: LoginRequest): Promise<AuthTokens> => {
   return await apiClient.post("/login", loginData).then((response) => {
     if (response.data.accessToken && response.data.refreshToken) {
-      localStorage.setItem(
-        "accessToken",
-        JSON.stringify(response.data.accessToken),
-      );
-      localStorage.setItem(
-        "refreshToken",
-        JSON.stringify(response.data.refreshToken),
-      );
+      TokenHelper.setLocalAccessToken(response.data.accessToken);
+      TokenHelper.setLocalRefreshToken(response.data.refreshToken);
     }
 
     return response.data;

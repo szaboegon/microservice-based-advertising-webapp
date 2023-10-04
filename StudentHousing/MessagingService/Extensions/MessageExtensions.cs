@@ -12,7 +12,7 @@ public static class MessageExtensions
             Id = message.Id,
             SenderId = message.SenderId,
             Content = message.Content,
-            PrivateChatId = message.PrivateChatId,
+            PrivateChatUniqueName = message.PrivateChat.UniqueName,
             TimeStamp = message.TimeStamp,
         };
     }
