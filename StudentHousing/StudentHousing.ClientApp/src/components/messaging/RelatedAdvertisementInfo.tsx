@@ -30,12 +30,12 @@ import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
 
 interface RelatedAdvertisementInfo {
   advertisementId: number | undefined;
-  width?: any;
+  flex?: any;
 }
 
 const RelatedAdvertisementInfo: React.FunctionComponent<
   RelatedAdvertisementInfo
-> = ({ advertisementId, width }) => {
+> = ({ advertisementId, flex }) => {
   const [advertisement, setAdvertisement] = useState<AdvertisementDetailsDto>();
   const [base64Image, setBase64Image] = useState<string>();
 
@@ -61,7 +61,7 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
 
   return (
     <Card
-      width={width}
+      flex={flex}
       display={{ base: "none", xl: "flex" }}
       variant="elevated"
       zIndex="2"

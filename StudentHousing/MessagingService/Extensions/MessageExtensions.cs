@@ -1,4 +1,5 @@
-﻿using MessagingService.DataTransferObjects;
+﻿using System.Globalization;
+using MessagingService.DataTransferObjects;
 using MessagingService.Models;
 
 namespace MessagingService.Extensions;
@@ -13,7 +14,7 @@ public static class MessageExtensions
             SenderId = message.SenderId,
             Content = message.Content,
             PrivateChatUniqueName = message.PrivateChat.UniqueName,
-            TimeStamp = message.TimeStamp,
+            TimeStamp = message.TimeStamp.ToUniversalTime().ToString("O"),
         };
     }
 }

@@ -1,4 +1,12 @@
-import { Card, Flex, Heading, Spinner, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  Flex,
+  Heading,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import * as React from "react";
 import { User } from "../../models/user";
@@ -9,21 +17,23 @@ import { AxiosError } from "axios";
 import { ErrorAlert } from "../alerts/ErrorAlert";
 import { WarningAlert } from "../alerts/WarningAlert";
 import UserService from "../../services/userService";
-import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 import { UserChatDto } from "../../models/userChatDto";
-import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
+import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
+import { detailsHeadingStyles } from "../../styles/detailsHeadingStyles";
 
 interface IPartnersSidebarProps {
-  selectChat: (chatPartner: User, advertisementId: number) => void;
-  width?: any;
+  notifyChatSelected: (chat: UserChatDto, partner: User) => void;
+  flex?: any;
 }
 
 const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
-  selectChat,
-  width,
+  notifyChatSelected,
+  flex,
 }) => {
+  const [selectedChat, setSelectedChat] = useState<UserChatDto>();
   const [chats, setChats] = useState<UserChatDto[]>([]);
   const [chatPartners, setChatPartners] = useState<User[]>([]);
+
   const {
     isSuccess: isSuccessChats,
     isLoading: isLoadingChats,
@@ -59,18 +69,27 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
     enabled: chats.length > 0,
   });
 
+  const onChatSelected = (chat: UserChatDto, partner: User) => {
+    setSelectedChat(chat);
+    notifyChatSelected(chat, partner);
+  };
+
   return (
     <>
       <Card
         justifyContent="start"
         alignItems="center"
-        paddingY="80px"
         variant="elevated"
-        width={width}
+        flex={flex}
         height="100%"
         boxShadow="3px 3px 5px #d3d3d3"
         zIndex="2"
       >
+        <Box width="100%" height="80px">
+          <Heading margin="15px" textColor="gray.600" fontSize="1.8rem">
+            Chats
+          </Heading>
+        </Box>
         <VStack width="100%">
           <Flex
             justifyContent="center"
@@ -84,7 +103,8 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
                   key={chat.uniqueName}
                   chatPartner={chatPartners.find((p) => p.id == chat.partnerId)}
                   chat={chat}
-                  selectChat={selectChat}
+                  notifyChatSelected={onChatSelected}
+                  isSelected={chat.uniqueName == selectedChat?.uniqueName}
                 />
               ))}
             {(isLoadingChats ||

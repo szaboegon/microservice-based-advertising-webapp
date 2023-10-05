@@ -11,27 +11,26 @@ import UserChatsSidebar from "../components/messaging/UserChatsSidebar";
 import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
 import { useSignalR } from "../hooks/useSignalR";
+import { UserChatDto } from "../models/userChatDto";
 
 interface IMessagesProps {
   user: User;
 }
 
 const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
-  const [groupName, setGroupName] = useState<string>("");
-  const [advertisementId, setAdvertisementId] = useState<number | undefined>();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [selectedChatPartner, setSelectedChatPartner] = useState<User>();
+  const [selectedChat, setSelectedChat] = useState<UserChatDto>();
+  const [partner, setPartner] = useState<User>();
 
   const connection = useSignalR();
 
   useEffect(() => {
-    if (connection && selectedChatPartner && advertisementId) {
+    if (connection && selectedChat && partner) {
       MessagingService.startPrivateChat(
         connection,
-        selectedChatPartner.id,
-        advertisementId,
+        partner.id,
+        selectedChat.advertisementId,
       ).then((uniqueName) => {
-        setGroupName(uniqueName);
         MessagingService.getMessagesForPrivateChat(uniqueName).then(
           (prevMessages) => {
             setMessages(prevMessages);
@@ -39,38 +38,41 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
         );
       });
     }
-  }, [connection, selectedChatPartner, advertisementId]);
+  }, [connection, selectedChat, partner]);
 
   useEffect(() => {
     connection &&
       connection.on("ReceiveMessage", (message: Message) => {
-        receiveMessage(message);
+        onMessageReceived(message);
       });
   }, [connection]);
 
-  const receiveMessage = (message: Message) => {
-    console.log("Received: " + message);
+  const onMessageReceived = (message: Message) => {
     setMessages((messages) => [...messages, message]);
   };
 
-  const onChatSelected = (chatPartner: User, advertisementId: number) => {
-    setSelectedChatPartner(chatPartner);
-    setAdvertisementId(advertisementId);
+  const onChatSelected = (chat: UserChatDto, partner: User) => {
+    setSelectedChat(chat);
+    setPartner(partner);
   };
 
   return (
     <>
-      <Flex height={`calc(100vh - ${NAVBAR_HEIGHT})`} justifyContent="center">
+      <Flex
+        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+        justifyContent="center"
+        flexDirection="row"
+      >
         <UserChatsSidebar
-          selectChat={onChatSelected}
-          width={{ base: "30%", xl: "20%" }}
+          notifyChatSelected={onChatSelected}
+          flex="0 0 340px"
         />
-        {selectedChatPartner ? (
+        {partner && selectedChat ? (
           <Card
             height="100%"
             variant="outline"
             alignItems="center"
-            width={{ base: "70%", xl: "55%" }}
+            flex="1 0"
             flexDir="column"
           >
             <HStack
@@ -83,7 +85,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
               zIndex="1"
             >
               <Avatar
-                name={`${selectedChatPartner.firstName} ${selectedChatPartner.lastName}`}
+                name={`${partner.firstName} ${partner.lastName}`}
                 size="md"
               />
               <Text
@@ -92,7 +94,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
                 textColor="gray.600"
                 fontWeight="semibold"
               >
-                {`${selectedChatPartner.firstName} ${selectedChatPartner.lastName}`}
+                {`${partner.firstName} ${partner.lastName}`}
               </Text>
             </HStack>
 
@@ -121,7 +123,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
               ))}
             </VStack>
             <Flex width="100%">
-              <MessageInput groupName={groupName}></MessageInput>
+              <MessageInput groupName={selectedChat.uniqueName}></MessageInput>
               <></>
             </Flex>
           </Card>
@@ -131,16 +133,16 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
             variant="outline"
             alignItems="center"
             justifyContent="center"
-            width={{ base: "70%", xl: "55%" }}
             flexDir="column"
+            flex="1 0"
             backgroundColor="gray.50"
           >
             <Text fontSize="1.1rem">Select a chat to show messages</Text>
           </Card>
         )}
         <RelatedAdvertisementInfo
-          advertisementId={advertisementId}
-          width={{ base: "0%", xl: "25%" }}
+          advertisementId={selectedChat?.advertisementId}
+          flex="0 0 450px"
         />
       </Flex>
     </>

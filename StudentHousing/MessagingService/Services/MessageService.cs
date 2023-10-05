@@ -29,7 +29,8 @@ public class MessageService : IMessageService
             Content = messageContent,
             PrivateChatId = privateChat.Id,
             PrivateChat = privateChat,
-            IsUnread = true
+            IsUnread = true,
+            TimeStamp = DateTime.UtcNow
         };
 
         await _messageRepository.Add(message);
