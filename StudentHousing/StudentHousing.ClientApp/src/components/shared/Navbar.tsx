@@ -15,13 +15,10 @@ import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { User } from "../../models/user";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
-import {
-  HubConnection,
-  HubConnectionState,
-} from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../../services/messagingService";
 import { Message } from "../../models/message";
 import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
+import { useSignalR } from "../../hooks/useSignalR";
 
 interface INavbarProps {
   user: User | undefined;
@@ -29,14 +26,10 @@ interface INavbarProps {
 }
 
 const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
-  const [connection, setConnection] = useState<HubConnection | undefined>();
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
+  const connection = useSignalR();
 
   useEffect(() => {
-    const conn = MessagingService.buildConnection();
-    if (conn) {
-      setConnection(conn);
-    }
     MessagingService.getUnreadMessageCount().then((count) => {
       setUnreadMessageCount(count);
     });
@@ -44,20 +37,16 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
 
   useEffect(() => {
     if (connection) {
-      MessagingService.startConnection(connection)
-        .then(async (result) => {
-          connection.on("ReceiveMessage", (message: Message) => {
-            if (message.senderId != user?.id) {
-              setUnreadMessageCount(unreadMessageCount + 1);
-            }
-          });
-          connection.on("MessagesRead", (userId) => {
-            if (userId == user?.id) {
-              setUnreadMessageCount(0);
-            }
-          });
-        })
-        .catch((e) => console.log("Connection failed: ", e));
+      connection.on("ReceiveMessage", (message: Message) => {
+        if (message.senderId != user?.id) {
+          setUnreadMessageCount(unreadMessageCount + 1);
+        }
+      });
+      connection.on("MessagesRead", (userId) => {
+        if (userId == user?.id) {
+          setUnreadMessageCount(0);
+        }
+      });
     }
   }, [connection]);
 

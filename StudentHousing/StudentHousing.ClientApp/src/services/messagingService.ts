@@ -1,49 +1,12 @@
-import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
+import { HubConnectionState } from "@microsoft/signalr";
 import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import InterceptorApiClient from "../helpers/interceptorApiClient";
-import TokenHelper from "../helpers/tokenHelper";
 import { SendMessageRequest } from "../models/requests/sendMessageRequest";
 import { UserChatDto } from "../models/userChatDto";
 
 const apiClient = InterceptorApiClient.createInstance("/api/message", {
   "Content-type": "application/json",
 });
-
-let connectionInstance: HubConnection | undefined;
-
-const buildConnection = (): HubConnection | undefined => {
-  const token = TokenHelper.getLocalAccessToken();
-  if (!token) {
-    console.log("buildConnnection failed: no token available");
-    return;
-  }
-  if (connectionInstance) {
-    return connectionInstance;
-  }
-  connectionInstance = new HubConnectionBuilder()
-    .withUrl("/hubs/message", {
-      //skipNegotiation: true,
-      //transport: HttpTransportType.WebSockets,
-      accessTokenFactory: () => JSON.parse(token),
-      //httpClient: new CustomHttpClient(),
-    })
-    .withAutomaticReconnect()
-    .build();
-
-  return connectionInstance;
-};
-
-const startConnection = async (connection: HubConnection) => {
-  if (
-    connection.state != HubConnectionState.Connected &&
-    connection.state != HubConnectionState.Connecting &&
-    connection.state != HubConnectionState.Reconnecting
-  ) {
-    await connection.start();
-  }
-  return connection;
-};
-
 const startPrivateChat = async (
   connection: HubConnection,
   otherUserId: number,
@@ -130,8 +93,6 @@ const getUnreadMessageCount = async (): Promise<number> => {
 };
 
 const MessagingService = {
-  buildConnection,
-  startConnection,
   startPrivateChat,
   sendMessage,
   sendMessageToAdvertiser,

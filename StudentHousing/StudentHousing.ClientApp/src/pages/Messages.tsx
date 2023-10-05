@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 import MessagingService from "../services/messagingService";
 import { Message } from "../models/message";
 import { User } from "../models/user";
@@ -11,49 +10,43 @@ import UserService from "../services/userService";
 import UserChatsSidebar from "../components/messaging/UserChatsSidebar";
 import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
+import { useSignalR } from "../hooks/useSignalR";
 
 interface IMessagesProps {
   user: User;
 }
 
 const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
-  const [connection, setConnection] = useState<HubConnection | null>(null);
   const [groupName, setGroupName] = useState<string>("");
   const [advertisementId, setAdvertisementId] = useState<number | undefined>();
   const [messages, setMessages] = useState<Message[]>([]);
-
   const [selectedChatPartner, setSelectedChatPartner] = useState<User>();
-  useEffect(() => {
-    if (!selectedChatPartner) return;
-    const conn = MessagingService.buildConnection();
-    if (conn) {
-      setConnection(conn);
-    }
-  }, [selectedChatPartner]);
+
+  const connection = useSignalR();
 
   useEffect(() => {
-    if (!selectedChatPartner || !advertisementId) return;
-    if (connection) {
-      MessagingService.startConnection(connection)
-        .then(async (result) => {
-          const uniqueName = await MessagingService.startPrivateChat(
-            connection,
-            selectedChatPartner.id,
-            advertisementId,
-          );
-          setGroupName(uniqueName);
-          console.log("Name " + uniqueName);
-          const previousMessages =
-            await MessagingService.getMessagesForPrivateChat(uniqueName);
-          setMessages(previousMessages);
-          console.log("Connected!");
-          connection.on("ReceiveMessage", (message: Message) => {
-            receiveMessage(message);
-          });
-        })
-        .catch((e) => console.log("Connection failed: ", e));
+    if (connection && selectedChatPartner && advertisementId) {
+      MessagingService.startPrivateChat(
+        connection,
+        selectedChatPartner.id,
+        advertisementId,
+      ).then((uniqueName) => {
+        setGroupName(uniqueName);
+        MessagingService.getMessagesForPrivateChat(uniqueName).then(
+          (prevMessages) => {
+            setMessages(prevMessages);
+          },
+        );
+      });
     }
   }, [connection, selectedChatPartner, advertisementId]);
+
+  useEffect(() => {
+    connection &&
+      connection.on("ReceiveMessage", (message: Message) => {
+        receiveMessage(message);
+      });
+  }, [connection]);
 
   const receiveMessage = (message: Message) => {
     console.log("Received: " + message);
@@ -128,10 +121,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
               ))}
             </VStack>
             <Flex width="100%">
-              <MessageInput
-                connection={connection}
-                groupName={groupName}
-              ></MessageInput>
+              <MessageInput groupName={groupName}></MessageInput>
               <></>
             </Flex>
           </Card>

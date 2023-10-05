@@ -7,7 +7,7 @@ import { Search } from "./pages/Search";
 import Details from "./pages/Details";
 import { Login } from "./pages/Login";
 import Register from "./pages/Register";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserService from "./services/userService";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
 import { NewAdvertisement } from "./pages/NewAdvertisement";
@@ -15,10 +15,8 @@ import { User } from "./models/user";
 import { AuthVerify } from "./components/auth/AuthVerify";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
-import { createSignalRContext } from "react-signalr";
-import useAccessToken from "./hooks/useAccessToken";
+import { SignalRProvider } from "./hooks/useSignalR";
 
-const SignalRContext = createSignalRContext();
 function App() {
   const theme = extendTheme({
     colors: {
@@ -61,8 +59,6 @@ function App() {
   });
 
   const [user, setUser] = useState<User | undefined>(undefined);
-  const { accessToken, saveAccessToken } = useAccessToken();
-
   const navigate = useNavigate();
 
   const logout = () => {
@@ -78,7 +74,8 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Navbar logout={logout} user={user}></Navbar>
+      <SignalRProvider>
+        <Navbar logout={logout} user={user}></Navbar>
         <Routes>
           <Route
             path="/newadvertisement"
@@ -109,7 +106,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/*" element={<Navigate to="/login" replace />} />
         </Routes>
-      <AuthVerify logout={logout} />
+        <AuthVerify logout={logout} />
+      </SignalRProvider>
     </ChakraProvider>
   );
 }

@@ -22,7 +22,7 @@ public class MessageRepository : IMessageRepository
 
     public async Task<IEnumerable<Message>> GetByPrivateChat(string privateChatUniqueName)
     {
-        return await _dbcontext.Messages.Where(m => m.PrivateChat.UniqueName == privateChatUniqueName).ToListAsync();
+        return await _dbcontext.Messages.Where(m => m.PrivateChat.UniqueName == privateChatUniqueName).Include(m => m.PrivateChat).ToListAsync();
     }
 
     public async Task<int> UpdateRange(IEnumerable<Message> messagesToUpdate)

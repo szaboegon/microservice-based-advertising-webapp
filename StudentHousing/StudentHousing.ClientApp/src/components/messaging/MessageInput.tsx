@@ -12,17 +12,17 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { MessageInputData } from "../../models/forms/messageInputData";
 import MessagingService from "../../services/messagingService";
+import { useSignalR } from "../../hooks/useSignalR";
 
 interface IMessageInputProps {
-  connection: HubConnection | null;
   groupName: string;
 }
 const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
-  connection,
   groupName,
 }) => {
   const { handleSubmit, register, reset } = useForm<MessageInputData>();
 
+  const connection = useSignalR();
   const submit = async (data: MessageInputData) => {
     connection &&
       (await MessagingService.sendMessage(data.content, connection, groupName));
