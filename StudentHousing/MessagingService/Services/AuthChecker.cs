@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using MessagingService.DataTransferObjects;
+﻿using System.Net.Http.Headers;
 using MessagingService.Services.Interfaces;
 
 namespace MessagingService.Services;
@@ -10,9 +9,16 @@ public class AuthChecker : IAuthChecker
 
     public async Task<bool> CheckTokenValidity(string? token)
     {
+        if (string.IsNullOrEmpty(token))
+        {
+            return false;
+        }
+
         try
         {
-            var response = await _httpClient.GetAsync($"http://identityservice:80/api/user/auth");
+            using var request = new HttpRequestMessage(HttpMethod.Get, "http://identityservice:80/api/user/auth");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
             return true;

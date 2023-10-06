@@ -29,7 +29,7 @@ builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
 
 // Services
 builder.Services.AddScoped<IMessageService, MessageService>();
-//builder.Services.AddScoped<IAuthChecker, AuthChecker>();
+builder.Services.AddScoped<IAuthChecker, AuthChecker>();
 builder.Services.AddSingleton<IMessageProducer, MessageProducer>();
 
 //Helpers

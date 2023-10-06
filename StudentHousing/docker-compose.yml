@@ -151,7 +151,6 @@ services:
      - traefik.http.middlewares.messagingauth.forwardauth.authResponseHeaders=X-Forwarded-User
      - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
      - traefik.http.routers.messagingservicewebapi.middlewares=messagingauth
-    # - traefik.http.routers.messagingservicesocket.middlewares=messagingauth
     depends_on:
      - messagingdb
      - rabbitmq

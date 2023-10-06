@@ -9,16 +9,26 @@ public class MessageHub : Hub
 {
     private readonly IMessageService _messageService;
     private readonly JwtTokenHelper _jwtTokenHelper;
+    private readonly IAuthChecker _authChecker;
 
-    public MessageHub(IMessageService messageService, JwtTokenHelper jwtTokenHelper)
+    public MessageHub(IMessageService messageService, JwtTokenHelper jwtTokenHelper, IAuthChecker authChecker)
     {
         _messageService = messageService;
         _jwtTokenHelper = jwtTokenHelper;
+        _authChecker = authChecker;
     }
-    public override Task OnConnectedAsync()
+    public override async Task OnConnectedAsync()
     {
         var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
-        return base.OnConnectedAsync(); //TODO check auth
+        var authResult = await _authChecker.CheckTokenValidity(tokenString);
+        if (authResult)
+        {
+            await base.OnConnectedAsync();
+        }
+        else
+        {
+            Context.Abort();
+        }
     }
 
     public async Task SendMessageToGroup(string uniqueName, string messageContent)
@@ -26,8 +36,6 @@ public class MessageHub : Hub
         try
         {
             var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
-            //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
             var senderId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var message = await _messageService.SendMessageToPrivateChatAsync(senderId, uniqueName, messageContent);
