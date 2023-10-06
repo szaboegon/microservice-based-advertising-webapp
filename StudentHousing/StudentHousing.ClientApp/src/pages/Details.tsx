@@ -12,13 +12,12 @@ interface IDetailsProps {
 }
 
 const Details: React.FunctionComponent<IDetailsProps> = ({ isLoggedIn }) => {
-  const [advertisement, setAdvertisement] =
-    useState<AdvertisementDetailsDto>();
+  const [advertisement, setAdvertisement] = useState<AdvertisementDetailsDto>();
 
   let params = useParams();
 
   const { isSuccess, isLoading, isError, data, error } = useQuery({
-    queryKey: "advertisment",
+    queryKey: "advertisementDetails",
     queryFn: async () => {
       if (params.id) {
         return await AdvertisementService.findById(+params.id);

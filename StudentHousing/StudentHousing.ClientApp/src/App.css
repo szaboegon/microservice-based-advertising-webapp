@@ -21,3 +21,12 @@ form.filterBar {
 .chat-tab-container {
     margin-top: 2px !important;
 }
+
+.multiline-ellipsis {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}

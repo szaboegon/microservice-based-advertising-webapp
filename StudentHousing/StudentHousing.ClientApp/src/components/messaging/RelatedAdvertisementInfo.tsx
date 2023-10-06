@@ -1,5 +1,6 @@
 import {
   Box,
+  BoxProps,
   Button,
   Card,
   Flex,
@@ -10,18 +11,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import * as React from "react";
-import { User } from "../../models/user";
 import { useQuery } from "react-query";
-import MessagingService from "../../services/messagingService";
-import ChatTab from "./ChatTab";
-import { AxiosError } from "axios";
-import { ErrorAlert } from "../alerts/ErrorAlert";
-import { WarningAlert } from "../alerts/WarningAlert";
-import UserService from "../../services/userService";
-import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
-import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import AdvertisementService from "../../services/advertisementService";
 import { AdvertisementDetailsDto } from "../../models/advertisement/advertisementDetailsDto";
 import ImageService from "../../services/imageService";
@@ -62,28 +54,29 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
   return (
     <Card
       flex={flex}
+      height="100%"
       display={{ base: "none", xl: "flex" }}
       variant="elevated"
       zIndex="2"
       boxShadow="-3px 3px 5px #d3d3d3"
       alignItems="center"
+      flexDir="column"
     >
       {advertisement && isSuccess ? (
         <Flex
           width="100%"
-          flexWrap="wrap"
-          fontSize="1.1rem"
+          height="100%"
           fontWeight="semibold"
           textColor="gray.600"
-          justifyContent="center"
+          flexDirection="column"
         >
           <Flex
             width="100%"
             overflow="hidden"
-            height="420px"
             borderWidth="8px"
             borderRadius="6px"
             borderColor="white"
+            flex="0 0 420px"
           >
             <Image
               objectFit="cover"
@@ -92,20 +85,45 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
               src={base64Image}
             ></Image>
           </Flex>
-          <Button
-            width="130px"
-            as={Link}
-            to={`/details/${advertisement.id}`}
-            aria-label="Register"
-            sx={navbarButtonStyles}
-            leftIcon={
-              <Box className="material-icons" textColor="white">
-                wysiwyg
-              </Box>
-            }
+          <HStack flex="0 0 50px" fontSize="1.2rem" padding="10px">
+            <Box className="material-icons" textColor="brandGreen.500">
+              location_on
+            </Box>
+            <Text>
+              {advertisement.city}
+              {advertisement.city.toUpperCase() == "BUDAPEST"
+                ? advertisement.district + ", "
+                : ", "}
+              {advertisement.streetName}
+            </Text>
+          </HStack>
+          <Box
+            overflowY="scroll"
+            marginY="10px"
+            overflowX="hidden"
+            flex="1"
+            width="100%"
           >
-            To Details
-          </Button>
+            <Text textAlign="justify" marginX="50px">
+              {advertisement.description}
+            </Text>
+          </Box>
+          <Box flex="0 0 80px">
+            <Button
+              margin="15px"
+              width="130px"
+              as={Link}
+              to={`/details/${advertisement.id}`}
+              sx={navbarButtonStyles}
+              leftIcon={
+                <Box className="material-icons" textColor="white">
+                  wysiwyg
+                </Box>
+              }
+            >
+              To Details
+            </Button>
+          </Box>
         </Flex>
       ) : (
         <Text

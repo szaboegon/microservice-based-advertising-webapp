@@ -46,7 +46,7 @@ const refreshTokens = async (): Promise<AuthTokens | null> => {
   };
   console.log(refreshTokenRequest);
   return await axios
-    .post<AuthTokens>("api/user/refresh_token", refreshTokenRequest)
+    .post<AuthTokens>("/api/user/refresh_token", refreshTokenRequest)
     .then((response) => {
       if (response.data.accessToken && response.data.refreshToken) {
         TokenHelper.setLocalAccessToken(response.data.accessToken);
