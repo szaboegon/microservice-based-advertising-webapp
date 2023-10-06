@@ -60,42 +60,15 @@ const AdvertisementListItem: React.FunctionComponent<
   let base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
-      <LinkBox>
-        <Card
-          padding="10px"
+      <LinkBox width="100%" paddingX="20px" borderBottom="1px">
+        <Flex
           direction="row"
           overflow="hidden"
-          variant="filled"
-          height="180px"
-          borderBottom="4px"
-          borderColor="brandYellow.500"
-          width={{ base: "450px", md: "800px" }}
+          height="200px"
+          width="100%"
+          borderRadius="8px"
         >
-          <CardHeader
-            width="300px"
-            padding="0px"
-            position="relative"
-            overflow="hidden"
-            display={{ base: "none", md: "flex" }}
-          >
-            <Flex
-              backgroundColor="brandYellow.700"
-              position="absolute"
-              width="40%"
-              height="15%"
-              justifyContent="center"
-              alignItems="center"
-              borderRightRadius="25px"
-            >
-              <Text fontSize="1.2rem" fontWeight="600" textColor="white">
-                {advertisement.categoryName.charAt(0).toUpperCase() +
-                  advertisement.categoryName.slice(1)}
-              </Text>
-            </Flex>
-            <Flex justifyContent="center" alignItems="center">
-              <Image src={base64Image} minWidth="100%" minHeight="100%"></Image>
-            </Flex>
-          </CardHeader>
+          <Image src={base64Image} maxWidth="700px" objectFit="cover"></Image>
           <LinkOverlay onClick={openDetails}></LinkOverlay>
           <CardBody>
             <HStack justifyContent="space-between">
@@ -144,7 +117,7 @@ const AdvertisementListItem: React.FunctionComponent<
               ></IconButton>
             </HStack>
           </CardBody>
-        </Card>
+        </Flex>
       </LinkBox>
       {isLoading && <Spinner />}
       {isError && !isLoading && error instanceof Error && (

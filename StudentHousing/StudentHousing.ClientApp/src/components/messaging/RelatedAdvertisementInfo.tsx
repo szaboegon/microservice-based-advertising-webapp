@@ -92,7 +92,7 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
             <Text>
               {advertisement.city}
               {advertisement.city.toUpperCase() == "BUDAPEST"
-                ? advertisement.district + ", "
+                ? " " + advertisement.district + ", "
                 : ", "}
               {advertisement.streetName}
             </Text>

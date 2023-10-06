@@ -1,7 +1,7 @@
-import { Flex, Heading, Spinner } from "@chakra-ui/react";
+import { Box, Card, Divider, Flex, Heading, Spinner } from "@chakra-ui/react";
 import ProfileCard from "../components/profile/ProfileCard";
 import { User } from "../models/user";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import AdvertisementService from "../services/advertisementService";
 import AdvertisementListItem from "../components/advertisement/AdvertisementListItem";
@@ -9,6 +9,10 @@ import { WarningAlert } from "../components/alerts/WarningAlert";
 import { ErrorAlert } from "../components/alerts/ErrorAlert";
 import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
 import { pageSubheadingStyles } from "../styles/pageSubheadingStyles";
+import {
+  NAVBAR_HEIGHT,
+  PROFILE_CARD_WIDTH,
+} from "../assets/literals/constants";
 
 interface IProfileProps {
   user: User;
@@ -16,7 +20,7 @@ interface IProfileProps {
 
 const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
   const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
-    []
+    [],
   );
 
   const {
@@ -24,24 +28,43 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
     isLoading,
     isError,
     isRefetching,
-    data,
     error,
     refetch: getAdvertisements,
   } = useQuery({
-    queryKey: ["advertismentcards"],
+    queryKey: ["userAds"],
     queryFn: async () => {
       return await AdvertisementService.findByUser();
     },
-    onSuccess: (data: AdvertisementCardDto[]) => setAdvertisements(data),
+    onSuccess: (advertisements: AdvertisementCardDto[]) =>
+      setAdvertisements(advertisements),
     refetchOnWindowFocus: false,
   });
 
   return (
     <>
-      <Flex alignItems="center" justifyContent="center" direction="column">
-        <ProfileCard user={user}></ProfileCard>
-        <Heading sx={pageSubheadingStyles}>My Advertisements</Heading>
-        <Flex flexDirection="column" gap="20px" marginBottom="20px">
+      <Flex
+        justifyContent="center"
+        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+        paddingY="20px"
+      >
+        <Card
+          flexDirection="column"
+          position="relative"
+          alignItems="center"
+          width="50%"
+          gap="15px"
+        >
+          <Box
+            position="absolute"
+            left={`calc(-${PROFILE_CARD_WIDTH} - 20px)`}
+            top="150px"
+          >
+            <ProfileCard user={user}></ProfileCard>
+          </Box>
+          <Heading sx={pageSubheadingStyles} alignSelf="start" marginY="0">
+            My Advertisements
+          </Heading>
+
           {(isLoading || isRefetching) && <Spinner alignSelf="center" />}
           {isError && !isLoading && !isRefetching && error instanceof Error && (
             <ErrorAlert error={error} />
@@ -56,7 +79,7 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
           {isSuccess && advertisements.length <= 0 && !isRefetching && (
             <WarningAlert message="You haven't posted any advertisements yet." />
           )}
-        </Flex>
+        </Card>
       </Flex>
     </>
   );
