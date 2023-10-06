@@ -35,7 +35,7 @@ const AdvertisementDetails: React.FunctionComponent<
 
   return (
     <>
-      <Box width={{ base: "100%", lg: "75%", xl: "60%" }}>
+      <Box width={{ base: "100%", lg: "85%", xl: "65%" }}>
         <Flex position="absolute">
           <Badge fontSize="1.1rem" fontWeight="500" variant="solid">
             {advertisement.categoryName}

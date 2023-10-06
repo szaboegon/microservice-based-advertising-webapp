@@ -12,6 +12,10 @@ import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
 import { useSignalR } from "../hooks/useSignalR";
 import { UserChatDto } from "../models/userChatDto";
+import { useQuery } from "react-query";
+import AdvertisementService from "../services/advertisementService";
+import { PagedQueryResponse } from "../models/pagedQueryResponse";
+import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
 
 interface IMessagesProps {
   user: User;
@@ -30,15 +34,23 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
         connection,
         partner.id,
         selectedChat.advertisementId,
-      ).then((uniqueName) => {
-        MessagingService.getMessagesForPrivateChat(uniqueName).then(
-          (prevMessages) => {
-            setMessages(prevMessages);
-          },
-        );
-      });
+      );
     }
   }, [connection, selectedChat, partner]);
+
+  useQuery({
+    queryKey: ["prevMessages", selectedChat],
+    queryFn: async () => {
+      return await MessagingService.getMessagesForPrivateChat(
+        selectedChat?.uniqueName!,
+      );
+    },
+    onSuccess: (prevMessages) => {
+      setMessages(prevMessages);
+    },
+    enabled: !!selectedChat?.uniqueName,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
     connection &&

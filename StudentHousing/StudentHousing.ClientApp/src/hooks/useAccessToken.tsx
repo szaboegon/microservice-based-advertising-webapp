@@ -12,7 +12,7 @@ const useAccessToken = () => {
     setAccessToken(TokenHelper.getLocalAccessToken());
   };
   return {
-    saveAccessToken,
+    setAccessToken: saveAccessToken,
     accessToken,
   };
 };

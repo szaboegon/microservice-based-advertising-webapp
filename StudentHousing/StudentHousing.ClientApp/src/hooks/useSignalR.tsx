@@ -21,12 +21,14 @@ export const SignalRProvider: React.FunctionComponent<ISignalRProvider> = ({
   children,
 }) => {
   const [connection, setConnection] = useState<HubConnection | undefined>();
-  const { accessToken, saveAccessToken } = useAccessToken();
+  const { accessToken, setAccessToken } = useAccessToken();
 
   useEffect(() => {
+    console.log("newConn");
     if (!accessToken) {
       return;
     }
+    console.log("newConn");
     const conn = new HubConnectionBuilder()
       .withUrl("/hubs/message", {
         accessTokenFactory: () => accessToken,
@@ -41,7 +43,6 @@ export const SignalRProvider: React.FunctionComponent<ISignalRProvider> = ({
         setConnection(conn);
       });
     }
-    return () => {};
   }, [accessToken]);
 
   return (

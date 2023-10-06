@@ -34,7 +34,8 @@ public class TokenProvider : ITokenProvider
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(_configuration["Jwt:MinutesUntilExpiry"])),
+            //expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(_configuration["Jwt:MinutesUntilExpiry"])),
+            expires: DateTime.UtcNow.AddSeconds(8),
             signingCredentials: signingCredentials
         );
 

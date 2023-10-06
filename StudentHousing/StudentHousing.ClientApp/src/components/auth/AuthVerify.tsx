@@ -16,29 +16,30 @@ export const AuthVerify: React.FunctionComponent<AuthVerifyProps> = ({
   logout,
 }) => {
   let location = useLocation();
-  const { accessToken, saveAccessToken } = useAccessToken();
+  const { accessToken, setAccessToken } = useAccessToken();
 
   useEffect(() => {
-    if (accessToken) {
-      const decodedJwt: TokenClaims = jwtDecode(accessToken);
-
-      if (decodedJwt.exp * 1000 < Date.now()) {
-        console.log("authVerify triggered");
-        UserService.checkAuth()
-          .then((isAuthenticated) => {
-            if (!isAuthenticated) {
-              logout();
-            }
-          })
-          .catch((error) => {
-            if (
-              error instanceof AxiosError &&
-              error.response?.data == "Token expired"
-            ) {
-              logout();
-            }
-          });
-      }
+    const currentToken = TokenHelper.getLocalAccessToken();
+    if (!currentToken) {
+      return;
+    }
+    const decodedJwt: TokenClaims = jwtDecode(currentToken);
+    setAccessToken(currentToken);
+    if (decodedJwt.exp * 1000 < Date.now()) {
+      UserService.checkAuth()
+        .then((isAuthenticated) => {
+          if (!isAuthenticated) {
+            logout();
+          }
+        })
+        .catch((error) => {
+          if (
+            error instanceof AxiosError &&
+            error.response?.data == "Token expired"
+          ) {
+            logout();
+          }
+        });
     }
   }, [location]);
 

@@ -96,14 +96,16 @@ const ChatTab: React.FunctionComponent<IChatTab> = ({
           >
             {`${chatPartner?.firstName} ${chatPartner?.lastName}`}
           </Text>
-          <HStack width="300px" fontWeight={hasUnreadMessage ? "500" : "300"}>
+          <HStack width="300px" fontWeight={hasUnreadMessage ? "500" : "400"}>
             <Text
               maxW="70%"
               whiteSpace="nowrap"
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {lastMessage.content}
+              {lastMessage.senderId == chatPartner?.id
+                ? `${lastMessage.content}`
+                : `You: ${lastMessage.content}`}
             </Text>
             <Text>{DateHelper.getFormattedString(lastMessage.timeStamp)}</Text>
           </HStack>
