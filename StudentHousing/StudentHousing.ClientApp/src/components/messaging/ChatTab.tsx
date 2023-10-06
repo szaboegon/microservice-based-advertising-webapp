@@ -29,10 +29,11 @@ const ChatTab: React.FunctionComponent<IChatTab> = ({
   const connection = useSignalR();
 
   useEffect(() => {
-    connection &&
+    if (connection) {
       connection.on("ReceiveMessage", (message: Message) => {
         onMessageReceived(message);
       });
+    }
   }, [connection]);
 
   const onMessageReceived = (message: Message) => {

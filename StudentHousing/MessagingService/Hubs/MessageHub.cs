@@ -17,6 +17,7 @@ public class MessageHub : Hub
     }
     public override Task OnConnectedAsync()
     {
+        var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
         return base.OnConnectedAsync(); //TODO check auth
     }
 
@@ -44,7 +45,6 @@ public class MessageHub : Hub
         try
         {
             var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
-            //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             var user1Id = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var privateChat = await _messageService.CreatePrivateChatIfDoesNotExistAsync(user1Id, user2Id, advertisementId);
@@ -61,7 +61,6 @@ public class MessageHub : Hub
     public async Task MarkMessagesAsRead(string privateChatUniqueName)
     {
         var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
-        //var tokenString = Context.GetHttpContext()?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
         var receiverId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
         _ = await _messageService.MarkMessagesAsReadAsync(privateChatUniqueName, receiverId)

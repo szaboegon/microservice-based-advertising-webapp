@@ -12,13 +12,14 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { User } from "../../models/user";
 import { NAVBAR_HEIGHT } from "../../assets/literals/constants";
 import MessagingService from "../../services/messagingService";
 import { Message } from "../../models/message";
 import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
 import { useSignalR } from "../../hooks/useSignalR";
+import { useQuery } from "react-query";
 
 interface INavbarProps {
   user: User | undefined;
@@ -29,22 +30,26 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
   const connection = useSignalR();
 
-  useEffect(() => {
-    MessagingService.getUnreadMessageCount().then((count) => {
+  useQuery({
+    queryKey: ["unreadMessages"],
+    queryFn: async () => {
+      return await MessagingService.getUnreadMessageCount();
+    },
+    onSuccess: (count: number) => {
       setUnreadMessageCount(count);
-    });
-  }, []);
+    },
+    refetchOnWindowFocus: true,
+  });
 
   useEffect(() => {
     if (connection) {
       connection.on("ReceiveMessage", (message: Message) => {
         if (message.senderId != user?.id) {
-          setUnreadMessageCount(unreadMessageCount + 1);
+          setUnreadMessageCount(() => unreadMessageCount + 1);
         }
       });
       connection.on("MessagesRead", (userId) => {
         if (userId == user?.id) {
-          console.log("read lol");
           setUnreadMessageCount(0);
         }
       });

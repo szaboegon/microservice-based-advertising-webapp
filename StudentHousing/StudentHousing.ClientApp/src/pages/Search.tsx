@@ -21,13 +21,10 @@ export const Search = () => {
   const [advertisements, setAdvertisements] = useState<AdvertisementCardDto[]>(
     [],
   );
-
   const [currentPage, setCurrentPage] = useState(
     SearchParamsHelper.getCurrentPageFromParams(searchParams),
   );
   const [totalPages, setTotalPages] = useState(0);
-
-  const navigate = useNavigate();
 
   const { isSuccess, isLoading, isError, isRefetching, error, refetch } =
     useQuery({
