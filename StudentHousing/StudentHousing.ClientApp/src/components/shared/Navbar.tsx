@@ -44,6 +44,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
       });
       connection.on("MessagesRead", (userId) => {
         if (userId == user?.id) {
+          console.log("read lol");
           setUnreadMessageCount(0);
         }
       });

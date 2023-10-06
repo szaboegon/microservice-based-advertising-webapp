@@ -6,30 +6,27 @@ import { useSignalR } from "../../hooks/useSignalR";
 import { useEffect, useState } from "react";
 import DateHelper from "../../helpers/dateHelper";
 import { Message } from "../../models/message";
+import MessagingService from "../../services/messagingService";
+import UserService from "../../services/userService";
 
 interface IChatTab {
   chatPartner: User | undefined;
   chat: UserChatDto;
-  notifyChatSelected: (chat: UserChatDto, partner: User) => void;
+  handleClick: (chat: UserChatDto, partner: User) => void;
   isSelected: boolean;
 }
 
 const ChatTab: React.FunctionComponent<IChatTab> = ({
   chatPartner,
   chat,
-  notifyChatSelected,
+  handleClick,
   isSelected,
 }) => {
   const [lastMessage, setLastMessage] = useState<Message>(chat.lastMessage);
   const [hasUnreadMessage, setHasUnreadMessage] = useState(
     chat.hasUnreadMessage,
   );
-
   const connection = useSignalR();
-  const handleClick = () => {
-    setHasUnreadMessage(false);
-    chatPartner && notifyChatSelected(chat, chatPartner);
-  };
 
   useEffect(() => {
     connection &&
@@ -41,16 +38,28 @@ const ChatTab: React.FunctionComponent<IChatTab> = ({
   const onMessageReceived = (message: Message) => {
     if (message.privateChatUniqueName == chat.uniqueName) {
       setLastMessage(message);
-      setHasUnreadMessage(!isSelected);
+      if (message.senderId != UserService.getCurrentUser()?.id) {
+        setHasUnreadMessage(true);
+      }
     }
   };
+
+  useEffect(() => {
+    if (isSelected && hasUnreadMessage) {
+      setHasUnreadMessage(false);
+      connection &&
+        MessagingService.markMessagesAsRead(connection, chat.uniqueName);
+    }
+  }, [isSelected, hasUnreadMessage]);
 
   return (
     <>
       <Flex
         width="96%"
         borderRadius="10px"
-        onClick={handleClick}
+        onClick={() => {
+          chatPartner && handleClick(chat, chatPartner);
+        }}
         background={isSelected ? "brandGreen.500" : "white"}
         alignItems="center"
         _hover={
@@ -86,13 +95,12 @@ const ChatTab: React.FunctionComponent<IChatTab> = ({
           >
             {`${chatPartner?.firstName} ${chatPartner?.lastName}`}
           </Text>
-          <HStack width="300px">
+          <HStack width="300px" fontWeight={hasUnreadMessage ? "500" : "300"}>
             <Text
               maxW="70%"
               whiteSpace="nowrap"
               overflow="hidden"
               textOverflow="ellipsis"
-              fontWeight={hasUnreadMessage ? "500" : "300"}
             >
               {lastMessage.content}
             </Text>

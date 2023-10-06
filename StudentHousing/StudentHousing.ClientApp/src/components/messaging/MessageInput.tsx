@@ -29,11 +29,6 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
     reset();
   };
 
-  const handleFocus = async () => {
-    connection &&
-      (await MessagingService.markMessagesAsRead(connection, groupName));
-  };
-
   return (
     <>
       <Flex
@@ -55,7 +50,6 @@ const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
               border="0px"
               autoComplete="off"
               borderRadius="200px"
-              onFocus={handleFocus}
               backgroundColor="white"
               placeholder="Type your message here..."
               w="70%"

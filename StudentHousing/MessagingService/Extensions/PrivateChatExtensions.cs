@@ -20,14 +20,13 @@ public static class PrivateChatExtensions
 
     public static UserChatInfoDto ToInfoDto(this PrivateChat privateChat, int userId)
     {
-        var lastMessage = privateChat.Messages.LastOrDefault();
         return new UserChatInfoDto()
         {
             AdvertisementId = privateChat.AdvertisementId,
             UniqueName = privateChat.UniqueName,
             PartnerId = userId == privateChat.User1Id ? privateChat.User2Id : privateChat.User1Id,
-            LastMessage = lastMessage?.ToDto(),
-            HasUnreadMessage = lastMessage?.IsUnread ?? false,
+            LastMessage = privateChat.Messages.LastOrDefault()?.ToDto(),
+            HasUnreadMessage = privateChat.Messages.Any(m => m.SenderId != userId && m.IsUnread),
         };
     }
 }

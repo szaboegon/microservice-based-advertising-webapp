@@ -69,7 +69,7 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
     enabled: chats.length > 0,
   });
 
-  const onChatSelected = (chat: UserChatDto, partner: User) => {
+  const handleItemClick = (chat: UserChatDto, partner: User) => {
     setSelectedChat(chat);
     notifyChatSelected(chat, partner);
   };
@@ -103,8 +103,8 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
                   key={chat.uniqueName}
                   chatPartner={chatPartners.find((p) => p.id == chat.partnerId)}
                   chat={chat}
-                  notifyChatSelected={onChatSelected}
-                  isSelected={chat.uniqueName == selectedChat?.uniqueName}
+                  handleClick={handleItemClick}
+                  isSelected={selectedChat?.uniqueName == chat.uniqueName}
                 />
               ))}
             {(isLoadingChats ||
