@@ -13,9 +13,6 @@ import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertiseme
 import { useSignalR } from "../hooks/useSignalR";
 import { UserChatDto } from "../models/userChatDto";
 import { useQuery } from "react-query";
-import AdvertisementService from "../services/advertisementService";
-import { PagedQueryResponse } from "../models/pagedQueryResponse";
-import { AdvertisementCardDto } from "../models/advertisement/advertisementCardDto";
 
 interface IMessagesProps {
   user: User;

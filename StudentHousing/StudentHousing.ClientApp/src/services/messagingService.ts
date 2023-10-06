@@ -46,12 +46,6 @@ const getPrivateChatsForUser = async (): Promise<UserChatDto> => {
   return response.data;
 };
 
-/*const getChatPartnersForUser = async () => {
-  const response = await apiClient.get<Array<number>>(`/user_partners`, {});
-  console.log(response.data);
-  return response.data;
-};*/
-
 const getMessagesForPrivateChat = async (uniqueName: string) => {
   const response = await apiClient.get(`/messages/${uniqueName}`, {});
   return response.data;
