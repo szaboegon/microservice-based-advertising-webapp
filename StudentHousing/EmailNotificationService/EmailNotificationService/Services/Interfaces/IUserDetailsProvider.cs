@@ -1,4 +1,4 @@
-﻿using EmailNotificationService.DataTransferObjects;
+﻿using EmailNotificationService.Dtos;
 
 namespace EmailNotificationService.Services.Interfaces;
 

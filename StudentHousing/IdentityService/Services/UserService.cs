@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IdentityService.DataTransferObjects;
+using IdentityService.Dtos;
 using IdentityService.Extensions;
 using IdentityService.Models;
 using IdentityService.Services.Interfaces;

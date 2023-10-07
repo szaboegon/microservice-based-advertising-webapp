@@ -1,4 +1,4 @@
-﻿using IdentityService.DataTransferObjects;
+﻿using IdentityService.Dtos;
 using IdentityService.Models;
 
 namespace IdentityService.Extensions;

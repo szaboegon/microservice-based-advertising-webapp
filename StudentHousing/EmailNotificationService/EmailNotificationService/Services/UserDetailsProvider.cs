@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using EmailNotificationService.DataTransferObjects;
+using EmailNotificationService.Dtos;
 using EmailNotificationService.Services.Interfaces;
 
 namespace EmailNotificationService.Services;

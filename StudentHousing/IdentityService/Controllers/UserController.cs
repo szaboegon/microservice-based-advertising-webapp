@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using IdentityService.DataTransferObjects;
+using IdentityService.Dtos;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

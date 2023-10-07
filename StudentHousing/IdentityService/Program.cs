@@ -1,8 +1,8 @@
 using System.Text;
 using FluentValidation;
 using IdentityService.DAL;
-using IdentityService.DataTransferObjects;
-using IdentityService.DataTransferObjects.Validators;
+using IdentityService.Dtos;
+using IdentityService.Dtos.Validators;
 using IdentityService.Models;
 using IdentityService.Services;
 using IdentityService.Services.Interfaces;

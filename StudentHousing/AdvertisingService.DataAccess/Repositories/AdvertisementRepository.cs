@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq.Expressions;
-using AdvertisingService.BusinessLogic.DataTransferObjects;
+using AdvertisingService.BusinessLogic.Dtos;
 using AdvertisingService.BusinessLogic.Helpers.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;

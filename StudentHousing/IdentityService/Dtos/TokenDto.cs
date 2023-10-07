@@ -1,4 +1,4 @@
-﻿namespace IdentityService.DataTransferObjects;
+﻿namespace IdentityService.Dtos;
 
 public record TokenDto
 {

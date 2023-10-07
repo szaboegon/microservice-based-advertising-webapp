@@ -1,4 +1,4 @@
-﻿namespace EmailNotificationService.DataTransferObjects;
+﻿namespace EmailNotificationService.Dtos;
 
 public record UserDetailsDto
 {

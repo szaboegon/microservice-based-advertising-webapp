@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using AdvertisingService.BusinessLogic.DataTransferObjects;
 using AdvertisingService.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.ComponentModel.DataAnnotations;
+using AdvertisingService.BusinessLogic.Dtos;
 using AdvertisingService.BusinessLogic.Extensions;
 using Microsoft.IdentityModel.Tokens;
 

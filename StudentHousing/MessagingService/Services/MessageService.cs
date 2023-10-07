@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MessagingService.DataTransferObjects;
+using MessagingService.Dtos;
 using MessagingService.Extensions;
 using MessagingService.Models;
 using MessagingService.Repositories.Interfaces;

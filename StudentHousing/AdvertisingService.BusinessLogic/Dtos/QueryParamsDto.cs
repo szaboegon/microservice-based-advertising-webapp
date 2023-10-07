@@ -1,4 +1,4 @@
-﻿namespace AdvertisingService.BusinessLogic.DataTransferObjects;
+﻿namespace AdvertisingService.BusinessLogic.Dtos;
 
 public record QueryParamsDto
 {

@@ -1,6 +1,6 @@
+using MessagingService.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using MessagingService.DataTransferObjects;
 using MessagingService.Helpers;
 using MessagingService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;

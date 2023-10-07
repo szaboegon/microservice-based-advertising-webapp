@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using IdentityService.DataTransferObjects;
 
-namespace IdentityService.DataTransferObjects.Validators;
+namespace IdentityService.Dtos.Validators;
 
 public class RegistrationRequestValidator : AbstractValidator<RegistrationRequest>
 {

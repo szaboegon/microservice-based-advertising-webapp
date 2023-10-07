@@ -1,14 +1,11 @@
-import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Card,
   CardBody,
-  CardHeader,
   Flex,
   Heading,
   HStack,
-  IconButton,
   Image,
   LinkBox,
   LinkOverlay,
@@ -22,7 +19,6 @@ import { AdvertisementCardDto } from "../../models/advertisement/advertisementCa
 import AdvertisementService from "../../services/advertisementService";
 import ImageService from "../../services/imageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
-import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
 import { hoverAnimationStyles } from "../../styles/hoverAnimationStyles";
 
 interface IAdvertisementListItemProps {

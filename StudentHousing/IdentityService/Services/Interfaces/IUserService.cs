@@ -1,4 +1,4 @@
-﻿using IdentityService.DataTransferObjects;
+﻿using IdentityService.Dtos;
 using Microsoft.AspNetCore.Identity;
 
 namespace IdentityService.Services.Interfaces;

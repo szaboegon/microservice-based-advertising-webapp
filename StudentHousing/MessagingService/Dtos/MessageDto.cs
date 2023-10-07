@@ -1,4 +1,4 @@
-﻿namespace MessagingService.DataTransferObjects;
+﻿namespace MessagingService.Dtos;
 
 public record MessageDto
 {

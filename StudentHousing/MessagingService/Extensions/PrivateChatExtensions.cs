@@ -1,4 +1,4 @@
-﻿using MessagingService.DataTransferObjects;
+﻿using MessagingService.Dtos;
 using MessagingService.Models;
 
 namespace MessagingService.Extensions;

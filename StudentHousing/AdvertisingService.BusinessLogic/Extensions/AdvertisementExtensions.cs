@@ -1,4 +1,4 @@
-﻿using AdvertisingService.BusinessLogic.DataTransferObjects;
+﻿using AdvertisingService.BusinessLogic.Dtos;
 using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.BusinessLogic.Extensions;

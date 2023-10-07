@@ -1,6 +1,4 @@
-﻿using MessagingService.DataTransferObjects;
-
-namespace MessagingService.Services.Interfaces;
+﻿namespace MessagingService.Services.Interfaces;
 
 public interface IAuthChecker
 {
