@@ -32,26 +32,26 @@ const createInstance = (
       }
       return config;
     },
-    (error) => Promise.reject(error),
+    (error) => {
+      return Promise.reject(error);
+    },
   );
 
   instance.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      return response;
+    },
     async (error) => {
       const originalRequest: any = error.config;
       if (error.response.status == 401 && !originalRequest._retry) {
         originalRequest._retry = true;
-        await refreshTokens()
-          ?.then((tokens) => {
-            return tokens ? instance(originalRequest) : Promise.reject(error);
-          })
-          .catch((e) => {
-            return Promise.reject(e);
-          })
-          .finally(() => {
-            refreshTokens = TokenHelper.refreshExpiredTokenClosure();
-          });
+        const tokens = await refreshTokens();
+        if (tokens) {
+          refreshTokens = TokenHelper.refreshExpiredTokenClosure();
+          return instance(originalRequest);
+        }
       }
+      refreshTokens = TokenHelper.refreshExpiredTokenClosure();
       return Promise.reject(error);
     },
   );
