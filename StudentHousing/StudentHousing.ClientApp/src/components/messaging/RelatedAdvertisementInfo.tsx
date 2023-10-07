@@ -44,7 +44,7 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
     },
     onSuccess: (data: AdvertisementDetailsDto) => {
       setAdvertisement(data);
-      const img = ImageService.convertToBase64Image(data.image);
+      const img = ImageService.convertToBase64Image(data.images[0]);
       setBase64Image(img);
     },
     refetchOnWindowFocus: false,

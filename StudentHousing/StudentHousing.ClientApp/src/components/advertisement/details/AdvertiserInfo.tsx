@@ -83,7 +83,12 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
 
   return (
     <>
-      <Card width="530px" variant="elevated" height="360px" alignSelf="center">
+      <Card
+        width="530px"
+        variant="elevated"
+        maxHeight="400px"
+        alignSelf="center"
+      >
         {isSuccessUser && advertiser && (
           <Box>
             <CardHeader height="120px">
