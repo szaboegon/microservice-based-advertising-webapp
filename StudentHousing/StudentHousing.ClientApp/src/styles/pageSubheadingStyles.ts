@@ -1,7 +1,6 @@
 export const pageSubheadingStyles = {
-  marginY: "2.5rem",
-  textAlign: "center",
-  fontSize: "1.6rem",
+  fontSize: "1.5rem",
   textColor: "gray.600",
-  fontWeight: "600",
+  fontWeight: "700",
+  textTransform: "uppercase",
 };

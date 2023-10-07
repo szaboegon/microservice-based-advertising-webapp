@@ -1,12 +1,4 @@
-import {
-  Box,
-  Card,
-  Flex,
-  Heading,
-  Spinner,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Card, Flex, Heading, Spinner, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import * as React from "react";
 import { User } from "../../models/user";
@@ -19,7 +11,6 @@ import { WarningAlert } from "../alerts/WarningAlert";
 import UserService from "../../services/userService";
 import { UserChatDto } from "../../models/userChatDto";
 import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
-import { detailsHeadingStyles } from "../../styles/detailsHeadingStyles";
 
 interface IPartnersSidebarProps {
   notifyChatSelected: (chat: UserChatDto, partner: User) => void;
@@ -86,7 +77,7 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
         zIndex="2"
       >
         <Box width="100%" height="80px">
-          <Heading margin="15px" textColor="gray.600" fontSize="1.8rem">
+          <Heading sx={pageSubheadingStyles} padding="20px">
             Chats
           </Heading>
         </Box>

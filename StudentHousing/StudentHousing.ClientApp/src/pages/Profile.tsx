@@ -42,12 +42,8 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
 
   return (
     <>
-      <Flex
-        justifyContent="center"
-        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
-        paddingY="20px"
-      >
-        <Card
+      <Flex justifyContent="center" height={`calc(100vh - ${NAVBAR_HEIGHT})`}>
+        <Flex
           flexDirection="column"
           position="relative"
           alignItems="center"
@@ -61,10 +57,21 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
           >
             <ProfileCard user={user}></ProfileCard>
           </Box>
-          <Heading sx={pageSubheadingStyles} alignSelf="start" marginY="0">
+          <Heading
+            sx={pageSubheadingStyles}
+            alignSelf="start"
+            marginTop="1.5rem"
+          >
             My Advertisements
           </Heading>
-
+          <Divider
+            alignSelf="start"
+            orientation="horizontal"
+            borderColor="gray.600"
+            borderWidth="1px"
+            borderRadius="10"
+            width="290px"
+          />
           {(isLoading || isRefetching) && <Spinner alignSelf="center" />}
           {isError && !isLoading && !isRefetching && error instanceof Error && (
             <ErrorAlert error={error} />
@@ -79,7 +86,7 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
           {isSuccess && advertisements.length <= 0 && !isRefetching && (
             <WarningAlert message="You haven't posted any advertisements yet." />
           )}
-        </Card>
+        </Flex>
       </Flex>
     </>
   );

@@ -32,7 +32,7 @@ const ProfileCard: React.FunctionComponent<IProfileCardProps> = ({ user }) => {
         alignItems="center"
       >
         <Avatar name={`${user.firstName} ${user.lastName}`} size="2xl" />
-        <Text textColor="gray.600" fontSize="1.5rem" marginBottom="1rem">
+        <Text textColor="gray.600" font fontSize="1.5rem" marginBottom="1rem">
           {user.firstName + " " + user.lastName}
         </Text>
         <Divider

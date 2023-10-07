@@ -85,7 +85,9 @@ export const Home = () => {
           ></SearchBar>
         </Flex>
       </Flex>
-      <Heading sx={pageSubheadingStyles}>Recent Advertisements</Heading>
+      <Heading sx={pageSubheadingStyles} textAlign="center" marginY="2.5rem">
+        Recent Advertisements
+      </Heading>
       <SimpleGrid
         margin="1rem"
         columns={{ base: 1, sm: 2, md: 3, xl: 4 }}

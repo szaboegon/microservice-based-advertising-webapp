@@ -1,6 +1,7 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -16,11 +17,13 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useMutation } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import AdvertisementService from "../../services/advertisementService";
 import ImageService from "../../services/imageService";
 import { ErrorAlert } from "../alerts/ErrorAlert";
+import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
+import { hoverAnimationStyles } from "../../styles/hoverAnimationStyles";
 
 interface IAdvertisementListItemProps {
   advertisement: AdvertisementCardDto;
@@ -60,64 +63,77 @@ const AdvertisementListItem: React.FunctionComponent<
   let base64Image = ImageService.convertToBase64Image(advertisement.image);
   return (
     <>
-      <LinkBox width="100%" paddingX="20px" borderBottom="1px">
-        <Flex
+      <LinkBox width="100%" zIndex="5">
+        <Card
+          variant="elevated"
           direction="row"
-          overflow="hidden"
-          height="200px"
+          height="180px"
           width="100%"
           borderRadius="8px"
+          sx={hoverAnimationStyles}
         >
-          <Image src={base64Image} maxWidth="700px" objectFit="cover"></Image>
-          <LinkOverlay onClick={openDetails}></LinkOverlay>
-          <CardBody>
-            <HStack justifyContent="space-between">
-              <Box>
-                <HStack>
-                  <Heading
-                    alignSelf="end"
-                    fontSize="1.7rem"
-                    textColor="brandGreen.500"
-                  >
-                    {advertisement.monthlyPrice}
-                  </Heading>
-                  <Heading fontSize="1.2rem" paddingTop="5px">
-                    Ft/month
-                  </Heading>
-                </HStack>
-                <Heading
-                  alignSelf="end"
-                  fontSize="1.2rem"
-                  textColor="brandGreen.500"
-                ></Heading>
-                <Text fontSize="1.3rem" fontWeight="600">
-                  {advertisement.streetName + " " + advertisement.streetNumber}
-                </Text>
-                <Text
-                  fontSize="1.1rem"
-                  fontWeight="600"
-                  className="card-text"
-                  textColor="gray.500"
-                >
-                  {advertisement.city.toUpperCase() == "BUDAPEST"
-                    ? advertisement.district + " " + advertisement.city
-                    : advertisement.city}
-                </Text>
+          <Image
+            src={base64Image}
+            maxWidth="700px"
+            objectFit="cover"
+            borderRadius="8px"
+          ></Image>
 
-                <Text fontSize="1.1rem" fontWeight="600">
-                  {"Posted on: " + formatDate(advertisement.uploadDate)}
+          <CardBody>
+            <Flex
+              flexDirection="column"
+              height="100%"
+              fontSize="1.1rem"
+              fontWeight="semibold"
+              textColor="gray.600"
+              justifyContent="space-evenly"
+              position="relative"
+            >
+              <HStack>
+                <Box className="material-icons" textColor="brandGreen.500">
+                  location_on
+                </Box>
+                <Text>
+                  {advertisement.city},{" "}
+                  {advertisement.city.toUpperCase() == "BUDAPEST"
+                    ? advertisement.district
+                    : ""}{" "}
+                  {advertisement.streetName} {advertisement.streetNumber}
                 </Text>
-              </Box>
-              <IconButton
+              </HStack>
+              <HStack>
+                <Box className="material-icons" textColor="brandGreen.500">
+                  calendar_month
+                </Box>
+                <Text>{formatDate(advertisement.uploadDate)}</Text>
+              </HStack>
+              <HStack>
+                <Box className="material-icons" textColor="brandGreen.500">
+                  paid
+                </Box>
+                <Text>{advertisement.monthlyPrice} Ft/month</Text>
+              </HStack>
+              <LinkOverlay onClick={openDetails}></LinkOverlay>
+              <Button
+                position="absolute"
+                bottom="5px"
                 colorScheme="red"
+                height="45px"
                 aria-label="Delete Advertisement"
-                fontSize="20px"
-                icon={<DeleteIcon />}
                 onClick={handleClick}
-              ></IconButton>
-            </HStack>
+                size="sm"
+                alignSelf="end"
+                leftIcon={
+                  <Box className="material-icons" textColor="white">
+                    delete_forever
+                  </Box>
+                }
+              >
+                Delete
+              </Button>
+            </Flex>
           </CardBody>
-        </Flex>
+        </Card>
       </LinkBox>
       {isLoading && <Spinner />}
       {isError && !isLoading && error instanceof Error && (

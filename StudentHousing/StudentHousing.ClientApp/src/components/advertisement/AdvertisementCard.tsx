@@ -17,6 +17,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
 import ImageService from "../../services/imageService";
+import { hoverAnimationStyles } from "../../styles/hoverAnimationStyles";
 
 interface IAdvertisementCardProps {
   advertisement: AdvertisementCardDto;
@@ -42,6 +43,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
           borderColor="brandGreen.300"
           borderRadius="8px"
           height="380"
+          sx={hoverAnimationStyles}
         >
           <CardHeader
             height="250px"
@@ -71,17 +73,17 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
             </Flex>
           </CardHeader>
           <CardBody>
-            <HStack>
-              <Heading
-                alignSelf="end"
-                fontSize="1.4rem"
+            <HStack gap="3px">
+              <Text
+                fontSize="1.2rem"
                 textColor="brandGreen.400"
+                fontWeight="600"
               >
                 {"HUF " + advertisement.monthlyPrice}
-              </Heading>
-              <Heading fontSize="1.0rem" paddingTop="5px" textColor="gray.600">
+              </Text>
+              <Text fontSize="1.2rem" textColor="gray.600" fontWeight="600">
                 /month
-              </Heading>
+              </Text>
             </HStack>
             <LinkOverlay onClick={openDetails}></LinkOverlay>
             <VStack alignItems="space-between">
@@ -91,6 +93,7 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
                     ? advertisement.numberOfRooms + " " + "room"
                     : advertisement.numberOfRooms + " " + "rooms"}
                 </Text>
+
                 <Box
                   className="material-icons"
                   fontSize="0.4rem"

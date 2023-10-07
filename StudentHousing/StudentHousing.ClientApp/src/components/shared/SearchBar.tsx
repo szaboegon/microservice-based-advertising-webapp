@@ -16,11 +16,15 @@ import { AdvertisementSearchParamsDto } from "../../models/queryParams/advertise
 
 interface ISearchBarProps {
   minWidth?: string;
-  existingSearchParams?: URLSearchParams
-  onSearchParamsChanged: (newParams: AdvertisementSearchParamsDto) => void
+  existingSearchParams?: URLSearchParams;
+  onSearchParamsChanged: (newParams: AdvertisementSearchParamsDto) => void;
 }
 
-const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existingSearchParams, onSearchParamsChanged }) => {
+const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
+  minWidth,
+  existingSearchParams,
+  onSearchParamsChanged,
+}) => {
   const initialFormValues: AdvertisementSearchParamsDto = {
     categoryName: "",
     city: "",
@@ -44,7 +48,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existin
     for (const property in getValues()) {
       setValue(
         property as keyof AdvertisementSearchParamsDto,
-        data[property as keyof AdvertisementSearchParamsDto]
+        data[property as keyof AdvertisementSearchParamsDto],
       );
     }
     onSearchParamsChanged(data);
@@ -58,7 +62,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existin
           existingSearchParams.get(property)!;
         setValue(
           property as keyof AdvertisementSearchParamsDto,
-          existingSearchParams.get(property)!
+          existingSearchParams.get(property)!,
         );
       }
     }
@@ -191,7 +195,13 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({ minWidth, existin
             </Select>
           </FormControl>
 
-          <Flex backgroundColor="brandGreen.500" borderRightRadius="15px" >
+          <Flex
+            backgroundColor="brandGreen.500"
+            borderRightRadius="20px"
+            position="relative"
+            left="2px"
+            minHeight="50px"
+          >
             <Button
               type="submit"
               variant="link"
