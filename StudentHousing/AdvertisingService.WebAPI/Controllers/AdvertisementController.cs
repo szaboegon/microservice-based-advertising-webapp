@@ -50,19 +50,26 @@ public class AdvertisementController : ControllerBase
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementCreateDto advertisementCreate, [FromForm] IFormFile image) 
+    public async Task<ActionResult<int>> CreateAdvertisement([FromForm]AdvertisementCreateDto advertisementCreate, [FromForm]List<IFormFile> images) 
     {
         try
         {
+            if (images.IsNullOrEmpty())
+            {
+                return BadRequest("At least one image is required.");
+            }
+
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var advertiserId = GetAdvertiserIdFromToken(tokenString);
 
             var newAdvertisement = await _advertisementService.CreateAdvertisementAsync(advertisementCreate, advertiserId);
 
-            var bytes = await ConvertFileDataToBytesAsync(image);
-            await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
-
-  
+            foreach (var image in images)
+            {
+                var bytes = await ConvertFileDataToBytesAsync(image);
+                await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
+            }
+            
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
                 newAdvertisement.ToDetailsDto());
         }

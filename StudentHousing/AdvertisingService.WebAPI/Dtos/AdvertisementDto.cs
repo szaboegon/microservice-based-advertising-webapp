@@ -32,6 +32,6 @@ public record AdvertisementDetailsDto
     public required bool Parking { get; init; }
     public required string Description { get; init; }
     public required int MonthlyPrice { get; init; }
-    public byte[]? Image { get; init; }
+    public required IEnumerable<byte[]> Images { get; init; }
     public required int AdvertiserId { get; init; }
 }

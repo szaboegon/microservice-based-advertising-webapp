@@ -14,6 +14,6 @@ export interface AdvertisementDetailsDto {
   parking: boolean;
   description: string;
   monthlyPrice: number;
-  image: Uint8Array;
+  images: Uint8Array[];
   advertiserId: number;
 }

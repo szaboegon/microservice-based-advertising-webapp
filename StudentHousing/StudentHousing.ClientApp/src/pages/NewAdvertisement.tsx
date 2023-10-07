@@ -47,7 +47,7 @@ export const NewAdvertisement = () => {
 
   const [step, setStep] = useState(0);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [image, setImage] = useState<File>();
+  const [images, setImages] = useState<File[]>([]);
 
   const submitData = async (data: NewAdvertisementRequest) => {
     await postAdvertisement();
@@ -76,9 +76,9 @@ export const NewAdvertisement = () => {
       formData.append("parking", formValues.parking);
       formData.append("description", formValues.description);
       formData.append("monthlyPrice", formValues.monthlyPrice);
-      if (image) {
-        formData.append("image", image);
-      }
+      images.forEach((image, i) => {
+        formData.append(`images`, image);
+      });
       return await AdvertisementService.create(formData);
     },
   });
@@ -202,7 +202,7 @@ export const NewAdvertisement = () => {
                     />
                   </TabPanel>
                   <TabPanel>
-                    <FifthStep setImage={setImage} submitData={submitData} />
+                    <FifthStep setImages={setImages} submitData={submitData} />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

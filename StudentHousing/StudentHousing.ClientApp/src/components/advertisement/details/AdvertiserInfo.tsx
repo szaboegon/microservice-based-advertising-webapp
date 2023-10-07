@@ -83,7 +83,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
 
   return (
     <>
-      <Card minW="350px" variant="elevated">
+      <Card width="530px" variant="elevated" height="360px" alignSelf="center">
         {isSuccessUser && advertiser && (
           <Box>
             <CardHeader height="120px">
@@ -141,6 +141,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
                       height="40px"
                       bgColor="brandGreen.500"
                       textColor="white"
+                      marginTop="10px"
                       _hover={{ background: "brandGreen.700" }}
                     >
                       Send

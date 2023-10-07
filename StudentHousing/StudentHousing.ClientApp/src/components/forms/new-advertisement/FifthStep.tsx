@@ -20,26 +20,33 @@ import ImageService from "../../../services/imageService";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 
 interface IFifthStepProps {
-  setImage: React.Dispatch<File>;
+  setImages: React.Dispatch<File[]>;
   submitData: (data: NewAdvertisementRequest) => void;
 }
 
 const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
-  setImage,
+  setImages,
   submitData,
 }) => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
       return;
     }
-    const file = e.target.files[0];
-    if (!(file && (await ImageService.validateImageDimensions(file)))) {
+    let shouldNotify = false;
+    const files = e.target.files;
+    const fileArray = [...e.target.files];
+
+    for (const f of fileArray) {
+      if (!(await ImageService.validateImageDimensions(f))) {
+        shouldNotify = true;
+        fileArray.splice(fileArray.indexOf(f), 1);
+      }
+    }
+    if (shouldNotify) {
       onOpen();
       e.target.value = "";
-    }
-
-    if (file) {
-      setImage(file);
+    } else {
+      setImages(fileArray);
     }
   };
 
@@ -64,6 +71,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
               id="image"
               name="image"
               type="file"
+              multiple
               accept="image/*"
               onChange={handleFileChange}
               borderColor="brandYellow.800"
@@ -90,8 +98,8 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
           <ModalHeader>Image size error</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Image is too small. Image dimensions must be at least 600x600
-            pixels.
+            Some images were too small. Image dimensions must be at least
+            600x600 pixels.
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={onClose}>

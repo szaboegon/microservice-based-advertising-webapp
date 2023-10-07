@@ -22,6 +22,8 @@ import AdvertisementService from "../../../services/advertisementService";
 import { PagedQueryResponse } from "../../../models/pagedQueryResponse";
 import { AdvertisementCardDto } from "../../../models/advertisement/advertisementCardDto";
 import { ErrorAlert } from "../../alerts/ErrorAlert";
+import { hoverAnimationStyles } from "../../../styles/hoverAnimationStyles";
+import { hoverAnimation2Styles } from "../../../styles/hoverAnimation2Styles";
 
 interface IAdvertisementDetailsProps {
   advertisement: AdvertisementDetailsDto;
@@ -31,31 +33,64 @@ interface IAdvertisementDetailsProps {
 const AdvertisementDetails: React.FunctionComponent<
   IAdvertisementDetailsProps
 > = ({ advertisement, isLoggedIn }) => {
-  let base64Image = ImageService.convertToBase64Image(advertisement.image);
-
+  let base64Images = advertisement.images.map((image) => {
+    return ImageService.convertToBase64Image(image);
+  });
+  const [selectedImage, setSelectedImage] = useState(base64Images[0]);
   return (
     <>
-      <Box width={{ base: "100%", lg: "85%", xl: "65%" }}>
+      <Box width={{ base: "100%", lg: "85%", xl: "75%" }}>
         <Flex position="absolute">
           <Badge fontSize="1.1rem" fontWeight="500" variant="solid">
             {advertisement.categoryName}
           </Badge>
         </Flex>
-        <Flex flexWrap="nowrap" width="100%">
-          <Flex
-            width="100%"
-            overflow="hidden"
-            height="420px"
-            borderWidth="2px"
-            marginRight="20px"
-            borderRadius="6px"
-          >
-            <Image
-              objectFit="cover"
-              minWidth="100%"
-              minHeight="100%"
-              src={base64Image}
-            ></Image>
+        <Flex width="100%">
+          <Flex width="100%" marginRight="20px" flexDirection="column">
+            <Flex
+              width="100%"
+              overflow="hidden"
+              height="420px"
+              borderRadius="6px"
+            >
+              <Image
+                objectFit="cover"
+                minWidth="100%"
+                minHeight="100%"
+                src={selectedImage}
+                alignSelf="center"
+              ></Image>
+            </Flex>
+            {advertisement.images.length > 1 && (
+              <Flex
+                gap="5px"
+                marginY="10px"
+                flexDir="row"
+                overflowX="auto"
+                overflowY="hidden"
+              >
+                {base64Images.map((image) => (
+                  <Flex
+                    flex="1 0 200px"
+                    maxWidth="350px"
+                    onClick={() => setSelectedImage(image)}
+                    borderRadius="5px"
+                    overflow="hidden"
+                    border="3px solid gray"
+                    height="120px"
+                  >
+                    <Image
+                      src={image}
+                      objectFit="cover"
+                      minWidth="100%"
+                      minHeight="100%"
+                      alignSelf="center"
+                      sx={hoverAnimation2Styles}
+                    ></Image>
+                  </Flex>
+                ))}
+              </Flex>
+            )}
           </Flex>
           <AdvertiserInfo
             advertiserId={advertisement.advertiserId}
@@ -63,7 +98,11 @@ const AdvertisementDetails: React.FunctionComponent<
             isLoggedIn={isLoggedIn}
           />
         </Flex>
-        <Card marginTop="20px" variant="elevated" padding="20px">
+        <Card
+          variant="elevated"
+          padding="20px"
+          marginTop={advertisement.images.length > 1 ? "0px" : "20px"}
+        >
           <Heading sx={detailsHeadingStyles} marginY="1rem">
             Property description
           </Heading>

@@ -42,7 +42,7 @@ public static class AdvertisementExtensions
             Parking = advertisement.Parking,
             Description = advertisement.Description,
             MonthlyPrice = advertisement.MonthlyPrice,
-            Image = advertisement.Images.FirstOrDefault()?.Data, //use First
+            Images = advertisement.Images.Select(i => i.Data), 
             AdvertiserId = advertisement.AdvertiserId
         };
     }

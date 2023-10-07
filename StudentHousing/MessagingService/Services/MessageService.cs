@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MessagingService.Dtos;
-using MessagingService.Extensions;
-using MessagingService.Models;
+﻿using MessagingService.Models;
 using MessagingService.Repositories.Interfaces;
 using MessagingService.Services.Interfaces;
 
