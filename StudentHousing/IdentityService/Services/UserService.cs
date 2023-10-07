@@ -12,12 +12,12 @@ public class UserService : IUserService
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-    private readonly IValidator<AuthenticationRequest> _authenticationRequestValidator;
-    private readonly IValidator<RegistrationRequest> _registrationRequestValidator;
+    private readonly IValidator<AuthenticationRequestDto> _authenticationRequestValidator;
+    private readonly IValidator<RegistrationRequestDto> _registrationRequestValidator;
     private readonly ITokenProvider _tokenProvider;
 
     public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-        IValidator<AuthenticationRequest> authenticationRequestValidator, IValidator<RegistrationRequest> registrationRequestValidator, ITokenProvider tokenProvider)
+        IValidator<AuthenticationRequestDto> authenticationRequestValidator, IValidator<RegistrationRequestDto> registrationRequestValidator, ITokenProvider tokenProvider)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -26,7 +26,7 @@ public class UserService : IUserService
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<TokenDto?> LoginAsync(AuthenticationRequest request)
+    public async Task<TokenExchangeDto?> LoginAsync(AuthenticationRequestDto request)
     {
         var validationResult = await _authenticationRequestValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -52,14 +52,14 @@ public class UserService : IUserService
         var accessToken = _tokenProvider.GenerateAccessToken(user);
         var refreshToken = await UpdateUserRefreshTokenAsync(user);
 
-        return new TokenDto()
+        return new TokenExchangeDto()
         {
             AccessToken = accessToken,
             RefreshToken = refreshToken
         };
     }
 
-    public async Task<IdentityResult> RegisterAsync(RegistrationRequest request)
+    public async Task<IdentityResult> RegisterAsync(RegistrationRequestDto request)
     {
         var validationResult = await _registrationRequestValidator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -80,13 +80,13 @@ public class UserService : IUserService
         return await _userManager.CreateAsync(user, request.Password);
     }
 
-    public async Task<AppUserDto?> GetUserDetailsByIdAsync(int userId)
+    public async Task<AppUser?> GetUserByIdAsync(int userId)
     {
         var user = await _userManager.FindByIdAsync(userId.ToString());
-        return user?.ToDto();
+        return user;
     }
 
-    public async Task<TokenDto> RefreshTokenAsync(TokenDto request)
+    public async Task<TokenExchangeDto> RefreshTokenAsync(TokenExchangeDto request)
     {
         var claimsPrincipal = _tokenProvider.GetPrincipalFromExpiredToken(request.AccessToken);
 
@@ -104,7 +104,7 @@ public class UserService : IUserService
         var newAccessToken = _tokenProvider.GenerateAccessToken(user);
         var newRefreshToken = await UpdateUserRefreshTokenAsync(user);
 
-        return new TokenDto()
+        return new TokenExchangeDto()
         {
             AccessToken = newAccessToken,
             RefreshToken = newRefreshToken

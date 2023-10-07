@@ -2,9 +2,9 @@
 
 namespace IdentityService.Dtos.Validators;
 
-public class AuthenticationRequestValidator : AbstractValidator<AuthenticationRequest>
+public class AuthenticationRequestDtoValidator : AbstractValidator<AuthenticationRequestDto>
 {
-    public AuthenticationRequestValidator()
+    public AuthenticationRequestDtoValidator()
     {
         RuleFor(request => request.UserName)
             .NotNull().WithMessage("User name must not be null.")

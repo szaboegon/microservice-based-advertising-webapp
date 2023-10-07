@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using IdentityService.Dtos;
+using IdentityService.Extensions;
+using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<ActionResult> Login([FromBody] AuthenticationRequest request)
+    public async Task<ActionResult> Login([FromBody] AuthenticationRequestDto request)
     {
         try
         {
@@ -40,7 +42,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<ActionResult> Register([FromBody] RegistrationRequest request)
+    public async Task<ActionResult> Register([FromBody] RegistrationRequestDto request)
     {
         try
         {
@@ -69,7 +71,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("refresh_token")]
-    public async Task<ActionResult> RefreshToken([FromBody] TokenDto request)
+    public async Task<ActionResult> RefreshToken([FromBody] TokenExchangeDto request)
     {
         try
         {
@@ -86,7 +88,7 @@ public class UserController : ControllerBase
     [Route("user_details/{id}")]
     public async Task<ActionResult<List<AppUserDto>>> GetUserDetails(int id)
     {
-        var userDetails = await _userService.GetUserDetailsByIdAsync(id);
+        var userDetails = await _userService.GetUserByIdAsync(id);
         if (userDetails == null)
         {
             return NotFound();
@@ -102,13 +104,13 @@ public class UserController : ControllerBase
         var result = new List<AppUserDto>();
         foreach (var userId in id)
         {
-            var userDetails = await _userService.GetUserDetailsByIdAsync(userId);
+            var userDetails = await _userService.GetUserByIdAsync(userId);
             if (userDetails == null)
             {
                 return NotFound($"User with id: {userId} does not exist");
             }
 
-            result.Add(userDetails);
+            result.Add(userDetails.ToDto());
         }
 
         return Ok(result);

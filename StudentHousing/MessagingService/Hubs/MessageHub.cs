@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using MessagingService.Extensions;
+using Microsoft.AspNetCore.SignalR;
 using MessagingService.Helpers;
 using MessagingService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -39,7 +40,7 @@ public class MessageHub : Hub
             var senderId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var message = await _messageService.SendMessageToPrivateChatAsync(senderId, uniqueName, messageContent);
-            await Clients.Group(uniqueName).SendAsync("ReceiveMessage", message);
+            await Clients.Group(uniqueName).SendAsync("ReceiveMessage", message.ToDto());
         }
         catch (SecurityTokenException)
         {

@@ -41,8 +41,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 
 // Validators
-builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
-builder.Services.AddScoped<IValidator<RegistrationRequest>, RegistrationRequestValidator>();
+builder.Services.AddScoped<IValidator<AuthenticationRequestDto>, AuthenticationRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestDtoValidator>();
 
 // Jwt provider
 builder.Services.AddSingleton<ITokenProvider, TokenProvider>();

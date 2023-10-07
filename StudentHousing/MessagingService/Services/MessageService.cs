@@ -20,7 +20,7 @@ public class MessageService : IMessageService
         _messageProducer = messageProducer;
     }
 
-    public async Task<MessageDto> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
+    public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
     {
         var privateChat = await _privateChatRepository.GetByUniqueName(uniqueName) ?? throw new KeyNotFoundException("Chat does not exist.");
         var message = new Message
@@ -38,7 +38,7 @@ public class MessageService : IMessageService
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
         _messageProducer.SendMessage(receiverId);
 
-        return message.ToDto();
+        return message;
     }
 
     public async Task<PrivateChat> CreatePrivateChatIfDoesNotExistAsync(int user1Id, int user2Id, int advertisementId)
@@ -59,10 +59,10 @@ public class MessageService : IMessageService
         return privateChat;
     }
 
-    public async Task<IEnumerable<UserChatInfoDto>> GetUserChatsAsync(int userId)
+    public async Task<IEnumerable<PrivateChat>> GetUserChatsAsync(int userId)
     {
         var privateChats = await _privateChatRepository.GetByUserId(userId);
-        return privateChats.Select(p => p.ToInfoDto(userId));
+        return privateChats;
     }
 
     public async Task<List<int>> GetChatPartnerIdsForUserAsync(int userId)
@@ -70,10 +70,10 @@ public class MessageService : IMessageService
         return await _privateChatRepository.GetChatPartnerIdsByUserId(userId);
     }
 
-    public async Task<IEnumerable<MessageDto>> GetMessagesForPrivateChatAsync(string uniqueName)
+    public async Task<IEnumerable<Message>> GetMessagesForPrivateChatAsync(string uniqueName)
     {
         var messages = await _messageRepository.GetByPrivateChat(uniqueName);
-        return messages.Select(m => m.ToDto());
+        return messages;
     }
 
     public async Task<int?> MarkMessagesAsReadAsync(string privateChatUniqueName, int userId)

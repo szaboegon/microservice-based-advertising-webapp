@@ -61,7 +61,7 @@ public class AdvertisementRepository : IAdvertisementRepository
             .ToListAsync();
     }
 
-    public async Task<IPagedList<Advertisement>> GetByQuery(QueryParamsDto query)
+    public async Task<IPagedList<Advertisement>> GetByQuery(QueryParamsRequestDto query)
     {
         var advertisementQuery = ApplyQueryParams(query);
         var totalItemCount = advertisementQuery.Count();
@@ -84,7 +84,7 @@ public class AdvertisementRepository : IAdvertisementRepository
         return await PagedList<Advertisement>.CreateAsync(advertisementQuery, query.CurrentPage, query.PageItemCount);
     }
 
-    private IQueryable<Advertisement> ApplyQueryParams(QueryParamsDto query)
+    private IQueryable<Advertisement> ApplyQueryParams(QueryParamsRequestDto query)
     {
         var advertisementQuery = _dbcontext.Advertisements
             .Include(a => a.Address)

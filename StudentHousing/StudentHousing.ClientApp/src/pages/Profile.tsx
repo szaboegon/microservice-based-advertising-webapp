@@ -42,13 +42,14 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
 
   return (
     <>
-      <Flex justifyContent="center" height={`calc(100vh - ${NAVBAR_HEIGHT})`}>
+      <Flex justifyContent="center">
         <Flex
           flexDirection="column"
           position="relative"
           alignItems="center"
           width="50%"
           gap="15px"
+          paddingBottom="15px"
         >
           <Box
             position="absolute"

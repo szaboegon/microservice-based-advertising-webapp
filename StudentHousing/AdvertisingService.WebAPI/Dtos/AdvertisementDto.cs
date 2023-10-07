@@ -1,4 +1,4 @@
-﻿namespace AdvertisingService.BusinessLogic.Dtos;
+﻿namespace AdvertisingService.WebAPI.Dtos;
 
 public record AdvertisementDto
 {

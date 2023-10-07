@@ -1,7 +1,7 @@
-﻿using AdvertisingService.BusinessLogic.Dtos;
-using AdvertisingService.BusinessLogic.Models;
+﻿using AdvertisingService.BusinessLogic.Models;
+using AdvertisingService.WebAPI.Dtos;
 
-namespace AdvertisingService.BusinessLogic.Extensions;
+namespace AdvertisingService.WebAPI.Extensions;
 
 public static class AdvertisementExtensions
 {

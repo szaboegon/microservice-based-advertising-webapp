@@ -12,5 +12,5 @@ public interface IAdvertisementRepository
     void Remove(Advertisement advertisement);
     Task<IEnumerable<Advertisement>> GetByAdvertiserId(int id);
     Task<IEnumerable<Advertisement>> GetLatest(int count);
-    Task<IPagedList<Advertisement>> GetByQuery(QueryParamsDto query);
+    Task<IPagedList<Advertisement>> GetByQuery(QueryParamsRequestDto query);
 }

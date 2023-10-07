@@ -1,6 +1,6 @@
 ﻿namespace IdentityService.Dtos;
 
-public record RegistrationRequest
+public record RegistrationRequestDto
 {
     public required string FirstName { get; init; }
     public required string LastName { get; init; }

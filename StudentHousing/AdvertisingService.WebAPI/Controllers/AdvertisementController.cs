@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.ComponentModel.DataAnnotations;
 using AdvertisingService.BusinessLogic.Dtos;
-using AdvertisingService.BusinessLogic.Extensions;
+using AdvertisingService.WebAPI.Dtos;
+using AdvertisingService.WebAPI.Extensions;
 using Microsoft.IdentityModel.Tokens;
+using AdvertisementDetailsDto = AdvertisingService.WebAPI.Dtos.AdvertisementDetailsDto;
+using AdvertisementDto = AdvertisingService.WebAPI.Dtos.AdvertisementDto;
 
 namespace AdvertisingService.WebAPI.Controllers;
 
@@ -25,10 +28,11 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<PagedQueryResponse<AdvertisementDto>>> GetAdvertisements([FromQuery]QueryParamsDto queryParams)
+    public async Task<ActionResult<PagedQueryResponseDto<AdvertisementDto>>> GetAdvertisements([FromQuery]QueryParamsRequestDto queryParams)
     {
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
-        return Ok(advertisements);
+        return new PagedQueryResponseDto<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(), advertisements.CurrentPage,
+            advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
     }
 
     [HttpGet]
@@ -41,12 +45,12 @@ public class AdvertisementController : ControllerBase
             return NotFound();
         }
 
-        return Ok(advertisement);
+        return Ok(advertisement.ToDetailsDto());
     }
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementCreate advertisementCreate, [FromForm] IFormFile image) 
+    public async Task<ActionResult<int>> CreateAdvertisement([FromForm] AdvertisementCreateDto advertisementCreate, [FromForm] IFormFile image) 
     {
         try
         {
@@ -119,7 +123,7 @@ public class AdvertisementController : ControllerBase
 
             var advertiserId = GetAdvertiserIdFromToken(tokenString);
             var result = await _advertisementService.GetAdvertisementsByUserAsync(advertiserId);
-            return Ok(result);
+            return Ok(result.Select(a => a.ToDto()));
         }
         catch (SecurityTokenException ex)
         {
@@ -134,7 +138,7 @@ public class AdvertisementController : ControllerBase
         try
         {
             var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
-            return Ok(result);
+            return Ok(result.Select(a => a.ToDto()));
         }
         catch (ArgumentOutOfRangeException ex)
         {

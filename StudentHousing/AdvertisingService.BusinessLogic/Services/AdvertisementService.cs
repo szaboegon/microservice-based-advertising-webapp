@@ -1,5 +1,5 @@
 ﻿using AdvertisingService.BusinessLogic.Dtos;
-using AdvertisingService.BusinessLogic.Extensions;
+using AdvertisingService.BusinessLogic.Helpers.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services.Interfaces;
@@ -33,7 +33,7 @@ public class AdvertisementService : IAdvertisementService
         _categoryValidator = categoryValidator;
     }
 
-    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementCreate advertisementCreate, int advertiserId)
+    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementCreateDto advertisementCreate, int advertiserId)
     {
         var newCategory = await CreateNewCategoryIfDoesNotExistAsync(advertisementCreate.CategoryName);
         var newAddress = await CreateNewAddressAsync(advertisementCreate);
@@ -58,17 +58,16 @@ public class AdvertisementService : IAdvertisementService
         return newAdvertisement;
     }
 
-    public async Task<PagedQueryResponse<AdvertisementDto>> GetAdvertisementsByQueryAsync(QueryParamsDto queryParams)
+    public async Task<IPagedList<Advertisement>> GetAdvertisementsByQueryAsync(QueryParamsRequestDto queryParams)
     {
         var advertisements = await _advertisementRepository.GetByQuery(queryParams);
-        return new PagedQueryResponse<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(), advertisements.CurrentPage,
-            advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
+        return advertisements;
     }
 
-    public async Task<AdvertisementDetailsDto?> GetAdvertisementDetailsAsync(int id)
+    public async Task<Advertisement?> GetAdvertisementDetailsAsync(int id)
     {
         var advertisement= await _advertisementRepository.Get(id);
-        return advertisement?.ToDetailsDto();
+        return advertisement;
     }
 
     public async Task<Advertisement?> DeleteAdvertisementAsync(int advertisementId, int advertiserId)   
@@ -87,24 +86,23 @@ public class AdvertisementService : IAdvertisementService
         return advertisement;
     }
 
-    public async Task<IEnumerable<AdvertisementDto>> GetAdvertisementsByUserAsync(int advertiserId)
+    public async Task<IEnumerable<Advertisement>> GetAdvertisementsByUserAsync(int advertiserId)
     {
         var result = await _advertisementRepository.GetByAdvertiserId(advertiserId);
-
-        return result.Select(a => a.ToDto());
+        return result;
     }
 
-    public async Task<IEnumerable<AdvertisementDto>> GetLatestAdvertisementsAsync(int count)
+    public async Task<IEnumerable<Advertisement>> GetLatestAdvertisementsAsync(int count)
     {
         if (count < 0)
         {
             throw new ArgumentOutOfRangeException($"{nameof(count)} must be bigger than 0.");
         }
         var result = await _advertisementRepository.GetLatest(count);
-        return result.Select(a => a.ToDto());
+        return result;
     }
 
-    private async Task<Address> CreateNewAddressAsync(AdvertisementCreate advertisementCreate)
+    private async Task<Address> CreateNewAddressAsync(AdvertisementCreateDto advertisementCreate)
     {
         var newAddress = new Address()
         {

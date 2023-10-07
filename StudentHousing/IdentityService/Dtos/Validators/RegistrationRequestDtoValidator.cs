@@ -2,9 +2,9 @@
 
 namespace IdentityService.Dtos.Validators;
 
-public class RegistrationRequestValidator : AbstractValidator<RegistrationRequest>
+public class RegistrationRequestDtoValidator : AbstractValidator<RegistrationRequestDto>
 {
-    public RegistrationRequestValidator()
+    public RegistrationRequestDtoValidator()
     {
         RuleFor(request => request.FirstName)
             .NotNull().WithMessage("First name cannot be null.")

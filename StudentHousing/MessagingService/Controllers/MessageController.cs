@@ -1,4 +1,5 @@
 using MessagingService.Dtos;
+using MessagingService.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using MessagingService.Helpers;
@@ -30,7 +31,7 @@ public class MessageController : ControllerBase
             var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var chats = await _messageService.GetUserChatsAsync(userId);
-            return Ok(chats);
+            return Ok(chats.Select(c => c.ToInfoDto(userId)));
         }
         catch (SecurityTokenException ex)
         {
@@ -61,12 +62,12 @@ public class MessageController : ControllerBase
     public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForPrivateChat(string uniqueName)
     {
         var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
-        return Ok(messages);
+        return Ok(messages.Select(m => m.ToDto()));
     }
 
     [HttpPost]
     [Route("send_message")]
-    public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequest messageCreate)
+    public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequestDto messageCreate)
     {
         try
         {
@@ -77,7 +78,7 @@ public class MessageController : ControllerBase
                 await _messageService.CreatePrivateChatIfDoesNotExistAsync(senderId, messageCreate.ReceiverId, messageCreate.AdvertisementId);
             var message = await _messageService.SendMessageToPrivateChatAsync(senderId, privateChat.UniqueName, messageCreate.MessageContent);
 
-            return CreatedAtAction(nameof(GetMessagesForPrivateChat), new{ uniqueName = privateChat.UniqueName }, message);
+            return CreatedAtAction(nameof(GetMessagesForPrivateChat), new{ uniqueName = privateChat.UniqueName }, message.ToDto());
         }
         catch (SecurityTokenException ex)
         {

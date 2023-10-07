@@ -1,6 +1,6 @@
 ﻿namespace AdvertisingService.BusinessLogic.Dtos;
 
-public record QueryParamsDto
+public record QueryParamsRequestDto
 {
     public int CurrentPage { get; init; }
     public int PageItemCount { get; init; }
