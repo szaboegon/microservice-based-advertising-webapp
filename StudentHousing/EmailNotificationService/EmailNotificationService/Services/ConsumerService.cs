@@ -6,6 +6,8 @@ using RabbitMQ.Client.Events;
 using EmailNotificationService.Models.Options;
 using EmailNotificationService.Services.Interfaces;
 using Microsoft.Extensions.Options;
+using Polly;
+using Polly.Registry;
 
 namespace EmailNotificationService.Services;
 
@@ -15,11 +17,18 @@ public class ConsumerService: IHostedService
     private readonly IUserDetailsProvider _userDetailsProvider;
     private readonly RabbitMqOptions _options;
     private readonly IConnection _connection;
-    public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider userDetailsProvider, IOptions<RabbitMqOptions> options)
+
+    private readonly ResiliencePipeline _networkRetry;
+    private readonly ResiliencePipeline _emailRetry;
+    public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider userDetailsProvider,
+        ResiliencePipelineProvider<string> resiliencePipelineProvider,IOptions<RabbitMqOptions> options)
     {
         _emailSenderService = emailSenderService;
         _userDetailsProvider = userDetailsProvider;
         _options = options.Value;
+
+        _networkRetry = resiliencePipelineProvider.GetPipeline("network-retry");
+        _emailRetry = resiliencePipelineProvider.GetPipeline("email-retry");
 
         var connFactory = new ConnectionFactory()
         {
@@ -41,14 +50,11 @@ public class ConsumerService: IHostedService
             throw;
         }
     }
-
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _connection.Close();
         return Task.CompletedTask;
     }
-
-
     private Task StartConsumer()
     {
         using var channel = _connection.CreateModel();
@@ -73,7 +79,7 @@ public class ConsumerService: IHostedService
             var receivedJson = Encoding.UTF8.GetString(messageBody);
 
             var userId = JsonSerializer.Deserialize<int>(receivedJson);
-            var user = await _userDetailsProvider.GetUserDataByIdAsync(userId) ?? throw new KeyNotFoundException("User with received id does not exist.");
+            var user = await _networkRetry.ExecuteAsync(async _ => await _userDetailsProvider.GetUserDataByIdAsync(userId));
 
             var notificationMessage =
                 $"Dear {user.FirstName}!\n\n" +
@@ -81,8 +87,10 @@ public class ConsumerService: IHostedService
                 $"To check and respond to the message, go to the site and open the messages tab.\n\n" +
                 $"This is an auto generated email, please do not respond to it.\n\n";
 
-            _emailSenderService.SendEmail("szabo.egon2001@gmail.com", $"{user.FirstName} {user.LastName}", //TODO change this to actual email
-                "Message Notification", notificationMessage); 
+            await _emailRetry.ExecuteAsync(async ct => await _emailSenderService.SendEmail(
+                "szabo.egon2001@gmail.com",
+                $"{user.FirstName} {user.LastName}", //TODO change this to actual email
+                "Message Notification", notificationMessage));
         }
         catch (Exception ex)
         {

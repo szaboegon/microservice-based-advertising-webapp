@@ -8,5 +8,5 @@ namespace EmailNotificationService.Services.Interfaces;
 
 public interface IEmailSenderService
 {
-    void SendEmail(string receiverAddress, string receiverName, string subject, string message);
+    Task SendEmail(string receiverAddress, string receiverName, string subject, string message);
 }

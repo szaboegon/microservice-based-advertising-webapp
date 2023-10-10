@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EmailNotificationService.Extensions;
 using EmailNotificationService.Models.Options;
 using EmailNotificationService.Services;
 using EmailNotificationService.Services.Interfaces;
@@ -29,8 +29,7 @@ builder.Services.AddSingleton<IEmailSenderService, EmailSenderService>();
 builder.Services.AddScoped<IUserDetailsProvider, UserDetailsProvider>();
 builder.Services.AddHostedService<ConsumerService>();
 
+builder.Services.RegisterResiliencePipelines();
+
 var app = builder.Build();
 app.Run();
-
-
-

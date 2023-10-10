@@ -1,6 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using EmailNotificationService.Dtos;
 using EmailNotificationService.Services.Interfaces;
+using Polly;
 
 namespace EmailNotificationService.Services;
 
@@ -10,17 +12,13 @@ public class UserDetailsProvider : IUserDetailsProvider
 
     public async Task<UserDetailsDto?> GetUserDataByIdAsync(int userId)
     {
-        try
-        {
-            var response = await _httpClient.GetAsync($"http://identityservice:80/api/user/user_details/{userId}");
-            response.EnsureSuccessStatusCode();
+        var response = await _httpClient.GetAsync($"http://identityservice:80/api/user/user_details/{userId}");
+        response.EnsureSuccessStatusCode();
 
-            var user = JsonSerializer.Deserialize<UserDetailsDto>(response.Content.ReadAsStringAsync().Result, new JsonSerializerOptions(JsonSerializerDefaults.Web));
-            return user;
-        }
-        catch (HttpRequestException)
-        {
-            return null;
-        }
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var user = JsonSerializer.Deserialize<UserDetailsDto>(responseContent,
+                new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        return user;
     }
+
 }
