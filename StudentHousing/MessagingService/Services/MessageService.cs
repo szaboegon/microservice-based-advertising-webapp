@@ -8,13 +8,13 @@ public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;
-    private readonly IMessageProducer _messageProducer;
+    private readonly IMessageQueueProducer _messageQueueProducer;
 
-    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IMessageProducer messageProducer)
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IMessageQueueProducer messageQueueProducer)
     {
         _messageRepository = messageRepository;
         _privateChatRepository = privateChatRepository;
-        _messageProducer = messageProducer;
+        _messageQueueProducer = messageQueueProducer;
     }
 
     public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
@@ -33,7 +33,7 @@ public class MessageService : IMessageService
         await _messageRepository.Add(message);
 
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
-        _messageProducer.SendMessage(receiverId);
+        _messageQueueProducer.SendMessage(receiverId);
 
         return message;
     }
@@ -89,9 +89,7 @@ public class MessageService : IMessageService
 
     public async Task<int> GetUnreadMessageCountAsync(int userId)
     {
-        var chats = await _privateChatRepository.GetByUserId(userId);
-        var unreadCount = chats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
-
+        var unreadCount = await _privateChatRepository.GetUserUnreadMessageCount(userId);
         return unreadCount;
     }
 }

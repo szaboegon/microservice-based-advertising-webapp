@@ -9,4 +9,5 @@ public interface IPrivateChatRepository
     Task<PrivateChat?> GetByUniqueName(string uniqueName);
     Task<IEnumerable<PrivateChat>> GetByUserId(int userId);
     Task<List<int>> GetChatPartnerIdsByUserId(int userId);
+    Task<int> GetUserUnreadMessageCount(int userId);
 }

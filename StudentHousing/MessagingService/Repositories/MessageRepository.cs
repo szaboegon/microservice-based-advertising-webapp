@@ -30,4 +30,5 @@ public class MessageRepository : IMessageRepository
         _dbcontext.Messages.UpdateRange(messagesToUpdate);
         return await _dbcontext.SaveChangesAsync();
     }
+
 }

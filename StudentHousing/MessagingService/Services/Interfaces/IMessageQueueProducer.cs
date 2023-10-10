@@ -1,6 +1,6 @@
 ﻿namespace MessagingService.Services.Interfaces;
 
-public interface IMessageProducer
+public interface IMessageQueueProducer
 {
     void SendMessage<T>(T message);
 }

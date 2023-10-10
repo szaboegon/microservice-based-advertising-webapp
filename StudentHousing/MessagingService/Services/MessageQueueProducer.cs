@@ -7,11 +7,11 @@ using RabbitMQ.Client;
 
 namespace MessagingService.Services;
 
-public class MessageProducer: IMessageProducer
+public class MessageQueueProducer: IMessageQueueProducer
 {
     private readonly RabbitMqOptions _options;
     private readonly IConnection _connection;
-    public MessageProducer(IOptions<RabbitMqOptions> options)
+    public MessageQueueProducer(IOptions<RabbitMqOptions> options)
     {
         _options = options.Value;
 

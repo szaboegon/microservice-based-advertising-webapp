@@ -2,6 +2,7 @@
 using MessagingService.Models;
 using MessagingService.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace MessagingService.Repositories;
 
@@ -52,5 +53,12 @@ public class PrivateChatRepository : IPrivateChatRepository
     public async Task<PrivateChat?> GetByUniqueName(string uniqueName)
     {
         return await _dbcontext.PrivateChats.Include(p => p.Messages).Where(c => c.UniqueName == uniqueName).SingleOrDefaultAsync();
+    }
+
+    public async Task<int> GetUserUnreadMessageCount(int userId)
+    {
+        return await _dbcontext.PrivateChats
+            .Where(c => c.User1Id == userId || c.User2Id == userId)
+            .SumAsync(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
     }
 }
