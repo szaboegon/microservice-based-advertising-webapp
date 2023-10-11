@@ -1,4 +1,4 @@
-﻿using EmailNotificationService.Models.Exceptions;
+﻿using System.Net.Sockets;
 using EmailNotificationService.Models.Options;
 using EmailNotificationService.Services.Interfaces;
 using MailKit.Net.Smtp;
@@ -14,22 +14,16 @@ public class EmailSenderService: IEmailSenderService
     {
         _options = options.Value;
     }
+
     public async Task SendEmail(string receiverAddress, string receiverName, string subject, string message)
     {
-        try
-        {
-            var messageToSend = CreateMessage(receiverAddress, receiverName, subject, message);
-            using var smtpClient = new SmtpClient();
+        var messageToSend = CreateMessage(receiverAddress, receiverName, subject, message);
+        using var smtpClient = new SmtpClient();
 
-            await smtpClient.ConnectAsync(_options.SmtpServer, _options.Port);
-            await smtpClient.AuthenticateAsync(_options.SenderAddress, _options.SenderPassword);
+        await smtpClient.ConnectAsync(_options.SmtpServer, _options.Port);
+        await smtpClient.AuthenticateAsync(_options.SenderAddress, _options.SenderPassword);
 
-            await smtpClient.SendAsync(messageToSend);
-        }
-        catch (Exception ex)
-        {
-            throw new EmailNotificationFailedException("There was a problem with sending the email notification.", ex);
-        }
+        await smtpClient.SendAsync(messageToSend);
     }
 
     private MimeMessage CreateMessage(string receiverAddress, string receiverName, string subject, string message)

@@ -57,8 +57,7 @@ public class PrivateChatRepository : IPrivateChatRepository
 
     public async Task<int> GetUserUnreadMessageCount(int userId)
     {
-        return await _dbcontext.PrivateChats
-            .Where(c => c.User1Id == userId || c.User2Id == userId)
-            .SumAsync(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
+        var userChats = await GetByUserId(userId);
+        return userChats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
     }
 }

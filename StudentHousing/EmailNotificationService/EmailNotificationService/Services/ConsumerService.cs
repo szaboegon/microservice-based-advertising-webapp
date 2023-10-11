@@ -87,7 +87,7 @@ public class ConsumerService: IHostedService
                 $"To check and respond to the message, go to the site and open the messages tab.\n\n" +
                 $"This is an auto generated email, please do not respond to it.\n\n";
 
-            await _emailRetry.ExecuteAsync(async ct => await _emailSenderService.SendEmail(
+            await _emailRetry.ExecuteAsync(async _ => await _emailSenderService.SendEmail(
                 "szabo.egon2001@gmail.com",
                 $"{user.FirstName} {user.LastName}", //TODO change this to actual email
                 "Message Notification", notificationMessage));

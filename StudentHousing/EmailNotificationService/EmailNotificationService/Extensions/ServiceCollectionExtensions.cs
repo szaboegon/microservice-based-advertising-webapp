@@ -1,6 +1,9 @@
 ﻿using System.Net;
+using System.Net.Sockets;
+using MailKit;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
+using Polly.Retry;
 
 namespace EmailNotificationService.Extensions;
 
@@ -16,11 +19,18 @@ public static class ServiceCollectionExtensions
         HttpStatusCode.GatewayTimeout
     };
 
+    private static readonly IReadOnlyList<Type> EmailExceptionsToRetry = new List<Type>()
+    {
+        typeof(SocketException),
+        typeof(IOException),
+        typeof(ProtocolException)
+    };
+
     public static IServiceCollection RegisterResiliencePipelines(this IServiceCollection services)
     {
         services.AddResiliencePipeline("network-retry", builder =>
         {
-            builder.AddRetry(new()
+            builder.AddRetry(new RetryStrategyOptions
             {
                 Delay = TimeSpan.FromSeconds(3),
                 BackoffType = DelayBackoffType.Exponential,
@@ -33,12 +43,12 @@ public static class ServiceCollectionExtensions
 
         services.AddResiliencePipeline("email-retry", builder =>
         {
-            builder.AddRetry(new()
+            builder.AddRetry(new RetryStrategyOptions 
             {
                 Delay = TimeSpan.FromSeconds(3),
                 BackoffType = DelayBackoffType.Exponential,
                 MaxRetryAttempts = 3,
-                ShouldHandle = args => new ValueTask<bool>(args.Outcome.Exception is HttpRequestException)
+                ShouldHandle = ex => new ValueTask<bool>(EmailExceptionsToRetry.Contains(ex.Outcome.Exception?.GetType()))
             })
             .Build();
         });
