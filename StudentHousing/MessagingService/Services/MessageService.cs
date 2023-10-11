@@ -8,13 +8,11 @@ public class MessageService : IMessageService
 {
     private readonly IMessageRepository _messageRepository;
     private readonly IPrivateChatRepository _privateChatRepository;
-    private readonly IMessageQueueProducer _messageQueueProducer;
 
-    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository, IMessageQueueProducer messageQueueProducer)
+    public MessageService(IMessageRepository messageRepository, IPrivateChatRepository privateChatRepository)
     {
         _messageRepository = messageRepository;
         _privateChatRepository = privateChatRepository;
-        _messageQueueProducer = messageQueueProducer;
     }
 
     public async Task<Message> SendMessageToPrivateChatAsync(int senderId, string uniqueName, string messageContent)
@@ -31,9 +29,7 @@ public class MessageService : IMessageService
         };
 
         await _messageRepository.Add(message);
-
         var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
-        _messageQueueProducer.SendMessage(receiverId);
 
         return message;
     }

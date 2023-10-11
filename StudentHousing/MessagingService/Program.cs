@@ -23,6 +23,12 @@ builder.Services
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
+builder.Services
+    .AddOptions<UnreadMessageOptions>()
+    .Bind(builder.Configuration.GetSection(UnreadMessageOptions.ConfigSectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 // Repositories
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
@@ -31,6 +37,7 @@ builder.Services.AddScoped<IPrivateChatRepository, PrivateChatRepository>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IAuthChecker, AuthChecker>();
 builder.Services.AddSingleton<IMessageQueueProducer, MessageQueueProducer>();
+builder.Services.AddHostedService<UnreadMessageChecker>();
 
 //Helpers
 builder.Services.AddSingleton<JwtTokenHelper, JwtTokenHelper>();

@@ -60,4 +60,11 @@ public class PrivateChatRepository : IPrivateChatRepository
         var userChats = await GetByUserId(userId);
         return userChats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
     }
+
+    public async Task<int[]> GetAllUserIds()
+    {
+         var arrays = await _dbcontext.PrivateChats.Select(p => new[] { p.User1Id, p.User2Id }).ToArrayAsync();
+         return arrays.SelectMany(arr => arr).Distinct().ToArray();
+    }
+
 }
