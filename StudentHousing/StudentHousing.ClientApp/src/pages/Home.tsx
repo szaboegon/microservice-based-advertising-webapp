@@ -19,11 +19,9 @@ export const Home = () => {
   const navigate = useNavigate();
 
   const {
-    isSuccess,
     isLoading,
     isError,
     isRefetching,
-    data,
     error,
     refetch: getAdvertisements,
   } = useQuery({
@@ -57,7 +55,6 @@ export const Home = () => {
           alignSelf="end"
           height="auto"
           minWidth="2000px"
-          placeholder="Image by benzoix</a> on Freepik"
         ></Image>
         <Flex
           direction="column"

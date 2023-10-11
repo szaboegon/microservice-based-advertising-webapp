@@ -26,6 +26,8 @@ import { useMutation } from "react-query";
 import AdvertisementService from "../services/advertisementService";
 import { SuccessAlert } from "../components/alerts/SuccessAlert";
 import { ErrorAlert } from "../components/alerts/ErrorAlert";
+import { NAVBAR_HEIGHT } from "../assets/literals/constants";
+import FormBackground from "../assets/images/form-background.jpg";
 
 export const NewAdvertisement = () => {
   const initialFormValues: NewAdvertisementRequest = {
@@ -116,31 +118,31 @@ export const NewAdvertisement = () => {
 
   return (
     <>
-      <Box height="calc(100vh - 80px)" minHeight="700px">
-        <Flex
-          width={{ base: "0%", xl: "50%" }}
-          overflow="hidden"
-          float="left"
-          height="100%"
-        >
-          <Image
-            maxWidth="950px"
-            height="auto"
-            alignSelf="center"
-            src={ApartmentBuilding1}
-          ></Image>
-        </Flex>
+      <Box
+        width="100%"
+        height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+        position="relative"
+        backgroundImage={FormBackground}
+        backgroundSize="cover"
+        backgroundPosition="bottom"
+      >
+        <Box
+          width="100%"
+          height={`calc(100vh - ${NAVBAR_HEIGHT})`}
+          backgroundColor="rgba(0, 0, 0, 0.6)"
+          position="absolute"
+        />
+
         <Flex
           justifyContent="center"
-          width={{ base: "100%", xl: "50%" }}
           alignItems="center"
           height="100%"
-          scrollBehavior="smooth"
+          width="100%"
         >
           <Card
             justifyContent="center"
             alignItems="center"
-            padding="20px"
+            padding="30px"
             variant="elevated"
           >
             <Flex flexDirection="column" alignItems="center">
