@@ -74,7 +74,7 @@ export const Home = () => {
             marginBottom="50px"
             textAlign="center"
           >
-            For Students
+            For Everyone
           </Heading>
           <SearchBar
             minWidth="75%"

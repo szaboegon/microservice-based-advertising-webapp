@@ -74,7 +74,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
           variant="hidden"
           display={{ base: "none", md: "block" }}
         >
-          Student Housing
+          ApartmentFinder
         </Heading>
         <Spacer />
         {user ? (

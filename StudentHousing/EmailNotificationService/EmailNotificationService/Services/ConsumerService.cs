@@ -8,6 +8,7 @@ using EmailNotificationService.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Registry;
+using EmailNotificationService.Dtos;
 
 namespace EmailNotificationService.Services;
 
@@ -78,12 +79,16 @@ public class ConsumerService: IHostedService
             var messageBody = e.Body.ToArray();
             var receivedJson = Encoding.UTF8.GetString(messageBody);
 
-            var userId = JsonSerializer.Deserialize<int>(receivedJson);
-            var user = await _networkRetry.ExecuteAsync(async _ => await _userDetailsProvider.GetUserDataByIdAsync(userId));
+            var notification = JsonSerializer.Deserialize<UnreadMessageNotificationDto>(receivedJson);
+            if (notification == null)
+            {
+                throw new JsonException("Deserializing notification json failed");
+            }
 
+            var user = await _networkRetry.ExecuteAsync(async _ => await _userDetailsProvider.GetUserDataByIdAsync(notification.UserId));
             var notificationMessage =
                 $"Dear {user.FirstName}!\n\n" +
-                $"You have a new message waiting for you on Student Housing. " +
+                $"You have {notification.UnreadMessageCount} new messages waiting for you on ApartmentFinder. " +
                 $"To check and respond to the message, go to the site and open the messages tab.\n\n" +
                 $"This is an auto generated email, please do not respond to it.\n\n";
 

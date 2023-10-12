@@ -4,5 +4,5 @@ namespace EmailNotificationService.Services.Interfaces;
 
 public interface IUserDetailsProvider
 {
-    Task<UserDetailsDto?> GetUserDataByIdAsync(int userId);
+    Task<UserDetailsDto> GetUserDataByIdAsync(int userId);
 }

@@ -1,4 +1,5 @@
-﻿using MessagingService.Models.Options;
+﻿using MessagingService.Dtos;
+using MessagingService.Models.Options;
 using MessagingService.Repositories.Interfaces;
 using MessagingService.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -30,10 +31,13 @@ public class UnreadMessageChecker : BackgroundService
             foreach (var id in userIds)
             {
                 var unreadCount = await privateChatRepository.GetUserUnreadMessageCount(id);
-                if (unreadCount > 0)
+                if (unreadCount <= 0) continue;
+                var notification = new UnreadMessageNotificationDto()
                 {
-                    _messageQueueProducer.SendMessage(id);
-                }
+                    UserId = id,
+                    UnreadMessageCount = unreadCount
+                };
+                _messageQueueProducer.SendMessage(notification);
             }
         }
     }
