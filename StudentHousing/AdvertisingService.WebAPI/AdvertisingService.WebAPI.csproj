@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AdvertisingService.BusinessLogic\AdvertisingService.BusinessLogic.csproj" />
     <ProjectReference Include="..\AdvertisingService.DataAccess\AdvertisingService.DataAccess.csproj" />
+    <ProjectReference Include="..\Shared\ErrorHandling\ErrorHandling.csproj" />
   </ItemGroup>
 
 </Project>

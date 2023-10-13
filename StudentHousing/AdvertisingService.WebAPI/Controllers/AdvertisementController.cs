@@ -2,10 +2,10 @@
 using AdvertisingService.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using System.ComponentModel.DataAnnotations;
 using AdvertisingService.BusinessLogic.Dtos;
 using AdvertisingService.WebAPI.Dtos;
 using AdvertisingService.WebAPI.Extensions;
+using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
 using AdvertisementDetailsDto = AdvertisingService.WebAPI.Dtos.AdvertisementDetailsDto;
 using AdvertisementDto = AdvertisingService.WebAPI.Dtos.AdvertisementDto;
@@ -28,11 +28,13 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<PagedQueryResponseDto<AdvertisementDto>>> GetAdvertisements([FromQuery]QueryParamsRequestDto queryParams)
+    public async Task<ActionResult<PagedQueryResponseDto<AdvertisementDto>>> GetAdvertisements([FromQuery] QueryParamsRequestDto queryParams)
     {
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
-        return new PagedQueryResponseDto<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(), advertisements.CurrentPage,
+        return new PagedQueryResponseDto<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(),
+            advertisements.CurrentPage,
             advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
+
     }
 
     [HttpGet]

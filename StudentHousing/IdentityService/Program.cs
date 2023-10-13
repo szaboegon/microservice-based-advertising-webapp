@@ -1,4 +1,5 @@
 using System.Text;
+using ErrorHandling.Middleware;
 using FluentValidation;
 using IdentityService.DAL;
 using IdentityService.Dtos;
@@ -105,6 +106,8 @@ using (var scope = app.Services.CreateScope())
 app.UseAuthentication();
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseGlobalExceptionHandlerMiddleware();
 
 app.MapControllers();
 

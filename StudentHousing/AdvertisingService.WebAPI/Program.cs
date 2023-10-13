@@ -5,6 +5,7 @@ using AdvertisingService.BusinessLogic.Services;
 using AdvertisingService.BusinessLogic.Services.Interfaces;
 using AdvertisingService.DataAccess.DAL;
 using AdvertisingService.DataAccess.Repositories;
+using ErrorHandling.Middleware;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -54,6 +55,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseAuthorization();
+
+app.UseGlobalExceptionHandlerMiddleware();
 
 app.MapControllers();
 

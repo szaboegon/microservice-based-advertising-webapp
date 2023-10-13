@@ -1,3 +1,4 @@
+using ErrorHandling.Middleware;
 using MessagingService.DAL;
 using MessagingService.Helpers;
 using MessagingService.Hubs;
@@ -64,11 +65,10 @@ using (var scope = app.Services.CreateScope())
     app.UseSwaggerUI();
 }
 app.UseRouting();
-//app.UseCors("CorsPolicy");
 app.UseAuthorization();
+app.UseGlobalExceptionHandlerMiddleware();
 
 app.MapHub<MessageHub>("/hubs/message");
 app.MapControllers();
-
 
 app.Run();
