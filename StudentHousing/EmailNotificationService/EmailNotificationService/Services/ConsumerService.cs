@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Registry;
 using EmailNotificationService.Dtos;
+using Microsoft.Extensions.Logging;
 
 namespace EmailNotificationService.Services;
 
@@ -21,11 +22,14 @@ public class ConsumerService: IHostedService
 
     private readonly ResiliencePipeline _networkRetry;
     private readonly ResiliencePipeline _emailRetry;
+
+    private readonly ILogger<ConsumerService> _logger;
     public ConsumerService(IEmailSenderService emailSenderService, IUserDetailsProvider userDetailsProvider,
-        ResiliencePipelineProvider<string> resiliencePipelineProvider,IOptions<RabbitMqOptions> options)
+        ResiliencePipelineProvider<string> resiliencePipelineProvider,IOptions<RabbitMqOptions> options, ILogger<ConsumerService> logger)
     {
         _emailSenderService = emailSenderService;
         _userDetailsProvider = userDetailsProvider;
+        _logger = logger;
         _options = options.Value;
 
         _networkRetry = resiliencePipelineProvider.GetPipeline("network-retry");
@@ -40,14 +44,13 @@ public class ConsumerService: IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        Console.WriteLine("Email notification service started.");
         try
         {
             return StartConsumer();
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            _logger.LogError("An exception occurred while starting email notification service: {Exception}", ex);
             throw;
         }
     }
@@ -68,6 +71,7 @@ public class ConsumerService: IHostedService
         consumer.Received += OnMessageReceived;
 
         channel.BasicConsume(_options.QueueName, autoAck: true, consumer: consumer);
+        _logger.LogInformation($"Consuming started for queue: {_options.QueueName}.");
         Console.Read();
         return Task.CompletedTask;
     }
@@ -99,7 +103,7 @@ public class ConsumerService: IHostedService
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            _logger.LogError("An exception occurred while trying to send email notification: {Exception}", ex);
         }
     }
 }

@@ -11,11 +11,12 @@ public class GlobalExceptionHandlerMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GlobalExceptionHandlerMiddleware> _logger;
-    public GlobalExceptionHandlerMiddleware(RequestDelegate next ,ILogger<GlobalExceptionHandlerMiddleware> logger)
+    public GlobalExceptionHandlerMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlerMiddleware> logger)
     {
         _next = next;
         _logger = logger;
     }
+
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -24,11 +25,11 @@ public class GlobalExceptionHandlerMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError("A problem occurred while processing the request: {exception}", ex);
+            _logger.LogError("A problem occurred while processing the request: {Exception}", ex);
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-
             context.Response.ContentType = "application/json";
+
             var problemDetails = new ProblemDetails()
             {
                 Status = (int)HttpStatusCode.InternalServerError,

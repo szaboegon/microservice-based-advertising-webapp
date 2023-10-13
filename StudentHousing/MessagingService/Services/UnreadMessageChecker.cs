@@ -12,10 +12,14 @@ public class UnreadMessageChecker : BackgroundService
     private readonly IMessageQueueProducer _messageQueueProducer;
     private readonly UnreadMessageOptions _unreadMessageOptions;
 
-    public UnreadMessageChecker(IMessageQueueProducer messageQueueProducer, IServiceScopeFactory scopeFactory, IOptions<UnreadMessageOptions> unreadMessageOptions)
+    private readonly ILogger<UnreadMessageChecker> _logger;
+
+    public UnreadMessageChecker(IMessageQueueProducer messageQueueProducer, IServiceScopeFactory scopeFactory,
+        IOptions<UnreadMessageOptions> unreadMessageOptions, ILogger<UnreadMessageChecker> logger)
     {
         _messageQueueProducer = messageQueueProducer;
         _scopeFactory = scopeFactory;
+        _logger = logger;
         _unreadMessageOptions = unreadMessageOptions.Value;
     }
 
@@ -24,20 +28,27 @@ public class UnreadMessageChecker : BackgroundService
         using var timer = new PeriodicTimer(_unreadMessageOptions.CheckInterval);
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
         {
-            using var scope = _scopeFactory.CreateScope();
-            var privateChatRepository = scope.ServiceProvider.GetRequiredService<IPrivateChatRepository>();
-
-            var userIds = await privateChatRepository.GetAllUserIds();
-            foreach (var id in userIds)
+            try
             {
-                var unreadCount = await privateChatRepository.GetUserUnreadMessageCount(id);
-                if (unreadCount <= 0) continue;
-                var notification = new UnreadMessageNotificationDto()
+                using var scope = _scopeFactory.CreateScope();
+                var privateChatRepository = scope.ServiceProvider.GetRequiredService<IPrivateChatRepository>();
+
+                var userIds = await privateChatRepository.GetAllUserIds();
+                foreach (var id in userIds)
                 {
-                    UserId = id,
-                    UnreadMessageCount = unreadCount
-                };
-                _messageQueueProducer.SendMessage(notification);
+                    var unreadCount = await privateChatRepository.GetUserUnreadMessageCount(id);
+                    if (unreadCount <= 0) continue;
+                    var notification = new UnreadMessageNotificationDto()
+                    {
+                        UserId = id,
+                        UnreadMessageCount = unreadCount
+                    };
+                    _messageQueueProducer.SendMessage(notification);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("An exception occurred while checking for unread messages: {Exception}", ex);
             }
         }
     }
