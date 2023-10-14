@@ -12,11 +12,14 @@ public class MessageHub : Hub
     private readonly JwtTokenHelper _jwtTokenHelper;
     private readonly IAuthChecker _authChecker;
 
-    public MessageHub(IMessageService messageService, JwtTokenHelper jwtTokenHelper, IAuthChecker authChecker)
+    private readonly ILogger<MessageHub> _logger;
+
+    public MessageHub(IMessageService messageService, JwtTokenHelper jwtTokenHelper, IAuthChecker authChecker, ILogger<MessageHub> logger)
     {
         _messageService = messageService;
         _jwtTokenHelper = jwtTokenHelper;
         _authChecker = authChecker;
+        _logger = logger;
     }
     public override async Task OnConnectedAsync()
     {
@@ -24,10 +27,12 @@ public class MessageHub : Hub
         var authResult = await _authChecker.CheckTokenValidity(tokenString);
         if (authResult)
         {
+            _logger.LogInformation("User connected with conn id {ConnectionId}:", Context.ConnectionId);
             await base.OnConnectedAsync();
         }
         else
         {
+            _logger.LogWarning("Token authentication failed for conn id: {ConnectionId}, aborting connection", Context.ConnectionId);
             Context.Abort();
         }
     }
@@ -42,8 +47,9 @@ public class MessageHub : Hub
             var message = await _messageService.SendMessageToPrivateChatAsync(senderId, uniqueName, messageContent);
             await Clients.Group(uniqueName).SendAsync("ReceiveMessage", message.ToDto());
         }
-        catch (SecurityTokenException)
+        catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("Security token exception occurred while sending message, conn id: {ConnectionId}, exception: {Exception}", Context.ConnectionId, ex);
             Context.Abort();
             throw;
         }
@@ -60,8 +66,9 @@ public class MessageHub : Hub
             await Groups.AddToGroupAsync(Context.ConnectionId, privateChat.UniqueName);
             return privateChat.UniqueName;
         }
-        catch (SecurityTokenException)
+        catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("Security token exception occurred while sending message, conn id: {ConnectionId}, exception: {Exception}", Context.ConnectionId, ex);
             Context.Abort();
             throw;
         }

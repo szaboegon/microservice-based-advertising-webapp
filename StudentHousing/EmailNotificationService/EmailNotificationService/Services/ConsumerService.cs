@@ -71,7 +71,7 @@ public class ConsumerService: IHostedService
         consumer.Received += OnMessageReceived;
 
         channel.BasicConsume(_options.QueueName, autoAck: true, consumer: consumer);
-        _logger.LogInformation($"Consuming started for queue: {_options.QueueName}.");
+        _logger.LogInformation("Consuming started for queue: {Queue}.", _options.QueueName);
         Console.Read();
         return Task.CompletedTask;
     }

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using IdentityService.Dtos;
 using IdentityService.Extensions;
-using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,29 +13,34 @@ namespace IdentityService.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IUserService _userService;
-    public UserController(IUserService userService)
+    private readonly ILogger<UserController> _logger;
+    public UserController(IUserService userService, ILogger<UserController> logger)
     {
         _userService = userService;
+        _logger = logger;
     }
 
     [HttpPost]
     [Route("login")]
     public async Task<ActionResult> Login([FromBody] AuthenticationRequestDto request)
     {
+        _logger.LogInformation("Incoming login request for user: {UserName}", request.UserName);
         try
         {
             var tokens = await _userService.LoginAsync(request);
 
             if (tokens == null)
             {
+                _logger.LogWarning("Login attempt failed for user: {UserName}", request.UserName);
                 return Unauthorized("Wrong username or password.");
             }
 
             return Ok(tokens);
         }
-        catch(ValidationException e)
+        catch(ValidationException ex)
         {
-            return BadRequest(e.Message);
+            _logger.LogWarning("A validation exception occurred while checking login request: {Exception}", ex);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -44,6 +48,7 @@ public class UserController : ControllerBase
     [Route("register")]
     public async Task<ActionResult> Register([FromBody] RegistrationRequestDto request)
     {
+        _logger.LogInformation("Incoming registration request with user name: {UserName}", request.UserName);
         try
         {
             var result = await _userService.RegisterAsync(request);
@@ -55,9 +60,10 @@ public class UserController : ControllerBase
 
             return BadRequest(result.Errors.First().Description);
         }
-        catch(ValidationException e)
+        catch(ValidationException ex)
         {
-            return BadRequest(e.Message);
+            _logger.LogWarning("A validation exception occurred while checking registration request: {Exception}", ex);
+            return BadRequest(ex.Message);
         }
     }
 
@@ -78,8 +84,9 @@ public class UserController : ControllerBase
             var refreshedTokens = await _userService.RefreshTokenAsync(request);
             return Ok(refreshedTokens);
         }
-        catch (SecurityTokenException)
+        catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("Security token refresh failed: {Exception}", ex);
             return Unauthorized("Token expired");
         }
     }
@@ -88,9 +95,11 @@ public class UserController : ControllerBase
     [Route("user_details/{id}")]
     public async Task<ActionResult<List<AppUserDto>>> GetUserDetails(int id)
     {
+        _logger.LogInformation("Getting user by id: {UserId}",id);
         var userDetails = await _userService.GetUserByIdAsync(id);
         if (userDetails == null)
         {
+            _logger.LogWarning("Get user by id: {Id} NOT FOUND", id);
             return NotFound();
         }
 
@@ -101,12 +110,14 @@ public class UserController : ControllerBase
     [Route("multiple_user_details")]
     public async Task<ActionResult<List<AppUserDto>>> GetMultipleUserDetails([FromQuery] List<int> id)
     {
+        _logger.LogInformation("Getting multiple users by Id: {UserId}", id);
         var result = new List<AppUserDto>();
         foreach (var userId in id)
         {
             var userDetails = await _userService.GetUserByIdAsync(userId);
             if (userDetails == null)
             {
+                _logger.LogWarning("Get user by id: {UserId} NOT FOUND", id);
                 return NotFound($"User with id: {userId} does not exist");
             }
 

@@ -15,16 +15,20 @@ public class MessageController : ControllerBase
 {
     private readonly IMessageService _messageService;
     private readonly JwtTokenHelper _jwtTokenHelper;
-    public MessageController(IMessageService messageService, JwtTokenHelper jwtTokenHelper)
+
+    private readonly ILogger<MessageController> _logger;
+    public MessageController(IMessageService messageService, JwtTokenHelper jwtTokenHelper, ILogger<MessageController> logger)
     {
         _messageService = messageService;
         _jwtTokenHelper = jwtTokenHelper;
+        _logger = logger;
     }
 
     [HttpGet]
     [Route("user_chats")]
     public async Task<ActionResult<IEnumerable<UserChatInfoDto>>> GetPrivateChatsByUser() 
     {
+        _logger.LogInformation("Getting private chats by user");
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
@@ -35,32 +39,16 @@ public class MessageController : ControllerBase
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while getting private chats: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }
-
-    //[HttpGet]
-    //[Route("user_partners")]
-    //public async Task<ActionResult<List<int>>> GetChatPartnersByUser()
-    //{
-    //    try
-    //    {
-    //        var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-    //        var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
-
-    //        var partnerIds = await _messageService.GetChatPartnerIdsForUserAsync(userId);
-    //        return Ok(partnerIds);
-    //    }
-    //    catch (SecurityTokenException ex)
-    //    {
-    //        return BadRequest(ex.Message);
-    //    }
-    //}
 
     [HttpGet]
     [Route("messages/{uniqueName}")]
     public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForPrivateChat(string uniqueName)
     {
+        _logger.LogInformation("Getting messages for private chat, unique name: {PrivateChatUniqueName}", uniqueName);
         var messages = await _messageService.GetMessagesForPrivateChatAsync(uniqueName);
         return Ok(messages.Select(m => m.ToDto()));
     }
@@ -69,6 +57,7 @@ public class MessageController : ControllerBase
     [Route("send_message")]
     public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequestDto messageCreate)
     {
+        _logger.LogInformation("Sending message: {Message}", messageCreate);
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
@@ -82,6 +71,7 @@ public class MessageController : ControllerBase
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while sending message: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }
@@ -90,6 +80,7 @@ public class MessageController : ControllerBase
     [Route("unread_message_count")]
     public async Task<ActionResult<int>> GetUnreadMessageCount()
     {
+        _logger.LogInformation("Getting unread message count");
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
@@ -100,6 +91,7 @@ public class MessageController : ControllerBase
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while getting unread message count: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }

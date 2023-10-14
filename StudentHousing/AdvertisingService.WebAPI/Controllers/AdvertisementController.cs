@@ -19,10 +19,13 @@ public class AdvertisementController : ControllerBase
     private readonly IAdvertisementService _advertisementService;
     private readonly IImageService _imageService;
     private readonly JwtSecurityTokenHandler _tokenHandler;
-    public AdvertisementController(IAdvertisementService advertisementService, IImageService imageService)
+
+    private readonly ILogger<AdvertisementController> _logger;
+    public AdvertisementController(IAdvertisementService advertisementService, IImageService imageService, ILogger<AdvertisementController> logger)
     {
         _advertisementService = advertisementService;
         _imageService = imageService;
+        _logger = logger;
         _tokenHandler = new JwtSecurityTokenHandler();
     }
 
@@ -30,6 +33,7 @@ public class AdvertisementController : ControllerBase
     [Route("public/advertisement_cards")]
     public async Task<ActionResult<PagedQueryResponseDto<AdvertisementDto>>> GetAdvertisements([FromQuery] QueryParamsRequestDto queryParams)
     {
+        _logger.LogInformation("Getting advertisements by query: {Query}", queryParams);
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
         return new PagedQueryResponseDto<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(),
             advertisements.CurrentPage,
@@ -41,9 +45,11 @@ public class AdvertisementController : ControllerBase
     [Route("public/advertisement_details/{id:int}")]
     public async Task<ActionResult<AdvertisementDetailsDto>> GetAdvertisement(int id)
     {
+        _logger.LogInformation("Getting advertisement by id: {AdvertisementId}", id);
         var advertisement = await _advertisementService.GetAdvertisementDetailsAsync(id);
         if(advertisement == null)
         {
+            _logger.LogWarning("Get advertisement id: {AdvertisementId} NOT FOUND", id);
             return NotFound();
         }
 
@@ -54,10 +60,12 @@ public class AdvertisementController : ControllerBase
     [Route("private/advertisements")]
     public async Task<ActionResult<int>> CreateAdvertisement([FromForm]AdvertisementCreateDto advertisementCreate, [FromForm]List<IFormFile> images) 
     {
+        _logger.LogInformation("Creating new advertisement");
         try
         {
             if (images.IsNullOrEmpty())
             {
+                _logger.LogWarning("No images were provided to create advertisement");
                 return BadRequest("At least one image is required.");
             }
 
@@ -77,10 +85,12 @@ public class AdvertisementController : ControllerBase
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while creating advertisement: {Exception}", ex);
             return BadRequest(ex.Message);
         }
         catch (ValidationException ex)
         {
+            _logger.LogWarning("A validation exception occurred while creating advertisement: {Exception}", ex);
             return BadRequest(ex.Message);
         }
 
@@ -98,6 +108,7 @@ public class AdvertisementController : ControllerBase
     [Route("private/advertisements/{id:int}")]
     public async Task<ActionResult> DeleteAdvertisement(int id) 
     {
+        _logger.LogInformation("Deleting advertisement id: {AdvertisementId}", id);
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
@@ -107,6 +118,7 @@ public class AdvertisementController : ControllerBase
 
             if (deletedAdvertisement == null)
             {
+                _logger.LogWarning("Delete advertisement id: {AdvertisementId} NOT FOUND", id);
                 return NotFound();
             }
 
@@ -114,10 +126,12 @@ public class AdvertisementController : ControllerBase
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while deleting advertisement: {Exception}", ex);
             return BadRequest(ex.Message);
         }
         catch (ValidationException ex)
         {
+            _logger.LogWarning("A validation exception occurred while deleting advertisement: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }
@@ -126,16 +140,18 @@ public class AdvertisementController : ControllerBase
     [Route("private/advertisements_by_user")]
     public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId()
     {
+        _logger.LogInformation("Getting advertisement by user id");
         try
         {
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-
             var advertiserId = GetAdvertiserIdFromToken(tokenString);
+
             var result = await _advertisementService.GetAdvertisementsByUserAsync(advertiserId);
             return Ok(result.Select(a => a.ToDto()));
         }
         catch (SecurityTokenException ex)
         {
+            _logger.LogWarning("A security token exception occurred while getting advertisement by id: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }
@@ -144,6 +160,7 @@ public class AdvertisementController : ControllerBase
     [Route("public/latest_advertisements/{count:int}")]
     public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisements(int count)
     {
+        _logger.LogInformation("Getting latest advertisements, count: {Count}", count);
         try
         {
             var result = await _advertisementService.GetLatestAdvertisementsAsync(count);
@@ -151,6 +168,7 @@ public class AdvertisementController : ControllerBase
         }
         catch (ArgumentOutOfRangeException ex)
         {
+            _logger.LogWarning("An exception occurred while getting latest advertisements: {Exception}", ex);
             return BadRequest(ex.Message);
         }
     }
