@@ -182,7 +182,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
         <Flex
           justifyContent="center"
           alignItems="center"
-          height="100%"
+          minH="300px"
           marginX="10px"
         >
           {isLoadingUser && <Spinner />}

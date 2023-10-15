@@ -19,13 +19,6 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
-    #  - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
-     # - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-    #  - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-    #  - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-    #  - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-    #  - "--certificatesresolvers.myresolver.acme.email=szabo.egon2001@gmail.com"
-    #  - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       # The HTTP port
       - "80:80"
@@ -61,13 +54,8 @@ services:
        - traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders=X-Forwarded-User
        - traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader=true
        - traefik.http.routers.advertisingserviceprivate.middlewares=advertisingauth
-   #    - traefik.http.routers.advertisingservicepublic.tls=true
-   #   - traefik.http.routers.advertisingservicepublic.tls.certresolver=myresolver
-   #   - traefik.http.routers.advertisingserviceprivate.tls=true
-   #    - traefik.http.routers.advertisingserviceprivate.tls.certresolver=myresolver
     depends_on:
       - advertisingdb
-      - rabbitmq
        
   advertisingdb:
     container_name: advertising_db
@@ -96,11 +84,8 @@ services:
     labels: 
        - traefik.enable=true
        - traefik.http.routers.identityservice.rule=Host(`localhost`) && PathPrefix(`/api/user`)
-   #    - traefik.http.routers.identityservice.tls=true
-   #    - traefik.http.routers.identityservice.tls.certresolver=myresolver
     depends_on:
       - identitydb
-      - rabbitmq
 
   identitydb:
     container_name: identity_db
@@ -124,10 +109,7 @@ services:
     tty: true
     labels:
        - traefik.enable=true
-  #     - traefik.http.routers.clientapp.entrypoints=websecure
        - traefik.http.routers.clientapp.rule=Host(`localhost`)
-  #     - traefik.http.routers.clientapp.tls=true
-  #     - traefik.http.routers.clientapp.tls.certresolver=myresolver
 
   messagingservice:
     container_name: messaging_service
@@ -152,8 +134,10 @@ services:
      - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
      - traefik.http.routers.messagingservicewebapi.middlewares=messagingauth
     depends_on:
-     - messagingdb
-     - rabbitmq
+     rabbitmq: 
+       condition: service_healthy
+     messagingdb: 
+       condition: service_started
 
   messagingdb:
     container_name: messaging_db
@@ -175,8 +159,10 @@ services:
     networks:
       - mynetwork
     depends_on:
-      - rabbitmq
-      - messagingservice
+      rabbitmq: 
+       condition: service_healthy
+      messagingservice: 
+       condition: service_started
 
   rabbitmq:
     container_name: rabbit_mq
@@ -189,5 +175,11 @@ services:
       - "15672:15672"
     networks:
       - mynetwork
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    
 
 

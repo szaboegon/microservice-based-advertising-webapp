@@ -28,6 +28,7 @@ public class UnreadMessageChecker : BackgroundService
         using var timer = new PeriodicTimer(_unreadMessageOptions.CheckInterval);
         while (!stoppingToken.IsCancellationRequested && await timer.WaitForNextTickAsync(stoppingToken))
         {
+            _logger.LogInformation("Checking for unread messages...");
             try
             {
                 using var scope = _scopeFactory.CreateScope();

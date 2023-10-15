@@ -19,6 +19,7 @@ export const Home = () => {
   const navigate = useNavigate();
 
   const {
+    isSuccess,
     isLoading,
     isError,
     isRefetching,
@@ -91,12 +92,13 @@ export const Home = () => {
         spacing="8"
         marginX={{ base: "0px", "2xl": "12%" }}
       >
-        {advertisements.map((advertisement) => (
-          <AdvertisementCard
-            key={advertisement.id}
-            advertisement={advertisement}
-          ></AdvertisementCard>
-        ))}
+        {isSuccess &&
+          advertisements.map((advertisement) => (
+            <AdvertisementCard
+              key={advertisement.id}
+              advertisement={advertisement}
+            ></AdvertisementCard>
+          ))}
       </SimpleGrid>
       <Flex flexDirection="column" alignItems="center" width="100%">
         {(isLoading || isRefetching) && <Spinner />}
