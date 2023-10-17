@@ -52,7 +52,6 @@ public class AdvertisementDbContext : DbContext
 
             entity.Property(e => e.StreetNumber)
                 .HasColumnName("streetNumber")
-                .IsRequired()
                 .HasColumnType("nvarchar")
                 .HasMaxLength(10);
 

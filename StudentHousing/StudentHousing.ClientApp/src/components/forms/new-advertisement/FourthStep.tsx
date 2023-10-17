@@ -52,6 +52,11 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
             <Textarea
               {...register("description", {
                 required: "This field is required",
+                minLength: {
+                  value: 100,
+                  message:
+                    "The lenght of description must be at least 100 characters",
+                },
                 maxLength: {
                   value: 1000,
                   message:

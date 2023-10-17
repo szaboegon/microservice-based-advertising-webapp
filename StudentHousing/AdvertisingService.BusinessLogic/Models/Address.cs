@@ -8,7 +8,7 @@ public class Address
     public required string City { get; set; }
     public string? District { get; set; }
     public required string StreetName { get; set; }
-    public required string StreetNumber { get; set; }
+    public string? StreetNumber { get; set; }
     public string? UnitNumber { get; set; }
     public int AdvertisementId { get; set; }
 

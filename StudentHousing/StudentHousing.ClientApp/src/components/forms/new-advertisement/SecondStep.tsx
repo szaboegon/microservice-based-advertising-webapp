@@ -222,7 +222,6 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 </FormLabel>
                 <Input
                   {...register("streetNumber", {
-                    required: "This field is required",
                     maxLength: {
                       value: 20,
                       message: "Street number should have a max length of 20",

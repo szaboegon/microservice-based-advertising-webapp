@@ -24,6 +24,7 @@ import { SuccessAlert } from "../../alerts/SuccessAlert";
 import userService from "../../../services/userService";
 import { useState } from "react";
 import UserService from "../../../services/userService";
+import { useNavigate } from "react-router-dom";
 
 interface IAdvertiserInfoProps {
   advertiserId: number;
@@ -37,6 +38,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
   isLoggedIn,
 }) => {
   const [advertiser, setAdvertiser] = useState<User>();
+  const navigate = useNavigate();
 
   const {
     isSuccess: isSuccessUser,
@@ -74,7 +76,10 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
         data.content,
       );
     },
-    onSuccess: () => reset(),
+    onSuccess: () =>
+      navigate("/messages", {
+        state: { advertiserId: advertiserId, advertisementId: advertisementId },
+      }),
   });
 
   const submit = (data: MessageInputData) => {

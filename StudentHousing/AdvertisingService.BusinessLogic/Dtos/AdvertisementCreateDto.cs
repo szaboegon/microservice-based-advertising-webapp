@@ -8,7 +8,7 @@ public record AdvertisementCreateDto
     public required string City { get; init; }
     public string? District { get; init; }
     public required string StreetName { get; init; }
-    public required string StreetNumber { get; init; }
+    public string? StreetNumber { get; init; }
     public string? UnitNumber { get; init; }
     public required float NumberOfRooms { get; init; }
     public required float Size { get; init; }

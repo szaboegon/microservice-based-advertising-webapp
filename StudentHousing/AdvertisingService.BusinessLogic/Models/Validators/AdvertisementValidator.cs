@@ -24,6 +24,7 @@ public class AdvertisementValidator : AbstractValidator<Advertisement>
         RuleFor(advertisement => advertisement.Description)
             .NotNull().WithMessage("Description cannot be null")
             .NotEmpty().WithMessage("Description cannot be empty")
+            .MinimumLength(100).WithMessage("The length of Description must at least 100 characters.")
             .MaximumLength(1000).WithMessage("The length of Description must be less than 1000 characters.");
 
         RuleFor(advertisement => advertisement.Category)

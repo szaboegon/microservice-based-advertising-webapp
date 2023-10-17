@@ -1,5 +1,5 @@
 import { Box, Card, Flex, Heading, Spinner, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as React from "react";
 import { User } from "../../models/user";
 import { useQuery } from "react-query";
@@ -11,6 +11,7 @@ import { WarningAlert } from "../alerts/WarningAlert";
 import UserService from "../../services/userService";
 import { UserChatDto } from "../../models/userChatDto";
 import { pageSubheadingStyles } from "../../styles/pageSubheadingStyles";
+import { useLocation } from "react-router-dom";
 
 interface IPartnersSidebarProps {
   notifyChatSelected: (chat: UserChatDto, partner: User) => void;
@@ -24,6 +25,22 @@ const UserChatsSidebar: React.FunctionComponent<IPartnersSidebarProps> = ({
   const [selectedChat, setSelectedChat] = useState<UserChatDto>();
   const [chats, setChats] = useState<UserChatDto[]>([]);
   const [chatPartners, setChatPartners] = useState<User[]>([]);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const advertiserId = location.state?.advertiserId;
+    const advertisementId = location.state?.advertisementId;
+    const chat = chats.find(
+      (c) =>
+        c.partnerId == advertiserId && c.advertisementId == advertisementId,
+    );
+    const partner = chatPartners.find((p) => p.id == advertiserId);
+    if (chat && partner) {
+      setSelectedChat(chat);
+      notifyChatSelected(chat, partner);
+    }
+  }, [chats, chatPartners]);
 
   const {
     isSuccess: isSuccessChats,

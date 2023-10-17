@@ -3,7 +3,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Heading,
   Image,
   LinkBox,
   LinkOverlay,
@@ -68,7 +67,6 @@ const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({
                 width="100%"
                 height="100%"
                 objectFit="cover"
-                //src="https://img.staticmb.com/mbcontent//images/uploads/2022/12/Most-Beautiful-House-in-the-World.jpg"
               ></Image>
             </Flex>
           </CardHeader>

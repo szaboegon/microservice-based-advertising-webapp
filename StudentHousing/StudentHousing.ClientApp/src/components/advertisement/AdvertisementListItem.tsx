@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   Flex,
   Heading,
   HStack,
@@ -70,11 +71,10 @@ const AdvertisementListItem: React.FunctionComponent<
         >
           <Image
             src={base64Image}
-            maxWidth="700px"
+            width="300px"
             objectFit="cover"
             borderRadius="8px"
           ></Image>
-
           <CardBody>
             <Flex
               flexDirection="column"
