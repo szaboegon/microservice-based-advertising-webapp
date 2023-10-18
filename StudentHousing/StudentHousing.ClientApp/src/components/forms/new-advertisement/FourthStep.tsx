@@ -4,6 +4,7 @@ import {
   Flex,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Textarea,
 } from "@chakra-ui/react";
@@ -39,7 +40,7 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
     <>
       <form onSubmit={handleSubmit(saveData)}>
         <Flex
-          height="450px"
+          height="420px"
           width="600px"
           flexDirection="column"
           justifyContent="center"
@@ -47,7 +48,7 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
         >
           <FormControl isInvalid={!!errors.description}>
             <FormLabel sx={formLabelStyles} htmlFor="description">
-              Max 1000 characters
+              Write a short description
             </FormLabel>
             <Textarea
               {...register("description", {
@@ -67,14 +68,15 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
               resize="none"
               height="350px"
               size="md"
-              borderColor="brandYellow.800"
+              borderColor="gray.500"
             ></Textarea>
-            {errors.description ? (
+            <FormHelperText>
+              Description must be between 100 and 1000 charachters long.
+            </FormHelperText>
+            {errors.description && (
               <FormErrorMessage sx={formErrorMessageStyles}>
                 {errors.description.message}
               </FormErrorMessage>
-            ) : (
-              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
         </Flex>

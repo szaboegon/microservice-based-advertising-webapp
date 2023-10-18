@@ -91,60 +91,58 @@ export const Login = () => {
           >
             <Heading sx={formTitleStyles}>Sign In</Heading>
             <form onSubmit={handleSubmit(submit)}>
-              <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
-                <FormLabel sx={formLabelStyles} htmlFor="userName">
-                  Username:
-                </FormLabel>
-                <Input
-                  {...register("userName", {
-                    required: "This field is required",
-                  })}
-                  id="userName"
-                  borderColor="brandYellow.800"
+              <Flex flexDirection="column" alignItems="center" gap="10px">
+                <FormControl maxWidth="400px" isInvalid={!!errors.userName}>
+                  <FormLabel sx={formLabelStyles} htmlFor="userName">
+                    Username:
+                  </FormLabel>
+                  <Input
+                    {...register("userName", {
+                      required: "This field is required",
+                    })}
+                    id="userName"
+                    borderColor="gray.500"
+                    size="lg"
+                  ></Input>
+                  {errors.userName && (
+                    <FormErrorMessage sx={formErrorMessageStyles}>
+                      {errors.userName.message}
+                    </FormErrorMessage>
+                  )}
+                </FormControl>
+                <FormControl maxWidth="400px" isInvalid={!!errors.password}>
+                  <FormLabel sx={formLabelStyles} htmlFor="password">
+                    Password:
+                  </FormLabel>
+                  <Input
+                    id="password"
+                    {...register("password", {
+                      required: "This field is required",
+                    })}
+                    type="password"
+                    borderColor="gray.500"
+                    size="lg"
+                  ></Input>
+                  {errors.password && (
+                    <FormErrorMessage sx={formErrorMessageStyles}>
+                      {errors.password.message}
+                    </FormErrorMessage>
+                  )}
+                </FormControl>
+                <Button
                   size="lg"
-                ></Input>
-                {errors.userName ? (
-                  <FormErrorMessage sx={formErrorMessageStyles}>
-                    {errors.userName.message}
-                  </FormErrorMessage>
-                ) : (
-                  <Box sx={placeholderStyles}>Placeholder text</Box>
-                )}
-              </FormControl>
-              <FormControl maxWidth="400px" isInvalid={!!errors.password}>
-                <FormLabel sx={formLabelStyles} htmlFor="password">
-                  Password:
-                </FormLabel>
-                <Input
-                  id="password"
-                  {...register("password", {
-                    required: "This field is required",
-                  })}
-                  type="password"
-                  borderColor="brandYellow.800"
-                  size="lg"
-                ></Input>
-                {errors.password ? (
-                  <FormErrorMessage sx={formErrorMessageStyles}>
-                    {errors.password.message}
-                  </FormErrorMessage>
-                ) : (
-                  <Box sx={placeholderStyles}>Placeholder text</Box>
-                )}
-              </FormControl>
-              <Button
-                size="lg"
-                type="submit"
-                width="350px"
-                height="40px"
-                bgColor="brandGreen.500"
-                textColor="white"
-                _hover={{ background: "brandGreen.700" }}
-                marginBottom="20px"
-                marginTop="10px"
-              >
-                Login
-              </Button>
+                  type="submit"
+                  width="350px"
+                  height="40px"
+                  bgColor="brandGreen.500"
+                  textColor="white"
+                  _hover={{ background: "brandGreen.700" }}
+                  marginBottom="20px"
+                  marginTop="20px"
+                >
+                  Login
+                </Button>
+              </Flex>
             </form>
             <Link to="/register">Don't have an account yet?</Link>
             <Flex>

@@ -142,7 +142,7 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
                       resize="none"
                       height="100px"
                       size="md"
-                      borderColor="brandYellow.800"
+                      borderColor="gray.500"
                     ></Textarea>
                     <Button
                       width="100%"

@@ -2,6 +2,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   Modal,
@@ -18,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementRequest } from "../../../models/requests/newAdvertisementRequest";
 import ImageService from "../../../services/imageService";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
+import { useState } from "react";
 
 interface IFifthStepProps {
   setImages: React.Dispatch<File[]>;
@@ -32,23 +34,34 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
     if (!e.target.files) {
       return;
     }
-    let shouldNotify = false;
-    const files = e.target.files;
     const fileArray = [...e.target.files];
+
+    if (fileArray.length > 5) {
+      setModalMessage(
+        "You can only upload a maximum of 5 images. Please try again.",
+      );
+      onError(e);
+      return;
+    }
 
     for (const f of fileArray) {
       if (!(await ImageService.validateImageDimensions(f))) {
-        shouldNotify = true;
-        fileArray.splice(fileArray.indexOf(f), 1);
+        setModalMessage(
+          "Some images were too small. Image dimensions must be at least 600x600 pixels.",
+        );
+        onError(e);
+        return;
       }
     }
-    if (shouldNotify) {
-      onOpen();
-      e.target.value = "";
-    } else {
-      setImages(fileArray);
-    }
+    setImages(fileArray);
   };
+
+  const onError = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onOpen();
+    e.target.value = "";
+  };
+
+  const [modalMessage, setModalMessage] = useState<string>("");
 
   const { handleSubmit } = useForm<NewAdvertisementRequest>();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -57,7 +70,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
     <>
       <form onSubmit={handleSubmit(submitData)}>
         <Flex
-          height="450px"
+          height="420px"
           width="600px"
           flexDirection="column"
           justifyContent="center"
@@ -65,7 +78,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
         >
           <FormControl isRequired>
             <FormLabel sx={formLabelStyles} htmlFor="image">
-              Please select an image:
+              Please select images to upload:
             </FormLabel>
             <Input
               id="image"
@@ -74,8 +87,11 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
               multiple
               accept="image/*"
               onChange={handleFileChange}
-              borderColor="brandYellow.800"
+              borderColor="gray.500"
             ></Input>
+            <FormHelperText>
+              You can upload up to 5 images, but have to upload at least one.
+            </FormHelperText>
           </FormControl>
         </Flex>
         <Flex alignItems="center" marginTop="40px" flexDirection="column">
@@ -95,12 +111,9 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Image size error</ModalHeader>
+          <ModalHeader>Image upload error</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-            Some images were too small. Image dimensions must be at least
-            600x600 pixels.
-          </ModalBody>
+          <ModalBody>{modalMessage}</ModalBody>
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={onClose}>
               Close

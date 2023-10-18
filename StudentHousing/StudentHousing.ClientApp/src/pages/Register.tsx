@@ -93,8 +93,13 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
           >
             <Heading sx={formTitleStyles}>Register an account</Heading>
             <form onSubmit={handleSubmit(submit)}>
-              <Flex flexDirection="column" alignItems="center" maxWidth="400px">
-                <HStack>
+              <Flex
+                flexDirection="column"
+                alignItems="center"
+                maxWidth="400px"
+                gap="10px"
+              >
+                <HStack alignItems="start">
                   <FormControl isInvalid={!!errors.firstName}>
                     <FormLabel sx={formLabelStyles} htmlFor="firstName">
                       First name:
@@ -108,15 +113,13 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                         },
                       })}
                       id="firstName"
-                      borderColor="brandYellow.800"
+                      borderColor="gray.500"
                       size="lg"
                     ></Input>
-                    {errors.firstName ? (
+                    {errors.firstName && (
                       <FormErrorMessage sx={formErrorMessageStyles}>
                         {errors.firstName.message}
                       </FormErrorMessage>
-                    ) : (
-                      <Box sx={placeholderStyles}>Placeholder text</Box>
                     )}
                   </FormControl>
                   <FormControl isInvalid={!!errors.lastName}>
@@ -132,15 +135,13 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                         },
                       })}
                       id="lastName"
-                      borderColor="brandYellow.800"
+                      borderColor="gray.500"
                       size="lg"
                     ></Input>
-                    {errors.lastName ? (
+                    {errors.lastName && (
                       <FormErrorMessage sx={formErrorMessageStyles}>
                         {errors.lastName.message}
                       </FormErrorMessage>
-                    ) : (
-                      <Box sx={placeholderStyles}>Placeholder text</Box>
                     )}
                   </FormControl>
                 </HStack>
@@ -161,15 +162,13 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                       },
                     })}
                     id="userName"
-                    borderColor="brandYellow.800"
+                    borderColor="gray.500"
                     size="lg"
                   ></Input>
-                  {errors.userName ? (
+                  {errors.userName && (
                     <FormErrorMessage sx={formErrorMessageStyles}>
                       {errors.userName.message}
                     </FormErrorMessage>
-                  ) : (
-                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </FormControl>
                 <FormControl isInvalid={!!errors.email}>
@@ -186,16 +185,14 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                       },
                     })}
                     id="email"
-                    borderColor="brandYellow.800"
+                    borderColor="gray.500"
                     type="text"
                     size="lg"
                   ></Input>
-                  {errors.email ? (
+                  {errors.email && (
                     <FormErrorMessage sx={formErrorMessageStyles}>
                       {errors.email.message}
                     </FormErrorMessage>
-                  ) : (
-                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </FormControl>
 
@@ -218,15 +215,13 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                     })}
                     id="password"
                     type="password"
-                    borderColor="brandYellow.800"
+                    borderColor="gray.500"
                     size="lg"
                   ></Input>
-                  {errors.password ? (
+                  {errors.password && (
                     <FormErrorMessage sx={formErrorMessageStyles}>
                       {errors.password.message}
                     </FormErrorMessage>
-                  ) : (
-                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </FormControl>
                 <FormControl isInvalid={!!errors.confirmPassword}>
@@ -243,16 +238,14 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                       },
                     })}
                     id="confirmPassword"
-                    borderColor="brandYellow.800"
+                    borderColor="gray.500"
                     type="password"
                     size="lg"
                   ></Input>
-                  {errors.confirmPassword ? (
+                  {errors.confirmPassword && (
                     <FormErrorMessage sx={formErrorMessageStyles}>
                       {errors.confirmPassword.message}
                     </FormErrorMessage>
-                  ) : (
-                    <Box sx={placeholderStyles}>Placeholder text</Box>
                   )}
                 </FormControl>
 
@@ -265,7 +258,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                   textColor="white"
                   _hover={{ background: "brandGreen.700" }}
                   marginBottom="20px"
-                  marginTop="10px"
+                  marginTop="20px"
                 >
                   Register
                 </Button>

@@ -1,3 +1,5 @@
 export const formErrorMessageStyles = {
-  margin: "3px",
+  marginX: "3px",
+  marginTop: "1px",
+  marginBottom: "-10px",
 };

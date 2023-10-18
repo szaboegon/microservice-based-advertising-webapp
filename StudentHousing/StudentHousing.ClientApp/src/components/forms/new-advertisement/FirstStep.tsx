@@ -42,7 +42,7 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
     <>
       <form onSubmit={handleSubmit(saveData)}>
         <Flex
-          height="450px"
+          height="420px"
           width="600px"
           flexDirection="column"
           justifyContent="center"
