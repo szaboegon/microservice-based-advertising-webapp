@@ -4,7 +4,9 @@ using IdentityService.Extensions;
 using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using TokenOptions = IdentityService.Models.TokenOptions;
 
 namespace IdentityService.Services;
 
@@ -15,15 +17,19 @@ public class UserService : IUserService
     private readonly IValidator<AuthenticationRequestDto> _authenticationRequestValidator;
     private readonly IValidator<RegistrationRequestDto> _registrationRequestValidator;
     private readonly ITokenProvider _tokenProvider;
+    private readonly TokenOptions _options;
 
     public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-        IValidator<AuthenticationRequestDto> authenticationRequestValidator, IValidator<RegistrationRequestDto> registrationRequestValidator, ITokenProvider tokenProvider)
+        IValidator<AuthenticationRequestDto> authenticationRequestValidator,
+        IValidator<RegistrationRequestDto> registrationRequestValidator,
+        ITokenProvider tokenProvider, IOptions<TokenOptions> options)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _authenticationRequestValidator = authenticationRequestValidator;
         _registrationRequestValidator = registrationRequestValidator;
         _tokenProvider = tokenProvider;
+        _options = options.Value;
     }
 
     public async Task<TokenExchangeDto?> LoginAsync(AuthenticationRequestDto request)
@@ -116,7 +122,7 @@ public class UserService : IUserService
         var refreshToken = _tokenProvider.GenerateRefreshToken();
 
         user.RefreshToken = refreshToken;
-        user.RefreshTokenExpiry = DateTime.Now.AddDays(3);
+        user.RefreshTokenExpiry = DateTime.Now.Add(_options.RefreshTokenValidityTimeSpan);
 
         await _userManager.UpdateAsync(user);
         return refreshToken;

@@ -43,6 +43,14 @@ export const SignalRProvider: React.FunctionComponent<ISignalRProvider> = ({
         setConnection(conn);
       });
     }
+
+    conn.onclose((error) => {
+      setTimeout(() => {
+        conn.start().then(() => {
+          setConnection(conn);
+        });
+      }, 3000);
+    });
   }, [accessToken]);
 
   return (

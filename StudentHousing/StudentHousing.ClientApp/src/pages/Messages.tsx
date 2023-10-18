@@ -31,7 +31,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
         connection,
         partner.id,
         selectedChat.advertisementId,
-      );
+      ).catch(console.error);
     }
   }, [connection, selectedChat, partner]);
 

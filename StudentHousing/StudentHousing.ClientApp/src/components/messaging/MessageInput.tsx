@@ -7,7 +7,6 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import { HubConnection } from "@microsoft/signalr";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { MessageInputData } from "../../models/forms/messageInputData";
@@ -17,6 +16,7 @@ import { useSignalR } from "../../hooks/useSignalR";
 interface IMessageInputProps {
   groupName: string;
 }
+
 const MessageInput: React.FunctionComponent<IMessageInputProps> = ({
   groupName,
 }) => {
