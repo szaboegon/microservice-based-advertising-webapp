@@ -35,15 +35,6 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
       return;
     }
     const fileArray = [...e.target.files];
-
-    if (fileArray.length > 5) {
-      setModalMessage(
-        "You can only upload a maximum of 5 images. Please try again.",
-      );
-      onError(e);
-      return;
-    }
-
     for (const f of fileArray) {
       if (!(await ImageService.validateImageDimensions(f))) {
         setModalMessage(
