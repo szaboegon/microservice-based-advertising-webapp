@@ -1,5 +1,5 @@
-    {
-  "name": "studenthousingclientapp",
+{
+  "name": "apartmentfinder-clientapp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
