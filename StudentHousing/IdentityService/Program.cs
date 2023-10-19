@@ -19,7 +19,6 @@ var configuration = builder.Configuration;
 // Add services to the container.
 var connectionString = ConnectionHandler.GetIdentityDbConnectionString();
 
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlServer(connectionString));
 
@@ -76,7 +75,6 @@ builder.Services.AddAuthentication(opt =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:AccessTokenSecretKey"])),
             ClockSkew = TimeSpan.Zero
         };
-       // opt.AddQueryStringAuthentication();
     });
 
 builder.Services.AddAuthorization();
@@ -94,12 +92,6 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//else
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
 
 using (var scope = app.Services.CreateScope())
 {
@@ -109,10 +101,6 @@ using (var scope = app.Services.CreateScope())
         db.Database.Migrate();
     }
 }
-
-//app.UseForwardedHeaders();
-//app.UseHttpsRedirection();
-//app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseRouting();

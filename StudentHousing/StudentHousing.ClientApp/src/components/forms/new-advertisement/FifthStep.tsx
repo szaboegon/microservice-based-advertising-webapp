@@ -81,7 +81,9 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
               borderColor="gray.500"
             ></Input>
             <FormHelperText>
-              You can upload up to 5 images, but have to upload at least one.
+              You can select multiple images. The size of all images must be at
+              least 600x600.
+              <br />
             </FormHelperText>
           </FormControl>
         </Flex>
