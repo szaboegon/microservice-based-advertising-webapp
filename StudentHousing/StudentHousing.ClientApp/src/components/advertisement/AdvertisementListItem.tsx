@@ -109,8 +109,8 @@ const AdvertisementListItem: React.FunctionComponent<
                 </Box>
                 <Text>{advertisement.monthlyPrice} Ft/month</Text>
               </HStack>
-              <LinkOverlay onClick={openDetails}></LinkOverlay>
               <Button
+                zIndex="1"
                 position="absolute"
                 bottom="5px"
                 colorScheme="red"
@@ -129,6 +129,7 @@ const AdvertisementListItem: React.FunctionComponent<
               </Button>
             </Flex>
           </CardBody>
+          <LinkOverlay onClick={openDetails}></LinkOverlay>
         </Card>
       </LinkBox>
       {isLoading && <Spinner />}

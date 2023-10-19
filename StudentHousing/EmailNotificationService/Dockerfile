@@ -5,10 +5,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["EmailNotificationService/EmailNotificationService/EmailNotificationService.csproj", "EmailNotificationService/EmailNotificationService/"]
-RUN dotnet restore "EmailNotificationService/EmailNotificationService/EmailNotificationService.csproj"
+COPY ["EmailNotificationService/EmailNotificationService.csproj", "EmailNotificationService/EmailNotificationService/"]
+RUN dotnet restore "EmailNotificationService/EmailNotificationService.csproj"
 COPY . .
-WORKDIR "/src/EmailNotificationService/EmailNotificationService"
+WORKDIR "/src/EmailNotificationService"
 RUN dotnet build "EmailNotificationService.csproj" -c Release -o /app/build
 
 FROM build AS publish

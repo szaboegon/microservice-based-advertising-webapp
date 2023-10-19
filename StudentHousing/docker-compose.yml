@@ -37,7 +37,7 @@ services:
     image: ${DOCKER_REGISTRY-}adsvertisingservicewebapi
     build:
       context: .
-      dockerfile: AdvertisingService.WebAPI/Dockerfile
+      dockerfile: AdvertisingService/AdvertisingService.WebAPI/Dockerfile
     networks:
        - mynetwork
     environment:
@@ -161,7 +161,7 @@ services:
     image: ${DOCKER_REGISTRY-}emailnotificationservice
     build:
       context: .
-      dockerfile: EmailNotificationService/EmailNotificationService/Dockerfile
+      dockerfile: EmailNotificationService/Dockerfile
     networks:
       - mynetwork
     depends_on:

@@ -7,12 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj", "AdvertisingService.WebAPI/"]
-COPY ["AdvertisingService.BusinessLogic/AdvertisingService.BusinessLogic.csproj", "AdvertisingService.BusinessLogic/"]
-COPY ["AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj", "AdvertisingService.DataAccess/"]
+COPY ["AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj", "AdvertisingService/AdvertisingService.WebAPI/"]
+COPY ["AdvertisingService/AdvertisingService.BusinessLogic/AdvertisingService.BusinessLogic.csproj", "AdvertisingService/AdvertisingService.BusinessLogic/"]
+COPY ["AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj", "AdvertisingService/AdvertisingService.DataAccess/"]
 RUN dotnet restore "AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj"
 COPY . .
-WORKDIR "/src/AdvertisingService.WebAPI"
+WORKDIR "/src/AdvertisingService/AdvertisingService.WebAPI"
 RUN dotnet build "AdvertisingService.WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
