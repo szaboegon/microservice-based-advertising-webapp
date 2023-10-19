@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj", "AdvertisingService/AdvertisingService.WebAPI/"]
 COPY ["AdvertisingService/AdvertisingService.BusinessLogic/AdvertisingService.BusinessLogic.csproj", "AdvertisingService/AdvertisingService.BusinessLogic/"]
 COPY ["AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj", "AdvertisingService/AdvertisingService.DataAccess/"]
-RUN dotnet restore "AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj"
+RUN dotnet restore "AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/AdvertisingService/AdvertisingService.WebAPI"
 RUN dotnet build "AdvertisingService.WebAPI.csproj" -c Release -o /app/build
