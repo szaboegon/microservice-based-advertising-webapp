@@ -5,249 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/AdvertisingService.BusinessLogic.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Dtos/AdvertisementCreateDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Dtos/QueryParamsRequestDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Helpers/Interfaces/IPagedList.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Address.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Advertisement.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Category.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Image.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/AddressValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/AdvertisementValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/CategoryValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/ImageValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/RepositoryInterfaces/IAddressRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/RepositoryInterfaces/IAdvertisementRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/RepositoryInterfaces/ICategoryRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/RepositoryInterfaces/IImageRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Services/AdvertisementService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Services/ImageService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Services/Interfaces/IAdvertisementService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.BusinessLogic/Services/Interfaces/IImageService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/AdvertisementDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/ConnectionHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230422121129_Initialize.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230422121129_Initialize.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915064902_MoreDataSeed.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915064902_MoreDataSeed.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915065740_MoreDataSeed2.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915065740_MoreDataSeed2.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915065757_MoreDataSeed3.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20230915065757_MoreDataSeed3.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231016183707_MakeStreetNumberOptional.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231016183707_MakeStreetNumberOptional.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Extensions/ModelBuilderExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Helpers/PagedList.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Repositories/AddressRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Repositories/AdvertisementRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Repositories/CategoryRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.DataAccess/Repositories/ImageRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Controllers/AdvertisementController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Dtos/AdvertisementDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Dtos/PagedQueryResponseDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Extensions/AdvertisementExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/AdvertisingService/AdvertisingService.WebAPI/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Dtos/UnreadMessageNotificationDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Dtos/UserDetailsDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/EmailNotificationService.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Extensions/ServiceCollectionExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Models/Options/EmailOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Models/Options/RabbitMqOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Services/ConsumerService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Services/EmailSenderService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Services/Interfaces/IEmailSenderService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Services/Interfaces/IUserDetailsProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/Services/UserDetailsProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/EmailNotificationService/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Controllers/UserController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/ConnectionHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/IdentityDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/Migrations/20230419200416_Initalize.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/Migrations/20230419200416_Initalize.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/Migrations/20230928081947_Add-Refresh-Token.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/Migrations/20230928081947_Add-Refresh-Token.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/DAL/Migrations/IdentityDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/AppUserDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/AuthenticationRequestDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/RegistrationRequestDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/TokenExchangeDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/Validators/AuthenticationRequestDtoValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Dtos/Validators/RegistrationRequestDtoValidator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Extensions/AppUserExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/IdentityService.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Models/AppUser.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Models/TokenOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Properties/serviceDependencies.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Properties/serviceDependencies.local.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Services/Interfaces/ITokenProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Services/Interfaces/IUserService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Services/TokenProvider.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/Services/UserService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/IdentityService/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Controllers/MessageController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/ConnectionHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/MessageDbContext.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230510075807_Initialize.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230510075807_Initialize.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230510080318_PrivateChat_UniqueName_Added.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230510080318_PrivateChat_UniqueName_Added.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230929165140_Add-Unread-Messages.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20230929165140_Add-Unread-Messages.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20231002155837_Advertisement-Foreign-Key-Add.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/20231002155837_Advertisement-Foreign-Key-Add.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/DAL/Migrations/MessageDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dtos/MessageDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dtos/PrivateChatDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dtos/SendMessageRequestDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dtos/UnreadMessageNotificationDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Dtos/UserChatInfoDto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Extensions/MessageExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Extensions/PrivateChatExtensions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Helpers/JwtTokenHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Hubs/MessageHub.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/MessagingService.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Models/Message.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Models/Options/RabbitMqOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Models/Options/UnreadMessageOptions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Models/PrivateChat.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Properties/launchSettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Repositories/Interfaces/IMessageRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Repositories/Interfaces/IPrivateChatRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Repositories/MessageRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Repositories/PrivateChatRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/AuthChecker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/Interfaces/IAuthChecker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/Interfaces/IMessageQueueProducer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/Interfaces/IMessageService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/MessageQueueProducer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/MessageService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/Services/UnreadMessageChecker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/appsettings.Development.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/MessagingService/appsettings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/Shared/ErrorHandling/ErrorHandling.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/Shared/ErrorHandling/Middleware/GlobalExceptionHandlerMiddleware.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.idea/StudentHousing.ClientApp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.idea/prettier.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/public/vite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/apartment-building1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/apartment-building2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/bannerimg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/form-background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/large-bg.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/large-bg2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/images/profilepic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/literals/constants.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/literals/districts.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/assets/literals/regions.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/advertisement/AdvertisementCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/advertisement/AdvertisementListItem.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/advertisement/details/AdvertisementDetails.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/advertisement/details/AdvertiserInfo.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/alerts/ErrorAlert.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/alerts/SuccessAlert.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/alerts/WarningAlert.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/auth/AuthVerify.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/forms/new-advertisement/FifthStep.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/forms/new-advertisement/FirstStep.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/forms/new-advertisement/FourthStep.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/forms/new-advertisement/SecondStep.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/forms/new-advertisement/ThirdStep.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/messaging/ChatTab.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/messaging/MessageBubble.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/messaging/MessageInput.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/messaging/RelatedAdvertisementInfo.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/messaging/UserChatsSidebar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/profile/ProfileCard.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/routes/PrivateRoute.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/search/OrderingSelector.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/search/PaginationFooter.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/shared/Navbar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/components/shared/SearchBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/helpers/dateHelper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/helpers/interceptorApiClient.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/helpers/searchParamsHelper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/helpers/tokenHelper.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/hooks/useAccessToken.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/hooks/useSignalR.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/main.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/advertisement/advertisementCardDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/advertisement/advertisementDetailsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/authTokens.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/forms/messageInputData.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/message.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/pagedQueryResponse.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/queryParams/advertisementSearchParamsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/queryParams/orderingParamsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/queryParams/paginationParamsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/requests/loginRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/requests/newAdvertisementRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/requests/registrationRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/requests/sendMessageRequest.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/tokenClaims.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/user.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/models/userChatDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Details.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Home.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Login.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Messages.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/NewAdvertisement.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Profile.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Register.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/pages/Search.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/services/advertisementService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/services/imageService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/services/messagingService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/services/userService.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/detailsHeadingStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/formErrorMessageStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/formHeadingStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/formLabelStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/formTitleStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/hoverAnimation2Styles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/hoverAnimationStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/navbarButtonStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/pageSubheadingStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/styles/placeholderStyles.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/src/vite-env.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/tsconfig.node.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.ClientApp/vite.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/StudentHousing.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/docker-compose.dcproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/docker-compose.override.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/image-credits.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../StudentHousing/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,6 +28,20 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "szaboegon"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="c09d3a9c-7555-4b6f-8064-4075e803864a" />
+        <option name="url" value="https://github.com/szaboegon/microservice-based-advertising-webapp" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -367,6 +142,9 @@
       <workItem from="1697697824674" duration="2376000" />
       <workItem from="1697703454476" duration="122000" />
       <workItem from="1697703590274" duration="59000" />
+      <workItem from="1697810771626" duration="43000" />
+      <workItem from="1697981696819" duration="621000" />
+      <workItem from="1698160605573" duration="1739000" />
     </task>
     <servers />
   </component>
