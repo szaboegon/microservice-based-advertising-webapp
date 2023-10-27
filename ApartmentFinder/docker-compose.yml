@@ -104,7 +104,7 @@ services:
   clientapp:
     container_name: client_app
     build: 
-        context: ./StudentHousing.ClientApp
+        context: ./ApartmentFinder.ClientApp
         dockerfile: Dockerfile 
     networks:
        - mynetwork
