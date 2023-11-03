@@ -29,6 +29,8 @@ public class MessageService : IMessageService
         };
 
         await _messageRepository.Add(message);
+        var receiverId = privateChat.User1Id == senderId ? privateChat.User2Id : privateChat.User1Id;
+
         return message;
     }
 
