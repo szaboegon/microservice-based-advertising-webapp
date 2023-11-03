@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="Delete modal added">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MessagingService/Services/MessageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../MessagingService/Services/MessageService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/vite-env.d.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +25,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
