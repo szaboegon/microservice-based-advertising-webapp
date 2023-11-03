@@ -16,7 +16,7 @@ import React, {useState} from "react";
 import {useMutation, useQuery} from "react-query";
 import AdvertisementService from "../services/advertisementService";
 import AdvertisementListItem from "../components/advertisement/AdvertisementListItem";
-import {ErrorAlert} from "../components/shared/alerts/ErrorAlert";
+import {ErrorAlert} from "../components/alerts/ErrorAlert";
 import {AdvertisementCardDto} from "../models/advertisement/advertisementCardDto";
 import {pageSubheadingStyles} from "../styles/pageSubheadingStyles";
 import {
