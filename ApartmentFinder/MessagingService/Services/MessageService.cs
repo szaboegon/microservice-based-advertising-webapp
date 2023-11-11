@@ -51,15 +51,10 @@ public class MessageService : IMessageService
         return privateChat;
     }
 
-    public async Task<IEnumerable<PrivateChat>> GetUserChatsAsync(int userId)
+    public async Task<IEnumerable<UserChatInfo>> GetUserChatsAsync(int userId)
     {
-        var privateChats = await _privateChatRepository.GetByUserId(userId);
+        var privateChats = await _privateChatRepository.GetChatInfosByUserId(userId);
         return privateChats;
-    }
-
-    public async Task<List<int>> GetChatPartnerIdsForUserAsync(int userId)
-    {
-        return await _privateChatRepository.GetChatPartnerIdsByUserId(userId);
     }
 
     public async Task<IEnumerable<Message>> GetMessagesForPrivateChatAsync(string uniqueName)

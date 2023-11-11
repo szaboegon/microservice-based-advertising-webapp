@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace IdentityService.Dtos.Validators;
+namespace IdentityService.Models.Validators;
 
-public class RegistrationRequestDtoValidator : AbstractValidator<RegistrationRequestDto>
+public class RegistrationRequestValidator : AbstractValidator<RegistrationRequestDto>
 {
-    public RegistrationRequestDtoValidator()
+    public RegistrationRequestValidator()
     {
         RuleFor(request => request.FirstName)
             .NotNull().WithMessage("First name cannot be null.")

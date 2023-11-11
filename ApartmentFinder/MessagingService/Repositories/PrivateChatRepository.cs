@@ -20,27 +20,21 @@ public class PrivateChatRepository : IPrivateChatRepository
         await _dbcontext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<PrivateChat>> GetByUserId(int userId)
+    public async Task<IEnumerable<UserChatInfo>> GetChatInfosByUserId(int userId)
     {
-        return await _dbcontext.PrivateChats.Include(p => p.Messages).Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
-    }
-
-    public async Task<List<int>> GetChatPartnerIdsByUserId(int userId)
-    {
-        var ids = new List<int>();
-        var chats = await _dbcontext.PrivateChats.Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
-        foreach (var chat in chats)
-        {
-            if (chat.User1Id != userId)
+        return await _dbcontext.PrivateChats
+            .Where(c => c.User1Id == userId || c.User2Id == userId)
+            .Include(p => p.Messages)
+            .ThenInclude(m => m.PrivateChat)
+            .Select(p => new UserChatInfo()
             {
-                ids.Add(chat.User1Id);
-            }
-            else if (chat.User2Id != userId)
-            {
-                ids.Add(chat.User2Id);
-            }
-        }
-        return ids;
+                AdvertisementId = p.AdvertisementId,
+                UniqueName = p.UniqueName,
+                PartnerId = userId == p.User1Id ? p.User2Id : p.User1Id,
+                LastMessage = p.Messages.OrderByDescending(m => m.TimeStamp).FirstOrDefault(),
+                HasUnreadMessage = p.Messages.Any(m => m.SenderId != userId && m.IsUnread),
+            })
+            .ToListAsync();
     }
 
     public async Task<PrivateChat?> GetByUserAndAdvertisementIds(int user1Id, int user2Id, int advertisementId)
@@ -57,8 +51,8 @@ public class PrivateChatRepository : IPrivateChatRepository
 
     public async Task<int> GetUserUnreadMessageCount(int userId)
     {
-        var userChats = await GetByUserId(userId);
-        return userChats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
+        var chats = await _dbcontext.PrivateChats.Include(p => p.Messages).Where(c => c.User1Id == userId || c.User2Id == userId).ToListAsync();
+        return chats.Sum(c => c.Messages.Count(m => m.IsUnread && m.SenderId != userId));
     }
 
     public async Task<int[]> GetAllUserIds()

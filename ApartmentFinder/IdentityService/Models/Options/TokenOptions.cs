@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IdentityService.Models;
+namespace IdentityService.Models.Options;
 
 public class TokenOptions
 {

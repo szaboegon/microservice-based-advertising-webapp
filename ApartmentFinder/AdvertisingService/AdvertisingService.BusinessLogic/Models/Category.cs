@@ -1,4 +1,6 @@
-﻿namespace AdvertisingService.BusinessLogic.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AdvertisingService.BusinessLogic.Models;
 
 public class Category
 {
@@ -6,6 +8,7 @@ public class Category
     public required string Name { get; set; }
 
     private ICollection<Advertisement>? _advertisements;
+    [JsonIgnore]
     public ICollection<Advertisement> Advertisements
     {
         set => _advertisements = value;

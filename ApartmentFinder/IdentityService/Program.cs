@@ -2,16 +2,15 @@ using System.Text;
 using ErrorHandling.Middleware;
 using FluentValidation;
 using IdentityService.DAL;
-using IdentityService.Dtos;
-using IdentityService.Dtos.Validators;
 using IdentityService.Models;
+using IdentityService.Models.Validators;
 using IdentityService.Services;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using TokenOptions = IdentityService.Models.TokenOptions;
+using TokenOptions = IdentityService.Models.Options.TokenOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -49,8 +48,8 @@ builder.Services
 builder.Services.AddScoped<IUserService, UserService>();
 
 // Validators
-builder.Services.AddScoped<IValidator<AuthenticationRequestDto>, AuthenticationRequestDtoValidator>();
-builder.Services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestDtoValidator>();
+builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
+builder.Services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestValidator>();
 
 // Jwt provider
 builder.Services.AddSingleton<ITokenProvider, TokenProvider>();

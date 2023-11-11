@@ -1,5 +1,4 @@
-﻿using AdvertisingService.BusinessLogic.Dtos;
-using AdvertisingService.BusinessLogic.Helpers.Interfaces;
+﻿using AdvertisingService.BusinessLogic.Helpers.Interfaces;
 using AdvertisingService.BusinessLogic.Models;
 using AdvertisingService.BusinessLogic.RepositoryInterfaces;
 using AdvertisingService.BusinessLogic.Services.Interfaces;
@@ -10,7 +9,6 @@ namespace AdvertisingService.BusinessLogic.Services;
 public class AdvertisementService : IAdvertisementService
 {
     private readonly IAdvertisementRepository _advertisementRepository;
-    private readonly IAddressRepository _addressRepository;
     private readonly ICategoryRepository _categoryRepository;
 
     private readonly IValidator<Advertisement> _advertisementValidator;
@@ -19,7 +17,6 @@ public class AdvertisementService : IAdvertisementService
 
     public AdvertisementService(
         IAdvertisementRepository advertisementRepository,
-        IAddressRepository addressRepository,
         ICategoryRepository categoryRepository,
         IValidator<Advertisement> advertisementValidator,
         IValidator<Address> addressValidator,
@@ -27,13 +24,12 @@ public class AdvertisementService : IAdvertisementService
     {
         _advertisementRepository = advertisementRepository;
         _advertisementValidator = advertisementValidator;
-        _addressRepository = addressRepository;
         _categoryRepository = categoryRepository;
         _addressValidator = addressValidator;
         _categoryValidator = categoryValidator;
     }
 
-    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementCreateDto advertisementCreate, int advertiserId)
+    public async Task<Advertisement> CreateAdvertisementAsync(AdvertisementCreate advertisementCreate, int advertiserId)
     {
         var newCategory = await CreateNewCategoryIfDoesNotExistAsync(advertisementCreate.CategoryName);
         var newAddress = await CreateNewAddressAsync(advertisementCreate);
@@ -58,15 +54,15 @@ public class AdvertisementService : IAdvertisementService
         return newAdvertisement;
     }
 
-    public async Task<IPagedList<Advertisement>> GetAdvertisementsByQueryAsync(QueryParamsRequestDto queryParams)
+    public async Task<IPagedList<AdvertisementInfo>> GetAdvertisementsByQueryAsync(QueryParamsRequest queryParams)
     {
         var advertisements = await _advertisementRepository.GetByQuery(queryParams);
         return advertisements;
     }
 
-    public async Task<Advertisement?> GetAdvertisementDetailsAsync(int id)
+    public async Task<AdvertisementDetails?> GetAdvertisementDetailsAsync(int id)
     {
-        var advertisement= await _advertisementRepository.Get(id);
+        var advertisement= await _advertisementRepository.GetDetails(id);
         return advertisement;
     }
 
@@ -86,13 +82,13 @@ public class AdvertisementService : IAdvertisementService
         return advertisement;
     }
 
-    public async Task<IEnumerable<Advertisement>> GetAdvertisementsByUserAsync(int advertiserId)
+    public async Task<IEnumerable<AdvertisementInfo>> GetAdvertisementsByUserAsync(int advertiserId)
     {
         var result = await _advertisementRepository.GetByAdvertiserId(advertiserId);
         return result;
     }
 
-    public async Task<IEnumerable<Advertisement>> GetLatestAdvertisementsAsync(int count)
+    public async Task<IEnumerable<AdvertisementInfo>> GetLatestAdvertisementsAsync(int count)
     {
         if (count < 0)
         {
@@ -102,7 +98,7 @@ public class AdvertisementService : IAdvertisementService
         return result;
     }
 
-    private async Task<Address> CreateNewAddressAsync(AdvertisementCreateDto advertisementCreate)
+    private async Task<Address> CreateNewAddressAsync(AdvertisementCreate advertisementCreate)
     {
         var newAddress = new Address()
         {

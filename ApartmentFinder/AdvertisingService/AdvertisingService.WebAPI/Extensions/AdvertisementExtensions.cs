@@ -5,44 +5,44 @@ namespace AdvertisingService.WebAPI.Extensions;
 
 public static class AdvertisementExtensions
 {
-    public static AdvertisementDto ToDto(this Advertisement advertisement)
+    public static AdvertisementInfoDto ToDto(this AdvertisementInfo advertisement)
     {
-        return new AdvertisementDto
+        return new AdvertisementInfoDto
         {
             Id = advertisement.Id,
-            CategoryName = advertisement.Category.Name,
-            City = advertisement.Address.City,
-            District = advertisement.Address.District,
-            StreetName = advertisement.Address.StreetName,
-            StreetNumber = advertisement.Address.StreetNumber,
+            CategoryName = advertisement.CategoryName,
+            City = advertisement.City,
+            District = advertisement.District,
+            StreetName = advertisement.StreetName,
+            StreetNumber = advertisement.StreetNumber,
             NumberOfRooms = advertisement.NumberOfRooms,
             Size = advertisement.Size,
             MonthlyPrice = advertisement.MonthlyPrice,
             UploadDate = advertisement.UploadDate,
-            Image = advertisement.Images.FirstOrDefault()?.Data, //use First
+            Image = advertisement.Image, //use First
         };
     }
 
-    public static AdvertisementDetailsDto ToDetailsDto(this Advertisement advertisement)
+    public static AdvertisementDetailsDto ToDto(this AdvertisementDetails advertisement)
     {
         return new AdvertisementDetailsDto
         {
             Id = advertisement.Id,
-            CategoryName = advertisement.Category.Name,
-            Region = advertisement.Address.Region,
-            PostalCode = advertisement.Address.PostalCode,
-            City = advertisement.Address.City,
-            District = advertisement.Address.District,
-            StreetName = advertisement.Address.StreetName,
-            StreetNumber = advertisement.Address.StreetNumber,
-            UnitNumber = advertisement.Address.UnitNumber,
+            CategoryName = advertisement.CategoryName,
+            Region = advertisement.Region,
+            PostalCode = advertisement.PostalCode,
+            City = advertisement.City,
+            District = advertisement.District,
+            StreetName = advertisement.StreetName,
+            StreetNumber = advertisement.StreetNumber,
+            UnitNumber = advertisement.UnitNumber,
             NumberOfRooms = advertisement.NumberOfRooms,
             Size = advertisement.Size,
             Furnished = advertisement.Furnished,
             Parking = advertisement.Parking,
             Description = advertisement.Description,
             MonthlyPrice = advertisement.MonthlyPrice,
-            Images = advertisement.Images.Select(i => i.Data), 
+            Images = advertisement.Images, 
             AdvertiserId = advertisement.AdvertiserId
         };
     }

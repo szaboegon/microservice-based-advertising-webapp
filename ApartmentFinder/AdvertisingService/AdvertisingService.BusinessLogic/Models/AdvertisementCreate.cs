@@ -1,6 +1,6 @@
-﻿namespace AdvertisingService.BusinessLogic.Dtos;
+﻿namespace AdvertisingService.BusinessLogic.Models;
 
-public record AdvertisementCreateDto
+public record AdvertisementCreate
 {
     public required string CategoryName { get; init; }
     public required string Region { get; init; }

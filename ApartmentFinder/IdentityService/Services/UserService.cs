@@ -6,7 +6,7 @@ using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using TokenOptions = IdentityService.Models.TokenOptions;
+using TokenOptions = IdentityService.Models.Options.TokenOptions;
 
 namespace IdentityService.Services;
 
@@ -14,13 +14,13 @@ public class UserService : IUserService
 {
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
-    private readonly IValidator<AuthenticationRequestDto> _authenticationRequestValidator;
+    private readonly IValidator<AuthenticationRequest> _authenticationRequestValidator;
     private readonly IValidator<RegistrationRequestDto> _registrationRequestValidator;
     private readonly ITokenProvider _tokenProvider;
     private readonly TokenOptions _options;
 
     public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-        IValidator<AuthenticationRequestDto> authenticationRequestValidator,
+        IValidator<AuthenticationRequest> authenticationRequestValidator,
         IValidator<RegistrationRequestDto> registrationRequestValidator,
         ITokenProvider tokenProvider, IOptions<TokenOptions> options)
     {
@@ -32,7 +32,7 @@ public class UserService : IUserService
         _options = options.Value;
     }
 
-    public async Task<TokenExchangeDto?> LoginAsync(AuthenticationRequestDto request)
+    public async Task<TokenExchangeDto?> LoginAsync(AuthenticationRequest request)
     {
         await _authenticationRequestValidator.ValidateAndThrowAsync(request);
 

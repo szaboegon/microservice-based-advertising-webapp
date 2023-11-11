@@ -2,13 +2,12 @@
 using AdvertisingService.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using AdvertisingService.BusinessLogic.Dtos;
 using AdvertisingService.WebAPI.Dtos;
 using AdvertisingService.WebAPI.Extensions;
 using FluentValidation;
 using Microsoft.IdentityModel.Tokens;
 using AdvertisementDetailsDto = AdvertisingService.WebAPI.Dtos.AdvertisementDetailsDto;
-using AdvertisementDto = AdvertisingService.WebAPI.Dtos.AdvertisementDto;
+using AdvertisingService.BusinessLogic.Models;
 
 namespace AdvertisingService.WebAPI.Controllers;
 
@@ -31,11 +30,11 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/advertisement_cards")]
-    public async Task<ActionResult<PagedQueryResponseDto<AdvertisementDto>>> GetAdvertisements([FromQuery] QueryParamsRequestDto queryParams)
+    public async Task<ActionResult<PagedQueryResponseDto<AdvertisementInfoDto>>> GetAdvertisements([FromQuery] QueryParamsRequest queryParams)
     {
         _logger.LogInformation("Getting advertisements by query: {Query}", queryParams);
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
-        return new PagedQueryResponseDto<AdvertisementDto>(advertisements.Items.Select(a => a.ToDto()).ToList(),
+        return new PagedQueryResponseDto<AdvertisementInfoDto>(advertisements.Items.Select(a => a.ToDto()).ToList(),
             advertisements.CurrentPage,
             advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
 
@@ -53,12 +52,12 @@ public class AdvertisementController : ControllerBase
             return NotFound();
         }
 
-        return Ok(advertisement.ToDetailsDto());
+        return Ok(advertisement.ToDto());
     }
 
     [HttpPost]
     [Route("private/advertisements")]
-    public async Task<ActionResult<int>> CreateAdvertisement([FromForm]AdvertisementCreateDto advertisementCreate, [FromForm]List<IFormFile> images) 
+    public async Task<ActionResult> CreateAdvertisement([FromForm]AdvertisementCreate advertisementCreate, [FromForm]List<IFormFile> images) 
     {
         _logger.LogInformation("Creating new advertisement");
         try
@@ -81,7 +80,7 @@ public class AdvertisementController : ControllerBase
             }
             
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
-                newAdvertisement.ToDetailsDto());
+                newAdvertisement);
         }
         catch (SecurityTokenException ex)
         {
@@ -138,7 +137,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("private/advertisements_by_user")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetAdvertisementByUserId()
+    public async Task<ActionResult<IEnumerable<AdvertisementInfoDto>>> GetAdvertisementByUserId()
     {
         _logger.LogInformation("Getting advertisement by user id");
         try
@@ -158,7 +157,7 @@ public class AdvertisementController : ControllerBase
 
     [HttpGet]
     [Route("public/latest_advertisements/{count:int}")]
-    public async Task<ActionResult<IEnumerable<AdvertisementDto>>> GetLatestAdvertisements(int count)
+    public async Task<ActionResult<IEnumerable<AdvertisementInfoDto>>> GetLatestAdvertisements(int count)
     {
         _logger.LogInformation("Getting latest advertisements, count: {Count}", count);
         try

@@ -35,7 +35,7 @@ public class MessageController : ControllerBase
             var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
             var chats = await _messageService.GetUserChatsAsync(userId);
-            return Ok(chats.Select(c => c.ToInfoDto(userId)));
+            return Ok(chats.Select(c => c.ToDto()));
         }
         catch (SecurityTokenException ex)
         {

@@ -1,6 +1,6 @@
-﻿namespace IdentityService.Dtos;
+﻿namespace IdentityService.Models;
 
-public record AuthenticationRequestDto
+public record AuthenticationRequest
 {
     public required string UserName { get; init; }
     public required string Password { get; init; }

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using IdentityService.Dtos;
 using IdentityService.Extensions;
+using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<ActionResult> Login([FromBody] AuthenticationRequestDto request)
+    public async Task<ActionResult> Login([FromBody] AuthenticationRequest request)
     {
         _logger.LogInformation("Incoming login request for user: {UserName}", request.UserName);
         try

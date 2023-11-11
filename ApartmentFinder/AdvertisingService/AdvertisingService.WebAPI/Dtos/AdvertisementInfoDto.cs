@@ -1,6 +1,6 @@
 ﻿namespace AdvertisingService.WebAPI.Dtos;
 
-public record AdvertisementDto
+public record AdvertisementInfoDto
 {
     public required int Id { get; init; }
     public required string CategoryName { get; init; }
@@ -12,7 +12,7 @@ public record AdvertisementDto
     public required float Size { get; init; }
     public required int MonthlyPrice { get; init; }
     public required  DateTime UploadDate { get; init; }
-    public byte[]? Image { get; init; }
+    public required byte[] Image { get; init; }
 }
 
 public record AdvertisementDetailsDto

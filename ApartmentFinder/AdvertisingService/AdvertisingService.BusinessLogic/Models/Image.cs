@@ -1,4 +1,6 @@
-﻿namespace AdvertisingService.BusinessLogic.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AdvertisingService.BusinessLogic.Models;
 
 public class Image
 {
@@ -7,7 +9,7 @@ public class Image
     public int AdvertisementId { get; set; }
 
     private Advertisement? _advertisement;
-
+    [JsonIgnore]
     public Advertisement Advertisement
     {
         set => _advertisement = value;

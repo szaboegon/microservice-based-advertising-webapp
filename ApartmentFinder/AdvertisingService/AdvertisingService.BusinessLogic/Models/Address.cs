@@ -1,4 +1,6 @@
-﻿namespace AdvertisingService.BusinessLogic.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AdvertisingService.BusinessLogic.Models;
 
 public class Address
 {
@@ -13,6 +15,7 @@ public class Address
     public int AdvertisementId { get; set; }
 
     private Advertisement? _advertisement;
+    [JsonIgnore]
     public Advertisement Advertisement  //https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types
     {
         set  => _advertisement = value;

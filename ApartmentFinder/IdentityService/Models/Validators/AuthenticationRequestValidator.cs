@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace IdentityService.Dtos.Validators;
+namespace IdentityService.Models.Validators;
 
-public class AuthenticationRequestDtoValidator : AbstractValidator<AuthenticationRequestDto>
+public class AuthenticationRequestValidator : AbstractValidator<AuthenticationRequest>
 {
-    public AuthenticationRequestDtoValidator()
+    public AuthenticationRequestValidator()
     {
         RuleFor(request => request.UserName)
             .NotNull().WithMessage("User name must not be null.")

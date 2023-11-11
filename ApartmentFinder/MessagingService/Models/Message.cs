@@ -1,4 +1,6 @@
-﻿namespace MessagingService.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace MessagingService.Models;
 
 public class Message
 {
@@ -10,6 +12,7 @@ public class Message
     public int PrivateChatId { get; set; }
 
     private PrivateChat? _privateChat;
+    [JsonIgnore]
     public PrivateChat PrivateChat
     {
         set => _privateChat = value;

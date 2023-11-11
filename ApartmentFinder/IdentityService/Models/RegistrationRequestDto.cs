@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Dtos;
+﻿namespace IdentityService.Models;
 
 public record RegistrationRequestDto
 {
