@@ -61,9 +61,9 @@ builder.Services.AddAuthentication(opt =>
     opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-    .AddJwtBearer(opt =>
-    {
+
+}).AddJwtBearer(opt =>
+{
         opt.TokenValidationParameters = new()
         {
             ValidateIssuer = true,
@@ -75,7 +75,7 @@ builder.Services.AddAuthentication(opt =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:AccessTokenSecretKey"])),
             ClockSkew = TimeSpan.Zero
         };
-    });
+});
 
 builder.Services.AddAuthorization();
 

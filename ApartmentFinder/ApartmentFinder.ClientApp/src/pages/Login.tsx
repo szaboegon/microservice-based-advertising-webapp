@@ -51,7 +51,7 @@ export const Login = () => {
 
     const navigate = useNavigate();
     const submit = async (data: LoginRequest) => {
-        const response = await submitLogin(data).then(() => {
+        await submitLogin(data).then(() => {
             let searchParams = SearchParamsHelper.addPaginationParams(
                 new URLSearchParams(),
             );

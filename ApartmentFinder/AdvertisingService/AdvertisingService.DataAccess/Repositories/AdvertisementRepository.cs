@@ -64,7 +64,6 @@ public class AdvertisementRepository : IAdvertisementRepository
     public async Task<IPagedList<Advertisement>> GetByQuery(QueryParamsRequestDto query)
     {
         var advertisementQuery = ApplyQueryParams(query);
-        var totalItemCount = advertisementQuery.Count();
 
         Expression<Func<Advertisement, object>> keySelector = query.SortColumn?.ToLower() switch
         {
