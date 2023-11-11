@@ -5,6 +5,7 @@ using Microsoft.Net.Http.Headers;
 using MessagingService.Helpers;
 using MessagingService.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using MessagingService.Models;
 
 namespace MessagingService.Controllers;
 
@@ -55,7 +56,7 @@ public class MessageController : ControllerBase
 
     [HttpPost]
     [Route("send_message")]
-    public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequestDto messageCreate)
+    public async Task<ActionResult> SendMessageToUser([FromBody]SendMessageRequest messageCreate)
     {
         _logger.LogInformation("Sending message: {Message}", messageCreate);
         try

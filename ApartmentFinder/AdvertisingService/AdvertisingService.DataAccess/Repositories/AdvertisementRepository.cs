@@ -111,10 +111,12 @@ public class AdvertisementRepository : IAdvertisementRepository
             "size" => advertisement => advertisement.Size,
             "monthlyprice" => advertisement => advertisement.MonthlyPrice,
             "uploaddate" => advertisement => advertisement.UploadDate,
-            _ => advertisement => advertisement.Id                                                                                                                                                                                                                                                                                                          
+            _ => advertisement => advertisement.Id
         };
 
-        advertisementQuery = query.SortOrder?.ToLower() == "desc" ? advertisementQuery.OrderByDescending(keySelector) : advertisementQuery.OrderBy(keySelector);
+        advertisementQuery = query.SortOrder?.ToLower() == "desc"
+            ? advertisementQuery.OrderByDescending(keySelector)
+            : advertisementQuery.OrderBy(keySelector);
 
         if (query is not { CurrentPage: >= 1, PageItemCount: > 0 })
         {
@@ -123,19 +125,19 @@ public class AdvertisementRepository : IAdvertisementRepository
 
         return await PagedList<AdvertisementInfo>.CreateAsync(advertisementQuery
             .Select(advertisement => new AdvertisementInfo()
-        {
-            Id = advertisement.Id,
-            CategoryName = advertisement.Category.Name,
-            City = advertisement.Address.City,
-            District = advertisement.Address.District,
-            StreetName = advertisement.Address.StreetName,
-            StreetNumber = advertisement.Address.StreetNumber,
-            NumberOfRooms = advertisement.NumberOfRooms,
-            Size = advertisement.Size,
-            MonthlyPrice = advertisement.MonthlyPrice,
-            UploadDate = advertisement.UploadDate,
-            Image = advertisement.Images.First().Data,
-        }), query.CurrentPage, query.PageItemCount);
+            {
+                Id = advertisement.Id,
+                CategoryName = advertisement.Category.Name,
+                City = advertisement.Address.City,
+                District = advertisement.Address.District,
+                StreetName = advertisement.Address.StreetName,
+                StreetNumber = advertisement.Address.StreetNumber,
+                NumberOfRooms = advertisement.NumberOfRooms,
+                Size = advertisement.Size,
+                MonthlyPrice = advertisement.MonthlyPrice,
+                UploadDate = advertisement.UploadDate,
+                Image = advertisement.Images.First().Data,
+            }), query.CurrentPage, query.PageItemCount);
     }
 
     private IQueryable<Advertisement> ApplyQueryParams(QueryParamsRequest query)
