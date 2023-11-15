@@ -68,6 +68,12 @@ public class AdvertisementController : ControllerBase
                 return BadRequest("At least one image is required.");
             }
 
+            if (images.Count > 5)
+            {
+                _logger.LogWarning("More than 5 images were provided to the advertisement");
+                return BadRequest("The maximum of allowed images is 5.");
+            }
+
             var tokenString = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             var advertiserId = GetAdvertiserIdFromToken(tokenString);
 
@@ -75,8 +81,9 @@ public class AdvertisementController : ControllerBase
 
             foreach (var image in images)
             {
-                var bytes = await ConvertFileDataToBytesAsync(image);
-                await _imageService.CreateNewImageAsync(bytes, newAdvertisement.Id);
+                var stream = new MemoryStream();
+                await image.CopyToAsync(stream);
+                await _imageService.CreateNewImageAsync(stream, newAdvertisement.Id);
             }
             
             return CreatedAtAction(nameof(GetAdvertisement), new { id = newAdvertisement.Id },
@@ -91,15 +98,6 @@ public class AdvertisementController : ControllerBase
         {
             _logger.LogWarning("A validation exception occurred while creating advertisement: {Exception}", ex);
             return BadRequest(ex.Message);
-        }
-
-        async Task<byte[]> ConvertFileDataToBytesAsync(IFormFile file)
-        {
-            using var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
-            var fileData = stream.ToArray();
-
-            return fileData;
         }
     }
 

@@ -13,8 +13,6 @@ const validateImageDimensions = async (file: File): Promise<boolean> => {
             image.onload = async function () {
                 const height = image.height;
                 const width = image.width;
-                console.log(width);
-                console.log(height);
                 if (height < 600 || width < 600) {
                     resolve(false);
                 } else {

@@ -15,11 +15,11 @@ import {
 } from "@chakra-ui/react";
 import {useState} from "react";
 import {NewAdvertisementRequest} from "../models/requests/newAdvertisementRequest";
-import FirstStep from "../components/forms/new-advertisement/FirstStep";
-import SecondStep from "../components/forms/new-advertisement/SecondStep";
-import ThirdStep from "../components/forms/new-advertisement/ThirdStep";
-import FourthStep from "../components/forms/new-advertisement/FourthStep";
-import FifthStep from "../components/forms/new-advertisement/FifthStep";
+import CategoryStep from "../components/forms/new-advertisement/CategoryStep";
+import AddressStep from "../components/forms/new-advertisement/AddressStep";
+import DetailsStep from "../components/forms/new-advertisement/DetailsStep";
+import DescriptionStep from "../components/forms/new-advertisement/DescriptionStep";
+import ImagesStep from "../components/forms/new-advertisement/ImagesStep";
 import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import {formHeadingStyles} from "../styles/formHeadingStyles";
 import {useMutation} from "react-query";
@@ -157,7 +157,7 @@ export const NewAdvertisement = () => {
                                     <Tab>Address</Tab>
                                     <Tab>Details</Tab>
                                     <Tab>Description</Tab>
-                                    <Tab>Image</Tab>
+                                    <Tab>Images</Tab>
                                 </TabList>
                                 {step != 0 ? (
                                     <Button
@@ -176,35 +176,35 @@ export const NewAdvertisement = () => {
                                 {conditionalHeader()}
                                 <TabPanels>
                                     <TabPanel>
-                                        <FirstStep
+                                        <CategoryStep
                                             formValues={formValues}
                                             setFormValues={setFormValues}
                                             nextStep={nextStep}
                                         />
                                     </TabPanel>
                                     <TabPanel>
-                                        <SecondStep
+                                        <AddressStep
                                             formValues={formValues}
                                             setFormValues={setFormValues}
                                             nextStep={nextStep}
                                         />
                                     </TabPanel>
                                     <TabPanel>
-                                        <ThirdStep
+                                        <DetailsStep
                                             formValues={formValues}
                                             setFormValues={setFormValues}
                                             nextStep={nextStep}
                                         />
                                     </TabPanel>
                                     <TabPanel>
-                                        <FourthStep
+                                        <DescriptionStep
                                             formValues={formValues}
                                             setFormValues={setFormValues}
                                             nextStep={nextStep}
                                         />
                                     </TabPanel>
                                     <TabPanel>
-                                        <FifthStep setImages={setImages} submitData={submitData}/>
+                                        <ImagesStep setImages={setImages} submitData={submitData}/>
                                     </TabPanel>
                                 </TabPanels>
                             </Tabs>

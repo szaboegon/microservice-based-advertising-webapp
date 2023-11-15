@@ -21,7 +21,7 @@ interface IFourthStepProps {
   nextStep: () => void;
 }
 
-const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
+const DescriptionStep: React.FunctionComponent<IFourthStepProps> = ({
   formValues,
   setFormValues,
   nextStep,
@@ -98,4 +98,4 @@ const FourthStep: React.FunctionComponent<IFourthStepProps> = ({
   );
 };
 
-export default FourthStep;
+export default DescriptionStep;

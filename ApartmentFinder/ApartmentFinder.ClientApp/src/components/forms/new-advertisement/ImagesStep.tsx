@@ -26,7 +26,7 @@ interface IFifthStepProps {
   submitData: (data: NewAdvertisementRequest) => void;
 }
 
-const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
+const ImagesStep: React.FunctionComponent<IFifthStepProps> = ({
   setImages,
   submitData,
 }) => {
@@ -35,6 +35,12 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
       return;
     }
     const fileArray = [...e.target.files];
+    if (fileArray.length > 5) {
+      console.log("more");
+      setModalMessage("A maximum of 5 images are allowed.");
+      onError(e);
+      return;
+    }
     for (const f of fileArray) {
       if (!(await ImageService.validateImageDimensions(f))) {
         setModalMessage(
@@ -81,7 +87,7 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
               borderColor="gray.500"
             ></Input>
             <FormHelperText>
-              You can select multiple images. The size of all images must be at
+              You can select up to 5 images. The size of all images must be at
               least 600x600.
               <br />
             </FormHelperText>
@@ -118,4 +124,4 @@ const FifthStep: React.FunctionComponent<IFifthStepProps> = ({
   );
 };
 
-export default FifthStep;
+export default ImagesStep;

@@ -2,5 +2,5 @@
 
 public interface IImageService
 {
-    Task<int> CreateNewImageAsync(byte[] fileData, int advertisementId);
+    Task<int> CreateNewImageAsync(MemoryStream stream, int advertisementId);
 }

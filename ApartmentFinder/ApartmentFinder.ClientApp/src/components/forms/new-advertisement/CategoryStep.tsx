@@ -22,7 +22,7 @@ interface IFirstStepProps {
   nextStep: () => void;
 }
 
-const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
+const CategoryStep: React.FunctionComponent<IFirstStepProps> = ({
   formValues,
   setFormValues,
   nextStep,
@@ -115,4 +115,4 @@ const FirstStep: React.FunctionComponent<IFirstStepProps> = ({
   );
 };
 
-export default FirstStep;
+export default CategoryStep;

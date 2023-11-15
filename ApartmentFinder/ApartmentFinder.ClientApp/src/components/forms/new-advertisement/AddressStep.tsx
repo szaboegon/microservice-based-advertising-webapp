@@ -25,7 +25,7 @@ interface ISecondStepProps {
   nextStep: () => void;
 }
 
-const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
+const AddressStep: React.FunctionComponent<ISecondStepProps> = ({
   formValues,
   setFormValues,
   nextStep,
@@ -101,7 +101,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 id="city"
                 type="text"
                 borderColor="gray.500"
-                placeholder="e.g. Budapest"
+                placeholder="Budapest"
                 size="lg"
               ></Input>
               {errors.city && (
@@ -128,7 +128,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
                 })}
                 id="postalCode"
                 type="number"
-                placeholder="e.g. 1089"
+                placeholder="1089"
                 borderColor="gray.500"
                 size="lg"
                 width="100%"
@@ -188,7 +188,7 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
               id="streetName"
               type="text"
               borderColor="gray.500"
-              placeholder="e.g. Király St."
+              placeholder="Király St."
               size="lg"
             ></Input>
             {errors.streetName && (
@@ -280,4 +280,4 @@ const SecondStep: React.FunctionComponent<ISecondStepProps> = ({
   );
 };
 
-export default SecondStep;
+export default AddressStep;

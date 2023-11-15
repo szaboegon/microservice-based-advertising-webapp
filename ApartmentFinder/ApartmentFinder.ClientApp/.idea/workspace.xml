@@ -6,13 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="Index css removed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/interceptorApiClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/interceptorApiClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/FifthStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/ImagesStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/FirstStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/CategoryStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/FourthStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/DescriptionStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/SecondStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/AddressStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/ThirdStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/DetailsStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/services/imageService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/imageService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/messagingService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/messagingService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/userService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../IdentityService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../IdentityService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,24 +56,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/szabo/Desktop/asd&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\StudentHousing\\StudentHousing.ClientApp\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/szabo/Desktop/asd",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "ts.external.directory.path": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\szabo\source\repos\szaboegon\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp\src\assets\images" />
@@ -159,6 +159,7 @@
       <workItem from="1699464621432" duration="1963000" />
       <workItem from="1699516384864" duration="4264000" />
       <workItem from="1699617175851" duration="1000" />
+      <workItem from="1700068141648" duration="2112000" />
     </task>
     <task id="LOCAL-00001" summary="Delete modal added">
       <option name="closed" value="true" />

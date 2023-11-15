@@ -18,7 +18,7 @@ public class ImageService : IImageService
         _imageValidator = imageValidator;
     }
 
-    public async Task<int> CreateNewImageAsync(byte[] fileData, int advertisementId)
+    public async Task<int> CreateNewImageAsync(MemoryStream stream, int advertisementId)
     {
         var advertisement= await _advertisementRepository.Get(advertisementId);
         if (advertisement == null)
@@ -28,7 +28,7 @@ public class ImageService : IImageService
 
         var newImage = new Image
         {
-            Data = fileData,
+            Data = stream.ToArray(),
             Advertisement=advertisement
         };
 

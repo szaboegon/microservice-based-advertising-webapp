@@ -27,7 +27,7 @@ interface IThirdStepProps {
   nextStep: () => void;
 }
 
-const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
+const DetailsStep: React.FunctionComponent<IThirdStepProps> = ({
   formValues,
   setFormValues,
   nextStep,
@@ -257,4 +257,4 @@ const ThirdStep: React.FunctionComponent<IThirdStepProps> = ({
   );
 };
 
-export default ThirdStep;
+export default DetailsStep;
