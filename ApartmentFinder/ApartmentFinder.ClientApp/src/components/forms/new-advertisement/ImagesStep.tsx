@@ -21,12 +21,12 @@ import ImageService from "../../../services/imageService";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { useState } from "react";
 
-interface IFifthStepProps {
+interface IImagesStepProps {
   setImages: React.Dispatch<File[]>;
   submitData: (data: NewAdvertisementRequest) => void;
 }
 
-const ImagesStep: React.FunctionComponent<IFifthStepProps> = ({
+const ImagesStep: React.FunctionComponent<IImagesStepProps> = ({
   setImages,
   submitData,
 }) => {

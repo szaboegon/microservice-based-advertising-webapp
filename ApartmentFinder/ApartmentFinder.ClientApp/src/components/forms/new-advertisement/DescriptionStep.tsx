@@ -15,13 +15,13 @@ import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
-interface IFourthStepProps {
+interface IDescriptionStepProps {
   formValues: NewAdvertisementRequest;
   setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
-const DescriptionStep: React.FunctionComponent<IFourthStepProps> = ({
+const DescriptionStep: React.FunctionComponent<IDescriptionStepProps> = ({
   formValues,
   setFormValues,
   nextStep,

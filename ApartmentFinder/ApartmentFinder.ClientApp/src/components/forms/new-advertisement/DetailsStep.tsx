@@ -21,13 +21,13 @@ import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
-interface IThirdStepProps {
+interface IDetailsStepProps {
   formValues: NewAdvertisementRequest;
   setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
-const DetailsStep: React.FunctionComponent<IThirdStepProps> = ({
+const DetailsStep: React.FunctionComponent<IDetailsStepProps> = ({
   formValues,
   setFormValues,
   nextStep,

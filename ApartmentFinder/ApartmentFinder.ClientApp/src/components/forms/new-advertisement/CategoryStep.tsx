@@ -16,13 +16,13 @@ import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
-interface IFirstStepProps {
+interface ICategoryStepProps {
   formValues: NewAdvertisementRequest;
   setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
-const CategoryStep: React.FunctionComponent<IFirstStepProps> = ({
+const CategoryStep: React.FunctionComponent<ICategoryStepProps> = ({
   formValues,
   setFormValues,
   nextStep,

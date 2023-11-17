@@ -19,13 +19,13 @@ import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
 import { placeholderStyles } from "../../../styles/placeholderStyles";
 
-interface ISecondStepProps {
+interface IAddressStepProps {
   formValues: NewAdvertisementRequest;
   setFormValues: React.Dispatch<React.SetStateAction<NewAdvertisementRequest>>;
   nextStep: () => void;
 }
 
-const AddressStep: React.FunctionComponent<ISecondStepProps> = ({
+const AddressStep: React.FunctionComponent<IAddressStepProps> = ({
   formValues,
   setFormValues,
   nextStep,
@@ -37,12 +37,12 @@ const AddressStep: React.FunctionComponent<ISecondStepProps> = ({
     formState: { errors },
   } = useForm<NewAdvertisementRequest>();
 
-  const city = watch("city");
-
   const saveData = (data: NewAdvertisementRequest) => {
     setFormValues({ ...formValues, ...data });
     nextStep();
   };
+
+  const city = watch("city");
 
   return (
     <>
