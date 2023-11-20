@@ -30,7 +30,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
   const [unreadMessageCount, setUnreadMessageCount] = useState<number>(0);
   const connection = useSignalR();
 
-  useQuery({
+  const { refetch } = useQuery({
     queryKey: ["unreadMessages"],
     queryFn: async () => {
       return await MessagingService.getUnreadMessageCount();
@@ -48,9 +48,9 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
           setUnreadMessageCount(() => unreadMessageCount + 1);
         }
       });
-      connection.on("MessagesRead", (userId) => {
+      connection.on("MessagesRead", async (userId) => {
         if (userId == user?.id) {
-          setUnreadMessageCount(0);
+          await refetch();
         }
       });
     }

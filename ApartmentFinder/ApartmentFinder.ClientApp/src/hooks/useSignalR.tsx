@@ -24,11 +24,9 @@ export const SignalRProvider: React.FunctionComponent<ISignalRProvider> = ({
   const { accessToken, setAccessToken } = useAccessToken();
 
   useEffect(() => {
-    console.log("newConn");
     if (!accessToken) {
       return;
     }
-    console.log("newConn");
     const conn = new HubConnectionBuilder()
       .withUrl("/hubs/message", {
         accessTokenFactory: () => accessToken,

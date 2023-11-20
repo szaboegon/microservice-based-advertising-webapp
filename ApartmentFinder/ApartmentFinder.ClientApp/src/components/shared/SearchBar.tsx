@@ -103,7 +103,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
               {...register("city")}
               type="text"
               variant="flushed"
-              placeholder="e.g. Budapest"
+              placeholder="Budapest"
             ></Input>
           </FormControl>
           <FormControl maxWidth="100px">
@@ -117,7 +117,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
               max={20}
               min={1}
               variant="flushed"
-              placeholder="Number"
+              placeholder="number"
             />
           </FormControl>
           <FormControl maxWidth="150px">

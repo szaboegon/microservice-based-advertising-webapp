@@ -131,8 +131,12 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
           height="100%"
           display="flex"
           fontSize="1.1rem"
+          textAlign="center"
+          padding="10px"
         >
-          Ad info will show up here
+          {advertisementId
+            ? "There was a problem finding the related advertisement, it was probably deleted by the advertiser."
+            : "Ad info will show up here"}
         </Text>
       )}
     </Card>

@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="Index css removed">
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/AdvertisementDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/AdvertisementDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/AddressStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/AddressStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/CategoryStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/CategoryStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/DescriptionStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/DescriptionStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/DetailsStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/DetailsStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/ImagesStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/new-advertisement/ImagesStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/useSignalR.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useSignalR.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,6 +160,10 @@
       <workItem from="1699617175851" duration="1000" />
       <workItem from="1700068141648" duration="3608000" />
       <workItem from="1700131164679" duration="4129000" />
+      <workItem from="1700240477210" duration="186000" />
+      <workItem from="1700243096806" duration="3000" />
+      <workItem from="1700311986522" duration="2615000" />
+      <workItem from="1700408513307" duration="4750000" />
     </task>
     <task id="LOCAL-00001" summary="Delete modal added">
       <option name="closed" value="true" />

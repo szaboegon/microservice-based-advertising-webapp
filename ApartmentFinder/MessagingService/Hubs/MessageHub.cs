@@ -51,7 +51,6 @@ public class MessageHub : Hub
         {
             _logger.LogWarning("Security token exception occurred while sending message, conn id: {ConnectionId}, exception: {Exception}", Context.ConnectionId, ex);
             Context.Abort();
-            throw;
         }
     }
 

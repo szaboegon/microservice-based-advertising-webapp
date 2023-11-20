@@ -47,6 +47,10 @@ public class UnreadMessageChecker : BackgroundService
                     _messageQueueProducer.SendMessage(notification);
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // Service is stopping, swallow this exception
+            }
             catch (Exception ex)
             {
                 _logger.LogError("An exception occurred while checking for unread messages: {Exception}", ex);

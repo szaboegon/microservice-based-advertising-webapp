@@ -51,7 +51,7 @@ public class ConsumerService: IHostedService
         catch (Exception ex)
         {
             _logger.LogError("An exception occurred while starting email notification service: {Exception}", ex);
-            throw;
+            return Task.FromException(ex);
         }
     }
     public Task StopAsync(CancellationToken cancellationToken)

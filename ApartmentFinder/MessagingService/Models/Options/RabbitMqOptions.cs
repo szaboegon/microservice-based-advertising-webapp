@@ -7,6 +7,8 @@ public sealed class RabbitMqOptions
     public const string ConfigSectionName = "RabbitMq";
 
     [Required]
+    public required string HostName { get; init; }
+    [Required]
     public required string QueueName { get; init; }
     [Required]
     public required string ExchangeName { get; init; }

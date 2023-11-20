@@ -17,7 +17,7 @@ public class MessageQueueProducer: IMessageQueueProducer
 
         var connFactory = new ConnectionFactory()
         {
-            HostName = "rabbitmq"
+            HostName = _options.HostName
         };
         _connection = connFactory.CreateConnection();
     }
