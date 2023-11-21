@@ -1,4 +1,4 @@
-export interface OrderingParamsDto {
+export interface OrderingParams {
   sortColumn?: string;
   sortOrder?: string;
 }

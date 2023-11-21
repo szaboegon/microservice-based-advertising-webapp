@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { MessageInputData } from "../../models/forms/messageInputData";
+import { MessageInputData } from "../../models/formInterfaces/messageInputData";
 import MessagingService from "../../services/messagingService";
 import { useSignalR } from "../../hooks/useSignalR";
 

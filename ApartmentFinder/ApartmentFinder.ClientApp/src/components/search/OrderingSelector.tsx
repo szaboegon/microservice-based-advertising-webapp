@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Box, Flex, IconButton, Select } from "@chakra-ui/react";
-import { OrderingParamsDto } from "../../models/queryParams/orderingParamsDto";
+import { OrderingParams } from "../../models/queryParams/orderingParams";
 import { useEffect, useState } from "react";
 
 interface IOrderingSelectorProps {
   width?: string;
-  notifyOrderingChanged: (orderingParams: OrderingParamsDto) => void;
-  prevParams: OrderingParamsDto;
+  notifyOrderingChanged: (orderingParams: OrderingParams) => void;
+  prevParams: OrderingParams;
 }
 
 const OrderingSelector: React.FunctionComponent<IOrderingSelectorProps> = ({
@@ -29,7 +29,7 @@ const OrderingSelector: React.FunctionComponent<IOrderingSelectorProps> = ({
     if (!sortColumn) {
       return;
     }
-    const orderingParams: OrderingParamsDto = {
+    const orderingParams: OrderingParams = {
       sortColumn: sortColumn,
       sortOrder: isAscending ? "asc" : "desc",
     };

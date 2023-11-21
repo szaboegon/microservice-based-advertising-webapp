@@ -14,12 +14,12 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { AdvertisementCardDto } from "../../models/advertisement/advertisementCardDto";
+import { AdvertisementInfo } from "../../models/advertisement/advertisementInfo";
 import ImageService from "../../services/imageService";
 import { hoverAnimationStyles } from "../../styles/hoverAnimationStyles";
 
 interface IAdvertisementCardProps {
-  advertisement: AdvertisementCardDto;
+  advertisement: AdvertisementInfo;
 }
 
 const AdvertisementCard: React.FunctionComponent<IAdvertisementCardProps> = ({

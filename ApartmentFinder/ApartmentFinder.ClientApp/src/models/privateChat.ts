@@ -1,6 +1,6 @@
 import { Message } from "./message";
 
-export interface UserChatDto {
+export interface PrivateChat {
   uniqueName: string;
   partnerId: number;
   advertisementId: number;

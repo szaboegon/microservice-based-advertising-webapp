@@ -9,12 +9,12 @@ import {
   PaginationPrevious,
   usePagination,
 } from "@ajna/pagination";
-import { PaginationParamsDto } from "../../models/queryParams/paginationParamsDto";
+import { PaginationParams } from "../../models/queryParams/paginationParams";
 
 interface IPaginationFooterProps {
   prevCurrentPage: number;
   totalPages: number;
-  notifyPageChanged: (paginationParams: PaginationParamsDto) => void;
+  notifyPageChanged: (paginationParams: PaginationParams) => void;
 }
 
 const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
@@ -34,7 +34,7 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
 
   const onPageChange = (newCurrentPage: number) => {
     setCurrentPage(newCurrentPage);
-    let newPaginationParams: PaginationParamsDto = {
+    let newPaginationParams: PaginationParams = {
       currentPage: newCurrentPage.toString(),
       pageItemCount: PAGE_ITEM_COUNT.toString(),
     };

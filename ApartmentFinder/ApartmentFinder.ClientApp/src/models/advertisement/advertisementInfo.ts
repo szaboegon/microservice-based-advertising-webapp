@@ -1,10 +1,10 @@
-export interface AdvertisementCardDto {
+export interface AdvertisementInfo {
   id: number;
   categoryName: string;
   city: string;
   district?: string;
   streetName: string;
-  streetNumber: string;
+  streetNumber?: string;
   monthlyPrice: number;
   numberOfRooms: number;
   size: number;

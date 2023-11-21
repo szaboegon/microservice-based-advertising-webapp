@@ -1,7 +1,7 @@
 import { Avatar, Flex, HStack, Text, VStack } from "@chakra-ui/react";
 import * as React from "react";
 import { User } from "../../models/user";
-import { UserChatDto } from "../../models/userChatDto";
+import { PrivateChat } from "../../models/privateChat";
 import { useSignalR } from "../../hooks/useSignalR";
 import { useEffect, useState } from "react";
 import DateHelper from "../../helpers/dateHelper";
@@ -11,8 +11,8 @@ import UserService from "../../services/userService";
 
 interface IChatTab {
   chatPartner: User | undefined;
-  chat: UserChatDto;
-  handleClick: (chat: UserChatDto, partner: User) => void;
+  chat: PrivateChat;
+  handleClick: (chat: PrivateChat, partner: User) => void;
   isSelected: boolean;
 }
 

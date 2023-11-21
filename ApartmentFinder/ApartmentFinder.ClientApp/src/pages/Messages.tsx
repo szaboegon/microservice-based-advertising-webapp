@@ -11,7 +11,7 @@ import UserChatsSidebar from "../components/messaging/UserChatsSidebar";
 import { NAVBAR_HEIGHT } from "../assets/literals/constants";
 import RelatedAdvertisementInfo from "../components/messaging/RelatedAdvertisementInfo";
 import { useSignalR } from "../hooks/useSignalR";
-import { UserChatDto } from "../models/userChatDto";
+import { PrivateChat } from "../models/privateChat";
 import { useQuery } from "react-query";
 
 interface IMessagesProps {
@@ -20,7 +20,7 @@ interface IMessagesProps {
 
 const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [selectedChat, setSelectedChat] = useState<UserChatDto>();
+  const [selectedChat, setSelectedChat] = useState<PrivateChat>();
   const [partner, setPartner] = useState<User>();
 
   const connection = useSignalR();
@@ -60,7 +60,7 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
     setMessages((messages) => [...messages, message]);
   };
 
-  const onChatSelected = (chat: UserChatDto, partner: User) => {
+  const onChatSelected = (chat: PrivateChat, partner: User) => {
     setSelectedChat(chat);
     setPartner(partner);
   };

@@ -1,10 +1,10 @@
-import { AdvertisementSearchParamsDto } from "../models/queryParams/advertisementSearchParamsDto";
-import { PaginationParamsDto } from "../models/queryParams/paginationParamsDto";
-import { OrderingParamsDto } from "../models/queryParams/orderingParamsDto";
+import { AdvertisementSearchParams } from "../models/queryParams/advertisementSearchParams";
+import { PaginationParams } from "../models/queryParams/paginationParams";
+import { OrderingParams } from "../models/queryParams/orderingParams";
 
 const addSearchParams = (
   searchParams: URLSearchParams,
-  paramsToAdd: AdvertisementSearchParamsDto,
+  paramsToAdd: AdvertisementSearchParams,
 ) => {
   Object.entries(paramsToAdd).forEach(([key, value]) => {
     searchParams.set(key, value);
@@ -15,7 +15,7 @@ const addSearchParams = (
 
 const addPaginationParams = (
   searchParams: URLSearchParams,
-  paramsToAdd?: PaginationParamsDto,
+  paramsToAdd?: PaginationParams,
 ) => {
   if (paramsToAdd) {
     Object.entries(paramsToAdd).forEach(([key, value]) => {
@@ -33,7 +33,7 @@ const addPaginationParams = (
 
 const addOrderingParams = (
   searchParams: URLSearchParams,
-  paramsToAdd: OrderingParamsDto,
+  paramsToAdd: OrderingParams,
 ) => {
   Object.entries(paramsToAdd).forEach(([key, value]) => {
     if (value != "") {
@@ -49,7 +49,7 @@ const getCurrentPageFromParams = (params: URLSearchParams): number => {
   return stringValue ? parseInt(stringValue) : 1;
 };
 
-const getOrderingFromParams = (params: URLSearchParams): OrderingParamsDto => {
+const getOrderingFromParams = (params: URLSearchParams): OrderingParams => {
   const sortOrder = params.get("sortOrder") ?? undefined;
   const sortColumn = params.get("sortColumn") ?? undefined;
 

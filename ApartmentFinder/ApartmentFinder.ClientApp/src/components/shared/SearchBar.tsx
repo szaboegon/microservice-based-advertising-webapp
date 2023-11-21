@@ -12,12 +12,12 @@ import {
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AdvertisementSearchParamsDto } from "../../models/queryParams/advertisementSearchParamsDto";
+import { AdvertisementSearchParams } from "../../models/queryParams/advertisementSearchParams";
 
 interface ISearchBarProps {
   minWidth?: string;
   existingSearchParams?: URLSearchParams;
-  onSearchParamsChanged: (newParams: AdvertisementSearchParamsDto) => void;
+  onSearchParamsChanged: (newParams: AdvertisementSearchParams) => void;
 }
 
 const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
@@ -25,7 +25,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
   existingSearchParams,
   onSearchParamsChanged,
 }) => {
-  const initialFormValues: AdvertisementSearchParamsDto = {
+  const initialFormValues: AdvertisementSearchParams = {
     categoryName: "",
     city: "",
     numberOfRooms: "",
@@ -42,13 +42,13 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
     getValues,
     register,
     formState: { errors },
-  } = useForm<AdvertisementSearchParamsDto>();
+  } = useForm<AdvertisementSearchParams>();
 
-  const submit = (data: AdvertisementSearchParamsDto) => {
+  const submit = (data: AdvertisementSearchParams) => {
     for (const property in getValues()) {
       setValue(
-        property as keyof AdvertisementSearchParamsDto,
-        data[property as keyof AdvertisementSearchParamsDto],
+        property as keyof AdvertisementSearchParams,
+        data[property as keyof AdvertisementSearchParams],
       );
     }
     onSearchParamsChanged(data);
@@ -58,10 +58,10 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
     let updatedState = { ...initialFormValues };
     for (const property in getValues()) {
       if (existingSearchParams?.has(property)) {
-        updatedState[property as keyof AdvertisementSearchParamsDto] =
+        updatedState[property as keyof AdvertisementSearchParams] =
           existingSearchParams.get(property)!;
         setValue(
-          property as keyof AdvertisementSearchParamsDto,
+          property as keyof AdvertisementSearchParams,
           existingSearchParams.get(property)!,
         );
       }

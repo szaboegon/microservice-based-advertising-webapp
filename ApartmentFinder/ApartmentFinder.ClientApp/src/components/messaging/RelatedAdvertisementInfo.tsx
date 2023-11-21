@@ -15,7 +15,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import * as React from "react";
 import { useQuery } from "react-query";
 import AdvertisementService from "../../services/advertisementService";
-import { AdvertisementDetailsDto } from "../../models/advertisement/advertisementDetailsDto";
+import { Advertisement } from "../../models/advertisement/advertisement";
 import ImageService from "../../services/imageService";
 import { Link } from "react-router-dom";
 import { navbarButtonStyles } from "../../styles/navbarButtonStyles";
@@ -28,7 +28,7 @@ interface RelatedAdvertisementInfo {
 const RelatedAdvertisementInfo: React.FunctionComponent<
   RelatedAdvertisementInfo
 > = ({ advertisementId, flex }) => {
-  const [advertisement, setAdvertisement] = useState<AdvertisementDetailsDto>();
+  const [advertisement, setAdvertisement] = useState<Advertisement>();
   const [base64Image, setBase64Image] = useState<string>();
 
   const {
@@ -42,7 +42,7 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
       if (!advertisementId) return;
       return await AdvertisementService.findById(advertisementId);
     },
-    onSuccess: (data: AdvertisementDetailsDto) => {
+    onSuccess: (data: Advertisement) => {
       setAdvertisement(data);
       const img = ImageService.convertToBase64Image(data.images[0]);
       setBase64Image(img);

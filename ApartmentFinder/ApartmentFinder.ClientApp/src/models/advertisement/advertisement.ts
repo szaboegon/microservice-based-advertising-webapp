@@ -1,4 +1,4 @@
-export interface AdvertisementDetailsDto {
+export interface Advertisement {
   id: number;
   categoryName: string;
   region: string;
@@ -6,8 +6,8 @@ export interface AdvertisementDetailsDto {
   city: string;
   district?: string;
   streetName: string;
-  streetNumber: string;
-  unitNumber: string;
+  streetNumber?: string;
+  unitNumber?: string;
   numberOfRooms: number;
   size: number;
   furnished: boolean;
