@@ -50,15 +50,17 @@ public class ConsumerService: IHostedService
         }
         catch (Exception ex)
         {
-            _logger.LogError("An exception occurred while starting email notification service: {Exception}", ex);
-            return Task.FromException(ex);
+            _logger.LogCritical("An exception occurred while starting email notification service: {Exception}", ex);
+            return Task.CompletedTask;
         }
     }
+
     public Task StopAsync(CancellationToken cancellationToken)
     {
         _connection.Close();
         return Task.CompletedTask;
     }
+
     private Task StartConsumer()
     {
         using var channel = _connection.CreateModel();
@@ -97,8 +99,8 @@ public class ConsumerService: IHostedService
                 $"This is an auto generated email, please do not respond to it.\n\n";
 
             await _emailRetry.ExecuteAsync(async _ => await _emailSenderService.SendEmail(
-                "szabo.egon2001@gmail.com",
-                $"{user.FirstName} {user.LastName}", //TODO change this to actual email
+                user.Email,
+                $"{user.FirstName} {user.LastName}", 
                 "Message Notification", notificationMessage));
         }
         catch (Exception ex)

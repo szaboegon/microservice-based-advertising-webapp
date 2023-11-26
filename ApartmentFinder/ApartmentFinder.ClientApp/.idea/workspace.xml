@@ -5,42 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="Index css removed">
-      <change afterPath="$PROJECT_DIR$/src/models/queryParams/advertisementSearchParams.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/queryParams/paginationParams.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/AdvertisementCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/AdvertisementCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/details/AdvertiserInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/details/AdvertiserInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/AddressStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/AddressStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/CategoryStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/CategoryStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/DescriptionStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DescriptionStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/DetailsStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DetailsStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/new-advertisement/ImagesStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/ImagesStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/ChatTab.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/ChatTab.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/MessageInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/MessageInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/UserChatsSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/UserChatsSidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/search/OrderingSelector.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/OrderingSelector.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/advertisement/advertisementCardDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/advertisement/advertisementInfo.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/advertisement/advertisementDetailsDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/advertisement/advertisement.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/forms/messageInputData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/formInterfaces/messageInputData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/pagedQueryResponse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/pagedQueryResponse.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/queryParams/advertisementSearchParamsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/queryParams/orderingParamsDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/queryParams/orderingParams.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/queryParams/paginationParamsDto.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/userChatDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/privateChat.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Details.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Details.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Messages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Messages.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/advertisementService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/advertisementService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/messagingService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/messagingService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../EmailNotificationService/Services/ConsumerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EmailNotificationService/Services/ConsumerService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,22 +81,10 @@
       <recent name="C:\Users\szabo\source\repos\szaboegon\microservice-based-advertising-webapp\StudentHousing\StudentHousing.ClientApp\src" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Debug">
-    <configuration name="Debug" type="JavascriptDebugType" uri="http://localhost:3000">
+  <component name="RunManager">
+    <configuration name="Debug" type="JavascriptDebugType" uri="http://localhost:5173">
       <method v="2" />
     </configuration>
-    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/StudentHousing.ClientApp/StudentHousing/StudentHousing.ClientApp/index.html" useBuiltInWebServerPort="true">
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="JavaScript Debug.Debug" />
-      <item itemvalue="JavaScript Debug.index.html" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JavaScript Debug.index.html" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -193,7 +149,9 @@
       <workItem from="1700243096806" duration="3000" />
       <workItem from="1700311986522" duration="2615000" />
       <workItem from="1700408513307" duration="4750000" />
-      <workItem from="1700583858175" duration="2170000" />
+      <workItem from="1700583858175" duration="3391000" />
+      <workItem from="1700594751322" duration="4000" />
+      <workItem from="1701017140830" duration="2455000" />
     </task>
     <task id="LOCAL-00001" summary="Delete modal added">
       <option name="closed" value="true" />
@@ -241,5 +199,17 @@
     <MESSAGE value="Type declaration issue fixed" />
     <MESSAGE value="Index css removed" />
     <option name="LAST_COMMIT_MESSAGE" value="Index css removed" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/pages/Search.tsx</url>
+          <line>45</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

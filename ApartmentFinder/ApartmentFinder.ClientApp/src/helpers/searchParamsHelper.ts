@@ -7,7 +7,11 @@ const addSearchParams = (
   paramsToAdd: AdvertisementSearchParams,
 ) => {
   Object.entries(paramsToAdd).forEach(([key, value]) => {
-    searchParams.set(key, value);
+    if (value == "") {
+      searchParams.delete(key);
+    } else {
+      searchParams.set(key, value);
+    }
   });
 
   return searchParams;
