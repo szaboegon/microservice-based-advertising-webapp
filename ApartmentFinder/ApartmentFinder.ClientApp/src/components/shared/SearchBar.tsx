@@ -45,10 +45,6 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
   } = useForm<AdvertisementSearchParams>();
 
   const submit = (data: AdvertisementSearchParams) => {
-    //for (const property in getValues()) {
-    // const value = data[property as keyof AdvertisementSearchParams];
-    //setValue(property as keyof AdvertisementSearchParams, value);
-    //}
     onSearchParamsChanged(data);
   };
 

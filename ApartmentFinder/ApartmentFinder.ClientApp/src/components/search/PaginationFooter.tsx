@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Pagination,
@@ -10,6 +10,7 @@ import {
   usePagination,
 } from "@ajna/pagination";
 import { PaginationParams } from "../../models/queryParams/paginationParams";
+import { Text } from "@chakra-ui/react";
 
 interface IPaginationFooterProps {
   prevCurrentPage: number;
@@ -31,6 +32,12 @@ const PaginationFooter: React.FunctionComponent<IPaginationFooterProps> = ({
       inner: 1,
     },
   });
+
+  useEffect(() => {
+    if (prevCurrentPage > totalPages) {
+      onPageChange(1);
+    }
+  }, [totalPages]);
 
   const onPageChange = (newCurrentPage: number) => {
     setCurrentPage(newCurrentPage);

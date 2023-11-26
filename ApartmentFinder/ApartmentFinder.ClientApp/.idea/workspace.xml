@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="174fa181-2089-409b-98da-7663474c6d87" name="Changes" comment="Index css removed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/searchParamsHelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../EmailNotificationService/Services/ConsumerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../EmailNotificationService/Services/ConsumerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Search.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +151,7 @@
       <workItem from="1700408513307" duration="4750000" />
       <workItem from="1700583858175" duration="3391000" />
       <workItem from="1700594751322" duration="4000" />
-      <workItem from="1701017140830" duration="2455000" />
+      <workItem from="1701017140830" duration="5730000" />
     </task>
     <task id="LOCAL-00001" summary="Delete modal added">
       <option name="closed" value="true" />
@@ -205,9 +205,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/pages/Search.tsx</url>
-          <line>45</line>
+          <line>34</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

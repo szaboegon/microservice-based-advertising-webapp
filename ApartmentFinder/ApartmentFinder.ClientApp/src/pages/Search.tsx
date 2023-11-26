@@ -26,7 +26,7 @@ export const Search = () => {
 
   const { isSuccess, isLoading, isError, isRefetching, error, refetch } =
     useQuery({
-      queryKey: ["advertismentcards", searchParams],
+      queryKey: ["advertismentsearch", ...searchParams],
       queryFn: async () => {
         console.log(searchParams);
         return await AdvertisementService.findBySearchParams(searchParams);
@@ -37,10 +37,6 @@ export const Search = () => {
       },
       refetchOnWindowFocus: false,
     });
-
-  useEffect(() => {
-    refetch();
-  }, [searchParams]);
 
   const onSearchParamsChanged = (newParams: AdvertisementSearchParams) => {
     let changedParams = SearchParamsHelper.addSearchParams(
