@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AdvertisingService.DataAccess.Data.Migrations
+namespace AdvertisingService.DataAccess.DAL.Migrations
 {
     [DbContext(typeof(AdvertisementDbContext))]
     partial class AdvertisementDbContextModelSnapshot : ModelSnapshot
@@ -126,7 +126,7 @@ namespace AdvertisingService.DataAccess.Data.Migrations
                     b.Property<DateTime>("UploadDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 11, 19, 15, 46, 17, 105, DateTimeKind.Local).AddTicks(7046))
+                        .HasDefaultValue(new DateTime(2023, 11, 30, 12, 57, 23, 555, DateTimeKind.Local).AddTicks(5876))
                         .HasColumnName("uploadDate");
 
                     b.HasKey("Id");
