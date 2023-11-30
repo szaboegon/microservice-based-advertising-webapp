@@ -54,7 +54,8 @@ services:
    #    - traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader=true
        - traefik.http.routers.advertisingserviceprivate.middlewares=advertisingauth
     depends_on:
-      - advertisingdb
+      advertisingdb:
+        condition: service_healthy
        
   advertisingdb:
     container_name: advertising_db
@@ -68,6 +69,12 @@ services:
        - mynetwork
     ports:
        - 8001:1433    # Only needed for dev, remove in prod
+    healthcheck:
+       test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
+       interval: 10s
+       timeout: 3s
+       retries: 10
+       start_period: 10s
  
   identityservice:
     container_name: identity_service
@@ -86,7 +93,8 @@ services:
        - traefik.enable=true
        - traefik.http.routers.identityservice.rule=Host(`localhost`) && PathPrefix(`/api/user`)
     depends_on:
-      - identitydb
+      identitydb:
+        condition: service_healthy
 
   identitydb:
     container_name: identity_db
@@ -100,6 +108,12 @@ services:
        - mynetwork
     ports:
        - 8002:1433  # Only needed for dev, remove in prod
+    healthcheck:
+       test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
+       interval: 10s
+       timeout: 3s
+       retries: 10
+       start_period: 10s
 
   clientapp:
     container_name: client_app
@@ -140,7 +154,7 @@ services:
      rabbitmq: 
        condition: service_healthy
      messagingdb: 
-       condition: service_started
+       condition: service_healthy
 
   messagingdb:
     container_name: messaging_db
@@ -154,6 +168,12 @@ services:
        - mynetwork
     ports:
        - 8003:1433  # Only needed for dev, remove in prod
+    healthcheck:
+       test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
+       interval: 10s
+       timeout: 3s
+       retries: 10
+       start_period: 10s
 
   emailnotificationservice:
     container_name: email_notification_service
