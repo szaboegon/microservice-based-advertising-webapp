@@ -1,4 +1,5 @@
-﻿using IdentityService.Models;
+﻿using IdentityService.Extensions;
+using IdentityService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -10,5 +11,12 @@ public class IdentityDbContext : IdentityDbContext<AppUser, IdentityRole<int>, i
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
         : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.SeedData();
     }
 }

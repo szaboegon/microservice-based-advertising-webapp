@@ -60,8 +60,8 @@ services:
   advertisingdb:
     container_name: advertising_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    volumes:
-       - ./volumes/advertising_data:/var/opt/mssql/data
+    # volumes:
+    #    - ./volumes/advertising_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
@@ -99,8 +99,8 @@ services:
   identitydb:
     container_name: identity_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    volumes:
-       - ./volumes/identity_data:/var/opt/mssql/data
+    # volumes:
+    #    - ./volumes/identity_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
@@ -159,8 +159,8 @@ services:
   messagingdb:
     container_name: messaging_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    volumes:
-       - ./volumes/messaging_data:/var/opt/mssql/data
+    # volumes:
+    #    - ./volumes/messaging_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
