@@ -377,135 +377,141 @@ public static class ModelBuilderExtensions
                 StreetNumber = "1.",
                 UnitNumber = "5.",
                 AdvertisementId = 9
-            },
-            new Address
-            {
-                Id = 10,
-                Region = "Veszprém",
-                PostalCode = 8200,
-                City = "Veszprém",
-                StreetName = "Vár utca",
-                AdvertisementId = 10
-            },
-            new Address
-            {
-                Id = 11,
-                Region = "Zala",
-                PostalCode = 8900,
-                City = "Zalaegerszeg",
-                StreetName = "Széchenyi tér",
-                StreetNumber = "7.",
-                UnitNumber = "2.",
-                AdvertisementId = 11
-            },
-            new Address
-            {
-                Id = 12,
-                Region = "Békés",
-                PostalCode = 5600,
-                City = "Békéscsaba",
-                StreetName = "Szent István tér",
-                AdvertisementId = 12
-            },
-            new Address
-            {
-                Id = 13,
-                Region = "Bács-Kiskun",
-                PostalCode = 6000,
-                City = "Kecskemét",
-                StreetName = "Kossuth tér",
-                StreetNumber = "10.",
-                UnitNumber = "3.",
-                AdvertisementId = 13
-            },
-            new Address
-            {
-                Id = 14,
-                Region = "Tolna",
-                PostalCode = 7100,
-                City = "Szekszárd",
-                StreetName = "Arany János utca",
-                AdvertisementId = 14
-            },
-            new Address
-            {
-                Id = 15,
-                Region = "Komárom-Esztergom",
-                PostalCode = 2800,
-                City = "Tatabánya",
-                StreetName = "Bajcsy-Zsilinszky út",
-                StreetNumber = "5.",
-                UnitNumber = "1.",
-                AdvertisementId = 15
-            },
-            new Address
-            {
-                Id = 16,
-                Region = "Fejér",
-                PostalCode = 8000,
-                City = "Székesfehérvár",
-                StreetName = "Fő utca",
-                AdvertisementId = 16
-            },
-            new Address
-            {
-                Id = 17,
-                Region = "Pest",
-                PostalCode = 1101,
-                City = "Budapest",
-                District = "XX.",
-                StreetName = "József Attila utca",
-                StreetNumber = "32.",
-                UnitNumber = "7.",
-                AdvertisementId = 17
-            },
-            new Address
-            {
-                Id = 18,
-                Region = "Vas",
-                PostalCode = 9700,
-                City = "Szombathely",
-                StreetName = "Kossuth Lajos utca",
-                AdvertisementId = 18
-            },
-            new Address
-            {
-                Id = 19,
-                Region = "Hajdú-Bihar",
-                PostalCode = 4030,
-                City = "Debrecen",
-                StreetName = "Piac utca",
-                StreetNumber = "22.",
-                UnitNumber = "4.",
-                AdvertisementId = 19
-            },
-            new Address
-            {
-                Id = 20,
-                Region = "Borsod-Abaúj-Zemplén",
-                PostalCode = 3527,
-                City = "Miskolc",
-                StreetName = "Kölcsey Ferenc út",
-                AdvertisementId = 20
-            },
-            new Address
-            {
-                Id = 21,
-                Region = "Budapest",
-                PostalCode = 1132,
-                City = "Budapest",
-                District = "XIII.",
-                StreetName = "Váci út",
-                StreetNumber = "12.",
-                UnitNumber = "2.",
-                AdvertisementId = 21
             }
+            //new Address
+            //{
+            //    Id = 10,
+            //    Region = "Veszprém",
+            //    PostalCode = 8200,
+            //    City = "Veszprém",
+            //    StreetName = "Vár utca",
+            //    AdvertisementId = 10
+            //},
+            //new Address
+            //{
+            //    Id = 11,
+            //    Region = "Zala",
+            //    PostalCode = 8900,
+            //    City = "Zalaegerszeg",
+            //    StreetName = "Széchenyi tér",
+            //    StreetNumber = "7.",
+            //    UnitNumber = "2.",
+            //    AdvertisementId = 11
+            //},
+            //new Address
+            //{
+            //    Id = 12,
+            //    Region = "Békés",
+            //    PostalCode = 5600,
+            //    City = "Békéscsaba",
+            //    StreetName = "Szent István tér",
+            //    AdvertisementId = 12
+            //},
+            //new Address
+            //{
+            //    Id = 13,
+            //    Region = "Bács-Kiskun",
+            //    PostalCode = 6000,
+            //    City = "Kecskemét",
+            //    StreetName = "Kossuth tér",
+            //    StreetNumber = "10.",
+            //    UnitNumber = "3.",
+            //    AdvertisementId = 13
+            //},
+            //new Address
+            //{
+            //    Id = 14,
+            //    Region = "Tolna",
+            //    PostalCode = 7100,
+            //    City = "Szekszárd",
+            //    StreetName = "Arany János utca",
+            //    AdvertisementId = 14
+            //},
+            //new Address
+            //{
+            //    Id = 15,
+            //    Region = "Komárom-Esztergom",
+            //    PostalCode = 2800,
+            //    City = "Tatabánya",
+            //    StreetName = "Bajcsy-Zsilinszky út",
+            //    StreetNumber = "5.",
+            //    UnitNumber = "1.",
+            //    AdvertisementId = 15
+            //},
+            //new Address
+            //{
+            //    Id = 16,
+            //    Region = "Fejér",
+            //    PostalCode = 8000,
+            //    City = "Székesfehérvár",
+            //    StreetName = "Fő utca",
+            //    AdvertisementId = 16
+            //},
+            //new Address
+            //{
+            //    Id = 17,
+            //    Region = "Pest",
+            //    PostalCode = 1101,
+            //    City = "Budapest",
+            //    District = "XX.",
+            //    StreetName = "József Attila utca",
+            //    StreetNumber = "32.",
+            //    UnitNumber = "7.",
+            //    AdvertisementId = 17
+            //},
+            //new Address
+            //{
+            //    Id = 18,
+            //    Region = "Vas",
+            //    PostalCode = 9700,
+            //    City = "Szombathely",
+            //    StreetName = "Kossuth Lajos utca",
+            //    AdvertisementId = 18
+            //},
+            //new Address
+            //{
+            //    Id = 19,
+            //    Region = "Hajdú-Bihar",
+            //    PostalCode = 4030,
+            //    City = "Debrecen",
+            //    StreetName = "Piac utca",
+            //    StreetNumber = "22.",
+            //    UnitNumber = "4.",
+            //    AdvertisementId = 19
+            //},
+            //new Address
+            //{
+            //    Id = 20,
+            //    Region = "Borsod-Abaúj-Zemplén",
+            //    PostalCode = 3527,
+            //    City = "Miskolc",
+            //    StreetName = "Kölcsey Ferenc út",
+            //    AdvertisementId = 20
+            //},
+            //new Address
+            //{
+            //    Id = 21,
+            //    Region = "Budapest",
+            //    PostalCode = 1132,
+            //    City = "Budapest",
+            //    District = "XIII.",
+            //    StreetName = "Váci út",
+            //    StreetNumber = "12.",
+            //    UnitNumber = "2.",
+            //    AdvertisementId = 21
+            //}
         );
 
-        for (int i = 0; i < AdvertisementCount; i++)
+        var imagePaths = Directory.EnumerateFiles($"{Directory.GetCurrentDirectory()}/Assets").ToList();
+        var idx = 1;
+        var images = new List<Image>();
+
+        for (int i = 1; i <= AdvertisementCount; i++)
         {
-            
+            images.AddRange(imagePaths.Select(path => new Image { Id = idx++, Data = GetImageAsBytes(path), AdvertisementId = i }));
         }
+
+        modelBuilder.Entity<Image>().HasData(images);
 
         return modelBuilder;
     }

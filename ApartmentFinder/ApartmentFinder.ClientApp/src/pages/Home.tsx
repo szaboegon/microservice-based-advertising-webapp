@@ -22,7 +22,6 @@ export const Home = () => {
     isError,
     isRefetching,
     error,
-    refetch: getAdvertisements,
   } = useQuery({
     queryKey: ["advertismentcards"],
     queryFn: async () => {
@@ -90,8 +89,7 @@ export const Home = () => {
         spacing="8"
         marginX={{ base: "0px", "2xl": "12%" }}
       >
-        {isSuccess &&
-          advertisements.map((advertisement) => (
+        {isSuccess && advertisements?.map((advertisement) => (
             <AdvertisementCard
               key={advertisement.id}
               advertisement={advertisement}
