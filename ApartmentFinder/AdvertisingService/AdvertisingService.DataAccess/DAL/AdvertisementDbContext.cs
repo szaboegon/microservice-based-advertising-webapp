@@ -161,7 +161,7 @@ public class AdvertisementDbContext : DbContext
                 .HasConstraintName("FK_Image_Advertisement");
         });
 
-        //modelBuilder.SeedData();
+        modelBuilder.SeedData();
     }
     
 }

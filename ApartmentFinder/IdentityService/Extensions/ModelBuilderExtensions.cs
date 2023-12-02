@@ -13,7 +13,7 @@ public static class ModelBuilderExtensions
         modelBuilder.Entity<AppUser>().HasData(
             new AppUser
             {
-                Id = -1,
+                Id = 1,
                 FirstName = "John",
                 LastName = "Doe",
                 UserName = "johndoe",
@@ -25,7 +25,7 @@ public static class ModelBuilderExtensions
             },
             new AppUser
             {
-                Id = -2,
+                Id = 2,
                 FirstName = "Bob",
                 LastName = "Smith",
                 UserName = "bobsmith",
