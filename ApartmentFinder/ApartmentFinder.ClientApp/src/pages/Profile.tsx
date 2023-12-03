@@ -129,7 +129,7 @@ const Profile: React.FunctionComponent<IProfileProps> = ({ user }) => {
           <ModalCloseButton />
           <ModalBody>
             Are you sure you want to delete the advertisement? This operation is
-            final.
+            permanent.
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="green" mr={3} onClick={handleClick}>
