@@ -16,9 +16,11 @@ Bővebb információ a telepítésről: https://docs.docker.com/compose/install/
 - Adjuk ki a **docker compose up** parancsot
 
 ## Kipróbálási tippek
+Az első indítás hosszadalmas lehet, hiszen ilyenkor a Docker elkészíti a komponensek image-eit, és letölti az ehhez szükséges függőségeket. 
+
 Az indítást követően az alkalmazás felhasználói felületét a böngészőből a http://localhost:80 címen érhetjük el.
 
-Az alkalmazás adatbázisai tartalmaznak néhány előre regisztrált felhasználót és hozzáadott hirdetést is, így a funkciók könnyebben kipróbálhatók. A  perzisztált adatok az *ApartmentFinder/volumes* mappában kerülnek tárolásra.
+Az alkalmazás adatbázisai tartalmaznak néhány előre regisztrált felhasználót és hozzáadott hirdetést is, így a funkciók könnyebben kipróbálhatók.
 
 Regisztrált felhasználók, és bejelentkezési adataik:
 

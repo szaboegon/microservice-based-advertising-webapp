@@ -16,7 +16,7 @@ public class Address
 
     private Advertisement? _advertisement;
     [JsonIgnore]
-    public Advertisement Advertisement  //https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types
+    public Advertisement Advertisement  // Avoid nullability of nav property: https://learn.microsoft.com/en-us/ef/core/miscellaneous/nullable-reference-types
     {
         set  => _advertisement = value;
         get => _advertisement ?? throw new InvalidOperationException("Uninitialized property: " + nameof(Advertisement));
