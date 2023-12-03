@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231130115723_Initialize.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231130115723_Initialize.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/Extensions/ModelBuilderExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/Extensions/ModelBuilderExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/StudentHousing.ClientApp.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/Assets/image3.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +22,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2YzkbuxIzBzvl4KXwVc6alwKBFp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -37,11 +36,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/szabo/source/repos/szaboegon/microservice-based-advertising-webapp/ApartmentFinder/ApartmentFinder.ClientApp",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier",
     "ts.external.directory.path": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -55,6 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1701535870481</updated>
       <workItem from="1701535871531" duration="1284000" />
+      <workItem from="1701597051808" duration="716000" />
     </task>
     <servers />
   </component>

@@ -69,7 +69,7 @@ const AdvertisementDetails: React.FunctionComponent<
                 overflowX="auto"
                 overflowY="hidden"
               >
-                {base64Images.map((image) => (
+                {base64Images?.map((image) => (
                   <Flex
                     flex="1 0 200px"
                     maxWidth="350px"

@@ -5,7 +5,7 @@ namespace AdvertisingService.DataAccess.Extensions;
 
 public static class ModelBuilderExtensions
 {
-    private const int AdvertisementCount = 21;
+    private const int AdvertisementCount = 14;
     public static ModelBuilder SeedData(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>().HasData(
@@ -194,96 +194,96 @@ public static class ModelBuilderExtensions
                     "Charming two-bedroom cottage with a private garden. Embrace the charm of this delightful two-bedroom cottage featuring a serene private garden. The cozy interiors offer a blend of comfort and style, complemented by tasteful furnishings. Ideal for those seeking a tranquil retreat, this cottage provides a peaceful oasis within easy reach of essential amenities and recreational areas, making it a perfect escape from the bustle of city life.",
                 AdvertiserId = 2,
                 CategoryId = 3,
-            },
-            new Advertisement
-            {
-                Id = 15,
-                NumberOfRooms = 6,
-                Size = 250,
-                Furnished = false,
-                Parking = true,
-                MonthlyPrice = 550000,
-                Description =
-                    "Luxurious six-bedroom estate with resort-style amenities. Discover luxury living in this expansive six-bedroom estate offering resort-style amenities. Boasting grandeur and sophistication, this residence features spacious living areas, elegant interiors, and a myriad of top-tier facilities including a pool, spa, and landscaped gardens. Positioned in an exclusive enclave, this estate ensures privacy and tranquility while offering easy access to upscale shopping, dining, and entertainment.",
-                AdvertiserId = 1,
-                CategoryId = 1,
-            },
-            new Advertisement
-            {
-                Id = 16,
-                NumberOfRooms = 3,
-                Size = 85,
-                Furnished = true,
-                Parking = true,
-                MonthlyPrice = 270000,
-                Description =
-                    "Modern three-bedroom duplex in a vibrant neighborhood. Immerse yourself in modern urban living with this stylish three-bedroom duplex. The contemporary design, coupled with high-quality finishes, creates an inviting atmosphere. Enjoy the convenience of a vibrant neighborhood with trendy cafes, cultural venues, and easy access to transportation, making this duplex an ideal choice for those seeking a dynamic urban lifestyle.",
-                AdvertiserId = 1,
-                CategoryId = 1,
-            },
-            new Advertisement
-            {
-                Id = 17,
-                NumberOfRooms = 4,
-                Size = 120,
-                Furnished = true,
-                Parking = true,
-                MonthlyPrice = 320000,
-                Description =
-                    "Elegant four-bedroom residence with breathtaking views. Step into this exquisite four-bedroom residence that epitomizes luxury and comfort. The spacious interiors exude sophistication, adorned with high-end finishes and stylish design elements. The residence boasts a sprawling living space with magnificent views from every window, offering a sense of serenity and grandeur. The gourmet kitchen, equipped with state-of-the-art appliances, is a culinary enthusiast's dream. Retreat to the lavish master suite featuring a private balcony overlooking the scenic vistas. Nestled in an exclusive community, this residence offers access to a plethora of amenities, including a clubhouse, tennis courts, and nature trails. Experience an unparalleled lifestyle where every detail is meticulously curated to provide the utmost in luxury living.",
-                AdvertiserId = 2,
-                CategoryId = 3,
-            },
-            new Advertisement
-            {
-                Id = 18,
-                NumberOfRooms = 3,
-                Size = 95,
-                Furnished = false,
-                Parking = true,
-                MonthlyPrice = 280000,
-                Description =
-                    "Modern three-bedroom townhouse with contemporary elegance. Indulge in modern sophistication within this meticulously designed three-bedroom townhouse. The open-plan layout seamlessly integrates spacious living areas, fostering a sense of openness and fluidity. The sleek kitchen features high-end appliances and sleek cabinetry, perfect for culinary enthusiasts. Ascend the stylish staircase to discover the luxurious bedrooms, each designed to provide a relaxing retreat. The expansive windows frame picturesque views, inviting natural light into every corner. Situated in a thriving neighborhood, this townhouse offers a cosmopolitan lifestyle with easy access to cultural venues, fine dining, and recreational options.",
-                AdvertiserId = 2,
-                CategoryId = 1,
-            },
-            new Advertisement
-            {
-                Id = 19,
-                NumberOfRooms = 5,
-                Size = 180,
-                Furnished = true,
-                Parking = true,
-                MonthlyPrice = 420000,
-                Description =
-                    "Luxurious five-bedroom mansion with unparalleled amenities. Welcome to the pinnacle of luxury in this opulent five-bedroom mansion. Every facet of this residence exudes elegance, from the grand foyer to the meticulously landscaped grounds. The sprawling living spaces are adorned with bespoke finishes and designer touches, creating an atmosphere of refined sophistication. The expansive master suite features a spa-like en-suite bathroom and a private terrace overlooking the lush gardens. Revel in the resort-style amenities, including a swimming pool, home theater, and a state-of-the-art fitness center. Positioned in an exclusive enclave, this mansion offers the utmost in privacy while providing easy access to elite shopping districts, fine dining, and entertainment.",
-                AdvertiserId = 1,
-                CategoryId = 1,
-            },
-            new Advertisement
-            {
-                Id = 20,
-                NumberOfRooms = 1,
-                Size = 40,
-                Furnished = true,
-                Parking = false,
-                MonthlyPrice = 160000,
-                Description = "Cozy one-room apartment in a tranquil setting. Embrace comfort and simplicity in this cozy one-room apartment, perfect for individuals seeking a peaceful retreat. The tastefully furnished interior offers a warm and inviting ambiance, providing a comfortable living space. Situated in a serene locale, this apartment provides a quiet environment while remaining in close proximity to essential amenities, making it an ideal choice for those valuing tranquility.",
-                AdvertiserId = 1,
-                CategoryId = 2,
-            },
-            new Advertisement
-            {
-                Id = 21,
-                NumberOfRooms = 1,
-                Size = 45,
-                Furnished = false,
-                Parking = true,
-                MonthlyPrice = 140000,
-                Description = "Compact one-room studio with modern conveniences. Discover modern living in this compact yet efficiently designed one-room studio. The smart layout maximizes space, offering functionality without compromising style. Located in a convenient neighborhood with easy access to public transportation and local amenities, this studio caters to individuals seeking a contemporary and accessible living space.",
-                AdvertiserId = 2,
-                CategoryId = 2,
             }
+            //new Advertisement
+            //{
+            //    Id = 15,
+            //    NumberOfRooms = 6,
+            //    Size = 250,
+            //    Furnished = false,
+            //    Parking = true,
+            //    MonthlyPrice = 550000,
+            //    Description =
+            //        "Luxurious six-bedroom estate with resort-style amenities. Discover luxury living in this expansive six-bedroom estate offering resort-style amenities. Boasting grandeur and sophistication, this residence features spacious living areas, elegant interiors, and a myriad of top-tier facilities including a pool, spa, and landscaped gardens. Positioned in an exclusive enclave, this estate ensures privacy and tranquility while offering easy access to upscale shopping, dining, and entertainment.",
+            //    AdvertiserId = 1,
+            //    CategoryId = 1,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 16,
+            //    NumberOfRooms = 3,
+            //    Size = 85,
+            //    Furnished = true,
+            //    Parking = true,
+            //    MonthlyPrice = 270000,
+            //    Description =
+            //        "Modern three-bedroom duplex in a vibrant neighborhood. Immerse yourself in modern urban living with this stylish three-bedroom duplex. The contemporary design, coupled with high-quality finishes, creates an inviting atmosphere. Enjoy the convenience of a vibrant neighborhood with trendy cafes, cultural venues, and easy access to transportation, making this duplex an ideal choice for those seeking a dynamic urban lifestyle.",
+            //    AdvertiserId = 1,
+            //    CategoryId = 1,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 17,
+            //    NumberOfRooms = 4,
+            //    Size = 120,
+            //    Furnished = true,
+            //    Parking = true,
+            //    MonthlyPrice = 320000,
+            //    Description =
+            //        "Elegant four-bedroom residence with breathtaking views. Step into this exquisite four-bedroom residence that epitomizes luxury and comfort. The spacious interiors exude sophistication, adorned with high-end finishes and stylish design elements. The residence boasts a sprawling living space with magnificent views from every window, offering a sense of serenity and grandeur. The gourmet kitchen, equipped with state-of-the-art appliances, is a culinary enthusiast's dream. Retreat to the lavish master suite featuring a private balcony overlooking the scenic vistas. Nestled in an exclusive community, this residence offers access to a plethora of amenities, including a clubhouse, tennis courts, and nature trails. Experience an unparalleled lifestyle where every detail is meticulously curated to provide the utmost in luxury living.",
+            //    AdvertiserId = 2,
+            //    CategoryId = 3,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 18,
+            //    NumberOfRooms = 3,
+            //    Size = 95,
+            //    Furnished = false,
+            //    Parking = true,
+            //    MonthlyPrice = 280000,
+            //    Description =
+            //        "Modern three-bedroom townhouse with contemporary elegance. Indulge in modern sophistication within this meticulously designed three-bedroom townhouse. The open-plan layout seamlessly integrates spacious living areas, fostering a sense of openness and fluidity. The sleek kitchen features high-end appliances and sleek cabinetry, perfect for culinary enthusiasts. Ascend the stylish staircase to discover the luxurious bedrooms, each designed to provide a relaxing retreat. The expansive windows frame picturesque views, inviting natural light into every corner. Situated in a thriving neighborhood, this townhouse offers a cosmopolitan lifestyle with easy access to cultural venues, fine dining, and recreational options.",
+            //    AdvertiserId = 2,
+            //    CategoryId = 1,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 19,
+            //    NumberOfRooms = 5,
+            //    Size = 180,
+            //    Furnished = true,
+            //    Parking = true,
+            //    MonthlyPrice = 420000,
+            //    Description =
+            //        "Luxurious five-bedroom mansion with unparalleled amenities. Welcome to the pinnacle of luxury in this opulent five-bedroom mansion. Every facet of this residence exudes elegance, from the grand foyer to the meticulously landscaped grounds. The sprawling living spaces are adorned with bespoke finishes and designer touches, creating an atmosphere of refined sophistication. The expansive master suite features a spa-like en-suite bathroom and a private terrace overlooking the lush gardens. Revel in the resort-style amenities, including a swimming pool, home theater, and a state-of-the-art fitness center. Positioned in an exclusive enclave, this mansion offers the utmost in privacy while providing easy access to elite shopping districts, fine dining, and entertainment.",
+            //    AdvertiserId = 1,
+            //    CategoryId = 1,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 20,
+            //    NumberOfRooms = 1,
+            //    Size = 40,
+            //    Furnished = true,
+            //    Parking = false,
+            //    MonthlyPrice = 160000,
+            //    Description = "Cozy one-room apartment in a tranquil setting. Embrace comfort and simplicity in this cozy one-room apartment, perfect for individuals seeking a peaceful retreat. The tastefully furnished interior offers a warm and inviting ambiance, providing a comfortable living space. Situated in a serene locale, this apartment provides a quiet environment while remaining in close proximity to essential amenities, making it an ideal choice for those valuing tranquility.",
+            //    AdvertiserId = 1,
+            //    CategoryId = 2,
+            //},
+            //new Advertisement
+            //{
+            //    Id = 21,
+            //    NumberOfRooms = 1,
+            //    Size = 45,
+            //    Furnished = false,
+            //    Parking = true,
+            //    MonthlyPrice = 140000,
+            //    Description = "Compact one-room studio with modern conveniences. Discover modern living in this compact yet efficiently designed one-room studio. The smart layout maximizes space, offering functionality without compromising style. Located in a convenient neighborhood with easy access to public transportation and local amenities, this studio caters to individuals seeking a contemporary and accessible living space.",
+            //    AdvertiserId = 2,
+            //    CategoryId = 2,
+            //}
         );
 
 
@@ -377,56 +377,56 @@ public static class ModelBuilderExtensions
                 StreetNumber = "1.",
                 UnitNumber = "5.",
                 AdvertisementId = 9
+            },
+            new Address
+            {
+                Id = 10,
+                Region = "Veszprém",
+                PostalCode = 8200,
+                City = "Veszprém",
+                StreetName = "Vár utca",
+                AdvertisementId = 10
+            },
+            new Address
+            {
+                Id = 11,
+                Region = "Zala",
+                PostalCode = 8900,
+                City = "Zalaegerszeg",
+                StreetName = "Széchenyi tér",
+                StreetNumber = "7.",
+                UnitNumber = "2.",
+                AdvertisementId = 11
+            },
+            new Address
+            {
+                Id = 12,
+                Region = "Békés",
+                PostalCode = 5600,
+                City = "Békéscsaba",
+                StreetName = "Szent István tér",
+                AdvertisementId = 12
+            },
+            new Address
+            {
+                Id = 13,
+                Region = "Bács-Kiskun",
+                PostalCode = 6000,
+                City = "Kecskemét",
+                StreetName = "Kossuth tér",
+                StreetNumber = "10.",
+                UnitNumber = "3.",
+                AdvertisementId = 13
+            },
+            new Address
+            {
+                Id = 14,
+                Region = "Tolna",
+                PostalCode = 7100,
+                City = "Szekszárd",
+                StreetName = "Arany János utca",
+                AdvertisementId = 14
             }
-            //new Address
-            //{
-            //    Id = 10,
-            //    Region = "Veszprém",
-            //    PostalCode = 8200,
-            //    City = "Veszprém",
-            //    StreetName = "Vár utca",
-            //    AdvertisementId = 10
-            //},
-            //new Address
-            //{
-            //    Id = 11,
-            //    Region = "Zala",
-            //    PostalCode = 8900,
-            //    City = "Zalaegerszeg",
-            //    StreetName = "Széchenyi tér",
-            //    StreetNumber = "7.",
-            //    UnitNumber = "2.",
-            //    AdvertisementId = 11
-            //},
-            //new Address
-            //{
-            //    Id = 12,
-            //    Region = "Békés",
-            //    PostalCode = 5600,
-            //    City = "Békéscsaba",
-            //    StreetName = "Szent István tér",
-            //    AdvertisementId = 12
-            //},
-            //new Address
-            //{
-            //    Id = 13,
-            //    Region = "Bács-Kiskun",
-            //    PostalCode = 6000,
-            //    City = "Kecskemét",
-            //    StreetName = "Kossuth tér",
-            //    StreetNumber = "10.",
-            //    UnitNumber = "3.",
-            //    AdvertisementId = 13
-            //},
-            //new Address
-            //{
-            //    Id = 14,
-            //    Region = "Tolna",
-            //    PostalCode = 7100,
-            //    City = "Szekszárd",
-            //    StreetName = "Arany János utca",
-            //    AdvertisementId = 14
-            //},
             //new Address
             //{
             //    Id = 15,
@@ -508,21 +508,11 @@ public static class ModelBuilderExtensions
 
         for (int i = 1; i <= AdvertisementCount; i++)
         {
-            images.AddRange(imagePaths.Select(path => new Image { Id = idx++, Data = GetImageAsBytes(path), AdvertisementId = i }));
+            images.AddRange(imagePaths.Select(path => new Image { Id = idx++, Data = File.ReadAllBytes(path), AdvertisementId = i }));
         }
 
         modelBuilder.Entity<Image>().HasData(images);
 
         return modelBuilder;
-    }
-
-    private static byte[] GetImageAsBytes(string filePath)
-    {
-        using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-        using var br = new BinaryReader(fs);
-
-        var fileBytes = br.ReadBytes((int)fs.Length);
-
-        return fileBytes;
     }
 }

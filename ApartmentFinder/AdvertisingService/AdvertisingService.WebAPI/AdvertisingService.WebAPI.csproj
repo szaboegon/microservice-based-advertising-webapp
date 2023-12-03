@@ -24,4 +24,16 @@
     <ProjectReference Include="..\AdvertisingService.DataAccess\AdvertisingService.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\image0.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\image1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\image2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

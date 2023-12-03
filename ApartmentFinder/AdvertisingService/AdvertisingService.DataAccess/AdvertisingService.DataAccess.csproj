@@ -23,4 +23,8 @@
     <ProjectReference Include="..\AdvertisingService.BusinessLogic\AdvertisingService.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DAL\Migrations\" />
+  </ItemGroup>
+
 </Project>
