@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/Advertisement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/Advertisement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/AdvertisementCreate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/AdvertisementCreate.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/AdvertisementValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.BusinessLogic/Models/Validators/AdvertisementValidator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/AdvertisingService.DataAccess.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/AdvertisementDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/AdvertisementDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231202194138_Initialize.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/20231202194138_Initialize.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.DataAccess/DAL/Migrations/AdvertisementDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/AdvertisingService.WebAPI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/Assets/image0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/Assets/image1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../AdvertisingService/AdvertisingService.WebAPI/Assets/image2.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DetailsStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DetailsStep.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +65,7 @@
       <workItem from="1701535871531" duration="1284000" />
       <workItem from="1701597051808" duration="1339000" />
       <workItem from="1701600931246" duration="32000" />
+      <workItem from="1701604953364" duration="1219000" />
     </task>
     <servers />
   </component>

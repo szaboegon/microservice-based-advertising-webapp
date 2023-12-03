@@ -10,7 +10,7 @@ public record AdvertisementCreate
     public required string StreetName { get; init; }
     public string? StreetNumber { get; init; }
     public string? UnitNumber { get; init; }
-    public required float NumberOfRooms { get; init; }
+    public required int NumberOfRooms { get; init; }
     public required float Size { get; init; }
     public required bool Furnished { get; init; }
     public required bool Parking { get; init; }

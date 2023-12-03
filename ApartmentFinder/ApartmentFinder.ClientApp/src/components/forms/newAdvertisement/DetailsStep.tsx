@@ -84,10 +84,6 @@ const DetailsStep: React.FunctionComponent<IDetailsStepProps> = ({
                     value: 100,
                     message: "Number of rooms must be 100 at maximum",
                   },
-                  pattern: {
-                    value: /^[0-9]+$|^[0-9]+.[0,5]$/,
-                    message: "Number of rooms must be rounded to .5",
-                  },
                   disabled: isRoom,
                 })}
                 id="numberOfRooms"
@@ -122,6 +118,7 @@ const DetailsStep: React.FunctionComponent<IDetailsStepProps> = ({
                   })}
                   id="size"
                   type="number"
+                  step="0.1"
                   width="100%"
                   borderColor="gray.500"
                   size="lg"

@@ -5,7 +5,7 @@ namespace AdvertisingService.BusinessLogic.Models;
 public class Advertisement
 {
     public int Id { get; set; }
-    public float NumberOfRooms { get; set; }
+    public int NumberOfRooms { get; set; }
     public float Size { get; set; }
     public bool Furnished { get; set; }
     public bool Parking { get; set; }
@@ -48,7 +48,7 @@ public class AdvertisementInfo
     public string? District { get; set; }
     public required string StreetName { get; set; }
     public string? StreetNumber { get; set; }
-    public required float NumberOfRooms { get; set; }
+    public required int NumberOfRooms { get; set; }
     public required float Size { get; set; }
     public required int MonthlyPrice { get; set; }
     public required DateTime UploadDate { get; set; }
@@ -66,7 +66,7 @@ public class AdvertisementDetails
     public required string StreetName { get; set; }
     public string? StreetNumber { get; set; }
     public string? UnitNumber { get; set; }
-    public required float NumberOfRooms { get; set; }
+    public required int NumberOfRooms { get; set; }
     public required float Size { get; set; }
     public required bool Furnished { get; set; }
     public required bool Parking { get; set; }

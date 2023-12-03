@@ -6,7 +6,7 @@ public record QueryParamsRequest
     public int PageItemCount { get; init; }
     public string? CategoryName { get; init; }
     public string? City { get; init; }
-    public float? NumberOfRooms { get; init; }
+    public int? NumberOfRooms { get; init; }
     public float? MinSize { get; init; }
     public float? MaxSize { get; init; }
     public int? MinMonthlyPrice { get; init; }

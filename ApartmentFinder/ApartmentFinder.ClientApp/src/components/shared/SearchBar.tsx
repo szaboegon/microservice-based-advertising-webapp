@@ -123,6 +123,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
                 id="minSize"
                 {...register("minSize")}
                 type="number"
+                step="0.1"
                 variant="flushed"
                 placeholder="min"
               />
@@ -134,6 +135,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = ({
                 {...register("maxSize")}
                 type="number"
                 variant="flushed"
+                step="0.1"
                 placeholder="max"
               />
               <InputRightAddon children="m²" />

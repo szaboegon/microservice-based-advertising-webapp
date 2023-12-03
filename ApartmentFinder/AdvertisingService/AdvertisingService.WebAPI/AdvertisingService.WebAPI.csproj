@@ -25,13 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\image0.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\image1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\image2.jpg">
+    <None Update="Assets\apartment_image.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

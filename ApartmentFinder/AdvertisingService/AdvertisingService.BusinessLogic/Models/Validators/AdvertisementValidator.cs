@@ -19,8 +19,7 @@ public class AdvertisementValidator : AbstractValidator<Advertisement>
 
         RuleFor(advertisement => advertisement.NumberOfRooms)
             .NotNull().WithMessage("Number of Rooms cannot be null")
-            .GreaterThanOrEqualTo(1).WithMessage("Number of Rooms must be at least 1")
-            .Must(numberOfRooms => numberOfRooms % 0.5 == 0).WithMessage("Number of Rooms must be a multiple of 0.5");
+            .GreaterThanOrEqualTo(1).WithMessage("Number of Rooms must be at least 1");
 
         RuleFor(advertisement=>advertisement.MonthlyPrice)
             .NotNull().WithMessage("Monthly price cannot be null")

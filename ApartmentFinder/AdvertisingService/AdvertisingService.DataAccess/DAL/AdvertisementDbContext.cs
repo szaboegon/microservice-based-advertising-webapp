@@ -92,7 +92,7 @@ public class AdvertisementDbContext : DbContext
 
             entity.Property(e => e.NumberOfRooms)
                 .HasColumnName("numberOfRooms")
-                .HasColumnType("float")
+                .HasColumnType("int")
                 .IsRequired();
 
             entity.Property(e => e.Size)
