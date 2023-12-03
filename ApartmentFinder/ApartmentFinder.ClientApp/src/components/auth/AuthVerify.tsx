@@ -1,13 +1,10 @@
-//https://www.bezkoder.com/handle-jwt-token-expiration-react/
 import jwtDecode from "jwt-decode";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { TokenClaims } from "../../models/tokenClaims";
-import TokenHelper from "../../helpers/tokenHelper";
-import InterceptorApiClient from "../../helpers/interceptorApiClient";
 import UserService from "../../services/userService";
 import { AxiosError } from "axios";
-import useAccessToken from "../../hooks/useAccessToken";
+import { useAccessToken } from "../../hooks/useAccessToken";
 
 interface AuthVerifyProps {
   logout: Function;
@@ -19,17 +16,25 @@ export const AuthVerify: React.FunctionComponent<AuthVerifyProps> = ({
   const { accessToken, setAccessToken } = useAccessToken();
 
   useEffect(() => {
-    const currentToken = TokenHelper.getLocalAccessToken();
-    if (!currentToken) {
+    if (!accessToken) {
       return;
     }
-    const decodedJwt: TokenClaims = jwtDecode(currentToken);
-    setAccessToken(currentToken);
+
+    let decodedJwt: TokenClaims;
+    try {
+      decodedJwt = jwtDecode(accessToken);
+    } catch (e) {
+      logout();
+      return;
+    }
+
     if (decodedJwt.exp * 1000 < Date.now()) {
       UserService.checkAuth()
         .then((isAuthenticated) => {
           if (!isAuthenticated) {
             logout();
+          } else {
+            setAccessToken(accessToken);
           }
         })
         .catch((error) => {

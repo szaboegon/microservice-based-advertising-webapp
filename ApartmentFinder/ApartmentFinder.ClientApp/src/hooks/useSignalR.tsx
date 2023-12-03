@@ -3,7 +3,7 @@ import {
   HubConnection,
   HubConnectionState,
 } from "@microsoft/signalr/dist/esm/HubConnection";
-import useAccessToken from "./useAccessToken";
+import { useAccessToken } from "./useAccessToken";
 import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr";
 
 interface ISignalRProvider {
@@ -21,7 +21,7 @@ export const SignalRProvider: React.FunctionComponent<ISignalRProvider> = ({
   children,
 }) => {
   const [connection, setConnection] = useState<HubConnection | undefined>();
-  const { accessToken, setAccessToken } = useAccessToken();
+  const { accessToken } = useAccessToken();
 
   useEffect(() => {
     if (!accessToken) {

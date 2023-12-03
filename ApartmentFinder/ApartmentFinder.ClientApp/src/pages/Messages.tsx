@@ -1,9 +1,17 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import MessagingService from "../services/messagingService";
 import { Message } from "../models/message";
 import { User } from "../models/user";
-import { Avatar, Card, Flex, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Card,
+  Flex,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import MessageBubble from "../components/messaging/MessageBubble";
 import MessageInput from "../components/messaging/MessageInput";
 import UserService from "../services/userService";
@@ -19,6 +27,8 @@ interface IMessagesProps {
 }
 
 const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedChat, setSelectedChat] = useState<PrivateChat>();
   const [partner, setPartner] = useState<User>();
@@ -55,6 +65,14 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
         onMessageReceived(message);
       });
   }, [connection]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const onMessageReceived = (message: Message) => {
     setMessages((messages) => [...messages, message]);
@@ -130,10 +148,10 @@ const Messages: React.FunctionComponent<IMessagesProps> = ({ user }) => {
                   }
                 ></MessageBubble>
               ))}
+              <Box ref={messagesEndRef}></Box>
             </VStack>
             <Flex width="100%">
               <MessageInput groupName={selectedChat.uniqueName}></MessageInput>
-              <></>
             </Flex>
           </Card>
         ) : (

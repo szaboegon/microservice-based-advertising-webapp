@@ -1,20 +1,41 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import TokenHelper from "../helpers/tokenHelper";
+import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 
-const useAccessToken = () => {
-  const getAccessToken = () => {
-    return TokenHelper.getLocalAccessToken();
-  };
+interface IAccessTokenProvider {
+  children: any;
+}
 
-  const [accessToken, setAccessToken] = useState(getAccessToken());
-  const saveAccessToken = (accessToken: string) => {
-    TokenHelper.setLocalAccessToken(accessToken);
-    setAccessToken(TokenHelper.getLocalAccessToken());
-  };
-  return {
-    setAccessToken: saveAccessToken,
-    accessToken,
-  };
+type AccessTokenContextType = {
+  accessToken: string | null;
+  setAccessToken: Function;
 };
 
-export default useAccessToken;
+const AccessTokenContext = createContext<AccessTokenContextType>({
+  accessToken: null,
+  setAccessToken: () => {},
+});
+
+export const AccessTokenProvider: React.FunctionComponent<
+  IAccessTokenProvider
+> = ({ children }) => {
+  const [accessToken, setAccessToken] = useState(
+    TokenHelper.getLocalAccessToken(),
+  );
+  const updateAccessToken = (accessToken: string) => {
+    TokenHelper.setLocalAccessToken(accessToken);
+    setAccessToken(accessToken);
+  };
+
+  return (
+    <AccessTokenContext.Provider
+      value={{ accessToken: accessToken, setAccessToken: updateAccessToken }}
+    >
+      {children}
+    </AccessTokenContext.Provider>
+  );
+};
+
+export function useAccessToken() {
+  return useContext(AccessTokenContext);
+}
