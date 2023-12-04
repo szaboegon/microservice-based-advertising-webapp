@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="Access token and message scrolling fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/tokenHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/tokenHelper.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/userService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,23 +24,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/szabo/source/repos/szaboegon/microservice-based-advertising-webapp/ApartmentFinder/ApartmentFinder.ClientApp&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/szabo/source/repos/szaboegon/microservice-based-advertising-webapp/ApartmentFinder/ApartmentFinder.ClientApp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier",
+    "ts.external.directory.path": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Unnamed" type="JavascriptDebugType" nameIsGenerated="true" uri="http://localhost:5173">
       <method v="2" />
@@ -61,7 +60,9 @@
       <workItem from="1701604953364" duration="1908000" />
       <workItem from="1701630342031" duration="815000" />
       <workItem from="1701631177325" duration="3137000" />
-      <workItem from="1701707737894" duration="69000" />
+      <workItem from="1701707737894" duration="701000" />
+      <workItem from="1701714958177" duration="93000" />
+      <workItem from="1701715551326" duration="2321000" />
     </task>
     <task id="LOCAL-00001" summary="Access token and message scrolling fix">
       <option name="closed" value="true" />

@@ -76,11 +76,12 @@ public class MessageHub : Hub
     public async Task MarkMessagesAsRead(string privateChatUniqueName)
     {
         var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
-        var receiverId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+        var userId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
 
-        _ = await _messageService.MarkMessagesAsReadAsync(privateChatUniqueName, receiverId)
+        _ = await _messageService.MarkMessagesAsReadAsync(privateChatUniqueName, userId)
             ?? throw new KeyNotFoundException("Private chat with given name does not exist.");
 
-        await Clients.Group(privateChatUniqueName).SendAsync("MessagesRead", receiverId);
+        var unreadMessageCount = await _messageService.GetUnreadMessageCountAsync(userId);
+        await Clients.Group(privateChatUniqueName).SendAsync("MessagesRead", userId, unreadMessageCount);
     }
 }
