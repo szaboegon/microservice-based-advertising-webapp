@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="">
+    <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="Access token and message scrolling fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/AuthVerify.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/AuthVerify.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useAccessToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useAccessToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useSignalR.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useSignalR.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Messages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Messages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helpers/tokenHelper.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/tokenHelper.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/userService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/userService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,8 +60,18 @@
       <workItem from="1701600931246" duration="32000" />
       <workItem from="1701604953364" duration="1908000" />
       <workItem from="1701630342031" duration="815000" />
-      <workItem from="1701631177325" duration="2869000" />
+      <workItem from="1701631177325" duration="3137000" />
+      <workItem from="1701707737894" duration="69000" />
     </task>
+    <task id="LOCAL-00001" summary="Access token and message scrolling fix">
+      <option name="closed" value="true" />
+      <created>1701634193785</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1701634193785</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -81,5 +87,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Access token and message scrolling fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Access token and message scrolling fix" />
   </component>
 </project>

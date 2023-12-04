@@ -44,14 +44,13 @@ services:
        - DB_NAME=advertising
        - DB_SA_PASSWORD=password@12345
     ports:
+       # Swagger port
        - 9001:80
     labels:
        - traefik.enable=true
        - traefik.http.routers.advertisingserviceprivate.rule=Host(`localhost`) && PathPrefix(`/api/advertisement/private`)
        - traefik.http.routers.advertisingservicepublic.rule=Host(`localhost`) && PathPrefix(`/api/advertisement/public`)
        - traefik.http.middlewares.advertisingauth.forwardauth.address=http://localhost:80/api/user/auth
-   #    - traefik.http.middlewares.advertisingauth.forwardauth.authResponseHeaders=X-Forwarded-User
-   #    - traefik.http.middlewares.advertisingauth.forwardauth.trustForwardHeader=true
        - traefik.http.routers.advertisingserviceprivate.middlewares=advertisingauth
     depends_on:
       advertisingdb:
@@ -60,15 +59,14 @@ services:
   advertisingdb:
     container_name: advertising_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    # volumes:
-    #    - ./volumes/advertising_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
        - mynetwork
     ports:
-       - 8001:1433    # Only needed for dev, remove in prod
+       # So we can connect from SQL Server Management Studio
+       - 8001:1433    
     healthcheck:
        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
        interval: 10s
@@ -84,7 +82,8 @@ services:
     networks: 
         - mynetwork
     ports:
-        - 9002:80  # Only needed for dev, remove in prod
+        # Swagger port
+        - 9002:80  
     environment:
        - DB_HOST=identitydb
        - DB_NAME=identity
@@ -99,15 +98,14 @@ services:
   identitydb:
     container_name: identity_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    # volumes:
-    #    - ./volumes/identity_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
        - mynetwork
     ports:
-       - 8002:1433  # Only needed for dev, remove in prod
+       # So we can connect from SQL Server Management Studio
+       - 8002:1433  
     healthcheck:
        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
        interval: 10s
@@ -137,7 +135,8 @@ services:
     networks:
        - mynetwork
     ports:
-      - 9003:80  # Only needed for dev, remove in prod
+      # Swagger port
+      - 9003:80  
     environment:
        - DB_HOST=messagingdb
        - DB_NAME=messaging
@@ -147,8 +146,6 @@ services:
      - traefik.http.routers.messagingservicewebapi.rule=Host(`localhost`) && PathPrefix(`/api/message`)
      - traefik.http.routers.messagingservicesocket.rule=Host(`localhost`) && PathPrefix(`/hubs`)
      - traefik.http.middlewares.messagingauth.forwardauth.address=http://localhost:80/api/user/auth
-   #  - traefik.http.middlewares.messagingauth.forwardauth.authResponseHeaders=X-Forwarded-User
-   #  - traefik.http.middlewares.messagingauth.forwardauth.trustForwardHeader=true
      - traefik.http.routers.messagingservicewebapi.middlewares=messagingauth
     depends_on:
      rabbitmq: 
@@ -159,15 +156,14 @@ services:
   messagingdb:
     container_name: messaging_db
     image: mcr.microsoft.com/mssql/server:2022-latest
-    # volumes:
-    #    - ./volumes/messaging_data:/var/opt/mssql/data
     environment:
        - ACCEPT_EULA=Y
        - SA_PASSWORD=password@12345
     networks:
        - mynetwork
     ports:
-       - 8003:1433  # Only needed for dev, remove in prod
+       # So we can connect from SQL Server Management Studio
+       - 8003:1433  
     healthcheck:
        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -Q "SELECT 1" -b -o /dev/null
        interval: 10s
@@ -197,6 +193,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
     ports:
       - "5672:5672"
+      # Management UI port
       - "15672:15672"
     networks:
       - mynetwork

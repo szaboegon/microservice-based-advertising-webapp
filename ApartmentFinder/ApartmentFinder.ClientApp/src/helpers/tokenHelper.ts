@@ -78,6 +78,7 @@ const TokenHelper = {
   getLocalRefreshToken,
   setLocalRefreshToken,
   refreshExpiredTokenClosure,
+  deleteTokens,
 };
 
 export default TokenHelper;
