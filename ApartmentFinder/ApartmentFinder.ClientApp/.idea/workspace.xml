@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="Access token and message scrolling fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/Navbar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +61,7 @@
       <workItem from="1701631177325" duration="3137000" />
       <workItem from="1701707737894" duration="701000" />
       <workItem from="1701714958177" duration="93000" />
-      <workItem from="1701715551326" duration="2321000" />
+      <workItem from="1701715551326" duration="2913000" />
     </task>
     <task id="LOCAL-00001" summary="Access token and message scrolling fix">
       <option name="closed" value="true" />

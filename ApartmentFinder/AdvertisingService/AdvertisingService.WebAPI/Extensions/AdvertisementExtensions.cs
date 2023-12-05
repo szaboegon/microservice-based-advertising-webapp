@@ -19,7 +19,7 @@ public static class AdvertisementExtensions
             Size = advertisement.Size,
             MonthlyPrice = advertisement.MonthlyPrice,
             UploadDate = advertisement.UploadDate,
-            Image = advertisement.Image, //use First
+            Image = advertisement.Image
         };
     }
 
