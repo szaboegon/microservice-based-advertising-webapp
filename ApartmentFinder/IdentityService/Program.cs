@@ -49,7 +49,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 // Validators
 builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
-builder.Services.AddScoped<IValidator<RegistrationRequestDto>, RegistrationRequestValidator>();
+builder.Services.AddScoped<IValidator<RegistrationRequest>, RegistrationRequestValidator>();
 
 // Jwt provider
 builder.Services.AddSingleton<ITokenProvider, TokenProvider>();

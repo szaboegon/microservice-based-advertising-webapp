@@ -2,7 +2,7 @@
 
 namespace IdentityService.Models.Validators;
 
-public class RegistrationRequestValidator : AbstractValidator<RegistrationRequestDto>
+public class RegistrationRequestValidator : AbstractValidator<RegistrationRequest>
 {
     public RegistrationRequestValidator()
     {

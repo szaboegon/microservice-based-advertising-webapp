@@ -47,7 +47,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public async Task<ActionResult> Register([FromBody] RegistrationRequestDto request)
+    public async Task<ActionResult> Register([FromBody] RegistrationRequest request)
     {
         _logger.LogInformation("Incoming registration request with user name: {UserName}", request.UserName);
         try

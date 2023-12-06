@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace EmailNotificationService.Models.Options;
+﻿namespace EmailNotificationService.Models.Options;
 
 public sealed class RabbitMqOptions
 {

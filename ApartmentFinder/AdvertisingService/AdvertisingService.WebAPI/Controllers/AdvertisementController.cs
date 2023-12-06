@@ -35,9 +35,7 @@ public class AdvertisementController : ControllerBase
         _logger.LogInformation("Getting advertisements by query: {Query}", queryParams);
         var advertisements = await _advertisementService.GetAdvertisementsByQueryAsync(queryParams);
         return new PagedQueryResponseDto<AdvertisementInfoDto>(advertisements.Items.Select(a => a.ToDto()).ToList(),
-            advertisements.CurrentPage,
-            advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
-
+            advertisements.CurrentPage, advertisements.TotalPages, advertisements.PageItemCount, advertisements.TotalItemCount);
     }
 
     [HttpGet]

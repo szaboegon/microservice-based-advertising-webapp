@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using IdentityService.Dtos;
-using IdentityService.Extensions;
 using IdentityService.Models;
 using IdentityService.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -15,13 +14,13 @@ public class UserService : IUserService
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly IValidator<AuthenticationRequest> _authenticationRequestValidator;
-    private readonly IValidator<RegistrationRequestDto> _registrationRequestValidator;
+    private readonly IValidator<RegistrationRequest> _registrationRequestValidator;
     private readonly ITokenProvider _tokenProvider;
     private readonly TokenOptions _options;
 
     public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
         IValidator<AuthenticationRequest> authenticationRequestValidator,
-        IValidator<RegistrationRequestDto> registrationRequestValidator,
+        IValidator<RegistrationRequest> registrationRequestValidator,
         ITokenProvider tokenProvider, IOptions<TokenOptions> options)
     {
         _userManager = userManager;
@@ -58,7 +57,7 @@ public class UserService : IUserService
         };
     }
 
-    public async Task<IdentityResult> RegisterAsync(RegistrationRequestDto request)
+    public async Task<IdentityResult> RegisterAsync(RegistrationRequest request)
     {
         await _registrationRequestValidator.ValidateAndThrowAsync(request);
      

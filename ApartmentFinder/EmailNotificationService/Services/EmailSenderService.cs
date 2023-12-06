@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using EmailNotificationService.Models.Options;
+﻿using EmailNotificationService.Models.Options;
 using EmailNotificationService.Services.Interfaces;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EmailNotificationService.Models.Options;
+﻿namespace EmailNotificationService.Models.Options;
 
 public class EmailOptions
 {
