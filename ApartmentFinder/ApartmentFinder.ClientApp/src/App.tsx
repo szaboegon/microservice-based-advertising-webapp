@@ -7,7 +7,7 @@ import { Search } from "./pages/Search";
 import Details from "./pages/Details";
 import { Login } from "./pages/Login";
 import Register from "./pages/Register";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UserService from "./services/userService";
 import { PrivateRoute } from "./components/routes/PrivateRoute";
 import { NewAdvertisement } from "./pages/NewAdvertisement";

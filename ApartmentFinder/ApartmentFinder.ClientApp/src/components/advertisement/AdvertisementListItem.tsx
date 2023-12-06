@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AdvertisementInfo } from "../../models/advertisement/advertisementInfo";
 import ImageService from "../../services/imageService";
 import { hoverAnimationStyles } from "../../styles/hoverAnimationStyles";

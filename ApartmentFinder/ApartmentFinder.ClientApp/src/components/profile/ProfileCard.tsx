@@ -1,16 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Card,
-  CardHeader,
-  Divider,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Avatar, Box, Card, Divider, HStack, Text } from "@chakra-ui/react";
 import * as React from "react";
 import { User } from "../../models/user";
 import { PROFILE_CARD_WIDTH } from "../../assets/literals/constants";

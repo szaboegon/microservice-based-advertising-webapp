@@ -9,7 +9,6 @@ import {
   TabPanels,
   TabPanel,
   Box,
-  Image,
   Spinner,
   Card,
 } from "@chakra-ui/react";
@@ -20,7 +19,6 @@ import AddressStep from "../components/forms/newAdvertisement/AddressStep";
 import DetailsStep from "../components/forms/newAdvertisement/DetailsStep";
 import DescriptionStep from "../components/forms/newAdvertisement/DescriptionStep";
 import ImagesStep from "../components/forms/newAdvertisement/ImagesStep";
-import ApartmentBuilding1 from "../assets/images/apartment-building1.jpg";
 import { formHeadingStyles } from "../styles/formHeadingStyles";
 import { useMutation } from "react-query";
 import AdvertisementService from "../services/advertisementService";

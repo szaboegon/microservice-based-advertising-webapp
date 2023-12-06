@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -13,7 +12,6 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementRequest } from "../../../models/requests/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
-import { placeholderStyles } from "../../../styles/placeholderStyles";
 
 interface IDescriptionStepProps {
   formValues: NewAdvertisementRequest;

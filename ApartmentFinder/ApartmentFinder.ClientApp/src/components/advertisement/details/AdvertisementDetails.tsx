@@ -7,22 +7,13 @@ import {
   HStack,
   Badge,
   Card,
-  Spinner,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Advertisement } from "../../../models/advertisement/advertisement";
-import { User } from "../../../models/user";
 import ImageService from "../../../services/imageService";
-import UserService from "../../../services/userService";
 import { detailsHeadingStyles } from "../../../styles/detailsHeadingStyles";
 import AdvertiserInfo from "./AdvertiserInfo";
-import { useQuery } from "react-query";
-import AdvertisementService from "../../../services/advertisementService";
-import { PagedQueryResponse } from "../../../models/pagedQueryResponse";
-import { AdvertisementInfo } from "../../../models/advertisement/advertisementInfo";
-import { ErrorAlert } from "../../shared/alerts/ErrorAlert";
-import { hoverAnimationStyles } from "../../../styles/hoverAnimationStyles";
 import { hoverAnimation2Styles } from "../../../styles/hoverAnimation2Styles";
 
 interface IAdvertisementDetailsProps {

@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form";
 import { NewAdvertisementRequest } from "../../../models/requests/newAdvertisementRequest";
 import { formErrorMessageStyles } from "../../../styles/formErrorMessageStyles";
 import { formLabelStyles } from "../../../styles/formLabelStyles";
-import { placeholderStyles } from "../../../styles/placeholderStyles";
 
 interface ICategoryStepProps {
   formValues: NewAdvertisementRequest;
@@ -88,12 +87,10 @@ const CategoryStep: React.FunctionComponent<ICategoryStepProps> = ({
                 </Radio>
               </HStack>
             </RadioGroup>
-            {errors.categoryName ? (
+            {errors.categoryName && (
               <FormErrorMessage sx={formErrorMessageStyles}>
                 {errors.categoryName.message}
               </FormErrorMessage>
-            ) : (
-              <Box sx={placeholderStyles}>Placeholder text</Box>
             )}
           </FormControl>
         </Flex>

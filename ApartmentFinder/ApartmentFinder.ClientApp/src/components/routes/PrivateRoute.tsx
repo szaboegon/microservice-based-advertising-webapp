@@ -1,5 +1,4 @@
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
-import { NewAdvertisement } from "../../pages/NewAdvertisement";
+import { Navigate, Outlet } from "react-router-dom";
 interface PrivateRouteProps {
   isLoggedIn: boolean;
 }

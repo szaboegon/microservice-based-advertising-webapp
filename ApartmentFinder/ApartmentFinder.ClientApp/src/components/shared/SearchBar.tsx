@@ -10,7 +10,7 @@ import {
   InputRightAddon,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AdvertisementSearchParams } from "../../models/queryParams/advertisementSearchParams";
 

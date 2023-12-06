@@ -1,17 +1,5 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  Card,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Spinner,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Box, Button, Card, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import * as React from "react";
 import { useQuery } from "react-query";
 import AdvertisementService from "../../services/advertisementService";

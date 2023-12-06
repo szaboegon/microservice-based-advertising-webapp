@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import TokenHelper from "../helpers/tokenHelper";
-import { HubConnection } from "@microsoft/signalr/dist/esm/HubConnection";
 
 interface IAccessTokenProvider {
   children: any;

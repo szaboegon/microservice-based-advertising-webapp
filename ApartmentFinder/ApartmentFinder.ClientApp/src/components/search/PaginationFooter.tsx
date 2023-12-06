@@ -10,7 +10,6 @@ import {
   usePagination,
 } from "@ajna/pagination";
 import { PaginationParams } from "../../models/queryParams/paginationParams";
-import { Text } from "@chakra-ui/react";
 
 interface IPaginationFooterProps {
   prevCurrentPage: number;

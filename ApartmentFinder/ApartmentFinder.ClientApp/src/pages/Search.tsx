@@ -1,7 +1,7 @@
 import { Card, Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import AdvertisementCard from "../components/advertisement/AdvertisementCard";
 import { ErrorAlert } from "../components/shared/alerts/ErrorAlert";
 import { WarningAlert } from "../components/shared/alerts/WarningAlert";
