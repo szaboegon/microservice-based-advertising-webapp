@@ -25,16 +25,22 @@ public class MessageHub : Hub
     {
         var tokenString = Context.GetHttpContext()?.Request.Query["access_token"].ToString().Replace("Bearer ", "");
         var authResult = await _authChecker.CheckTokenValidity(tokenString);
-        if (authResult)
-        {
-            _logger.LogInformation("User connected with conn id {ConnectionId}:", Context.ConnectionId);
-            await base.OnConnectedAsync();
-        }
-        else
+        if (!authResult)
         {
             _logger.LogWarning("Token authentication failed for conn id: {ConnectionId}, aborting connection", Context.ConnectionId);
             Context.Abort();
+            return;
         }
+
+        var senderId = _jwtTokenHelper.GetUserIdFromToken(tokenString);
+        var chats = await _messageService.GetUserChatsAsync(senderId);
+        foreach (var chat in chats)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, chat.UniqueName);
+        }
+
+        _logger.LogInformation("User connected with conn id {ConnectionId}:", Context.ConnectionId);
+        await base.OnConnectedAsync();
     }
 
     public async Task SendMessageToGroup(string uniqueName, string messageContent)
