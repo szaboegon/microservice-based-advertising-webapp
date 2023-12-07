@@ -44,7 +44,6 @@ const AdvertiserInfo: React.FunctionComponent<IAdvertiserInfoProps> = ({
     isSuccess: isSuccessUser,
     isLoading: isLoadingUser,
     isError: isErrorUser,
-    isRefetching: isRefetchingUser,
     error: errorUser,
   } = useQuery({
     queryKey: ["advertiserInfo"],
