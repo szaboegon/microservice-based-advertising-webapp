@@ -19,12 +19,7 @@ const RelatedAdvertisementInfo: React.FunctionComponent<
   const [advertisement, setAdvertisement] = useState<Advertisement>();
   const [base64Image, setBase64Image] = useState<string>();
 
-  const {
-    isSuccess: isSuccess,
-    isLoading: isLoading,
-    isError: isError,
-    isRefetching: isRefetching,
-  } = useQuery({
+  const { isSuccess: isSuccess } = useQuery({
     queryKey: ["relatedAdvertisement", advertisementId],
     queryFn: async () => {
       if (!advertisementId) return;

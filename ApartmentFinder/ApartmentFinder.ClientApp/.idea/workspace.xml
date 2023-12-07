@@ -4,31 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="Access token and message scrolling fix">
+    <list default="true" id="9544801a-51bc-44b2-b293-e9991bf09fa6" name="Changes" comment="Import cleanup on frontend">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/images/apartment-building1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/images/apartment-building2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/images/large-bg2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/AdvertisementListItem.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/advertisement/details/AdvertisementDetails.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/newAdvertisement/AddressStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/AddressStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/newAdvertisement/CategoryStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/CategoryStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DescriptionStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DescriptionStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DetailsStep.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/forms/newAdvertisement/DetailsStep.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/MessageBubble.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/MessageBubble.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/messaging/MessageInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/MessageInput.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/messaging/RelatedAdvertisementInfo.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/ProfileCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/ProfileCard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/routes/PrivateRoute.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/routes/PrivateRoute.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/search/PaginationFooter.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shared/SearchBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/useAccessToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/useAccessToken.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/NewAdvertisement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/placeholderStyles.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,24 +24,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/szabo/source/repos/szaboegon/microservice-based-advertising-webapp/ApartmentFinder/ApartmentFinder.ClientApp",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/szabo/source/repos/szaboegon/microservice-based-advertising-webapp/ApartmentFinder/ApartmentFinder.ClientApp&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\szabo\\source\\repos\\szaboegon\\microservice-based-advertising-webapp\\ApartmentFinder\\ApartmentFinder.ClientApp\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Unnamed" type="JavascriptDebugType" nameIsGenerated="true" uri="http://localhost:5173">
       <method v="2" />
@@ -87,6 +65,7 @@
       <workItem from="1701714958177" duration="93000" />
       <workItem from="1701715551326" duration="2913000" />
       <workItem from="1701881534011" duration="781000" />
+      <workItem from="1701939850274" duration="564000" />
     </task>
     <task id="LOCAL-00001" summary="Access token and message scrolling fix">
       <option name="closed" value="true" />
