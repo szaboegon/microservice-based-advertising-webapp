@@ -37,6 +37,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = ({ user, logout }) => {
       setUnreadMessageCount(count);
     },
     refetchOnWindowFocus: false,
+    enabled: !!user,
   });
 
   useEffect(() => {
