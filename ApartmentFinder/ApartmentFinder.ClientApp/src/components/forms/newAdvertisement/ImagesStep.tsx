@@ -36,7 +36,6 @@ const ImagesStep: React.FunctionComponent<IImagesStepProps> = ({
     }
     const fileArray = [...e.target.files];
     if (fileArray.length > 5) {
-      console.log("more");
       setModalMessage("A maximum of 5 images are allowed.");
       onError(e);
       return;

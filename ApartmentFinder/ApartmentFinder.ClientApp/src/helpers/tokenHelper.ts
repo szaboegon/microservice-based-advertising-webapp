@@ -44,7 +44,6 @@ const refreshTokens = async (): Promise<AuthTokens | null> => {
     accessToken: accessToken,
     refreshToken: refreshToken,
   };
-  console.log(refreshTokenRequest);
   return await axios
     .post<AuthTokens>("/api/user/refresh_token", refreshTokenRequest)
     .then((response) => {

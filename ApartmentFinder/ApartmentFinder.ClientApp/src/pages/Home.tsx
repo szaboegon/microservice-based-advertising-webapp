@@ -16,13 +16,7 @@ export const Home = () => {
   const [advertisements, setAdvertisements] = useState<AdvertisementInfo[]>([]);
   const navigate = useNavigate();
 
-  const {
-    isSuccess,
-    isLoading,
-    isError,
-    isRefetching,
-    error,
-  } = useQuery({
+  const { isSuccess, isLoading, isError, isRefetching, error } = useQuery({
     queryKey: ["advertismentcards"],
     queryFn: async () => {
       return await AdvertisementService.getLatests(4);
@@ -89,7 +83,9 @@ export const Home = () => {
         spacing="8"
         marginX={{ base: "0px", "2xl": "12%" }}
       >
-        {isSuccess && advertisements?.map((advertisement) => (
+        {isSuccess &&
+          advertisements.length > 0 &&
+          advertisements?.map((advertisement) => (
             <AdvertisementCard
               key={advertisement.id}
               advertisement={advertisement}

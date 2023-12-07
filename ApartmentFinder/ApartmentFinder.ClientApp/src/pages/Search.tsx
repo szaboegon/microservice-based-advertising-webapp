@@ -28,7 +28,6 @@ export const Search = () => {
     useQuery({
       queryKey: ["advertismentsearch", ...searchParams],
       queryFn: async () => {
-        console.log(searchParams);
         return await AdvertisementService.findBySearchParams(searchParams);
       },
       onSuccess: (data: PagedQueryResponse<AdvertisementInfo>) => {
